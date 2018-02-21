@@ -10,6 +10,8 @@ class LoadController{
             define("_PASS", $_REQUEST('pass'));
     }
 
-    public function load(){}
+    public function load(){
+        
+    }
 }
 ?>
