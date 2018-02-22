@@ -64,4 +64,43 @@ class EmpleadoDAO{
         $val = $this->db->prepare($sql)->execute(array($detalle, $user));
         
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function addRol(EmpleadoController $data){
+        $sql = "create user ?@'" . HOST . "' identified by '?'";
+        $resultSet = $this->db->prepare($sql);
+        $resultSet->exectue(array($data->$_GET('Usuario'), $data->$_GET('')));
+    }
+
 ?>

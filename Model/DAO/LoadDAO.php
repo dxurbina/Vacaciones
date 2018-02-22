@@ -13,7 +13,6 @@
             $sql = "Select IdTipoEmpleado from Empleados where Usuario = ?";
             $resulSet = $this->db->prepare($sql);
             $resulSet->execute(array(_USER));
-            echo "";
             if($row = $resulSet->fetch(PDO::FETCH_OBJ)){
                 $tipo = $row->IdTipoEmpleado;
             }
