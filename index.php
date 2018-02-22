@@ -8,7 +8,7 @@
         $view->index();
     }else{
         $cont = ucwords($_REQUEST['c']);
-        require_once($cont.'Controller.php');
+        require_once('Controller/' . $cont.'Controller.php');
         $controller = $cont.'Controller';
         $accion = isset($_REQUEST['a'])? $_REQUEST['a']: 'index';
         $controller =new $controller;
