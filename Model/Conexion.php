@@ -1,10 +1,8 @@
 <?php 
-    class Conexion{
-        require('Entity/Conect.php');
-        $user = __GET('user');
-        $pass = __GET('pass'):
-        public class conex
-        $con = new PDO('mysql:host=' . HOST . 'dbname = ' . DB, $user, $pass );
-
-    }
+   class Conexion{
+    public function conex(){
+        $con = new PDO('mysql:host =' . HOST . 'dbname = ' . DB , _USER, _PASS );
+        return $con;
+    } 
+}
 ?>
