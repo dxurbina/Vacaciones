@@ -102,6 +102,7 @@ class EmpleadoDAO{
         $sql = "create user ?@'" . HOST . "' identified by '?'";
         $resultSet = $this->db->prepare($sql);
         $resultSet->exectue(array($data->$_GET('Usuario'), $data->$_GET('')));
+        echo "";
     }
 
 ?>
