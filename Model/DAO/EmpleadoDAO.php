@@ -20,8 +20,8 @@ class EmpleadoDAO{
         return $resultSet;
     }
     /*Agregar en la tabla Empleados*/ 
-    public function add(Empleados $data){
-        $sql = "insert into Empleados values('?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?');"; /*Verificar esta línea de código*/
+    public function CrearEmpleados(Empleados $data){
+        $sql = "insert into Empleados values('?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?');"; /*Verificar esta línea de código*/
         $this->bd->prepare($sl)->execute(array($data->__GET(),
         $data->__GET('PNombre') = mysql_real_escape_string_PDO($clean['PNombre']),
         $data->__GET('SNombre'),
@@ -47,6 +47,7 @@ class EmpleadoDAO{
         $data->__GET('Nacionalidad1'),
         $data->__GET('Nacionalidad2'),
         $data->__GET('Estado'),
+        $data->__GET('Usuario'),
         $data->__GET('Contraseña'),
         $data->__GET('IdTipoEmpleado'),
         $data->__GET('IdMunicipio')));
