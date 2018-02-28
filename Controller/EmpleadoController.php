@@ -9,8 +9,12 @@ public function __construct(){
     $this->model = new EmpleadoDAO();
 }
 
+public function Index (){
+    require_once "View/Empleados.php";
+}
 
 public function AddEmpleados(){
+    $Emp = new Empleado();
     $this->obj->__SET('PNombre', $_REQUEST['PNombre']);
     $this->obj->__SET('SNombre', $_REQUEST['SNombre']);
     $this->obj->__SET('PApellido', $_REQUEST['PApellido']);
@@ -36,12 +40,29 @@ public function AddEmpleados(){
     $this->obj->__SET('Nacionalidad2', $_REQUEST['Nacionalidad2']);
     $this->obj->__SET('Estado', $_REQUEST['Estado']);
     $this->obj->__SET('Usuario', $_REQUEST['Usuario']);
-    $this->obj->__SET('Contraseña', $_REQUEST['Contraseña']);
-    $this->obj->__SET('IdTipoEmpleado', $_REQUEST['IdTipoEmpleado']);
+    $this->obj->__SET('Pass', $_REQUEST['Pass']);
+    $this->obj->__SET('IdCargo', $_REQUEST['IdCargo']);
     $this->obj->__SET('IdMunicipio', 'IdMunicipio');
+
+    $Emp->id > 0 
+            ? $this->model->Actualizar($Emp)
+            : $this->model->Registrar($Emp);
+        
+        header('Location: index.php');
     $this->model->CrearEmpleados($this->obj);
     header('Location: index.php?c=View');
 }
+
+public function listaDptos(){
+    include('Model/DAO/EmpleadoDao.php');
+    $this->model->listaDptos($this->obj);
+        $this->url= $this->obj->__GET('url');
+        header('Location: Empleados.php?c=View');
+        echo "" .$list;
+
+}
+
+
 }
 
 ?>

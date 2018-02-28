@@ -4,17 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src= "js/jquery-1.9.0.min.js" type="text/javascript"></script>
+    <script type="text/javascript"></script>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Empleados</title>
+    <script src= "js/jquery-1.9.0.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="View/css/estilos.css"/>
+    <script type="text/javascript">
+    
+    /*Verificar aquí, para llamar la carga de la lista de los dptos y mun*/
+    $[document].ready[function]{
+    $_ajax({
+        url:'EmpleadoDAO.php?accion=getDepartamentos',
+        success:function(EmpleadoDAO){
+            for (x=0; x<EmpleadoDAO.length;x++)
+            $("#cboDepto").append(new Option (EmpleadoDAO[x].Departamento, EmpleadoDAO[x].IdDepto));
+        }
+    })
+}
+
+$("#cboDepto").change(function(){
+    $(cboMun).empty();
+    $getJSON('EmpleadoDAO.php' accion:'getMunicipios', IdDepto:$('#cboDepto'))
+    for (x=0; x<EmpleadoDAO.length;x++){
+        $("#cboMun").append(new Option (EmpleadoDAO[x].Departamento, EmpleadoDAO[x].IdDepto));
+    }
+})
+    </script>
+   
 </head>
 
 <body>
-    <div class="container-fluid">
+
+<tbody>
+    <div id="form">
         <div clas="row-fluid">
             <div class="panel-heading">
                 <center>Datos personales</center>
             </div>
-            <div class="panel panel-body">
+            <div class="campos">
 
                 <div class="row">
                     <div class="col-sm-4">
@@ -23,7 +51,6 @@
 
                         <output>2do. nombre:</output>
                         <input type="text" name="SNombre" size="15" />
-                        <!-- Es cedula residencia:<input type="button" value="no"> Este esta pendiente -->
                     </div>
                 </div>
 
@@ -41,6 +68,12 @@
                     <div class="col-sm-2">
                         <output>N° cédula:</output>
                         <input type="text" name="Cedula" size="15" />
+
+                        <output>Es Cédula Residencia</output>
+                        <select name="Residencia">
+                            <option value="" disabled selected>No</option>
+                            <option value="">Si</option>
+                        </select>
                     </div>
                 </div>
 
@@ -137,7 +170,7 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <output>Departamento</output>
-                        <select name="Departamento">
+                        <select id = "cboDepto" name="Departamento" value= "<?php echo $Departamentos;?>" >
 
                         </select>
 
@@ -148,8 +181,11 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <output>Municipio</output>
-                        <select name="Municipio">
+                        <select id = "cboMun" name="Municipio">
+                           <?php include_once('Model/DAO/EmpleadoDAO.php');
+                           $emp = new $emp;
 
+                           ?> 
                         </select>
 
                     </div>
@@ -160,7 +196,7 @@
 
                     <div class="row">
                         <div class="col-sm-2">
-                            <output>Nacionalidad</output>
+                            <output>Nacionalidad 1</output>
                             <input type="text" name="Nacionalidad" size="15" />
                         </div>
                     </div>
@@ -173,12 +209,16 @@
                     </div>
 
                     <div class="row">
-                            <div class="col-sm-2">
-                                <output>Habilitadoa</output>
-                                <input type="text" name="Estado" size="15" />
-                            </div>
+                        <div class="col-sm-2">
+                            <output>Habilitado</output>
+
+                            <select name="Residencia">
+                                <option value="" disabled selected>No</option>
+                                <option value="">Si</option>
+                            </select>
                         </div>
-    
+                    </div>
+
 
                 </div>
 
@@ -187,6 +227,8 @@
         </div>
 
     </div>
+
+</tbody>
 
 </body>
 
