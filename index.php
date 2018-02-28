@@ -1,5 +1,8 @@
 <?php
     require "defines.php";
+    require "Model/Entity/LoadEntity.php";
+    $_load = new LoadEntity();
+    $userP; $passP;
     $principal = 'Principal';
     if(!(isset($_REQUEST['c']))){
         require_once('Controller/'.$principal.'Controller.php');

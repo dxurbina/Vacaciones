@@ -99,10 +99,32 @@ class EmpleadoDAO{
 
 
     public function addRol(EmpleadoController $data){
+        //Crear usuario
+        /*
+        $tipo;
         $sql = "create user ?@'" . HOST . "' identified by '?'";
         $resultSet = $this->db->prepare($sql);
-        $resultSet->exectue(array($data->$_GET('Usuario'), $data->$_GET('')));
-        echo "";
+        $resultSet->exectue(array($data->$_GET('Usuario'), $data->$_GET('Contraseña')));
+        */
+        $sql = "";
+
+        //Agregar roles
+        /*
+            $sql = "Select Chksubordinado from Cargos c inner join Empleados e on c.IdCargo = e.IdCargo where Usuario = ?";
+            $resulSet = $this->db->prepare($sql);
+            $resulSet->execute(array(_USER));
+            if($row = $resulSet->fetch(PDO::FETCH_OBJ)){
+                $tipo = $row->Chksubordinado;
+            }
+            if($tipo == true){
+                $sql = "Grant all privileges on Vacaciones.* to  ";
+            }else if($tipo == false){
+
+            }
+
+
+            */
+
     }
 
 ?>
