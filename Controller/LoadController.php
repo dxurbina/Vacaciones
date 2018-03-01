@@ -6,18 +6,16 @@ class LoadController{
             include("Model/Entity/Empleado.php");
             $this->obj = new Empleado();
             $this->Load = new LoadDAO();
-            $this->obj->__SET('user', $_REQUEST['user']);
-            $this->obj->__SET('pass', $_REQUEST['pass']);
-            $this->userP = $_REQUEST['user'];
-            $this->passP = $_REQUEST['pass'];
+            if(isset($_REQUEST['user'])){
+                $this->obj->__SET('user', $_REQUEST['user']);
+                $this->obj->__SET('pass', $_REQUEST['pass']);
+            }
+            
     }
 
     public function load(){
         $this->flag = $this->Load->login($this->obj);
-        
         if($this->flag == true){
-
-
             $this->Load->LoadType($this->obj);
             include("View/Head.php");
             include("View/PrincipalView.php");

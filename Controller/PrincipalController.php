@@ -5,12 +5,11 @@
             include("View/Head.php");
             include("View/PrincipalView.php");
             include("View/Footer.php");
-        }
-
-        public function  login(){
-
-        }
-
-        
+        }  
+        public function AccessError(){
+            include("View/Head.php");
+            include("View/AccessErrorView.php");
+            include("View/Footer.php");
+         }    
     }
  ?>

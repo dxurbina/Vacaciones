@@ -11,19 +11,66 @@ class EmpleadoDAO{
 
     /*Lista de Empleados*/
     public function list(){
+      try{
         $resultSet = array();
         $consult = $this->bd->prepare("select * from Empleados");
         $consult->execute();
         while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
-            $resultSet[] = $row; 
+            $resultSet[] = $row;
         }
         return $resultSet;
-    }
+    } catch(Exception $e)
+        {
+            die($e->getMessage());
+        }
+}
+
+     /*Lista de Departamentos, con las exepciones*/
+     public function listaDptos(){
+         try{
+            $Departamentos = array();
+            $consult = $this->bd->prepare("select * from Departamento");
+            $consult->execute();   
+            while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                $Departamentos[] = $row; 
+            }
+            return $Departamentos ; /*esto estaba ahí*/
+            /*echo json_encode($Departamentos);*/
+        } catch(Exception $e)
+        {
+            die($e->getMessage());
+        }
+     }
+        
+      /*Lista de Municipios*/
+      public function listaMunicipios(){
+        try{
+        $Municipios = array();
+        $consulta = $this->bd->prepare("select IdMunicipio, Nombre from Municipios where IdDepartamento = " .$_REQUEST(IdDepartamento));
+        $consulta->execute();
+        while( $row = $consulta->fetchAll(PDO::FETCH_OBJ)){
+            $Municipios[] = $row; 
+        }
+        return $Municipios;
+    } catch(Exception $e)
+        {
+            die($e->getMessage());
+        }
+}
+
+    /*Buscar en la tabla Empleados*/
+    public function buscarEmp($IdEmp){
+        $sql = "select * from Empleados where IdEmpleado = ?";
+        $val = $this->db->prepare($sql)->execute(array($IdEmp));
+    }        
+        
+
     /*Agregar en la tabla Empleados*/ 
-    public function CrearEmpleados(Empleados $data){
-        $sql = "insert into Empleados values('?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?');"; /*Verificar esta línea de código*/
-        $this->bd->prepare($sl)->execute(array($data->__GET(),
-        $data->__GET('PNombre') = mysql_real_escape_string_PDO($clean['PNombre']),
+    public function AddEmpleados(Empleados $data){
+        $sql = "insert into Empleados values('null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?');"; /*Verificar esta línea de código*/
+        $this->db->prepare($sql);
+        $this->db->execute(array($data->__GET(),
+        $data->__GET('PNombre') /*= mysql_real_escape_string_PDO($clean['PNombre'])*/,
         $data->__GET('SNombre'),
         $data->__GET('PApellido'),
         $data->__GET('SApellido'),
@@ -46,12 +93,28 @@ class EmpleadoDAO{
         $data->__GET('Direccion'),
         $data->__GET('Nacionalidad1'),
         $data->__GET('Nacionalidad2'),
-        $data->__GET('Estado'),
-        $data->__GET('Usuario'),
-        $data->__GET('Contraseña'),
-        $data->__GET('IdTipoEmpleado'),
-        $data->__GET('IdMunicipio')));
+        $data->__GET('IdCargos'),
+        $data->__GET('IdJefe'),
+        $data->__GET('IdMunicipio')
+        ));
+
+        $LastId = GetId();
+        $sql = "insert into Usuarios values (null, ?, ?, ?)";
+        
     }
+    
+    public function GetId(){
+        $id;
+        $sql = "select MAX(IdEmpleado) as valor from Empleados";
+        $result = $this->db->prepare($sql);
+        $result->execute();
+        if($row = $result->fetch(PDO::FETCH_OBJ)){
+            $id=$row->valor;
+        }
+        return $id;
+    }
+
+
 
     /*Eliminar en la tabla de Empleados*/
     public function delete($id){
@@ -60,10 +123,9 @@ class EmpleadoDAO{
     }
 
     /*Actualizar en la tabla Empleados*/
-    public function update($detalle, $user){
+    public function update($IdEmpAct){
         $sql = "update Empleado set IdEmpleado = ? where IdEmpleado = ?";
-        $val = $this->db->prepare($sql)->execute(array($detalle, $user));
-        
+        $val = $this->db->prepare($sql)->execute(array($IdEmpAct));
     }
 
 
@@ -126,5 +188,6 @@ class EmpleadoDAO{
             */
 
     }
+}
 
 ?>

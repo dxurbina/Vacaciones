@@ -20,8 +20,11 @@
                 $flag = true;
                 
                 $_SESSION['nickname'] = $data->__GET('user');
+            }else{
+                $_SESSION['nickname'] = 'Error';
+                $_SESSION['access'] = null;
             }
-            $_SESSION['nickname'] = 'Error';
+            
             return $flag;
         }
 
