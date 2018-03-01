@@ -66,7 +66,7 @@ class EmpleadoDAO{
         
 
     /*Agregar en la tabla Empleados*/ 
-    public function AddEmpleados(Empleados $data){
+    public function AddEmpleados(Empleados $data, User $datau){
         $sql = "insert into Empleados values('null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?');"; /*Verificar esta línea de código*/
         $this->db->prepare($sql);
         $this->db->execute(array($data->__GET(),
@@ -99,7 +99,9 @@ class EmpleadoDAO{
         ));
 
         $LastId = GetId();
-        $sql = "insert into Usuarios values (null, ?, ?, ?)";
+        $sql = "call adduser (?, ?, ?)";
+        $this->db->prepare($sql);
+        $this->db->execute(array($datau->__GET('user'), $datau->__GET('pass'), $lastId));
         
     }
     

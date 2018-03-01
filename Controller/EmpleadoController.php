@@ -13,7 +13,7 @@ public function __construct(){
 
 public function index (){
     session_start();
-    if($_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+    if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
     require_once "View/EmpleadosView.php";
     }else {
         header('Location: index.php?c=Principal&a=AccessError');
@@ -21,15 +21,9 @@ public function index (){
 }
 
 public function AddEmpleados(){
-    if($_REQUEST['Residencia'] == '0' ){
-        $this->obj->__SET('Residencia', 1);
-
-    }else{
-        $this->obj->__SET('Residencia', 0);
-        
-    }
-
-    if($_REQUEST['Hijos'] == 'Si' ){
+    if($_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+    $this->obj->__SET('Residencia', $_REQUEST['Residencia']);
+    if($_REQUEST['Hijos'] == '1' ){
         $this->obj->__SET('Hijos', 1);
         $this->obj->__SET('NumHijos', $_REQUEST['NumHijos']);
     }else{
@@ -37,7 +31,7 @@ public function AddEmpleados(){
         $this->obj->__SET('NumHijos', 0);
     }
 
-    if($_REQUEST['Hermanos'] == 'Si' ){
+    if($_REQUEST['Hermanos'] == '1' ){
         $this->obj->__SET('Hermanos', 1);
         $this->obj->__SET('NumHermanos', $_REQUEST['NumHermanos']);
     }else{
@@ -69,12 +63,9 @@ public function AddEmpleados(){
     $this->obj->__SET('Nacionalidad1', $_REQUEST['Nacionalidad1']);
     $this->obj->__SET('Nacionalidad2', $_REQUEST['Nacionalidad2']);
     // $this->obj->__SET('Estado', $_REQUEST['Estado']);
-    $valorCargo = $this->model->GetCargo($_REQUEST['IdCargo']);
-    $valorJefe = $this->model->GetJefe($_REQUEST['IdJefe']);
-    $valorMunicipio = $this->model->GetMunicipio($_REQUEST['IdMunicipio']);
-    $this->obj->__SET('IdCargo', $valorCargo);
-    $this->obj->__SET('IdJefe', $valorJefe);
-    $this->obj->__SET('IdMunicipio', $valorMunicipio);
+    $this->obj->__SET('IdCargo', $_REQUEST['IdCargo']);
+    $this->obj->__SET('IdJefe', $_REQUEST['IdJefe']);
+    $this->obj->__SET('IdMunicipio', $_REQUEST['IdMunicipio']);
     /*
     $Emp->id > 0 
             ? $this->model->Actualizar($Emp)
@@ -85,10 +76,13 @@ public function AddEmpleados(){
         $this->obju->__SET('user', $_REQUEST['user']);
         $this->obju->__SET('user', $_REQUEST['pass']);
 
-    $this->model->AddEmpleados($this->obj);
+    $this->model->AddEmpleados($this->obj, $this->obju);
     
     
     header('Location: index.php?c=View');
+}else {
+    header('Location: index.php?c=Principal&a=AccessError');
+}
 }
 
 public function listaDptos(){

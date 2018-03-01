@@ -47,9 +47,7 @@
             $resultSet->execute(array($data->__GET('user')));
             
             if($row = $resultSet->fetch(PDO::FETCH_OBJ)){
-                
                 $_SESSION['access'] = $row->IdRol;
-                
             }
 /*
             $sql = "Select NombreCargo from Cargos c inner join Empleados e on c.IdCargo = e.IdCargo where Usuario = ?";
