@@ -5,6 +5,7 @@ class EmpleadoDAO{
     public function __construct(){
         include('Model/Conexion.php');
         include_once('Model/Entity/Empleado.php');
+        include_once('Model/Entity/User.php');
         $this->con = new Conexion();
         $this->db = $this->con->conex();
     }
@@ -21,41 +22,40 @@ class EmpleadoDAO{
                 $resulSet = $row; 
             }
             return $resulSet; /*esto estaba ahí*/
-        
     } catch(Exception $e)
         {
             die($e->getMessage());
         }
 }
 
-     /*Lista de Departamentos, con las exepciones*/
-     public function listaDptos(){
-         try{
-            $Departamentos = array();
-            $consult = $this->bd->prepare("select * from Departamento");
+   /*Lista de Departamentos, con las exepciones*/
+   public function listarDptos(){
+    try{
+       $Departamentos = array();
+       $consult = $this->db->prepare("select * from Departamento");
+       $consult->execute();   
+       while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+           $Departamentos = $row; 
+       }
+       return $Departamentos ; /*esto estaba ahí*/
+       /*echo json_encode($Departamentos);*/
+   } catch(Exception $e)
+   {
+       die($e->getMessage());
+   }
+}
+      /*Lista de Municipios*/
+      public function listarMunicipios(){
+        try{
+            $Municipios = array();
+            $consult = $this->db->prepare("select * from Municipio where IdDepartamento=10");
             $consult->execute();   
             while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
-                $Departamentos[] = $row; 
+                $Municipios = $row; 
             }
-            return $Departamentos ; /*esto estaba ahí*/
+            return $Municipios ; /*esto estaba ahí*/
             /*echo json_encode($Departamentos);*/
         } catch(Exception $e)
-        {
-            die($e->getMessage());
-        }
-     }
-        
-      /*Lista de Municipios*/
-      public function listaMunicipios(){
-        try{
-        $Municipios = array();
-        $consulta = $this->bd->prepare("select IdMunicipio, Nombre from Municipios where IdDepartamento = " .$_REQUEST(IdDepartamento));
-        $consulta->execute();
-        while( $row = $consulta->fetchAll(PDO::FETCH_OBJ)){
-            $Municipios[] = $row; 
-        }
-        return $Municipios;
-    } catch(Exception $e)
         {
             die($e->getMessage());
         }
@@ -71,10 +71,10 @@ class EmpleadoDAO{
         
 
     /*Agregar en la tabla Empleados*/ 
-    public function AddEmpleados(Empleados $data, User $datau){
-        $sql = "insert into Empleados values('null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?');"; /*Verificar esta línea de código*/
-        $this->db->prepare($sql);
-        $this->db->execute(array($data->__GET(),
+    public function AddEmpleados(Empleado $data, User $datau){
+        $sql = "insert into Empleados values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?);"; /*Verificar esta línea de código*/
+        $consult = $this->db->prepare($sql);
+        $consult->execute(array(null,
         $data->__GET('PNombre') /*= mysql_real_escape_string_PDO($clean['PNombre'])*/,
         $data->__GET('SNombre'),
         $data->__GET('PApellido'),
@@ -103,10 +103,17 @@ class EmpleadoDAO{
         $data->__GET('IdMunicipio')
         ));
 
-        $LastId = GetId();
+        $lastid;
+        $sql = "select MAX(IdEmpleado) as valor from Empleados";
+        $result = $this->db->prepare($sql);
+        $result->execute();
+        if($row = $result->fetch(PDO::FETCH_OBJ)){
+            $lastid=$row->valor;
+        }
+
         $sql = "call adduser (?, ?, ?)";
-        $this->db->prepare($sql);
-        $this->db->execute(array($datau->__GET('user'), $datau->__GET('pass'), $lastId));
+        $consult2 = $this->db->prepare($sql);
+        $consult->execute(array($datau->__GET('user'), $datau->__GET('pass'), $lastid));
         
     }
     
