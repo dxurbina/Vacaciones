@@ -15,7 +15,7 @@ class EmpleadoDAO{
     public function ListEmployee(){
       try{
         $resultSet = array();
-        $consult = $this->db->prepare("select IdEmpleado,PNombre, SNombre, Telefono, IdCargo, IdJefe from
+        $consult = $this->db->prepare("select IdEmpleado, SNombre, Telefono, IdCargo, IdJefe from
         Empleados");
         $consult->execute(); 
             while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
@@ -98,10 +98,12 @@ class EmpleadoDAO{
         $data->__GET('Direccion'),
         $data->__GET('Nacionalidad1'),
         $data->__GET('Nacionalidad2'),
-        $data->__GET('IdCargos'),
+        $data->__GET('IdCargo'),
         $data->__GET('IdJefe'),
         $data->__GET('IdMunicipio')
         ));
+
+        var_dump($consult);
 
         $lastid;
         $sql = "select MAX(IdEmpleado) as valor from Empleados";

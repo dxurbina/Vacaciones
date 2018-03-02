@@ -132,7 +132,6 @@ function utf8_converter($array){
         $cursos = $this->model->ListEmployee();
         //$var = json_encode(array_map('utf8_encode', $cursos));
         $var = json_encode( $cursos, JSON_UNESCAPED_UNICODE);
-        
         echo $var;
         }else {
             header('Location: index.php?c=Principal&a=AccessError');
