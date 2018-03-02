@@ -13,7 +13,7 @@ class EmpleadoDAO{
     public function list(){
       try{
         $resultSet = array();
-        $consult = $this->bd->prepare("select * from Empleados");
+        $consult = $this->db->prepare("select * from Empleados");
         $consult->execute();
         while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
             $resultSet[] = $row;
@@ -25,34 +25,34 @@ class EmpleadoDAO{
         }
 }
 
-     /*Lista de Departamentos, con las exepciones*/
-     public function listaDptos(){
-         try{
-            $Departamentos = array();
-            $consult = $this->bd->prepare("select * from Departamento");
+   /*Lista de Departamentos, con las exepciones*/
+   public function listarDptos(){
+    try{
+       $Departamentos = array();
+       $consult = $this->db->prepare("select * from Departamento");
+       $consult->execute();   
+       while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+           $Departamentos = $row; 
+       }
+       return $Departamentos ; /*esto estaba ahí*/
+       /*echo json_encode($Departamentos);*/
+   } catch(Exception $e)
+   {
+       die($e->getMessage());
+   }
+}
+      /*Lista de Municipios*/
+      public function listarMunicipios(){
+        try{
+            $Municipios = array();
+            $consult = $this->db->prepare("select * from Municipio where IdDepartamento=10");
             $consult->execute();   
             while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
-                $Departamentos[] = $row; 
+                $Municipios = $row; 
             }
-            return $Departamentos ; /*esto estaba ahí*/
+            return $Municipios ; /*esto estaba ahí*/
             /*echo json_encode($Departamentos);*/
         } catch(Exception $e)
-        {
-            die($e->getMessage());
-        }
-     }
-        
-      /*Lista de Municipios*/
-      public function listaMunicipios(){
-        try{
-        $Municipios = array();
-        $consulta = $this->bd->prepare("select IdMunicipio, Nombre from Municipios where IdDepartamento = " .$_REQUEST(IdDepartamento));
-        $consulta->execute();
-        while( $row = $consulta->fetchAll(PDO::FETCH_OBJ)){
-            $Municipios[] = $row; 
-        }
-        return $Municipios;
-    } catch(Exception $e)
         {
             die($e->getMessage());
         }

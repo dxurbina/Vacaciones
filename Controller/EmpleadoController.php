@@ -1,20 +1,24 @@
 <?php
-
 class EmpleadoController{
-    public $obj, $model, $obju;
+    public $obj, $model, $obju, $Departamentos, $mun;
+
 public function __construct(){
-    include('Model/DAO/EmpleadoDao.php');
+    include('Model/DAO/EmpleadoDAO.php');
     include('Model/Entity/Empleado.php');
     include('Model/Entity/User.php');
     $this->obj = new Empleado();
     $this->obju = new User();
     $this->model = new EmpleadoDAO();
+ 
 }
 
 public function index (){
     session_start();
     if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
-    require_once "View/EmpleadosView.php";
+        $this->Departamentos = $this->model->listarDptos();
+        $this->mun= $this->model->listarMunicipios();
+    /*Esto lo agregue yo*/
+   require_once('View/Empleados.php');
     }else {
         header('Location: index.php?c=Principal&a=AccessError');
     }
@@ -38,9 +42,6 @@ public function AddEmpleados(){
         $this->obj->__SET('Hermanos', 0);
         $this->obj->__SET('NumHermanos', 0);
     }
-
-
-
 
     $this->obj->__SET('PNombre', $_REQUEST['PNombre']);
     $this->obj->__SET('SNombre', $_REQUEST['SNombre']);
@@ -78,22 +79,21 @@ public function AddEmpleados(){
 
     $this->model->AddEmpleados($this->obj, $this->obju);
     
-    
     header('Location: index.php?c=View');
 }else {
     header('Location: index.php?c=Principal&a=AccessError');
 }
 }
 
-public function listaDptos(){
-    include('Model/DAO/EmpleadoDao.php');
-    $this->model->listaDptos($this->obj);
-        $this->url= $this->obj->__GET('url');
-        header('Location: Empleados.php?c=View');
-        echo "" .$list;
+/*Llamado al método del controlador*/ 
+public function MunicipiosPorDepto($IdDepto){
+    header('Content-type: application/json');
+    $this->mun = $this->model->listarMuniPorDpto($_POST[_IdDepartamento]);
+
+    //$mun=$this->EmpleadoDAO->listarDeptos($_POST[_IdDepartamento]);
+    print_r(json_encode($mun));
 
 }
-
 
 }
 
