@@ -11,7 +11,9 @@
 
         public function conexLoad(){
             try{      
-                $con = new PDO('mysql:host=10.20.190.139; dbname=' . DB , $this->userP, $this->passP);
+                $con = new PDO('mysql:host=10.20.190.139; dbname=' . DB , $this->userP, $this->passP,
+                array(PDO::MYSQL_ATTR_INIT_COMMAND =>"SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' "));
+                
                 return $con;
             } catch (PDOException $e) {
                 return null;

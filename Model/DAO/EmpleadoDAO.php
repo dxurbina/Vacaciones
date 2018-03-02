@@ -9,16 +9,19 @@ class EmpleadoDAO{
         $this->db = $this->con->conex();
     }
 
+
     /*Lista de Empleados*/
-    public function list(){
+    public function ListEmployee(){
       try{
         $resultSet = array();
-        $consult = $this->bd->prepare("select * from Empleados");
-        $consult->execute();
-        while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
-            $resultSet[] = $row;
-        }
-        return $resultSet;
+        $consult = $this->db->prepare("select IdEmpleado,PNombre, SNombre, Telefono, IdCargo, IdJefe from
+        Empleados");
+        $consult->execute(); 
+            while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                $resulSet = $row; 
+            }
+            return $resulSet; /*esto estaba ahí*/
+        
     } catch(Exception $e)
         {
             die($e->getMessage());
@@ -62,7 +65,9 @@ class EmpleadoDAO{
     public function buscarEmp($IdEmp){
         $sql = "select * from Empleados where IdEmpleado = ?";
         $val = $this->db->prepare($sql)->execute(array($IdEmp));
-    }        
+    }    
+    
+   
         
 
     /*Agregar en la tabla Empleados*/ 

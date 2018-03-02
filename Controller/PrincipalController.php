@@ -10,6 +10,7 @@
             include("View/Head.php");
             include("View/AccessErrorView.php");
             include("View/Footer.php");
-         }    
+         }   
+         
     }
  ?>

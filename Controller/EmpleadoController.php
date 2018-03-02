@@ -1,9 +1,9 @@
 <?php
-
+ session_start();
 class EmpleadoController{
     public $obj, $model, $obju;
-public function __construct(){
-    include('Model/DAO/EmpleadoDao.php');
+public function __construct(){  
+        include('Model/DAO/EmpleadoDao.php');
     include('Model/Entity/Empleado.php');
     include('Model/Entity/User.php');
     $this->obj = new Empleado();
@@ -12,13 +12,27 @@ public function __construct(){
 }
 
 public function index (){
-    session_start();
+   
     if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
-    require_once "View/EmpleadosView.php";
+        
+        require_once "View/EmpleadosView.php";
     }else {
         header('Location: index.php?c=Principal&a=AccessError');
     }
 }
+
+    public function ListEmployeeView(){
+    if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+            include("View/Head.php");
+            include("View/ListEmployeeView.php");
+            include("View/Footer.php");
+    }else {
+        header('Location: index.php?c=Principal&a=AccessError');
+    }
+}
+
+
+
 
 public function AddEmpleados(){
     if($_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
@@ -30,6 +44,7 @@ public function AddEmpleados(){
         $this->obj->__SET('Hijos', 0);
         $this->obj->__SET('NumHijos', 0);
     }
+
 
     if($_REQUEST['Hermanos'] == '1' ){
         $this->obj->__SET('Hermanos', 1);
@@ -95,6 +110,30 @@ public function listaDptos(){
 }
 
 
+
+function utf8_converter($array){ 
+    array_walk_recursive($array, function(&$item){     
+              $item = utf8_encode( $item );   
+               });       return json_encode( $array ); }
+
+    public function ListEmployee(){
+        
+
+        
+
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        
+        header('Content-Type: application/json;');
+        $cursos = $this->model->ListEmployee();
+        //$var = json_encode(array_map('utf8_encode', $cursos));
+        $var = json_encode( $cursos, JSON_UNESCAPED_UNICODE);
+        
+        echo $var;
+        }else {
+            header('Location: index.php?c=Principal&a=AccessError');
+        }
+
+    }
 }
 
 ?>
