@@ -28,7 +28,7 @@ FRAME="border" RULES="none" -->
 <TR><TD>Hermanos: <TD><select name="Hermanos"><option value="0">No</option>
     <option value="1">Si</option>
 </select><TD>Num. Hermanos: <TD><input type="text" name="NumHermanos" size="5" placeholder="0" />
-<TR><TD>Télefonos: <TD><input type="text" name="Telefono" size="15" /><TD>Estado civil: <TD><select name="EstadoCivil">
+<TR><TD>Télefonos: <TD><input type=a"text" name="Telefono" size="15" /><TD>Estado civil: <TD><select name="EstadoCivil">
                 <option value="" disabled selected>Seleccione Estado civil</option>
                 <option value="Soltero">Soltero/a.</option>
                 <option value="Comprometido">Comprometido/a.</option>

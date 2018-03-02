@@ -15,8 +15,7 @@ class EmpleadoDAO{
     public function ListEmployee(){
       try{
         $resultSet = array();
-        $consult = $this->db->prepare("select IdEmpleado,PNombre, SNombre, Telefono, IdCargo, IdJefe from
-        Empleados");
+        $consult = $this->db->prepare("select IdEmpleado,PNombre, SNombre, Telefono, IdCargo, IdJefe from Empleados");
         $consult->execute(); 
             while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
                 $resulSet = $row; 
@@ -67,9 +66,6 @@ class EmpleadoDAO{
         $val = $this->db->prepare($sql)->execute(array($IdEmp));
     }    
     
-   
-        
-
     /*Agregar en la tabla Empleados*/ 
     public function AddEmpleados(Empleado $data, User $datau){
         $sql = "insert into Empleados values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?);"; /*Verificar esta línea de código*/
@@ -98,10 +94,10 @@ class EmpleadoDAO{
         $data->__GET('Direccion'),
         $data->__GET('Nacionalidad1'),
         $data->__GET('Nacionalidad2'),
-        $data->__GET('IdCargos'),
+        $data->__GET('IdCargo'),
         $data->__GET('IdJefe'),
         $data->__GET('IdMunicipio')
-        ));
+        ));     
 
         $lastid;
         $sql = "select MAX(IdEmpleado) as valor from Empleados";
@@ -111,11 +107,27 @@ class EmpleadoDAO{
             $lastid=$row->valor;
         }
 
-        $sql = "call adduser (?, ?, ?)";
-        $consult2 = $this->db->prepare($sql);
-        $consult->execute(array($datau->__GET('user'), $datau->__GET('pass'), $lastid));
-        
+        try {
+            $sql = 'CALL adduser(:_user,pass,empleado)';
+            //$stmt = $db->prepare($sql);
+            $stmt->bindParam(':id', $lastid, PDO::PARAM_STR, 100);
+            $stmt->execute();
+          
+            $stmt->closeCursor(); //permite limpiar y ejecutar la segunda query
+            
+            $r = $conn->query("SELECT Usuario  AS user")->fetch(PDO::FETCH_ASSOC);
+            if ($r['Usuario']) {
+                echo sprintf('Nombre del Usuario %s es %s', $lastid, $r['Usuario']);
+            }
+         else
+          echo sprintf('Nombre del empleado %s no esta especificado', $lastid);
+         }
+        catch (PDOException $pe) {
+            die("Error occurred:" . $pe->getMessage());
+        }
     }
+        
+    
     
     public function GetId(){
         $id;
@@ -127,8 +139,6 @@ class EmpleadoDAO{
         }
         return $id;
     }
-
-
 
     /*Eliminar en la tabla de Empleados*/
     public function delete($id){
