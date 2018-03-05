@@ -1,10 +1,14 @@
-  .tabla {
-      border: 1px, solid;  
-      width: 400px; 
+
+
+.comp {
+  margin-left: 50px;
+  width: 0%;
+  border: 3px solid rgb(22, 22, 22);
+  padding: auto;
 } 
 
-.tabla td{
-border: 1px solid;
+.comp-td{
+border: 5px solid;
 text-align: center; 
 
 }

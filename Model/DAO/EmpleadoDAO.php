@@ -52,7 +52,7 @@ class EmpleadoDAO{
             while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
                 $Municipios = $row; 
             }
-            return $Municipios ; /*esto estaba ahí*/
+            return $Municipios ; /*estabato estaba ahí*/
             /*echo json_encode($Departamentos);*/
         } catch(Exception $e)
         {
@@ -106,25 +106,10 @@ class EmpleadoDAO{
         if($row = $result->fetch(PDO::FETCH_OBJ)){
             $lastid=$row->valor;
         }
-
-        try {
-            $sql = 'CALL adduser(:_user,pass,empleado)';
-            //$stmt = $db->prepare($sql);
-            $stmt->bindParam(':id', $lastid, PDO::PARAM_STR, 100);
-            $stmt->execute();
-          
-            $stmt->closeCursor(); //permite limpiar y ejecutar la segunda query
-            
-            $r = $conn->query("SELECT Usuario  AS user")->fetch(PDO::FETCH_ASSOC);
-            if ($r['Usuario']) {
-                echo sprintf('Nombre del Usuario %s es %s', $lastid, $r['Usuario']);
-            }
-         else
-          echo sprintf('Nombre del empleado %s no esta especificado', $lastid);
-         }
-        catch (PDOException $pe) {
-            die("Error occurred:" . $pe->getMessage());
-        }
+        
+        $sql = "call adduser (?, ?, ?)";
+        $consult2 = $this->db->prepare($sql);
+        $consult->execute(array($datau->__GET('user'), $datau->__GET('pass'), $lastid));
     }
         
     
