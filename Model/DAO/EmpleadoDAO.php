@@ -15,8 +15,9 @@ class EmpleadoDAO{
     public function ListEmployee(){
       try{
         $resultSet = array();
-        $consult = $this->db->prepare("select IdEmpleado, SNombre, Telefono, IdCargo, IdJefe from
-        Empleados");
+        $consult = $this->db->prepare("select e.IdEmpleado, e.PNombre, e.PApellido, e.Telefono, d.Nombre as Dep, c.NombreCargo, ej.PNombre as NJefe, ej.PApellido
+		as AJefe from Empleados e, Empleados ej, Cargos c,DeptosEmpresa d where
+        e.IdJefe = ej.IdEmpleado and e.IdCargo = c.IdCargo and c.IdDep = d.IdDep;");
         $consult->execute(); 
             while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
                 $resulSet = $row; 

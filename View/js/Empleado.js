@@ -34,12 +34,14 @@ function sendDataAjax() {
     for (var i = 0; i < data.length; i++) {
         tabla.fnAddData([
             data[i].IdEmpleado,
-            data[i].SNombre,
+            ( data[i].PNombre + " "+ data[i].PApellido),
             data[i].Telefono,
-            data[i].IdCargo,
-            data[i].IdJefe,
-            '<button title= "Actualizar" value= "Actualizar" class="btn btn-primary btn-act " data-target="#imodal" data-toggle="modal"><i class="fa fa-arrow-circle-down" aria-hidden="true"></i></button>&nbsp;' +
-            '<button title= "delete" value= "Borrar" class="btn btn-danger btn-del "><i class="fa fa-eraser" aria-hidden="true"></i></button>'
+            data[i].Dep,
+            data[i].NombreCargo,
+            (data[i].NJefe + " " + data[i].AJefe),
+            '<button title= "Editar/ver" value= "Actualizar" class="btn btn-primary btn-act " data-target="#imodal" data-toggle="modal"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;&nbsp;&nbsp;' +
+            '<button title= "Eliminar" value= "Borrar" class="btn btn-danger btn-del "><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;&nbsp;' +
+            '<button title= "Vacaciones" value= "VerVacaciones" class="btn btn-primary btn-act " data-target="#imodalver" data-toggle="modal"><i class="fa fa-plus-square" aria-hidden="true"></i></button>&nbsp;'
         ]);
     }
         }

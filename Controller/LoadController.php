@@ -15,16 +15,19 @@ class LoadController{
 
     public function load(){
         $this->flag = $this->Load->login($this->obj);
-        if($this->flag == true){
+        if($this->flag == true || (isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5)){
             $this->Load->LoadType($this->obj);
-            include("View/Head.php");
-            include("View/PrincipalView.php");
-            include("View/Footer.php");
+            header('Location: index.php?c=Principal');
+
+           // include("View/Head.php");
+            //include("View/PrincipalView.php");
+            //include("View/Footer.php");
         
         } else {
-            include("View/Head.php");
-            include("View/PrincipalView.php");
-            include("View/Footer.php");
+            header('Location: index.php?c=Principal&a=PrincipalView');
+           // include("View/Head.php");
+            //include("View/PrincipalView.php");
+            //include("View/Footer.php");
         }
 
         
