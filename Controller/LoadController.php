@@ -1,4 +1,5 @@
 <?php 
+ini_set('display_errors', 1);
 class LoadController{
     public $Load, $var, $access, $flag = false, $obj;
     public function __construct(){
@@ -24,7 +25,7 @@ class LoadController{
             //include("View/Footer.php");
         
         } else {
-            header('Location: index.php?c=Principal&a=PrincipalView');
+            header('Location: index.php?c=Principal');
            // include("View/Head.php");
             //include("View/PrincipalView.php");
             //include("View/Footer.php");

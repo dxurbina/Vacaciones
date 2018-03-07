@@ -143,6 +143,32 @@ public function MunicipiosPorDepto($IdDepto){
         }
 
     }
+
+
+    public function ListEmployeebyId(){
+        
+
+        
+
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        
+        header('Content-Type: application/json; charset=utf-8');
+       # Get JSON as a string
+    $json_str = file_get_contents('php://input');
+
+        # Get as an object
+        $json_obj = json_decode($json_str);
+                $datos = $this->model->ListEmployeebyId($json_obj->id);
+
+        # unset($cursos[5]);
+        $var = json_encode( $datos);
+
+        echo $var; 
+        }else {
+            header('Location: index.php?c=Principal&a=AccessError');
+        }
+
+    }
 }
 
 ?>

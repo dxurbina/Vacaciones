@@ -29,6 +29,23 @@ class EmpleadoDAO{
         }
 }
 
+    public function ListEmployeebyId($id){
+        try{
+            $resultSet = array();
+            $consult = $this->db->prepare("select e.IdEmpleado, e.PNombre, e.SNombre, e.PApellido, e.SApellido, e.Residencia, e.Cedula, e.Pasaporte, e.NInss, e.FechaNac, e.Sexo, e.Hijos, e.NumHijos, e.Hermanos, e.NumHermanos, e.Telefono, e.EstadoCivil, e.Correo, e.Escolaridad, e.NRuc, e.Profesion, e.Direccion, e.Nacionalidad1, e.Nacionalidad2, d.Nombre as Dep, c.NombreCargo, c.IdCargo,  ej.PNombre as NJefe, ej.PApellido
+            as AJefe, ej.IdEmpleado as IdJefeE from Empleados e, Empleados ej, Cargos c,DeptosEmpresa d where
+            e.IdJefe = ej.IdEmpleado and e.IdCargo = c.IdCargo and c.IdDep = d.IdDep and e.IdEmpleado = ?;");
+            $consult->execute(array($id)); 
+                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                    $resulSet = $row; 
+                }
+                return $resulSet; /*esto estaba ahí*/
+        } catch(Exception $e)
+            {
+                die($e->getMessage());
+            }
+    }
+
    /*Lista de Departamentos, con las exepciones*/
    public function listarDptos(){
     try{
@@ -54,7 +71,7 @@ class EmpleadoDAO{
             while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
                 $Municipios = $row; 
             }
-            return $Municipios ; /*esto estaba ahí*/
+            return $Municipios ; /*estabato estaba ahí*/
             /*echo json_encode($Departamentos);*/
         } catch(Exception $e)
         {
@@ -68,9 +85,6 @@ class EmpleadoDAO{
         $val = $this->db->prepare($sql)->execute(array($IdEmp));
     }    
     
-   
-        
-
     /*Agregar en la tabla Empleados*/ 
     public function AddEmpleados(Empleado $data, User $datau){
         $sql = "insert into Empleados values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?);"; /*Verificar esta línea de código*/
@@ -102,9 +116,7 @@ class EmpleadoDAO{
         $data->__GET('IdCargo'),
         $data->__GET('IdJefe'),
         $data->__GET('IdMunicipio')
-        ));
-
-        var_dump($consult);
+        ));     
 
         $lastid;
         $sql = "select MAX(IdEmpleado) as valor from Empleados";
@@ -113,12 +125,13 @@ class EmpleadoDAO{
         if($row = $result->fetch(PDO::FETCH_OBJ)){
             $lastid=$row->valor;
         }
-
+        
         $sql = "call adduser (?, ?, ?)";
         $consult2 = $this->db->prepare($sql);
         $consult->execute(array($datau->__GET('user'), $datau->__GET('pass'), $lastid));
-        
     }
+        
+    
     
     public function GetId(){
         $id;
@@ -130,8 +143,6 @@ class EmpleadoDAO{
         }
         return $id;
     }
-
-
 
     /*Eliminar en la tabla de Empleados*/
     public function delete($id){
