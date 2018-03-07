@@ -106,14 +106,14 @@ public function AddEmpleados(){
 }
 
 /*Llamado al método del controlador*/ 
-public function MunicipiosPorDepto($IdDepto){
-    header('Content-type: application/json');
-    $this->mun = $this->model->listarMuniPorDpto($_POST[_IdDepartamento]);
+    public function MunicipiosPorDepto($IdDepto){
+        header('Content-type: application/json');
+        $this->mun = $this->model->listarMuniPorDpto($_POST[_IdDepartamento]);
 
-    //$mun=$this->EmpleadoDAO->listarDeptos($_POST[_IdDepartamento]);
-    print_r(json_encode($mun));
+        //$mun=$this->EmpleadoDAO->listarDeptos($_POST[_IdDepartamento]);
+        print_r(json_encode($mun));
 
-}
+    }
 
 
     public function utf8_converter($array){ 
@@ -122,10 +122,6 @@ public function MunicipiosPorDepto($IdDepto){
                });       return json_encode( $array ); }
 
     public function ListEmployee(){
-        
-
-        
-
         if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         
         header('Content-Type: application/json; charset=utf-8');
@@ -146,15 +142,12 @@ public function MunicipiosPorDepto($IdDepto){
 
 
     public function ListEmployeebyId(){
-        
-
-        
-
         if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         
         header('Content-Type: application/json; charset=utf-8');
        # Get JSON as a string
     $json_str = file_get_contents('php://input');
+            //$json_str = $_POST['obj'];
 
         # Get as an object
         $json_obj = json_decode($json_str);
@@ -169,6 +162,52 @@ public function MunicipiosPorDepto($IdDepto){
         }
 
     }
+
+    public function showDeparment(){
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        
+            header('Content-Type: application/json; charset=utf-8');
+            $_array = $this->model->showDeparment();
+            //$var = json_encode(array_map('utf8_encode', $cursos));
+            # unset($cursos[5]);
+            $var = json_encode( $_array);
+            $json = json_last_error();
+           // $var2 = utf8_converter($cursos);
+            
+           # echo $json; #esta era la wea que lo jodia hace rato
+            echo $var; 
+            }else {
+                header('Location: index.php?c=Principal&a=AccessError');
+            }
+        
+    }
+
+    public function showMunicipality(){
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        
+           header('Content-Type: application/json; charset=utf-8');
+
+             # Get JSON as a string
+            $json_str = file_get_contents('php://input');
+           // $json_str = $_POST['id'];
+            # Get as an object
+            $json_obj = json_decode($json_str);
+
+            $_array = $this->model->showMunicipality($json_obj->id);
+            //$var = json_encode(array_map('utf8_encode', $cursos));
+            # unset($cursos[5]);
+            $var = json_encode( $_array);
+            $json = json_last_error();
+           // $var2 = utf8_converter($cursos);
+            
+           # echo $json; #esta era la wea que lo jodia hace rato
+            echo $var; 
+            }else {
+                header('Location: index.php?c=Principal&a=AccessError');
+            }
+    }
 }
+
+    
 
 ?>
