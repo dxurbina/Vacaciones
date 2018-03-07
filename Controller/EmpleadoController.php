@@ -2,7 +2,7 @@
  session_start();
 class EmpleadoController{
     public $obj, $model, $obju;
-    public  $Departamentos, $html, $DeptoEmp, $cargo, $jefe;
+    public  $Departamentos, $html, $DeptoEmp, $cargo, $jefe, $datos, $var;
 
 public function __construct(){
     include('Model/DAO/EmpleadoDAO.php');
@@ -18,7 +18,7 @@ public function index (){
    
     if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         $this->Departamentos = $this->model->listarDptos();
-        $this->html= $this->model->listarMunicipios();
+        //$this->html= $this->model->listarMunPorDpto();
         $this->DeptoEmp = $this->model->listarDptosEmp();
         $this->cargo = $this->model->listarCargos();
         $this->jefe =$this->model->listarJefesPorCargos();
@@ -42,9 +42,6 @@ public function index (){
         header('Location: index.php?c=Principal&a=AccessError');
     }
 }
-
-
-
 
 public function AddEmpleados(){
     if($_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
@@ -107,27 +104,12 @@ public function AddEmpleados(){
     header('Location: index.php?c=Principal&a=AccessError');
 }
 }
-
-/*Llamado al método del controlador*/ 
-public function MunicipiosPorDepto($IdDepto){
-    header('Content-type: application/json');
-    $this->mun = $this->model->listarMuniPorDpto($_POST[_IdDepartamento]);
-
-    //$mun=$this->EmpleadoDAO->listarDeptos($_POST[_IdDepartamento]);
-    print_r(json_encode($mun));
-
-}
-
-
     public function utf8_converter($array){ 
     array_walk_recursive($array, function(&$item){     
               $item = utf8_encode( $item );   
                });       return json_encode( $array ); }
 
     public function ListEmployee(){
-        
-
-        
 
         if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         
@@ -147,12 +129,8 @@ public function MunicipiosPorDepto($IdDepto){
 
     }
 
-
     public function ListEmployeebyId(){
-        
-
-        
-
+    
         if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         
         header('Content-Type: application/json; charset=utf-8');
@@ -164,14 +142,70 @@ public function MunicipiosPorDepto($IdDepto){
                 $datos = $this->model->ListEmployeebyId($json_obj->id);
 
         # unset($cursos[5]);
-        $var = json_encode( $datos);
+        //$var = json_encode( $datos);
+        $this->var = json_encode( $datos);
+
+       // echo $var; 
+       echo $this->var;
+        }else {
+            header('Location: index.php?c=Principal&a=AccessError');
+        }
+
+    }
+
+    //Desde aquí
+
+    /*public function Epleados(){
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+                
+                include("View/Head.php");
+                include("View/Empleados.php");
+                include("View/Footer.php");
+        }else {
+            header('Location: index.php?c=Principal&a=AccessError');
+        }
+    }*/
+
+//List depto
+   /* public function ListDepto(){
+
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        
+        header('Content-Type: application/json; charset=utf-8');
+        $this->Departamentos = $this->model->listarDptos();
+
+        $var = json_encode( $Departamentos);
+        $json = json_last_error();
 
         echo $var; 
         }else {
             header('Location: index.php?c=Principal&a=AccessError');
         }
 
+    }*/
+
+
+//list Mun --este funciona bien 07/03/2018
+public function ListMunId(){
+    
+    if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+    
+    header('Content-Type: application/json; charset=utf-8');
+   # Get JSON as a string
+$json_str = file_get_contents('php://input');
+
+    # Get as an object
+    $json_obj = json_decode($json_str);
+            $this->datos = $this->model->listarMunPorDpto($json_obj->datos);
+
+    # unset($cursos[5]);
+    $var = json_encode($this->datos);
+
+    echo $var; 
+    }else {
+        header('Location: index.php?c=Principal&a=AccessError');
+        }
+
     }
 }
-
 ?>

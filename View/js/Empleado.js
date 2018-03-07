@@ -153,8 +153,6 @@ function sendDataAjax() {
 
 
 sendDataAjax();
-<<<<<<< HEAD
-=======
 DisabledField();
 
 
@@ -212,8 +210,18 @@ $(document).on('click', '.btn-edit', function (e) {
 
 });
 
+// evento click para boton eliminar
+$(document).on('click', '.btn-del', function (e) {
+    e.preventDefault();
 
->>>>>>> d05579669aa787e2fb385b4e75ffe1ad8d45a7da
+    var _row = $(this).parent().parent()[0];
+    
+    dato = tabla.fnGetData(_row);
+   
+});
+
+
+
 
 
 //Ajax para cargar municipios
@@ -221,10 +229,12 @@ function CargarMunicipios(val)
 {  
     $.ajax({
         type: "POST",
-        url: "?c=Empleado&a=listarMunicipios",
+        url: "?c=Empleado&a=ListMunId",
         data: 'IdDepartamento='+val,
         success: function(resp){
             $('#cboDepto').html(resp);
         }
     });
 }
+
+CargarMunicipios();

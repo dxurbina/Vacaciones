@@ -17,53 +17,32 @@
     <script src="View/js/plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
     <script src="View/js/plugins/datatables/dataTables.bootstrap.js"></script>
     <script src="View/js/AdminLTE/app.js" type="text/javascript"></script>
-     <link rel="stylesheet" type="text/css" href="View/css/estilos.css"/>
-    
-    <script language="javascript" src="js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript">
-$(document).ready(function()
-{  
- // function to get all records from table
- function getAll(){
-  
-  $.ajax
-  ({
-      type: "POST"
-   url: "?c=getempleados&a=listarMunPorDepto",
-   data: 'action=showAll',
-   cache: false,
-   success: function(r)
-   {
-    $("#display").html(r);
-   }
-  });   
- }
- 
- getAll();
- // function to get all records from table
- 
- 
- // code to get all records from table via select box
- $("#cboDepto").change(function()
- {    
-  var id = $(this).find(":selected").val();
+     <link rel="stylesheet" type="text/css" href="View/css/estilos.css"/>   
 
-  var dataString = 'action='+ id;
-    
-  $.ajax
-  ({
-   url: 'getempleados.php',
-   data: dataString,
-   cache: false,
-   success: function(r)
-   {
-    $("#cboMun").html(r);
-   } 
-  });
- })
- // code to get all records from table via select box
-});
-</script>
+    <script language="javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script language="javascript">
+			$(document).ready(function(){
+				$("#cboDepto").change(function () {
+ 
+					//$('#cbx_localidad').find('option').remove().end().append('<option value="whatever"></option>').val('whatever');
+					
+					$("#cboDepto option:selected").each(function () {
+                        IdDepartamento = $(this).val();
+                        //$.post("?c=Empleado&a=MunicipiosDepto", { IdDepartamento: IdDepartamento },
+                        $.post("?c=Empleado&a=ListMunId", { IdDepartamento: IdDepartamento },
+                        //$.post("?c=Empleado&a=listarMunPorDepto", { IdDepartamento: IdDepartamento },
+                        //$.post("?c=Empleado&a=index.php", { IdDepartamento: IdDepartamento }, 
+                        function(data){
+							$("#cboMun").html(data);
+						});            
+					});
+				})
+			});
+            
+		</script>
+
+
+
      
     
 </head>

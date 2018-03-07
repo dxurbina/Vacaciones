@@ -43,7 +43,7 @@
 <TR><TD>N° Ruc: <TD> <input value="" name="NRuc" size="15" /><TD>Profesión: <TD> <input value="" name="Profesion" size="20" />
     
 <!-- VERIFICAR AQUÍ QUE SE VA A MANDAR A LLAMAR LA LISTA DE DEPTO -->
-<TR><TD>Departamento: <TD> <select id = "cboDepto" name="Departamento" onchange="CargarMunicipios(this.value);">
+<TR><TD>Departamento: <TD> <select id = "cboDepto" name="Departamento" onchange="CargarMunicipios(this.value);"><!--ListMunId() -->
                 <option value="0" disabled selected>Seleccione  Departamento</option>
                 <?php foreach ($this->Departamentos as $row){?> 
                 <option value="<?php echo $row->IdDepartamento; ?>"> <?php echo $row->Nombre; ?></option>
@@ -54,7 +54,15 @@
 <br style="clear:both;">    
 <TD>Municipio: <TD> <select id = "cboMun" name="IdMunicipio">
 <option value="0" disabled selected>Seleccione Municipio</option>
-
+<?php if(count($this->var)): ?>
+		<?php for($i=0; $i<count($this->var); $i++): ?>
+		
+			<option value="<?php echo $this->var[$i]; ?>">
+				<?php echo $this->var[$i]; ?>
+			</option>
+		
+		<?php endfor; ?>
+		<?php endif; ?>
                 </select>  
 
 <TR><TD>Dirección: <TD> <textarea class="form-control" rows="1" id="Direccion"  cols="20" ></textarea>

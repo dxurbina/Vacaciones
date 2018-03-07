@@ -63,21 +63,51 @@ class EmpleadoDAO{
    }
 }
       /*Lista de Municipios*/
-      public function listarMunicipios(){
+      public function listarMunPorDpto(){
         try{
-            $Municipios = array();
-            $consult = $this->db->prepare("select * from Municipio where IdDepartamento=10");
-            $consult->execute();   
+            $IdDepartamento = $_POST['IdDepartamento'];
+            //$Municipios = array();
+            $consult = $this->db->prepare("select * from Municipio where IdDepartamento= '$IdDepartamento'");
+            $consult->execute();    
+            
+            //$html= "<option value='0'>Seleccionar Municipio</option>";
+
             while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
-                $Municipios = $row; 
+                //$html="<option value='".$row['IdMunicipio']."'>".$row['Nombre'].option>  "" disabled selected>Seleccione  Departamento</option>";
+                
+                //$html.= "<option value='".$row['IdMunicipio']."'>".$row['Nombre']."</option>";
+                
+                $IdDepartamento = $row; 
+                //$row= "<option value='".$row['IdMunicipio']."'>".$row['Nombre']."</option>";
             }
-            return $Municipios ; /*estabato estaba ahí*/
-            /*echo json_encode($Departamentos);*/
+            //echo $html;
+            return $IdDepartamento ; /*estabato estaba ahí*/
+            echo json_encode($IdDepartamento);
         } catch(Exception $e)
         {
             die($e->getMessage());
         }
 }
+
+
+public function MunicipiosDepto($IdDepto){
+    if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        
+    header('Content-type:  application/json;  charset=utf-8');
+    $mun = $this->model->listarMunPorDpto($_POST[_IdDepartamento]);
+    $var = json_encode($mun);
+    json_last_error();
+
+    echo $var; 
+    }else{
+        header('Location: index.php?c=Principal&a=AccessError');
+    }   
+
+    //$mun=$this->EmpleadoDAO->listarDeptos($_POST[_IdDepartamento]);
+
+   // print_r(json_encode($mun));
+
+    }
 
    /*Lista de Departamentos de la empresa, con las exepciones*/
    public function listarDptosEmp(){
