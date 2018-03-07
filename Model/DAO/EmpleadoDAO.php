@@ -209,6 +209,19 @@ class EmpleadoDAO{
     }
 
 
+    public function showCargos(){
+        $sql = "select IdCargo, NombreCargos from Cargos";
+        $resulSet = array();
+        $consult = $this->db->prepare($sql);
+        $consult->execute();
+                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                    $resulSet = $row; 
+                }
+                return $resulSet;
+
+    }
+
+
 
     public function addRol(EmpleadoController $data){
         //Crear usuario

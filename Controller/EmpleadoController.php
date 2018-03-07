@@ -206,6 +206,25 @@ public function AddEmpleados(){
                 header('Location: index.php?c=Principal&a=AccessError');
             }
     }
+
+    public function showCargos(){
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        
+            header('Content-Type: application/json; charset=utf-8');
+            $_array = $this->model->showCargos();
+            //$var = json_encode(array_map('utf8_encode', $cursos));
+            # unset($cursos[5]);
+            $var = json_encode( $_array);
+            $json = json_last_error();
+           // $var2 = utf8_converter($cursos);
+            
+           # echo $json; #esta era la wea que lo jodia hace rato
+            echo $var; 
+            }else {
+                header('Location: index.php?c=Principal&a=AccessError');
+            }
+        
+    }
 }
 
     
