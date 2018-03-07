@@ -2,34 +2,7 @@ var datos, tabla;
 $(document).ready(function(){
 	$("#casilla").change(function(){
         if($("#casilla").val()=="Ver") {
-            $("#desac1").attr('disabled', 'disabled');
-            $("#desac2").attr('disabled', 'disabled');
-            $("#desac3").attr('disabled', 'disabled');
-            $("#desac4").attr('disabled', 'disabled');
-            $("#desac5").attr('disabled', 'disabled');
-            $("#desac6").attr('disabled', 'disabled');
-            $("#desac7").attr('disabled', 'disabled');
-            $("#desac8").attr('disabled', 'disabled');
-            $("#desac9").attr('disabled', 'disabled');
-            $("#desac10").attr('disabled', 'disabled');
-            $("#desac11").attr('disabled', 'disabled');
-            $("#desac12").attr('disabled', 'disabled');
-            $("#desac13").attr('disabled', 'disabled');
-            $("#desac14").attr('disabled', 'disabled');
-            $("#desac15").attr('disabled', 'disabled');
-            $("#desac16").attr('disabled', 'disabled');
-            $("#desac17").attr('disabled', 'disabled');
-            $("#desac18").attr('disabled', 'disabled');
-            $("#desac19").attr('disabled', 'disabled');
-            $("#desac20").attr('disabled', 'disabled');
-            $("#desac21").attr('disabled', 'disabled');
-            $("#desac22").attr('disabled', 'disabled');
-            $("#desac23").attr('disabled', 'disabled');
-            $("#desac24").attr('disabled', 'disabled');
-            $("#desac25").attr('disabled', 'disabled');
-            $("#desac26").attr('disabled', 'disabled');
-            $("#desac27").attr('disabled', 'disabled');
-            $("#desac28").attr('disabled', 'disabled');
+            DisabledField();
             $("#btnActualizar").attr('disabled', 'disabled');
         }
         else {
@@ -60,47 +33,78 @@ $(document).ready(function(){
             $("#desac25").removeAttr("disabled");
             $("#desac26").removeAttr("disabled");
             $("#desac27").removeAttr("disabled");
-            $("#desac28").removeAttr("disabled");
             
             $("#btnActualizar").removeAttr("disabled");
+            if($("#desac12").val() == "0"){
+                $("#desac13").attr('disabled', 'disabled');
+            }else{
+                $("#desac13").removeAttr("disabled");
+            }
         }
+    });
+
+        $("#desac12").change(function(){
+            if($("#desac12").val() == "0"){
+                $("#desac13").attr('disabled', 'disabled');
+               }else{
+                 $("#desac13").removeAttr("disabled");
+               }
         });
+
+        $("#desac14").change(function(){
+            if($("#desac14").val() == "0"){
+                $("#desac15").attr('disabled', 'disabled');
+               }else{
+                 $("#desac15").removeAttr("disabled");
+               }
+        });
+
+        $("#desac24").change(function(){
+            var _Mun = $("#desac25");
+            var _select = $("#desac24").val();
+            var obj = JSON.stringify({ id: _select });
+            console.log($("#desac24").val());
+            $.ajax({
+                data: obj,
+                url: "?c=Empleado&a=showMunicipality",
+                type: "POST",
+                
+                
+                dataType: 'json',
+                contentType: 'application/json; charset= utf-8',
+                beforeSend: function () 
+                {
+                    $(this).prop('disabled', true);
+                },
+                error: function(xhr, ajaxOptions, thrownError){
+                    console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+                },
+                success: function (data) {
+                    console.log(data);
+                    _Mun.find('option').remove();
+                    $(data).each(function(i, v){ // indice, valor
+
+                        _Mun.append('<option value="' + v.IdMunicipio + '">' + v.Nombre + '</option>');
+                    })
+                }
+                });
+        });
+
+
 });
 
+    function clear(){
+        for(var i =1; i < 28; i++){
+            $("#desac" + i).val("");
+        }
+    }
+
 function DisabledField(){
-    if($("#casilla").val()=="Ver") {
-        $("#desac1").attr('disabled', 'disabled');
-        $("#desac2").attr('disabled', 'disabled');
-        $("#desac3").attr('disabled', 'disabled');
-        $("#desac4").attr('disabled', 'disabled');
-        $("#desac5").attr('disabled', 'disabled');
-        $("#desac6").attr('disabled', 'disabled');
-        $("#desac7").attr('disabled', 'disabled');
-        $("#desac8").attr('disabled', 'disabled');
-        $("#desac9").attr('disabled', 'disabled');
-        $("#desac10").attr('disabled', 'disabled');
-        $("#desac11").attr('disabled', 'disabled');
-        $("#desac12").attr('disabled', 'disabled');
-        $("#desac13").attr('disabled', 'disabled');
-        $("#desac14").attr('disabled', 'disabled');
-        $("#desac15").attr('disabled', 'disabled');
-        $("#desac16").attr('disabled', 'disabled');
-        $("#desac17").attr('disabled', 'disabled');
-        $("#desac18").attr('disabled', 'disabled');
-        $("#desac19").attr('disabled', 'disabled');
-        $("#desac20").attr('disabled', 'disabled');
-        $("#desac21").attr('disabled', 'disabled');
-        $("#desac22").attr('disabled', 'disabled');
-        $("#desac23").attr('disabled', 'disabled');
-        $("#desac24").attr('disabled', 'disabled');
-        $("#desac25").attr('disabled', 'disabled');
-        $("#desac26").attr('disabled', 'disabled');
-        $("#desac27").attr('disabled', 'disabled');
-        $("#desac28").attr('disabled', 'disabled');
+    for(var i =1; i < 28; i++){
+        $("#desac" + i).attr('disabled', 'disabled');
+        $("#btnActualizar").attr('disabled', 'disabled');
     }
-    else {
-        $("#desac").removeAttr("disabled");
-    }
+    
 }
 function addRowDT(data) {
     tabla = $("#tbl_Empleados").DataTable();
@@ -151,13 +155,120 @@ function sendDataAjax() {
     });
 }
 
+function loadDeparment(_dep) {
+    var _deptos = $("#desac24");
+    $.ajax({
+        data: {},
+        url: "?c=Empleado&a=showDeparment",
+        type: "POST",
+        dataType: 'json',
+        contentType: 'application/json; charset= utf-8',
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+        },
+        success: function (data) {
+            console.log(data);
+            $(data).each(function(i, v){ // indice, valor
+                _deptos.append('<option value="' + v.IdDepartamento + '">' + v.Nombre + '</option>');
+            })
+
+            var $miSelect = $('#desac24');
+           $miSelect.val($miSelect.children('option[value= ' + _dep + ']').val());
+        }
+        });
+}
+
+function loadMunicipality(datos){
+    var _Mun = $("#desac25");
+    var obj = JSON.stringify({ id: datos[0].IdDepartamento });
+    console.log(obj);
+    $.ajax({
+        data: obj,
+        url: "?c=Empleado&a=showMunicipality",
+        type: "POST",
+        
+        
+        dataType: 'json',
+        contentType: 'application/json; charset= utf-8',
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+        },
+        success: function (data) {
+            console.log(data);
+            $(data).each(function(i, v){ // indice, valor
+                _Mun.append('<option value="' + v.IdMunicipio + '">' + v.Nombre + '</option>');
+            })
+
+            var $miSelect = $('#desac25');
+            console.log(data[0].IdMunicipio);
+           $miSelect.val($miSelect.children('option[value= ' + data[0].IdMunicipio + ']').val());
+        }
+        });
+}
+
+function loadCargos(datos){
+    var _Mun = $("#desac26");
+    //var obj = JSON.stringify({ id: datos[0].IdDepartamento });
+    console.log(obj);
+    $.ajax({
+        data: obj,
+        url: "?c=Empleado&a=LoadCargos",
+        type: "POST",
+        
+        
+        dataType: 'json',
+        contentType: 'application/json; charset= utf-8',
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+        },
+        success: function (data) {
+            console.log(data);
+            $(data).each(function(i, v){ // indice, valor
+                _Mun.append('<option value="' + v.IdMunicipio + '">' + v.Nombre + '</option>');
+            })
+
+            var $miSelect = $('#desac26');
+            console.log(data[0].IdMunicipio);
+           $miSelect.val($miSelect.children('option[value= ' + data[0].IdMunicipio + ']').val());
+        }
+        });
+}
+
+function loadMunicipality(datos){
+    var _Mun = $("#desac25");
+    var obj = JSON.stringify({ id: datos[0].IdDepartamento });
+    console.log(obj);
+    $.ajax({
+        data: obj,
+        url: "?c=Empleado&a=showMunicipality",
+        type: "POST",
+        
+        
+        dataType: 'json',
+        contentType: 'application/json; charset= utf-8',
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+        },
+        success: function (data) {
+            console.log(data);
+            $(data).each(function(i, v){ // indice, valor
+                _Mun.append('<option value="' + v.IdMunicipio + '">' + v.Nombre + '</option>');
+            })
+
+            var $miSelect = $('#desac25');
+            console.log(data[0].IdMunicipio);
+           $miSelect.val($miSelect.children('option[value= ' + data[0].IdMunicipio + ']').val());
+        }
+        });
+}
+
+
 
 sendDataAjax();
-DisabledField();
 
 
 function fillModalData(dato){
-    //var obj = { id: dato[0] };
+   // var obj = { id: dato[0] };
    var obj = JSON.stringify({ id: dato[0] });
     console.log(obj);
     $.ajax({
@@ -180,22 +291,107 @@ function fillModalData(dato){
            $("#desac2").val(data[0].SNombre);
            $("#desac3").val(data[0].PApellido);
            $("#desac4").val(data[0].SApellido);
-           if(data[0].Residencia == 0){
-            $("#desac5").val("Si");
+           if(data[0].Residencia == "0"){
+           // $("#desac5 > option[value=0]").attr("selected",true);
+            //$("#desac5").change();
+            var $miSelect = $('#desac5');
+            $miSelect.val($miSelect.children('option:eq(1)').val());
            }else{
-            $("#desac5").val("No");
-            
+            //$("#desac5 > option[value=1]").attr("selected",true);
+            //$("#desac5").change();
+            var $miSelect = $('#desac5');
+            $miSelect.val($miSelect.children('option:first').val());
            }
+           
            $("#desac6").val(data[0].Cedula);
            $("#desac7").val(data[0].Pasaporte);
            $("#desac8").val(data[0].NInss);
-           $("#desac9").val(data[0].FechaNac);
-           $("#desac9").val(data[0].FechaNac);
+           var _date = data[0].FechaNac;
+           _date.type = "date";
+           if(!(_date  == "0000-00-00")){
+            $("#desac9").val(_date);
+           }else{
+            $("#desac9").val("");
+           }
            
+           if(data[0].Sexo == "M"){
+             var $miSelect = $('#desac10');
+             $miSelect.val($miSelect.children('option:eq(0)').val());
+            }else{
+             var $miSelect = $('#desac10');
+             $miSelect.val($miSelect.children('option:eq(1)').val());
+            }
+
+           if(data[0].EstadoCivil == "Casado"){
+            var $miSelect = $('#desac11');
+             $miSelect.val($miSelect.children('option:eq(0)').val());
+           }else if(data[0].EstadoCivil == "Soltero"){
+            var $miSelect = $('#desac11');
+             $miSelect.val($miSelect.children('option:eq(1)').val());
+           }else if(data[0].EstadoCivil == "Divorsiado"){
+            var $miSelect = $('#desac11');
+             $miSelect.val($miSelect.children('option:eq(2)').val());
+           }else if(data[0].EstadoCivil == "Viudo"){
+            var $miSelect = $('#desac11');
+             $miSelect.val($miSelect.children('option:eq(3)').val());
+           }
+
+           if(data[0].Hijos == "0"){
+            var $miSelect = $('#desac12');
+            $miSelect.val($miSelect.children('option:eq(1)').val());
+            
+           }else{
+            var $miSelect = $('#desac12');
+            $miSelect.val($miSelect.children('option:eq(0)').val());
+            $("#desac13").val(data[0].NumHijos);
+           }
+
+           if(data[0].Hermanos == "0"){
+            var $miSelect = $('#desac14');
+            $miSelect.val($miSelect.children('option:eq(1)').val());
+            
+           }else{
+            var $miSelect = $('#desac14');
+            $miSelect.val($miSelect.children('option:eq(0)').val());
+            $("#desac15").val(data[0].NumHermanos);
+           }
+
+           $("#desac16").val(data[0].Telefono);
+           $("#desac17").val(data[0].Correo);
+
+           if(data[0].Escolaridad == "Primaria"){
+            var $miSelect = $('#desac18');
+             $miSelect.val($miSelect.children('option:eq(0)').val());
+           }else if(data[0].Escolaridad == "Secundaria"){
+            var $miSelect = $('#desac18');
+             $miSelect.val($miSelect.children('option:eq(1)').val());
+           }else if(data[0].Escolaridad == "Universidad"){
+            var $miSelect = $('#desac18');
+             $miSelect.val($miSelect.children('option:eq(2)').val());
+           }else if(data[0].Escolaridad == "Postgrado"){
+            var $miSelect = $('#desac18');
+             $miSelect.val($miSelect.children('option:eq(3)').val());
+           }else if(data[0].Escolaridad == "Maestría"){
+            var $miSelect = $('#desac18');
+             $miSelect.val($miSelect.children('option:eq(4)').val());
+           }
+           $("#desac19").val(data[0].NRuc);
+           $("#desac20").val(data[0].Profesion);
+           $("#desac21").val(data[0].Direccion);
+           $("#desac22").val(data[0].Nacionalidad1);
+           $("#desac23").val(data[0].Nacionalidad2);
+           loadDeparment(data[0].IdDepartamento);
+           loadMunicipality(data);
+           //$('#desac24 option[value='+ data[0].IdMunicipio + ']')
+           
+           
+
 
         }
     });
+    
 }
+
 
 // evento click para boton actualizar
 $(document).on('click', '.btn-edit', function (e) {
@@ -205,7 +401,11 @@ $(document).on('click', '.btn-edit', function (e) {
     //data = tabla.row(_row).data();
     
     dato = tabla.fnGetData(_row);
+            var $miSelect = $('#casilla');
+             $miSelect.val($miSelect.children('option:eq(0)').val());
+             DisabledField()
     //console.log(data[0]);
+    clear();
     fillModalData(dato);
 
 });

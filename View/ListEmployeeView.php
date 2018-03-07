@@ -74,8 +74,8 @@
                                         <div class="col-xs-6">
                                             <div class="form-group"><label>Sexo</label></div>
                                             <div class="form-group"><select id="desac10" name="Sexo">
-                                            <option value="H">Masculino</option>
-                                            <option value="M">Femenino</option>
+                                            <option value="M">Masculino</option>
+                                            <option value="F">Femenino</option>
                                             </select></div>
                                         </div>
                                         <div class="col-xs-6">
@@ -128,24 +128,12 @@
                             
                         </div>
                         <div class="col-sm-3">
-                            
-                            <div class="form-group">
-                                <label>Estado Civil</label></div>
-                                <div class="form-group"><select id="desac17" name="EstadoCivil">
-                                            <option value="Casado">Casado</option>
-                                            <option value="Soltero">Soltero</option>
-                                            <option value="Divorsiado">Divorsiado</option>
-                                            <option value="Viudo">Viudo</option>
-                                            </select>
-                                </div>
-                            
-
                             <div class="form-group"><label>Correo</label></div>
-                            <div class="form-group"><input name="Correo" id="desac18"  ></input></div>
+                            <div class="form-group"><input name="Correo" id="desac17"  ></input></div>
 
                                 <div class="form-group">
                                     <label>Escolaridad</label></div>
-                                    <div class="form-group"><select id="desac19" name="Escolaridad">
+                                    <div class="form-group"><select id="desac18" name="Escolaridad">
                                                 <option value="Primaria">Primaria</option>
                                                 <option value="Secundaria">Secundaria</option>
                                                 <option value="Universidad">Universidad</option>
@@ -156,12 +144,12 @@
                                 
 
                                 <div class="form-group"><label>Num Ruc</label></div>
-                                <div class="form-group"><input id="desac20" name ="NRuc" type= "text"  Enabled="false"></input></div>
+                                <div class="form-group"><input id="desac19" name ="NRuc" type= "text"  Enabled="false"></input></div>
                                 <div class="form-group"><label>Profesion</label></div>
-                                <div class="form-group"><input id="desac21" name ="Profesion" type= "text" Enabled="false"></input></div>
+                                <div class="form-group"><input id="desac20" name ="Profesion" type= "text" Enabled="false"></input></div>
                                 
                                 <div class="form-group"><label>Dirección</label></div>
-                                <textarea id="desac22" name="Direccion" rows="3" style="width: 100%;" >Write something here</textarea>
+                                <textarea id="desac21" name="Direccion" rows="3" style="width: 100%;" >Write something here</textarea>
                             
                                 
                         </div>
@@ -174,22 +162,22 @@
                             
 
                             <div class="form-group"><label>Nacionalidad 1</label></div>
-                            <div class="form-group"><input  id="desac23"name="Nacionalidad1" ID=""  ></input></div>
+                            <div class="form-group"><input  id="desac22"name="Nacionalidad1" ID=""  ></input></div>
 
                             <div class="form-group"><label>Nacionalidad2</label></div>
-                            <div class="form-group"><input  id="desac24"name="Nacionalidad2" ID=""  ></input></div>
+                            <div class="form-group"><input  id="desac23"name="Nacionalidad2" ID=""  ></input></div>
 
                                 <div class="form-group">
                                     <label>Departamento</label></div>
-                                    <div class="form-group"><select id="desac25" name="Departamento">
-                                                <option value="Primaria">Seleccione</option>
+                                    <div class="form-group"><select id="desac24" name="Departamento">
+                                                
                                                 
                                                 </select></div>
 
                             <div class="form-group">
                                 <label>Municipio</label></div>
-                                <div class="form-group"><select id="desac26" name="IdMunicipio">
-                                                <option value="">Seleccione</option>
+                                <div class="form-group"><select id="desac25" name="IdMunicipio">
+                                                
                                             </select>
                                 </div>
                                         
@@ -197,14 +185,14 @@
 
                                 <div class="form-group">
                                 <label>Cargo</label></div>
-                                <div class="form-group"><select  id="desac27"name="IdCargo">
+                                <div class="form-group"><select  id="desac26"name="IdCargo">
                                                 <option value="">Seleccione</option>
                                             </select>
                                 </div>
 
                                 <div class="form-group">
                                 <label>Jefe</label></div>
-                                <div class="form-group"><select  id="desac28" name="IdJefe">
+                                <div class="form-group"><select  id="desac27" name="IdJefe">
                                                 <option value="">Seleccione</option>
                                             </select>
                                 </div>
