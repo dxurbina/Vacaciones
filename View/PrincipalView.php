@@ -1,4 +1,5 @@
 <?php 
+session_start();
     if(!(isset($_SESSION['nickname']))){ ?>
 <form method="POST" action="?c=Load&a=load">
     <center>Usuario</center>

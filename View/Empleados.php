@@ -40,10 +40,10 @@
                 <option value="Universidad">Maestría</option>
                 <option value="Universidad">Doctorado</option>
             </select>
-<TR><TD>N° Ruc: <TD> <input value="" name="NRuc" size="15" /><TD>Profesión: <TD> <input value="" name="Profesion" size="20" onkeypress="return validaLetras(event)" />
+<TR><TD>N° Ruc: <TD> <input value="" name="NRuc" size="15" /><TD>Profesión: <TD> <input value="" name="Profesion" size="20" />
     
 <!-- VERIFICAR AQUÍ QUE SE VA A MANDAR A LLAMAR LA LISTA DE DEPTO -->
-<TR><TD>Departamento: <TD> <select id = "cboDepto" name="Departamento">
+<TR><TD>Departamento: <TD> <select id = "cboDepto" name="Departamento" onchange="CargarMunicipios(this.value);">
                 <option value="0" disabled selected>Seleccione  Departamento</option>
                 <?php foreach ($this->Departamentos as $row){?> 
                 <option value="<?php echo $row->IdDepartamento; ?>"> <?php echo $row->Nombre; ?></option>

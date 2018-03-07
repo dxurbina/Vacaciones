@@ -15,7 +15,9 @@ class EmpleadoDAO{
     public function ListEmployee(){
       try{
         $resultSet = array();
-        $consult = $this->db->prepare("select IdEmpleado,PNombre, SNombre, Telefono, IdCargo, IdJefe from Empleados");
+        $consult = $this->db->prepare("select e.IdEmpleado, e.PNombre, e.PApellido, e.Telefono, d.Nombre as Dep, c.NombreCargo, ej.PNombre as NJefe, ej.PApellido
+		as AJefe from Empleados e, Empleados ej, Cargos c,DeptosEmpresa d where
+        e.IdJefe = ej.IdEmpleado and e.IdCargo = c.IdCargo and c.IdDep = d.IdDep;");
         $consult->execute(); 
             while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
                 $resulSet = $row; 
@@ -26,6 +28,23 @@ class EmpleadoDAO{
             die($e->getMessage());
         }
 }
+
+    public function ListEmployeebyId($id){
+        try{
+            $resultSet = array();
+            $consult = $this->db->prepare("select e.IdEmpleado, e.PNombre, e.SNombre, e.PApellido, e.SApellido, e.Residencia, e.Cedula, e.Pasaporte, e.NInss, e.FechaNac, e.Sexo, e.Hijos, e.NumHijos, e.Hermanos, e.NumHermanos, e.Telefono, e.EstadoCivil, e.Correo, e.Escolaridad, e.NRuc, e.Profesion, e.Direccion, e.Nacionalidad1, e.Nacionalidad2, d.Nombre as Dep, c.NombreCargo, c.IdCargo,  ej.PNombre as NJefe, ej.PApellido
+            as AJefe, ej.IdEmpleado as IdJefeE from Empleados e, Empleados ej, Cargos c,DeptosEmpresa d where
+            e.IdJefe = ej.IdEmpleado and e.IdCargo = c.IdCargo and c.IdDep = d.IdDep and e.IdEmpleado = ?;");
+            $consult->execute(array($id)); 
+                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                    $resulSet = $row; 
+                }
+                return $resulSet; /*esto estaba ahí*/
+        } catch(Exception $e)
+            {
+                die($e->getMessage());
+            }
+    }
 
    /*Lista de Departamentos, con las exepciones*/
    public function listarDptos(){
@@ -46,21 +65,14 @@ class EmpleadoDAO{
       /*Lista de Municipios*/
       public function listarMunicipios(){
         try{
-
-            $IdDepartamento = $_POST['IdDepartamento'];
-	
-	//$queryM = ("SELECT * FROM Municipio WHERE IdDepartamento = '$IdDepartamento'");
-    $queryM = $this->db->prepare("select * from Municipio where IdDepartamento = $IdDepartamento");
-    //$resultadoM = $mysqli->query($queryM);
-    $queryM->execute();
-    //$html= "<option value='0'>Seleccionar Departamentos</option>";
-	
-	while($rowM = $queryM->fetchAll(PDO::FETCH_ASSOC))
-	{
-		$html.= "<option value='".$rowM['IdMunicipio']."'>".$rowM['Nombre']."</option>";
-	}
-	
-	return $html;
+            $Municipios = array();
+            $consult = $this->db->prepare("select * from Municipio where IdDepartamento=10");
+            $consult->execute();   
+            while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                $Municipios = $row; 
+            }
+            return $Municipios ; /*estabato estaba ahí*/
+            /*echo json_encode($Departamentos);*/
         } catch(Exception $e)
         {
             die($e->getMessage());

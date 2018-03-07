@@ -119,7 +119,7 @@ public function MunicipiosPorDepto($IdDepto){
 }
 
 
-function utf8_converter($array){ 
+    public function utf8_converter($array){ 
     array_walk_recursive($array, function(&$item){     
               $item = utf8_encode( $item );   
                });       return json_encode( $array ); }
@@ -131,11 +131,42 @@ function utf8_converter($array){
 
         if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         
-        header('Content-Type: application/json;');
+        header('Content-Type: application/json; charset=utf-8');
         $cursos = $this->model->ListEmployee();
         //$var = json_encode(array_map('utf8_encode', $cursos));
-        $var = json_encode( $cursos, JSON_UNESCAPED_UNICODE);
-        echo $var;
+        # unset($cursos[5]);
+        $var = json_encode( $cursos);
+        $json = json_last_error();
+       // $var2 = utf8_converter($cursos);
+        
+       # echo $json; #esta era la wea que lo jodia hace rato
+        echo $var; 
+        }else {
+            header('Location: index.php?c=Principal&a=AccessError');
+        }
+
+    }
+
+
+    public function ListEmployeebyId(){
+        
+
+        
+
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        
+        header('Content-Type: application/json; charset=utf-8');
+       # Get JSON as a string
+    $json_str = file_get_contents('php://input');
+
+        # Get as an object
+        $json_obj = json_decode($json_str);
+                $datos = $this->model->ListEmployeebyId($json_obj->id);
+
+        # unset($cursos[5]);
+        $var = json_encode( $datos);
+
+        echo $var; 
         }else {
             header('Location: index.php?c=Principal&a=AccessError');
         }

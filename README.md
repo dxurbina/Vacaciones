@@ -1,2 +1,0 @@
-# Vacaciones
-Sistema de Vacaciones.
