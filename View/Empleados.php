@@ -6,13 +6,13 @@
 
 
 <TBODY>
-<TR><TD>Primer nombre: <TD> <input type="text" name="PNombre" size="15" required /><TD>Segundo nombre: <TD><input type="text" name="SNombre" size="15"  /></TR>
-<TR><TD>Primer apellido: <TD><input type="text" name="PApellido" size="15" required /><TD>Segundo apellido: <TD><input type="text" name="SApellido" size="15" />
+<TR><TD>Primer nombre: <TD> <input type="text" name="PNombre" size="15" required onkeypress="return validaLetras(event)" /><TD>Segundo nombre: <TD><input type="text" name="SNombre" size="15" onkeypress="return validaLetras(event)" />
+<TR><TD>Primer apellido: <TD><input type="text" name="PApellido" size="15" required onkeypress="return validaLetras(event)" /><TD>Segundo apellido: <TD><input type="text" name="SApellido" size="15" onkeypress="return validaLetras(event)" />
 <TR><TD>N° cédula: <TD><input type="text" name="Cedula" size="15" required /><TD>Es Cédula Residencia: <TD><select name="Residencia"><option value="No">No</option>
     <option value="Si">Si</option>
 </select>
 <TR><TD>N° Inss: <TD><input type="text" name="NInss" size="15" /><TD>N° Pasaporte: <TD><input type="text" name="Pasaporte" size="15" />
-<TR><TD>Fecha Nacimiento: <TD> <input type="text" name="FechaNac" size="15" placeholder="dd-mm-aaaa" required /><TD>Sexo: <TD><select name="Sexo">
+<TR><TD>Fecha Nacimiento: <TD> <input type="text" name="FechaNac" size="15" placeholder="dd-mm-aaaa" required onkeypress="return valida(event)" /><TD>Sexo: <TD><select name="Sexo">
         <option value="" disabled selected >Seleccione Sexo</option>
         <option value="Hombre">Hombre</option>
         <option value="Mujer">Mujer</option>
@@ -40,10 +40,10 @@
                 <option value="Universidad">Maestría</option>
                 <option value="Universidad">Doctorado</option>
             </select>
-<TR><TD>N° Ruc: <TD> <input value="" name="NRuc" size="15" /><TD>Profesión: <TD> <input value="" name="Profesion" size="20" />
+<TR><TD>N° Ruc: <TD> <input value="" name="NRuc" size="15" /><TD>Profesión: <TD> <input value="" name="Profesion" size="20" onkeypress="return validaLetras(event)" />
     
 <!-- VERIFICAR AQUÍ QUE SE VA A MANDAR A LLAMAR LA LISTA DE DEPTO -->
-<TR><TD>Departamento: <TD> <select id = "cboDepto" name="Departamento" onchange="CargarMunicipios(this.value);">
+<TR><TD>Departamento: <TD> <select id = "cboDepto" name="Departamento">
                 <option value="0" disabled selected>Seleccione  Departamento</option>
                 <?php foreach ($this->Departamentos as $row){?> 
                 <option value="<?php echo $row->IdDepartamento; ?>"> <?php echo $row->Nombre; ?></option>
@@ -54,16 +54,35 @@
 <br style="clear:both;">    
 <TD>Municipio: <TD> <select id = "cboMun" name="IdMunicipio">
 <option value="0" disabled selected>Seleccione Municipio</option>
-<?php foreach ($this->mun as $mrow){?> 
-                <option value="<?php echo $mrow->IdMunicipio; ?>"> <?php echo $mrow->Nombre; ?></option>
-                <?php } ?>
+
                 </select>  
 
-       
-<TR>
-<TR><TD>Dirección: <TD> <textarea class="form-control" rows="1" id="Direccion"  cols="20" ></textarea> <TD>Nacionalidad 1: <TD><input type="text" name="Nacionalidad1" size="15" />
+<TR><TD>Dirección: <TD> <textarea class="form-control" rows="1" id="Direccion"  cols="20" ></textarea>
 
-<TR><TD>Nacionalidad 2: <TD> <input type="text" name="Nacionalidad2" size="15" />
+<TR><TD>Nacionalidad 1: <TD><input type="text" name="Nacionalidad1" size="15" onkeypress="return validaLetras(event)" /><TD>Nacionalidad 2: <TD> <input type="text" name="Nacionalidad2" size="15" onkeypress="return validaLetras(event)" />
+
+<!-- VERIFICAR AQUÍ QUE SE VA A MANDAR A LLAMAR LA LISTA DE DEPARTAMENTOS DE LA EMPRESA-->
+<TR><TD>Departamentos: <TD> <select id = "dptoEmp" name="Departamentos">
+                <option value="0" disabled selected>Seleccione  Departamento</option>
+                <?php foreach ($this->DeptoEmp as $row){?> 
+                <option value="<?php echo $row->IdDep; ?>"> <?php echo $row->Nombre; ?></option>
+                <?php } ?>
+               </select> 
+<!-- VERIFICAR AQUÍ QUE SE VA A MANDAR A LLAMAR LA LISTA DE CARGOS POR DEPARTAMENTO-->
+<TD>Cargos: <TD> <select id = "cargos" name="cargos">
+                <option value="0" disabled selected>Seleccione  Cargo</option>
+                <?php foreach ($this->cargo as $row){?> 
+                <option value="<?php echo $row->IdCargo; ?>"> <?php echo $row->NombreCargo; ?></option>
+                <?php } ?>
+                </select> 
+
+<!-- VERIFICAR AQUÍ QUE SE VA A MANDAR A LLAMAR LA LISTA DE JEFES POR CARGOS DE LA EMPRESA
+<TD>Jefe: <TD> <select id = "jefe" name="jefe">
+                <option value="0" disabled selected>Seleccione  Jefe</option>
+                <?php foreach ($this->jefe as $row){?> 
+                <option value="<?php echo $row->IdJefe; ?>"> <?php echo $row->IdJefe; ?></option>
+                <?php } ?>
+                </select> -->
 
 <TBODY>
 <br>
@@ -84,6 +103,23 @@ function valida(e){
         
     // Patron de entrada, en este caso solo acepta numeros
     patron =/[0-9]/;
+    tecla_final = String.fromCharCode(tecla);
+    return patron.test(tecla_final);
+}
+</script>
+
+<!-- valida que solo se escriba letras -->
+<script>
+function validaLetras(e){
+    tecla = (document.all) ? e.keyCode : e.which;
+
+    //Tecla de retroceso para borrar, siempre la permite
+    if (tecla==8){
+        return true;
+    }
+        
+    // Patron de entrada, en este caso solo acepta numeros
+    patron =/[a-z]/;
     tecla_final = String.fromCharCode(tecla);
     return patron.test(tecla_final);
 }

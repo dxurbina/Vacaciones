@@ -2,7 +2,7 @@
  session_start();
 class EmpleadoController{
     public $obj, $model, $obju;
-    public  $Departamentos, $mun;
+    public  $Departamentos, $html, $DeptoEmp, $cargo, $jefe;
 
 public function __construct(){
     include('Model/DAO/EmpleadoDAO.php');
@@ -18,7 +18,10 @@ public function index (){
    
     if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         $this->Departamentos = $this->model->listarDptos();
-        $this->mun= $this->model->listarMunicipios();
+        $this->html= $this->model->listarMunicipios();
+        $this->DeptoEmp = $this->model->listarDptosEmp();
+        $this->cargo = $this->model->listarCargos();
+        $this->jefe =$this->model->listarJefesPorCargos();
         include("View/Head.php");
         require_once('View/Empleados.php');
         include("View/Footer.php");
