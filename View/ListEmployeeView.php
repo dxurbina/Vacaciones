@@ -31,16 +31,20 @@
 
 
     <!-- POP UP -->
-    <div class="modal fade" id ="imodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div style="width: 130%;" class="modal-content">
+    
+    <div  class="modal fade" id ="imodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" style="margin: 15%; margin-top: 5%;" role="document">
+            <div style="width: 165%;" class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden = "true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Actualizar registro</h4>
+                    
                 </div>
+                <form action="?c=Empleado&a=AddEmpleados" method="POST">
                 <div class="modal-body">
                     <div class="row row-fluid">
                         <div class="col-sm-3">
+                            <input  hidden type = "text" id= "CargarEmpleado" name = "idEmpleado" />
                             <div class="form-group"><label>Primer Nombre</label></div>
                             <div class="form-group"><input id="desac1" name = "PNombre" ID="txtFullName"  Text=""  Enabled="false"></input></div>
                             <div class="form-group"><label>SegundoNombre</label></div>
@@ -180,28 +184,36 @@
                                                 
                                             </select>
                                 </div>
-                                        
+
+                                <div class="form-group">
+                                <label>Depto Empresa</label></div>
+                                <div class="form-group"><select  id="desac26"name="IdCargo">
+                                                
+                                            </select>
+                                </div>
+     
                                 
 
                                 <div class="form-group">
                                 <label>Cargo</label></div>
-                                <div class="form-group"><select  id="desac26"name="IdCargo">
-                                                <option value="">Seleccione</option>
+                                <div class="form-group"><select  id="desac27"name="IdCargo">
+                                                
                                             </select>
                                 </div>
 
                                 <div class="form-group">
                                 <label>Jefe</label></div>
-                                <div class="form-group"><select  id="desac27" name="IdJefe">
-                                                <option value="">Seleccione</option>
+                                <div class="form-group"><select  id="desac28" name="IdJefe">
+                                               
                                             </select>
                                 </div>
-                                
+                               
                         </div>
                         
 
-                        
+                    
                     </div>
+                
                 </div>
                 <div class="modal-footer">
                 <select  id="casilla" name="Edit">
@@ -210,10 +222,13 @@
                     </select>
                     <input type="submit" class="btn btn-primary" id="btnActualizar" value="Actualizar"></input>
                 </div>
+                
+                </form>
             </div>
         </div>
 
     </div>
+    
 
 
 

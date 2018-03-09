@@ -1,4 +1,4 @@
-var datos, tabla;
+var datos, tabla, dato;
 $(document).ready(function(){
 	$("#casilla").change(function(){
         if($("#casilla").val()=="Ver") {
@@ -33,6 +33,7 @@ $(document).ready(function(){
             $("#desac25").removeAttr("disabled");
             $("#desac26").removeAttr("disabled");
             $("#desac27").removeAttr("disabled");
+            $("#desac28").removeAttr("disabled");
             
             $("#btnActualizar").removeAttr("disabled");
             if($("#desac12").val() == "0"){
@@ -60,47 +61,150 @@ $(document).ready(function(){
         });
 
         $("#desac24").change(function(){
-            var _Mun = $("#desac25");
-            var _select = $("#desac24").val();
-            var obj = JSON.stringify({ id: _select });
-            console.log($("#desac24").val());
-            $.ajax({
-                data: obj,
-                url: "?c=Empleado&a=showMunicipality",
-                type: "POST",
-                
-                
-                dataType: 'json',
-                contentType: 'application/json; charset= utf-8',
-                beforeSend: function () 
-                {
-                    $(this).prop('disabled', true);
-                },
-                error: function(xhr, ajaxOptions, thrownError){
-                    console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
-                },
-                success: function (data) {
-                    console.log(data);
-                    _Mun.find('option').remove();
-                    $(data).each(function(i, v){ // indice, valor
+            
 
-                        _Mun.append('<option value="' + v.IdMunicipio + '">' + v.Nombre + '</option>');
-                    })
-                }
+                var _Mun = $("#desac25");
+                var _select = $("#desac24").val();
+                var obj = JSON.stringify({ id: _select });
+                console.log($("#desac24").val());
+                $.ajax({
+                    data: obj,
+                    url: "?c=Empleado&a=showMunicipality",
+                    type: "POST",
+                    
+                    
+                    dataType: 'json',
+                    contentType: 'application/json; charset= utf-8',
+                    beforeSend: function () 
+                    {
+                        $("#desac24").prop('disabled', true);
+                    },
+                    error: function(xhr, ajaxOptions, thrownError){
+                        console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+                    },
+                    success: function (data) {
+                        $("#desac24").prop('disabled', false);
+                        console.log(data);
+                        _Mun.find('option').remove();
+                        $(data).each(function(i, v){ // indice, valor
+
+                            _Mun.append('<option value="' + v.IdMunicipio + '">' + v.Nombre + '</option>');
+                        })
+                    }
+                    });
+                
                 });
+        
+                $("#desac26").change(function(){
+                    
+        
+                        var Cargo = $("#desac27");
+                        var _select = $("#desac26").val();
+                        var obj = JSON.stringify({ id: _select });
+                        //console.log($("#desac24").val());
+                        $.ajax({
+                            data: obj,
+                            url: "?c=Empleado&a=showCargos",
+                            type: "POST",
+                            
+                            
+                            dataType: 'json',
+                            contentType: 'application/json; charset= utf-8',
+                            beforeSend: function () 
+                            {
+                                $("#desac26").prop('disabled', true);
+                            },
+                            error: function(xhr, ajaxOptions, thrownError){
+                                console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+                            },
+                            success: function (data) {
+                                $("#desac26").prop('disabled', false);
+                                console.log(data);
+                                Cargo.find('option').remove();
+                                $(data).each(function(i, v){ // indice, valor
+        
+                                    Cargo.append('<option value="' + v.IdCargo + '">' + v.NombreCargo + '</option>');
+
+                                })
+                                var cargo2 = $("#desac27");
+                                var _select2 = $("#desac27").val();
+                                var obj2 = JSON.stringify({ id: _select2 });
+                                $.ajax({
+                                    data: obj2,
+                                    url: "?c=Empleado&a=showJefe",
+                                    type: "POST",
+                                    dataType: 'json',
+                                    contentType: 'application/json; charset= utf-8',
+                                    beforeSend: function () 
+                                            {
+                                                cargo2.prop('disabled', true);
+                                            },
+                                    error: function(xhr, ajaxOptions, thrownError){
+                                        console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+                                    },
+                                    success: function (data) {
+                                        cargo2.prop('disabled', false);
+                                        //console.log(data);
+                                        $("#desac28").find('option').remove();
+                                        $(data).each(function(i, v){ // indice, valor
+                                            $("#desac28").append('<option value="' + v.IdEmpleado + '">' + (v.PNombre + " "+ v.SNombre ) + '</option>');
+                                           
+                                        })
+                                        }
+                                    });
+                            }
+                            });
+                        
+                        });
+
+                        $("#desac27").change(function(){
+                            var _Jefe = $("#desac28");
+                            var _select = $("#desac27").val();
+                            var obj = JSON.stringify({ id: _select });
+                           // console.log($("#desac24").val());
+                            $.ajax({
+                                data: obj,
+                                url: "?c=Empleado&a=showJefe",
+                                type: "POST",
+                                dataType: 'json',
+                                contentType: 'application/json; charset= utf-8',
+                                beforeSend: function () 
+                                {
+                                    $("#desac27").prop('disabled', true);
+                                },
+                                error: function(xhr, ajaxOptions, thrownError){
+                                    console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+                                },
+                                success: function (data) {
+                                    $("#desac27").prop('disabled', false);
+                                    console.log(data);
+                                    _Jefe.find('option').remove();
+                                    $(data).each(function(i, v){ // indice, valor
+            
+                                        $("#desac28").append('<option value="' + v.IdEmpleado + '">' + (v.PNombre + " "+ v.SNombre ) + '</option>');
+                                    })
+                                }
+                                });
+                            
+                            });
+        $("#CargarEmpleado").change(function(){
+           // console.log(dato[0]);
+           $("#CargarEmpleado").val(dato[0]);
         });
+            
+    
 
 
 });
 
-    function clear(){
-        for(var i =1; i < 28; i++){
+   function clear(){
+        for(var i =1; i < 29; i++){
             $("#desac" + i).val("");
         }
     }
 
 function DisabledField(){
-    for(var i =1; i < 28; i++){
+    for(var i =1; i < 29; i++){
         $("#desac" + i).attr('disabled', 'disabled');
         $("#btnActualizar").attr('disabled', 'disabled');
     }
@@ -155,6 +259,8 @@ function sendDataAjax() {
     });
 }
 
+
+
 function loadDeparment(_dep) {
     var _deptos = $("#desac24");
     $.ajax({
@@ -163,25 +269,31 @@ function loadDeparment(_dep) {
         type: "POST",
         dataType: 'json',
         contentType: 'application/json; charset= utf-8',
+        beforeSend: function () 
+                {
+                    _deptos.prop('disabled', true);
+                },
         error: function(xhr, ajaxOptions, thrownError){
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
+            _deptos.find('option').remove();
             console.log(data);
             $(data).each(function(i, v){ // indice, valor
                 _deptos.append('<option value="' + v.IdDepartamento + '">' + v.Nombre + '</option>');
             })
-
             var $miSelect = $('#desac24');
            $miSelect.val($miSelect.children('option[value= ' + _dep + ']').val());
+            
         }
         });
 }
 
 function loadMunicipality(datos){
     var _Mun = $("#desac25");
+    var _idmun = datos[0].IdMunicipio;
     var obj = JSON.stringify({ id: datos[0].IdDepartamento });
-    console.log(obj);
+   // console.log(obj);
     $.ajax({
         data: obj,
         url: "?c=Empleado&a=showMunicipality",
@@ -190,77 +302,131 @@ function loadMunicipality(datos){
         
         dataType: 'json',
         contentType: 'application/json; charset= utf-8',
+        beforeSend: function () 
+                {
+                    _Mun.prop('disabled', true);
+                },
         error: function(xhr, ajaxOptions, thrownError){
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
             console.log(data);
+            _Mun.find('option').remove();
             $(data).each(function(i, v){ // indice, valor
                 _Mun.append('<option value="' + v.IdMunicipio + '">' + v.Nombre + '</option>');
             })
 
             var $miSelect = $('#desac25');
-            console.log(data[0].IdMunicipio);
-           $miSelect.val($miSelect.children('option[value= ' + data[0].IdMunicipio + ']').val());
+            //console.log(data[0].IdMunicipio);
+            $miSelect.val($miSelect.children('option[value= ' + _idmun + ']').val());
+           // $("#desac25 option[value='"+ data[0].IdMunicipio +"']").attr("selected",true);
+        }
+        });
+}
+
+function loadDptosEmpresa(datos){
+    var _Dptos = $("#desac26");
+    var _idDep = datos[0].IdDep;
+        //var obj = JSON.stringify({ id: datos[0].IdDepartamento });
+    
+    $.ajax({
+        data: {},
+        url: "?c=Empleado&a=showDptosEmpresa",
+        type: "POST",
+        
+        
+        dataType: 'json',
+        contentType: 'application/json; charset= utf-8',
+        beforeSend: function () 
+                {
+                    _Dptos.prop('disabled', true);
+                },
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+        },
+        success: function (data) {
+            console.log(data);
+            _Dptos.find('option').remove();
+            $(data).each(function(i, v){ // indice, valor
+                _Dptos.append('<option value="' + v.IdDep + '">' + v.Nombre + '</option>');
+            })
+
+            var $miSelect = $('#desac26');
+            //console.log(datos[0].IdCargo);
+           $miSelect.val($miSelect.children('option[value= ' + _idDep + ']').val());
         }
         });
 }
 
 function loadCargos(datos){
-    var _Mun = $("#desac26");
-    //var obj = JSON.stringify({ id: datos[0].IdDepartamento });
-    console.log(obj);
+    var _Cargo = $("#desac27");
+    var _idCargo = datos[0].IdCargo;
+    var obj = JSON.stringify({ id: datos[0].IdDep });
+    
     $.ajax({
         data: obj,
-        url: "?c=Empleado&a=LoadCargos",
+        url: "?c=Empleado&a=showCargos",
         type: "POST",
         
         
         dataType: 'json',
         contentType: 'application/json; charset= utf-8',
+        beforeSend: function () 
+                {
+                    _Cargo.prop('disabled', true);
+                },
         error: function(xhr, ajaxOptions, thrownError){
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
             console.log(data);
+            _Cargo.find('option').remove();
             $(data).each(function(i, v){ // indice, valor
-                _Mun.append('<option value="' + v.IdMunicipio + '">' + v.Nombre + '</option>');
+                _Cargo.append('<option value="' + v.IdCargo + '">' + v.NombreCargo + '</option>');
             })
 
-            var $miSelect = $('#desac26');
-            console.log(data[0].IdMunicipio);
-           $miSelect.val($miSelect.children('option[value= ' + data[0].IdMunicipio + ']').val());
+            var $miSelect = $('#desac27');
+            //console.log(datos[0].IdCargo);
+           $miSelect.val($miSelect.children('option[value= ' + _idCargo + ']').val());
         }
         });
 }
 
-function loadMunicipality(datos){
-    var _Mun = $("#desac25");
-    var obj = JSON.stringify({ id: datos[0].IdDepartamento });
-    console.log(obj);
+function loadJefe(datos){
+    var _Jefe = $("#desac28");
+    var _idJefe = datos[0].IdJefeE;
+    var obj = JSON.stringify({ id: datos[0].IdJefeE });
+    
     $.ajax({
         data: obj,
-        url: "?c=Empleado&a=showMunicipality",
+        url: "?c=Empleado&a=showJefe",
         type: "POST",
-        
-        
         dataType: 'json',
         contentType: 'application/json; charset= utf-8',
+        beforeSend: function () 
+                {
+                    _Jefe.prop('disabled', true);
+                },
         error: function(xhr, ajaxOptions, thrownError){
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
             console.log(data);
+            _Jefe.find('option').remove();
             $(data).each(function(i, v){ // indice, valor
-                _Mun.append('<option value="' + v.IdMunicipio + '">' + v.Nombre + '</option>');
+                _Jefe.append('<option value="' + v.IdEmpleado + '">' + (v.PNombre + " "+ v.SNombre ) + '</option>');
+               
             })
-
-            var $miSelect = $('#desac25');
-            console.log(data[0].IdMunicipio);
-           $miSelect.val($miSelect.children('option[value= ' + data[0].IdMunicipio + ']').val());
+            var $miSelect = $('#desac28');
+            console.log($miSelect);
+            //console.log(datos[0].IdCargo);
+           $miSelect.val($miSelect.children('option[value= ' + _idJefe + ']').val());
+           
+          
         }
         });
 }
+
 
 
 
@@ -382,7 +548,14 @@ function fillModalData(dato){
            $("#desac23").val(data[0].Nacionalidad2);
            loadDeparment(data[0].IdDepartamento);
            loadMunicipality(data);
-           //$('#desac24 option[value='+ data[0].IdMunicipio + ']')
+           loadDptosEmpresa(data);
+           loadCargos(data);
+           loadJefe(data);
+           
+           //$("#idEmpleado").val(data[0].IdEmpleado);
+          // $("#desac1").val(data[0].IdEmpleado);
+           
+           //$('#desac25 option[value='+ _dep + ']').attr("selected",true);
            
            
 
@@ -399,14 +572,18 @@ $(document).on('click', '.btn-edit', function (e) {
 
     var _row = $(this).parent().parent()[0];
     //data = tabla.row(_row).data();
-    
+    //console.log(_row);
     dato = tabla.fnGetData(_row);
-            var $miSelect = $('#casilla');
+             var $miSelect = $('#casilla');
              $miSelect.val($miSelect.children('option:eq(0)').val());
-             DisabledField()
-    //console.log(data[0]);
+             DisabledField();
+            
+    //console.log(dato[1]);
     clear();
     fillModalData(dato);
+    $("#CargarEmpleado").val(dato[0]);
+    //$("#desac1").val(dato[0].IdEmpleado);
+    
 
 });
 

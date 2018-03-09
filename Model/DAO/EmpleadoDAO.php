@@ -32,7 +32,7 @@ class EmpleadoDAO{
     public function ListEmployeebyId($id){
         try{
             $resultSet = array();
-            $consult = $this->db->prepare("select e.IdEmpleado, e.PNombre, e.SNombre, e.PApellido, e.SApellido, e.Residencia, e.Cedula, e.Pasaporte, e.NInss, e.FechaNac, e.Sexo, e.Hijos, e.NumHijos, e.Hermanos, e.NumHermanos, e.Telefono, e.EstadoCivil, e.Correo, e.Escolaridad, e.NRuc, e.Profesion, e.Direccion, e.Nacionalidad1, e.Nacionalidad2, e.IdMunicipio,dt.IdDepartamento, d.Nombre as Dep, c.NombreCargo, c.IdCargo,  ej.PNombre as NJefe, ej.PApellido
+            $consult = $this->db->prepare("select e.IdEmpleado, e.PNombre, e.SNombre, e.PApellido, e.SApellido, e.Residencia, e.Cedula, e.Pasaporte, e.NInss, e.FechaNac, e.Sexo, e.Hijos, e.NumHijos, e.Hermanos, e.NumHermanos, e.Telefono, e.EstadoCivil, e.Correo, e.Escolaridad, e.NRuc, e.Profesion, e.Direccion, e.Nacionalidad1, e.Nacionalidad2, e.IdMunicipio,dt.IdDepartamento, d.Nombre as Dep, d.IdDep, c.NombreCargo, c.IdCargo,  ej.PNombre as NJefe, ej.PApellido
             as AJefe, ej.IdEmpleado as IdJefeE from Empleados e, Empleados ej, Cargos c,DeptosEmpresa d, Municipio dt where
             e.IdJefe = ej.IdEmpleado and e.IdCargo = c.IdCargo and c.IdDep = d.IdDep and dt.IdMunicipio = e.IdMunicipio  and e.IdEmpleado = ?;");
             $consult->execute(array($id)); 
@@ -208,9 +208,8 @@ class EmpleadoDAO{
 
     }
 
-
-    public function showCargos(){
-        $sql = "select IdCargo, NombreCargos from Cargos";
+    public function showDptosEmpresa(){
+        $sql = "select IdDep, Nombre from DeptosEmpresa";
         $resulSet = array();
         $consult = $this->db->prepare($sql);
         $consult->execute();
@@ -221,35 +220,65 @@ class EmpleadoDAO{
 
     }
 
+    public function showCargos($id){
+        $sql = "select IdCargo, NombreCargo from Cargos where IdDep = ?";
+        $resulSet = array();
+        $consult = $this->db->prepare($sql);
+        $consult->execute(array($id));
+                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                    $resulSet = $row; 
+                }
+                return $resulSet;
+
+    }
+
+    public function showJefe($id){
+        $sql = "select IdEmpleado, PNombre, SNombre from Empleados where IdEmpleado = ?";
+        $resulSet = array();
+        $consult = $this->db->prepare($sql);
+        $consult->execute(array($id));
+                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                    $resulSet = $row; 
+                }
+                return $resulSet;
+
+    }
+
+    
 
 
-    public function addRol(EmpleadoController $data){
-        //Crear usuario
-        /*
-        $tipo;
-        $sql = "create user ?@'" . HOST . "' identified by '?'";
-        $resultSet = $this->db->prepare($sql);
-        $resultSet->exectue(array($data->$_GET('Usuario'), $data->$_GET('Contraseña')));
-        */
-        $sql = "";
-
-        //Agregar roles
-        /*
-            $sql = "Select Chksubordinado from Cargos c inner join Empleados e on c.IdCargo = e.IdCargo where Usuario = ?";
-            $resulSet = $this->db->prepare($sql);
-            $resulSet->execute(array(_USER));
-            if($row = $resulSet->fetch(PDO::FETCH_OBJ)){
-                $tipo = $row->Chksubordinado;
-            }
-            if($tipo == true){
-                $sql = "Grant all privileges on Vacaciones.* to  ";
-            }else if($tipo == false){
-
-            }
-
-
-            */
-
+    public function UpdateEmpleados(Empleado $data, User $datau){
+        $sql = "update Empleados set PNombre = ?, SNombre = ?, PApellido = ?, SApellido = ?, Residencia= ?, Cedula = ?, Pasaporte = ?, NInss = ?, FechaNac = ?, Sexo = ?, Hijos = ?, NumHijos = ?, Hermanos = ?, NumHermanos = ?, Telefono = ?, EstadoCivil = ?, Correo = ?, Escolaridad = ?, NRuc = ?, Profesion = ?, Direccion = ?, Nacionalidad1 = ?, Nacionalidad2 = ?,  IdCargo = ?, IdJefe = ?, IdMunicipio = ? where IdEmpleado = ?";
+        $consult = $this->db->prepare($sql);
+        $consult->execute(array(
+        $data->__GET('PNombre') /*= mysql_real_escape_string_PDO($clean['PNombre'])*/,
+        $data->__GET('SNombre'),
+        $data->__GET('PApellido'),
+        $data->__GET('SApellido'),
+        $data->__GET('Residencia'),
+        $data->__GET('Cedula'),
+        $data->__GET('Pasaporte'),
+        $data->__GET('NInss'),
+        $data->__GET('FechaNac'),
+        $data->__GET('Sexo'),
+        $data->__GET('Hijos'),
+        $data->__GET('NumHijos'),
+        $data->__GET('Hermanos'),
+        $data->__GET('NumHermanos'),
+        $data->__GET('Telefono'),
+        $data->__GET('EstadoCivil'),
+        $data->__GET('Correo'),
+        $data->__GET('Escolaridad'),
+        $data->__GET('NRuc'),
+        $data->__GET('Profesion'),
+        $data->__GET('Direccion'),
+        $data->__GET('Nacionalidad1'),
+        $data->__GET('Nacionalidad2'),
+        $data->__GET('IdCargo'),
+        $data->__GET('IdJefe'),
+        $data->__GET('IdMunicipio'),
+        $data->__GET('idEmpleado'),
+        ));     
     }
 }
 
