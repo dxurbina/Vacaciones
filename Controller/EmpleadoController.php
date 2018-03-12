@@ -2,7 +2,7 @@
  session_start();
 class EmpleadoController{
     public $obj, $model, $obju;
-    public  $Departamentos, $mun;
+    public  $Departamentos, $html, $DeptoEmp, $cargo, $jefe, $datos, $var;
 
 public function __construct(){
     include('Model/DAO/EmpleadoDAO.php');
@@ -18,14 +18,13 @@ public function index (){
    
     if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         $this->Departamentos = $this->model->listarDptos();
-        $this->mun= $this->model->listarMunicipios();
+       $this->DeptoEmp = $this->model->listarDptosEmp();
         include("View/Head.php");
         require_once('View/Empleados.php');
         include("View/Footer.php");
-        
     /*Esto lo agregue yo*/
   
-    }else {
+   }else {
         header('Location: index.php?c=Principal&a=AccessError');
     }
 }
@@ -39,9 +38,6 @@ public function index (){
         header('Location: index.php?c=Principal&a=AccessError');
     }
 }
-
-
-
 
 public function AddEmpleados(){
     if($_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
@@ -112,18 +108,6 @@ public function AddEmpleados(){
     header('Location: index.php?c=Principal&a=AccessError');
 }
 }
-
-/*Llamado al método del controlador*/ 
-    public function MunicipiosPorDepto($IdDepto){
-        header('Content-type: application/json');
-        $this->mun = $this->model->listarMuniPorDpto($_POST[_IdDepartamento]);
-
-        //$mun=$this->EmpleadoDAO->listarDeptos($_POST[_IdDepartamento]);
-        print_r(json_encode($mun));
-
-    }
-
-
     public function utf8_converter($array){ 
     array_walk_recursive($array, function(&$item){     
               $item = utf8_encode( $item );   
@@ -148,8 +132,8 @@ public function AddEmpleados(){
 
     }
 
-
     public function ListEmployeebyId(){
+    
         if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         
         header('Content-Type: application/json; charset=utf-8');
@@ -162,15 +146,38 @@ public function AddEmpleados(){
                 $datos = $this->model->ListEmployeebyId($json_obj->id);
 
         # unset($cursos[5]);
-        $var = json_encode( $datos);
+        //$var = json_encode( $datos);
+        $this->var = json_encode( $datos);
 
-        echo $var; 
+       // echo $var; 
+       echo $this->var;
         }else {
             header('Location: index.php?c=Principal&a=AccessError');
         }
 
     }
 
+public function listarMunPorDepto(){
+    if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        
+        header('Content-Type: application/json; charset=utf-8');
+
+          # Get JSON as a string
+         $json_str = file_get_contents('php://input');
+         # Get as an object
+         $json_obj = json_decode($json_str);
+
+         $_array = $this->model->listarMunPorDepto($json_obj->id);
+         
+         $var = json_encode( $_array);
+         $json = json_last_error();
+         
+         echo $var; 
+         }else {
+             header('Location: index.php?c=Principal&a=AccessError');
+         }
+
+    }
     public function showDeparment(){
         if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         
@@ -238,13 +245,11 @@ public function AddEmpleados(){
         if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         
             header('Content-Type: application/json; charset=utf-8');
-
              # Get JSON as a string
             $json_str = file_get_contents('php://input');
            // $json_str = $_POST['id'];
             # Get as an object
             $json_obj = json_decode($json_str);
-
             $_array = $this->model->showCargos($json_obj->id);
             //$var = json_encode(array_map('utf8_encode', $cursos));
             # unset($cursos[5]);
@@ -264,13 +269,11 @@ public function AddEmpleados(){
         if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         
             header('Content-Type: application/json; charset=utf-8');
-
              # Get JSON as a string
             $json_str = file_get_contents('php://input');
            // $json_str = $_POST['id'];
             # Get as an object
             $json_obj = json_decode($json_str);
-
             $_array = $this->model->showJefe($json_obj->id);
             //$var = json_encode(array_map('utf8_encode', $cursos));
             # unset($cursos[5]);

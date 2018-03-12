@@ -2,6 +2,7 @@
     class Conexion{
         public function conex(){
             try{      
+           
             $con = new PDO('mysql:host=' . HOST . '; dbname=' . DB  . ";charset=utf8", _USER, _PASS,
             array(PDO::MYSQL_ATTR_INIT_COMMAND =>"SET NAMES 'utf8' "));
             return $con;

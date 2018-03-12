@@ -17,8 +17,7 @@
     <script src="View/js/plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
     <script src="View/js/plugins/datatables/dataTables.bootstrap.js"></script>
     <script src="View/js/AdminLTE/app.js" type="text/javascript"></script>
-     <link rel="stylesheet" type="text/css" href="View/css/estilos.css"/>
-     
+     <link rel="stylesheet" type="text/css" href="View/css/estilos.css"/>  
     
 </head>
 <body>

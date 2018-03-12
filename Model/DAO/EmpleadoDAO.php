@@ -46,6 +46,21 @@ class EmpleadoDAO{
             }
     }
 
+    public function ListaEmpEliminar($id){
+        try{
+            $resultSet = array();
+            $consult = $this->db->prepare("delete from Empleado where id = ?");
+            $consult->execute(array($id)); 
+                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                    $resulSet = $row; 
+                }
+                return $resulSet; /*esto estaba ahí*/
+        } catch(Exception $e)
+            {
+                die($e->getMessage());
+            }
+    }
+
    /*Lista de Departamentos, con las exepciones*/
    public function listarDptos(){
     try{
@@ -56,27 +71,39 @@ class EmpleadoDAO{
            $Departamentos = $row; 
        }
        return $Departamentos ; /*esto estaba ahí*/
+      
+  } catch(Exception $e)
+   {
+      // die($e->getMessage());
+   }
+}
+
+//Carga lista de municipios por idDepto, este es el que mando a llamar a RegistrarEmp.js
+public function listarMunPorDepto($dep){
+    $sql = "select IdMunicipio, Nombre from Municipio where IdDepartamento = ?";
+    $resulSet = array();
+    $consult = $this->db->prepare($sql);
+    $consult->execute(array($dep));
+            while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                $resulSet = $row; 
+            }
+            return $resulSet;
+
+}
+   public function listarDptosEmp(){
+    try{
+       $DeptoEmp = array();
+       $consult = $this->db->prepare("select * from DeptosEmpresa");
+       $consult->execute();   
+       while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+           $DeptoEmp = $row; 
+       }
+       return $DeptoEmp ;
        /*echo json_encode($Departamentos);*/
    } catch(Exception $e)
    {
        die($e->getMessage());
    }
-}
-      /*Lista de Municipios*/
-      public function listarMunicipios(){
-        try{
-            $Municipios = array();
-            $consult = $this->db->prepare("select * from Municipio where IdDepartamento=10");
-            $consult->execute();   
-            while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
-                $Municipios = $row; 
-            }
-            return $Municipios ; /*estabato estaba ahí*/
-            /*echo json_encode($Departamentos);*/
-        } catch(Exception $e)
-        {
-            die($e->getMessage());
-        }
 }
 
     /*Buscar en la tabla Empleados*/
@@ -208,17 +235,6 @@ class EmpleadoDAO{
 
     }
 
-    public function showDptosEmpresa(){
-        $sql = "select IdDep, Nombre from DeptosEmpresa";
-        $resulSet = array();
-        $consult = $this->db->prepare($sql);
-        $consult->execute();
-                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
-                    $resulSet = $row; 
-                }
-                return $resulSet;
-
-    }
 
     public function showCargos($id){
         $sql = "select IdCargo, NombreCargo from Cargos where IdDep = ?";
@@ -229,7 +245,6 @@ class EmpleadoDAO{
                     $resulSet = $row; 
                 }
                 return $resulSet;
-
     }
 
     public function showJefe($id){
@@ -241,8 +256,9 @@ class EmpleadoDAO{
                     $resulSet = $row; 
                 }
                 return $resulSet;
-
     }
+
+   
 
     
 
