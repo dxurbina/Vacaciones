@@ -145,6 +145,7 @@ function valida(e){
 }
 </script>
 
+
 <!-- valida que solo se escriba letras -->
 <script>
 function validaLetras(e){
