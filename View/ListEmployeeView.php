@@ -5,7 +5,8 @@
             <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title" style="font-size: 200%;">Lista de Empleados</h3>
-                    
+                   
+
                 </div>
                 <div class="box-body table-responsive">
                     <table id="tbl_Empleados"  class="table table-bordered table-hover">
