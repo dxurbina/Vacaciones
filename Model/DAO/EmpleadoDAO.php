@@ -46,6 +46,21 @@ class EmpleadoDAO{
             }
     }
 
+    public function ListaEmpEliminar($id){
+        try{
+            $resultSet = array();
+            $consult = $this->db->prepare("delete from Empleado where id = ?");
+            $consult->execute(array($id)); 
+                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                    $resulSet = $row; 
+                }
+                return $resulSet; /*esto estaba ahí*/
+        } catch(Exception $e)
+            {
+                die($e->getMessage());
+            }
+    }
+
    /*Lista de Departamentos, con las exepciones*/
    public function listarDptos(){
     try{
@@ -56,60 +71,25 @@ class EmpleadoDAO{
            $Departamentos = $row; 
        }
        return $Departamentos ; /*esto estaba ahí*/
-       /*echo json_encode($Departamentos);*/
-   } catch(Exception $e)
+      
+  } catch(Exception $e)
    {
-       die($e->getMessage());
+      // die($e->getMessage());
    }
 }
-      /*Lista de Municipios*/
-      public function listarMunPorDpto(){
-        try{
-            $IdDepartamento = $_POST['IdDepartamento'];
-            //$Municipios = array();
-            $consult = $this->db->prepare("select * from Municipio where IdDepartamento= '$IdDepartamento'");
-            $consult->execute();    
-            
-            //$html= "<option value='0'>Seleccionar Municipio</option>";
 
+//Carga lista de municipios por idDepto, este es el que mando a llamar a RegistrarEmp.js
+public function listarMunPorDepto($dep){
+    $sql = "select IdMunicipio, Nombre from Municipio where IdDepartamento = ?";
+    $resulSet = array();
+    $consult = $this->db->prepare($sql);
+    $consult->execute(array($dep));
             while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
-                //$html="<option value='".$row['IdMunicipio']."'>".$row['Nombre'].option>  "" disabled selected>Seleccione  Departamento</option>";
-                
-                //$html.= "<option value='".$row['IdMunicipio']."'>".$row['Nombre']."</option>";
-                
-                $IdDepartamento = $row; 
-                //$row= "<option value='".$row['IdMunicipio']."'>".$row['Nombre']."</option>";
+                $resulSet = $row; 
             }
-            //echo $html;
-            return $IdDepartamento ; /*estabato estaba ahí*/
-            echo json_encode($IdDepartamento);
-        } catch(Exception $e)
-        {
-            die($e->getMessage());
-        }
+            return $resulSet;
+
 }
-
-
-public function MunicipiosDepto($IdDepto){
-    if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
-        
-    header('Content-type:  application/json;  charset=utf-8');
-    $mun = $this->model->listarMunPorDpto($_POST[_IdDepartamento]);
-    $var = json_encode($mun);
-    json_last_error();
-
-    echo $var; 
-    }else{
-        header('Location: index.php?c=Principal&a=AccessError');
-    }   
-
-    //$mun=$this->EmpleadoDAO->listarDeptos($_POST[_IdDepartamento]);
-
-   // print_r(json_encode($mun));
-
-    }
-
-   /*Lista de Departamentos de la empresa, con las exepciones*/
    public function listarDptosEmp(){
     try{
        $DeptoEmp = array();
@@ -119,40 +99,6 @@ public function MunicipiosDepto($IdDepto){
            $DeptoEmp = $row; 
        }
        return $DeptoEmp ;
-       /*echo json_encode($Departamentos);*/
-   } catch(Exception $e)
-   {
-       die($e->getMessage());
-   }
-}
-
-   /*Lista de Cargos por id del DeptoEmp, con las exepciones*/
-   public function listarCargos(){
-    try{
-       $cargo = array();
-       $consult = $this->db->prepare("select * from Cargos where IdDep = 15");
-       $consult->execute();   
-       while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
-           $cargo = $row; 
-       }
-       return $cargo ;
-       /*echo json_encode($Departamentos);*/
-   } catch(Exception $e)
-   {
-       die($e->getMessage());
-   }
-}
-
-   /*Lista de Jefes por id del Cargo, con las exepciones*/
-   public function listarJefesPorCargos(){
-    try{
-       $jefe = array();
-       $consult = $this->db->prepare("select * from Cargos where IdJefe = 2");
-       $consult->execute();   
-       while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
-           $jefe = $row; 
-       }
-       return $jefe ;
        /*echo json_encode($Departamentos);*/
    } catch(Exception $e)
    {
@@ -290,18 +236,27 @@ public function MunicipiosDepto($IdDepto){
     }
 
 
-    public function showCargos(){
-        $sql = "select IdCargo, NombreCargos from Cargos";
+    public function showCargos($id){
+        $sql = "select IdCargo, NombreCargo from Cargos where IdDep = ?";
         $resulSet = array();
         $consult = $this->db->prepare($sql);
-        $consult->execute();
+        $consult->execute(array($id));
                 while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
                     $resulSet = $row; 
                 }
                 return $resulSet;
-
     }
 
+    public function showJefe($id){
+        $sql = "select IdEmpleado, PNombre, SNombre from Empleados where IdEmpleado = ?";
+        $resulSet = array();
+        $consult = $this->db->prepare($sql);
+        $consult->execute(array($id));
+                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                    $resulSet = $row; 
+                }
+                return $resulSet;
+    }
 
 
     public function addRol(EmpleadoController $data){

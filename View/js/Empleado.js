@@ -1,4 +1,5 @@
 var datos, tabla;
+var table = $('#tbl_Empleados').dataTable
 $(document).ready(function(){
 	$("#casilla").change(function(){
         if($("#casilla").val()=="Ver") {
@@ -91,6 +92,9 @@ $(document).ready(function(){
         });
 
 
+        //Para cargar los municpios por deptoId
+
+
 });
 
     function clear(){
@@ -116,7 +120,8 @@ function addRowDT(data) {
             data[i].IdCargo,
             data[i].IdJefe,
             '<button title= "Actualizar" value= "Actualizar" class="btn btn-primary btn-act " data-target="#imodal" data-toggle="modal"><i class="fa fa-arrow-circle-down" aria-hidden="true"></i></button>&nbsp;' +
-            '<button title= "delete" value= "Borrar" class="btn btn-danger btn-del "><i class="fa fa-eraser" aria-hidden="true"></i></button>'
+            '<button title= "Eliminar" value= "Eliminar" class="btn btn-primary btn-del " data-target="#imodal" data-toggle="modal"><i class="fa fa-eraser-circle-down" aria-hidden="true"></i></button>'
+            //'<button title= "delete" value= "Eliminar" class="btn btn-danger btn-del "><i class="fa fa-eraser" aria-hidden="true"></i></button>'
         ]);
     }
     // ((data[i].estado == true)? "Activo" : "Inactivo")
@@ -147,7 +152,7 @@ function sendDataAjax() {
             data[i].NombreCargo,
             (data[i].NJefe + " " + data[i].AJefe),
             '<button title= "Editar/ver" value= "Actualizar" class="btn btn-primary btn-edit " data-target="#imodal" data-toggle="modal"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
-            '<button title= "Eliminar" value= "Borrar" class="btn btn-danger btn-del "><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
+            '<button title= "Eliminar" value= "Eliminar" class="btn btn-danger btn-del "><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
             '<button title= "Vacaciones" value= "VerVacaciones" class="btn btn-primary btn-vac " data-target="#imodalver" data-toggle="modal"><i class="fa fa-plus-square" aria-hidden="true"></i></button>'
         ]);
     }
@@ -261,8 +266,6 @@ function loadMunicipality(datos){
         }
         });
 }
-
-
 
 sendDataAjax();
 
@@ -414,27 +417,45 @@ $(document).on('click', '.btn-edit', function (e) {
 $(document).on('click', '.btn-del', function (e) {
     e.preventDefault();
 
-    var _row = $(this).parent().parent()[0];
-    
-    dato = tabla.fnGetData(_row);
-   
+        var _row = $(this).parent().parent()[0];
+   //mandar a llamar la funcion del ajax
 });
 
+$('#tbl_Empleados tbl_body_table').on( 'click', 'tr', function () {
+    if ( $(this).hasClass('selected') ) {
+        $(this).removeClass('selected');
+    }
+    else {
+        table.$('tr.selected').removeClass('selected');
+        $(this).addClass('selected');
+    }
+} );
 
-
-
-
-//Ajax para cargar municipios
-function CargarMunicipios(val)
-{  
-    $.ajax({
-        type: "POST",
-        url: "?c=Empleado&a=ListMunId",
-        data: 'IdDepartamento='+val,
-        success: function(resp){
-            $('#cboDepto').html(resp);
+/*
+$('#tbl_Empleados').DataTable({            
+    aaData: jsonObject,
+    aoColumns: [{
+            sTitle: "Id",
+            mDataProp: "id",
+            visible: false
+        },
+        {
+            sTitle: "Tipo",
+            mDataProp: "tipo"
+        },
+        {
+            sTitle: "Accion",
+            mDataProp: "id",
+            sWidth: '7%',
+            orderable: false,
+            render: function(data) {
+                acciones = `<button id="` + data + `" value="Eliminar" type="button" class="btn btn-danger btn-xs accionesTabla" title="Eliminar">
+                                Eliminar
+                            </button>`;
+                return acciones
+            }
         }
-    });
-}
+    ]
+});*/
 
-CargarMunicipios();
+

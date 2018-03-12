@@ -1,102 +1,123 @@
-<!-- Inicia la tabla con los valores -->
-<FRAME="border" RULES="none" >
+<?php if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+           ?>  
+    <!-- Inicia la tabla con los valores -->
 <form class="form" action="?c=Empleado&a=AddEmpleados" method="POST">
-<table width="80%" border="0" cellspacing="2" cellpadding="2"> 
-<CAPTION style = "font-weight: bold" ><center> Datos personales</center></CAPTION>
+    <!-- POP UP -->
+    <div class="modal-dialog" role="document">
+        <div style="width: 130%;" class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden = "true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Registar Empleado</h4>
+            </div>
 
+        <div class="modal-body">
+            <div class="row row-fluid">
+                <div class="col-sm-6">
+                    <div class="form-group"><label>Primer Nombre</label><input id="desac1" name = "PNombre" ID="txtFullName"  Text=""  Enabled="false"></input></div>
+                        <div class="form-group"><label>Primer Apellido</label><input id="desac3" name ="PApellido"ID="txtFullName"  Text=""  Enabled="false"></div>
+                        <div class="form-group"><label>¿Reside en el país?</label>
+                            <select id="desac5" name="Residencia">
+                                <option value="1">Si</option>
+                                <option value="0">No</option>
+                            </select></div>
+                        <div class="form-group"><label>Número INSS</label><input id="desac8" name="NInss" ID="" ></input></div>
+                        <div class="form-group"><label>Fecha de Nacimiento</label>
+                            <input  id="desac9" name ="FechaNac" type= "date" min="1950-01-01" max="2018-05-03"ID=""  Text=""  Enabled="false"></input></div>
+                        <div class="form-group"><label>Hijos</label>
+                            <select id="desac12" name="Hijos">
+                                <option value="1">Si</option>
+                                <option value="0">No</option>
+                            </select></div>
+                        </div>
+                
 
-<TBODY>
-<TR><TD>Primer nombre: <TD> <input type="text" name="PNombre" size="15" required onkeypress="return validaLetras(event)" /><TD>Segundo nombre: <TD><input type="text" name="SNombre" size="15" onkeypress="return validaLetras(event)" />
-<TR><TD>Primer apellido: <TD><input type="text" name="PApellido" size="15" required onkeypress="return validaLetras(event)" /><TD>Segundo apellido: <TD><input type="text" name="SApellido" size="15" onkeypress="return validaLetras(event)" />
-<TR><TD>N° cédula: <TD><input type="text" name="Cedula" size="15" required /><TD>Es Cédula Residencia: <TD><select name="Residencia"><option value="No">No</option>
-    <option value="Si">Si</option>
-</select>
-<TR><TD>N° Inss: <TD><input type="text" name="NInss" size="15" /><TD>N° Pasaporte: <TD><input type="text" name="Pasaporte" size="15" />
-<TR><TD>Fecha Nacimiento: <TD> <input type="text" name="FechaNac" size="15" placeholder="dd-mm-aaaa" required onkeypress="return valida(event)" /><TD>Sexo: <TD><select name="Sexo">
-        <option value="" disabled selected >Seleccione Sexo</option>
-        <option value="Hombre">Hombre</option>
-        <option value="Mujer">Mujer</option>
-    </select>
-<TR><TD>Hjos: <TD><select name="Hijos"><option value="0" >No</option>
-    <option value="1">Si</option>
-</select><TD>Num. Hijos: <TD><input type="text" name="NumHijos" size="5" placeholder="0" onkeypress="return valida(event)" maxlength="2"/>
-<TR><TD>Hermanos: <TD><select name="Hermanos"><option value="0">No</option>
-    <option value="1">Si</option>
-</select><TD>Num. Hermanos: <TD><input type="text" name="NumHermanos" size="5" placeholder="0" onkeypress="return valida(event)" maxlength="2" />
-<TR><TD>Télefonos: <TD><input type=a"text" name="Telefono" size="15" onkeypress="return valida(event)" maxlength="8" /><TD>Estado civil: <TD><select name="EstadoCivil">
-                <option value="" disabled selected>Seleccione Estado civil</option>
-                <option value="Soltero">Soltero/a.</option>
-                <option value="Comprometido">Comprometido/a.</option>
-                <option value="Casado">Casado/a.</option>   
-                <option value="Divorciado">Divorciado/a.</option>
-                <option value="Viudo">Viudo/a.</option>
-            </select>
-<TR><TD>E-mail: <TD> <input type="text" name="Correo" size="15" /><TD>Escolaridad: <TD><select name="Escolaridad">
-                <option value="" disabled selected>Seleccione Escolaridad</option>
-                <option value="Primaria">Primaria</option>
-                <option value="Secundaria">Secundaria</option>
-                <option value="Universidad">Universidad</option>
-                <option value="Universidad">Postgrado</option>
-                <option value="Universidad">Maestría</option>
-                <option value="Universidad">Doctorado</option>
-            </select>
-<TR><TD>N° Ruc: <TD> <input value="" name="NRuc" size="15" /><TD>Profesión: <TD> <input value="" name="Profesion" size="20" />
-    
-<!-- VERIFICAR AQUÍ QUE SE VA A MANDAR A LLAMAR LA LISTA DE DEPTO -->
-<TR><TD>Departamento: <TD> <select id = "cboDepto" name="Departamento" onchange="CargarMunicipios(this.value);"><!--ListMunId() -->
-                <option value="0" disabled selected>Seleccione  Departamento</option>
-                <?php foreach ($this->Departamentos as $row){?> 
-                <option value="<?php echo $row->IdDepartamento; ?>"> <?php echo $row->Nombre; ?></option>
-                <?php } ?>
-                </select> 
+                <div class="col-sm-6">
+                    <div class="form-group"><label>SegundoNombre</label><input id="desac2" name ="SNombre" ID="txtmodaldireccion"  ></input></div>
+                    <div class="form-group"><label>Segundo Apellido</label><input id="desac4" name="SApellido" ID="txtmodaldireccion"  ></input></div>
+                    <div class="form-group"><label>Cedula</label><input id="desac6" name ="Cedula" ID=""></input></div>
+                    <div class="form-group"><label>Pasaporte</label><input id="desac7" name ="Pasaporte" ID=""  Text=""  Enabled="false"></input></div>
+                    <div class="form-group"><label>Sexo</label><select id="desac10" name="Sexo">
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                        </select></div>
+                    <div class="form-group"><label>Número Hijos</label><input  id="desac13" name = "NumHijos" type="number" name="edad" min="0" max="30" step="1"></div>
 
-<!-- VERIFICAR AQUÍ QUE SE VA A MANDAR A LLAMAR LA LISTA DE MUNICIPIO FILTRADA POR EL IDDEPTO-->  
-<br style="clear:both;">    
-<TD>Municipio: <TD> <select id = "cboMun" name="IdMunicipio">
-<option value="0" disabled selected>Seleccione Municipio</option>
-<?php if(count($this->var)): ?>
-		<?php for($i=0; $i<count($this->var); $i++): ?>
-		
-			<option value="<?php echo $this->var[$i]; ?>">
-				<?php echo $this->var[$i]; ?>
-			</option>
-		
-		<?php endfor; ?>
-		<?php endif; ?>
-                </select>  
+                </div> <!-- ver si aquí da error -->
 
-<TR><TD>Dirección: <TD> <textarea class="form-control" rows="1" id="Direccion"  cols="20" ></textarea>
+                <div class="col-sm-6">
+                    <div class="form-group"><label>Hermanos</label><select id="desac14" name="Hermanos">
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div> 
+                    <div class="form-group"><label>Teléfono</label><input id="desac16" name ="Telefono" ID=""  Text=""  Enabled="false"></input></div>
+                    <div class="form-group"><label>Correo</label><input name="Correo" id="desac17"  ></input></div>
+                    <div class="form-group"><label>N° Ruc</label><input id="desac19" name ="NRuc" type= "text"  Enabled="false"></input></div>
+                             
 
-<TR><TD>Nacionalidad 1: <TD><input type="text" name="Nacionalidad1" size="15" onkeypress="return validaLetras(event)" /><TD>Nacionalidad 2: <TD> <input type="text" name="Nacionalidad2" size="15" onkeypress="return validaLetras(event)" />
+                </div>
 
-<!-- VERIFICAR AQUÍ QUE SE VA A MANDAR A LLAMAR LA LISTA DE DEPARTAMENTOS DE LA EMPRESA-->
-<TR><TD>Departamentos: <TD> <select id = "dptoEmp" name="Departamentos">
-                <option value="0" disabled selected>Seleccione  Departamento</option>
-                <?php foreach ($this->DeptoEmp as $row){?> 
-                <option value="<?php echo $row->IdDep; ?>"> <?php echo $row->Nombre; ?></option>
-                <?php } ?>
-               </select> 
-<!-- VERIFICAR AQUÍ QUE SE VA A MANDAR A LLAMAR LA LISTA DE CARGOS POR DEPARTAMENTO-->
-<TD>Cargos: <TD> <select id = "cargos" name="cargos">
-                <option value="0" disabled selected>Seleccione  Cargo</option>
-                <?php foreach ($this->cargo as $row){?> 
-                <option value="<?php echo $row->IdCargo; ?>"> <?php echo $row->NombreCargo; ?></option>
-                <?php } ?>
-                </select> 
+                <div class="col-sm-6">
+                    <div class="form-group"><label>Numero hermanos</label><input  type="number" id="desac15" name="NumHermanos" min="0" max="30" step="1">
+                    <div class="form-group"><label>Estado Civil</label> <select id="desac11" name="EstadoCivil">
+                            <option value="Casado">Casado</option>
+                            <option value="Soltero">Soltero</option>
+                            <option value="Divorsiado">Divorsiado</option>
+                            <option value="Viudo">Viudo</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Escolaridad</label><select id="desac18" name="Escolaridad">
+                            <option value="Primaria">Primaria</option>
+                            <option value="Secundaria">Secundaria</option>
+                            <option value="Universidad">Universidad</option>
+                            <option value="Postgrado">Postgrado</option>
+                            <option value="Maestría">Maestría</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Profesión</label><input id="desac16" name ="Profesion" </input></div>
+                    <div class="form-group"><label>Dirección</label><textarea id="desac21" name="Direccion" rows="3" style="width: 100%;" ></textarea>
+                
+                <br>
+                <h3>Dirección:</h3>
+                <div class="col-sm-6">
+                    <div class="form-group"><label>Nacionalidad 1</label><input  id="desac22"name="Nacionalidad1" ID=""  ></input></div>
+                </div>
+                <div class="form-group"><label>Nacionalidad 2</label><input  id="desac23"name="Nacionalidad2" ID=""  ></input></div>
 
-<!-- VERIFICAR AQUÍ QUE SE VA A MANDAR A LLAMAR LA LISTA DE JEFES POR CARGOS DE LA EMPRESA
-<TD>Jefe: <TD> <select id = "jefe" name="jefe">
-                <option value="0" disabled selected>Seleccione  Jefe</option>
-                <?php foreach ($this->jefe as $row){?> 
-                <option value="<?php echo $row->IdJefe; ?>"> <?php echo $row->IdJefe; ?></option>
-                <?php } ?>
-                </select> -->
+                            <div class="form-group"><label>Departamento</label>
+                                <select id="desac24" name="Departamento">
+                                    <option value="">Seleccione Departamento</option>          
+                                </select> 
+                            <div class="form-group"><label>Municipio</label>
+                                <select id="desac25" name="IdMunicipio">
+                                    <option value="">Seleccione Municipio</option>               
+                                </select>
+                            </div>        
+                            
+                            <div class="form-group"><label>Departamento Empresa</label>
+                                <select id="desac24" name="Departamento">
+                                    <option value="">Seleccione Departamento</option>         
+                                </select></div>
 
-<TBODY>
-<br>
-</TABLE>
-<br>
-<div><center><input type="submit" value="Guardar Empleado"></center></div>  
+                            <div class="form-group"><label>Cargo</label>
+                                    <select  id="desac26"name="IdCargo">
+                                        <option value="">Seleccione Cargo</option>
+                                    </select>
+                                </div>
+
+                            <div class="form-group"><label>Jefe</label>
+                                    <select  id="desac27" name="IdJefe">
+                                        <option value="">Seleccione Jefe</option>
+                                    </select>
+                            </div>                    
+
+                <div class="modal-footer">
+                    <center><input type="submit" class="btn btn-primary"  value="Guardar Empleado"></input></center>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
 </form>
 
 <!-- valida que solo se escriba números -->
@@ -132,3 +153,10 @@ function validaLetras(e){
     return patron.test(tecla_final);
 }
 </script>
+ <?php
+    }else 
+    {
+        echo "Site not Found";
+    } ?>
+
+ <script src="View/js/RegistarEmp.js" type="text/javascript"></script>

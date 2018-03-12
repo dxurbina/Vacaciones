@@ -17,33 +17,7 @@
     <script src="View/js/plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
     <script src="View/js/plugins/datatables/dataTables.bootstrap.js"></script>
     <script src="View/js/AdminLTE/app.js" type="text/javascript"></script>
-     <link rel="stylesheet" type="text/css" href="View/css/estilos.css"/>   
-
-    <script language="javascript" src="js/jquery-3.1.1.min.js"></script>
-		<script language="javascript">
-			$(document).ready(function(){
-				$("#cboDepto").change(function () {
- 
-					//$('#cbx_localidad').find('option').remove().end().append('<option value="whatever"></option>').val('whatever');
-					
-					$("#cboDepto option:selected").each(function () {
-                        IdDepartamento = $(this).val();
-                        //$.post("?c=Empleado&a=MunicipiosDepto", { IdDepartamento: IdDepartamento },
-                        $.post("?c=Empleado&a=ListMunId", { IdDepartamento: IdDepartamento },
-                        //$.post("?c=Empleado&a=listarMunPorDepto", { IdDepartamento: IdDepartamento },
-                        //$.post("?c=Empleado&a=index.php", { IdDepartamento: IdDepartamento }, 
-                        function(data){
-							$("#cboMun").html(data);
-						});            
-					});
-				})
-			});
-            
-		</script>
-
-
-
-     
+     <link rel="stylesheet" type="text/css" href="View/css/estilos.css"/>  
     
 </head>
 <body>

@@ -18,17 +18,13 @@ public function index (){
    
     if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         $this->Departamentos = $this->model->listarDptos();
-        //$this->html= $this->model->listarMunPorDpto();
-        $this->DeptoEmp = $this->model->listarDptosEmp();
-        $this->cargo = $this->model->listarCargos();
-        $this->jefe =$this->model->listarJefesPorCargos();
+       $this->DeptoEmp = $this->model->listarDptosEmp();
         include("View/Head.php");
         require_once('View/Empleados.php');
         include("View/Footer.php");
-        
     /*Esto lo agregue yo*/
   
-    }else {
+   }else {
         header('Location: index.php?c=Principal&a=AccessError');
     }
 }
@@ -153,61 +149,27 @@ public function AddEmpleados(){
 
     }
 
-    //Desde aquí
-
-    /*public function Epleados(){
-        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
-                
-                include("View/Head.php");
-                include("View/Empleados.php");
-                include("View/Footer.php");
-        }else {
-            header('Location: index.php?c=Principal&a=AccessError');
-        }
-    }*/
-
-//List depto
-   /* public function ListDepto(){
-
-        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+public function listarMunPorDepto(){
+    if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         
         header('Content-Type: application/json; charset=utf-8');
-        $this->Departamentos = $this->model->listarDptos();
 
-        $var = json_encode( $Departamentos);
-        $json = json_last_error();
+          # Get JSON as a string
+         $json_str = file_get_contents('php://input');
+         # Get as an object
+         $json_obj = json_decode($json_str);
 
-        echo $var; 
-        }else {
-            header('Location: index.php?c=Principal&a=AccessError');
-        }
-
-    }*/
-
-
-//list Mun --este funciona bien 07/03/2018
-public function ListMunId(){
-    
-    if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
-    
-    header('Content-Type: application/json; charset=utf-8');
-   # Get JSON as a string
-$json_str = file_get_contents('php://input');
-
-    # Get as an object
-    $json_obj = json_decode($json_str);
-            $this->datos = $this->model->listarMunPorDpto($json_obj->datos);
-
-    # unset($cursos[5]);
-    $var = json_encode($this->datos);
-
-    echo $var; 
-    }else {
-        header('Location: index.php?c=Principal&a=AccessError');
-        }
+         $_array = $this->model->listarMunPorDepto($json_obj->id);
+         
+         $var = json_encode( $_array);
+         $json = json_last_error();
+         
+         echo $var; 
+         }else {
+             header('Location: index.php?c=Principal&a=AccessError');
+         }
 
     }
-
     public function showDeparment(){
         if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         
@@ -256,7 +218,36 @@ $json_str = file_get_contents('php://input');
         if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         
             header('Content-Type: application/json; charset=utf-8');
-            $_array = $this->model->showCargos();
+             # Get JSON as a string
+            $json_str = file_get_contents('php://input');
+           // $json_str = $_POST['id'];
+            # Get as an object
+            $json_obj = json_decode($json_str);
+            $_array = $this->model->showCargos($json_obj->id);
+            //$var = json_encode(array_map('utf8_encode', $cursos));
+            # unset($cursos[5]);
+            $var = json_encode( $_array);
+            $json = json_last_error();
+           // $var2 = utf8_converter($cursos);
+            
+           # echo $json; #esta era la wea que lo jodia hace rato
+            echo $var; 
+            }else {
+                header('Location: index.php?c=Principal&a=AccessError');
+            }
+        
+    }
+
+    public function showJefe(){
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        
+            header('Content-Type: application/json; charset=utf-8');
+             # Get JSON as a string
+            $json_str = file_get_contents('php://input');
+           // $json_str = $_POST['id'];
+            # Get as an object
+            $json_obj = json_decode($json_str);
+            $_array = $this->model->showJefe($json_obj->id);
             //$var = json_encode(array_map('utf8_encode', $cursos));
             # unset($cursos[5]);
             $var = json_encode( $_array);
