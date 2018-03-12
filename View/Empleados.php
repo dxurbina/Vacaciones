@@ -13,60 +13,62 @@
         <div class="modal-body">
             <div class="row row-fluid">
                 <div class="col-sm-6">
-                    <div class="form-group"><label>Primer Nombre</label><input id="desac1" name = "PNombre" ID="txtFullName"  Text=""  Enabled="false"></input></div>
-                        <div class="form-group"><label>Primer Apellido</label><input id="desac3" name ="PApellido"ID="txtFullName"  Text=""  Enabled="false"></div>
+                    <div class="form-group"><label>Primer Nombre</label><input id="PNombre" name = "PNombre" size="20" required onkeypress="return validaLetras(event)" ></input></div>
+                        <div class="form-group"><label>Primer Apellido</label><input id="PApellido" name ="PApellido" size="20" required onkeypress="return validaLetras(event)"></div>
                         <div class="form-group"><label>¿Reside en el país?</label>
-                            <select id="desac5" name="Residencia">
+                            <select id="Residencia" name="Residencia">
                                 <option value="1">Si</option>
                                 <option value="0">No</option>
                             </select></div>
-                        <div class="form-group"><label>Número INSS</label><input id="desac8" name="NInss" ID="" ></input></div>
+                        <div class="form-group"><label>Número INSS</label><input id="NInss" name="NInss" size="20" ></input></div>
                         <div class="form-group"><label>Fecha de Nacimiento</label>
-                            <input  id="desac9" name ="FechaNac" type= "date" min="1950-01-01" max="2018-05-03"ID=""  Text=""  Enabled="false"></input></div>
+                            <input  id="FechaNac" name ="FechaNac" type= "date" min="1950-01-01" max="2018-05-03"ID=""  Text=""  Enabled="false"></input></div>
                         <div class="form-group"><label>Hijos</label>
-                            <select id="desac12" name="Hijos">
+                            <select id="Hijos" name="Hijos" onkeypress="return valida(event)">
                                 <option value="1">Si</option>
                                 <option value="0">No</option>
                             </select></div>
                         </div>
                 
-
                 <div class="col-sm-6">
-                    <div class="form-group"><label>SegundoNombre</label><input id="desac2" name ="SNombre" ID="txtmodaldireccion"  ></input></div>
-                    <div class="form-group"><label>Segundo Apellido</label><input id="desac4" name="SApellido" ID="txtmodaldireccion"  ></input></div>
-                    <div class="form-group"><label>Cedula</label><input id="desac6" name ="Cedula" ID=""></input></div>
-                    <div class="form-group"><label>Pasaporte</label><input id="desac7" name ="Pasaporte" ID=""  Text=""  Enabled="false"></input></div>
-                    <div class="form-group"><label>Sexo</label><select id="desac10" name="Sexo">
+                    <div class="form-group"><label>SegundoNombre</label><input id="SNombre" name ="SNombre" ID="txtmodaldireccion"  ></input></div>
+                    <div class="form-group"><label>Segundo Apellido</label><input id="SApellido" name="SApellido" ID="txtmodaldireccion" onkeypress="return validaLetras(event)"></input></div>
+                    <div class="form-group"><label>Cédula</label><input id="Cedula" name ="Cedula" ID=""></input></div>
+                    <div class="form-group"><label>Pasaporte</label><input id="Pasaporte" name ="Pasaporte" ID=""  Text=""  Enabled="false"></input></div>
+                    <div class="form-group"><label>Sexo</label><select id="Sexo" name="Sexo">
                             <option value="M">Masculino</option>
                             <option value="F">Femenino</option>
                         </select></div>
-                    <div class="form-group"><label>Número Hijos</label><input  id="desac13" name = "NumHijos" type="number" name="edad" min="0" max="30" step="1"></div>
+                    <div class="form-group"><label>Número Hijos</label><input type="text" name="NumHijos" size="5" placeholder="0" onkeypress="return valida(event)" maxlength="2"></div>
 
                 </div> <!-- ver si aquí da error -->
 
                 <div class="col-sm-6">
-                    <div class="form-group"><label>Hermanos</label><select id="desac14" name="Hermanos">
+                    <div class="form-group"><label>Hermanos</label><select id="Hermanos" name="Hermanos"></div>
                             <option value="1">Si</option>
                             <option value="0">No</option>
                         </select>
                     </div> 
-                    <div class="form-group"><label>Teléfono</label><input id="desac16" name ="Telefono" ID=""  Text=""  Enabled="false"></input></div>
-                    <div class="form-group"><label>Correo</label><input name="Correo" id="desac17"  ></input></div>
-                    <div class="form-group"><label>N° Ruc</label><input id="desac19" name ="NRuc" type= "text"  Enabled="false"></input></div>
-                             
-
-                </div>
-
-                <div class="col-sm-6">
-                    <div class="form-group"><label>Numero hermanos</label><input  type="number" id="desac15" name="NumHermanos" min="0" max="30" step="1">
-                    <div class="form-group"><label>Estado Civil</label> <select id="desac11" name="EstadoCivil">
+                    <div class="form-group"><label>Teléfono</label><input id="Telefono" name ="Telefono" ID=""  Text=""  Enabled="false" onkeypress="return valida(event)" maxlength="8"></input></div>
+                    <div class="form-group"><label>Correo</label><input id="Correo" name="Correo" ></input></div>
+                    <div class="form-group"><label>Nacionalidad 1</label><input  id="Nacionalidad1"name="Nacionalidad1" ID=""  ></input></div>
+                    <div class="form-group"><label>Estado Civil</label> <select id="EstadoCivil" name="EstadoCivil">
+                            <option value="" disabled selected>Seleccione Estado civil</option>
                             <option value="Casado">Casado</option>
                             <option value="Soltero">Soltero</option>
                             <option value="Divorsiado">Divorsiado</option>
                             <option value="Viudo">Viudo</option>
                         </select>
                     </div>
-                    <div class="form-group"><label>Escolaridad</label><select id="desac18" name="Escolaridad">
+               </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group"><label>Número hermanos</label><input type="text" name="NumHijos" size="5" placeholder="0" onkeypress="return valida(event)" maxlength="2"></div>
+                    <div class="form-group"><label>Profesión</label><input id="Profesion" name ="Profesion" </input></div>
+                    <div class="form-group"><label>N° Ruc</label><input id="NRuc" name ="NRuc" type= "text"  Enabled="false"></input></div> 
+                    <div class="form-group"><label>Nacionalidad 2</label><input  id="Nacionalidad2"name="Nacionalidad2" ID=""  ></input></div>
+                    <div class="form-group"><label>Escolaridad</label><select id="Escolaridad" name="Escolaridad">
+                            <option value="" disabled selected>Seleccione Escolaridad</option>
                             <option value="Primaria">Primaria</option>
                             <option value="Secundaria">Secundaria</option>
                             <option value="Universidad">Universidad</option>
@@ -74,45 +76,51 @@
                             <option value="Maestría">Maestría</option>
                         </select>
                     </div>
-                    <div class="form-group"><label>Profesión</label><input id="desac16" name ="Profesion" </input></div>
-                    <div class="form-group"><label>Dirección</label><textarea id="desac21" name="Direccion" rows="3" style="width: 100%;" ></textarea>
-                
-                <br>
-                <h3>Dirección:</h3>
-                <div class="col-sm-6">
-                    <div class="form-group"><label>Nacionalidad 1</label><input  id="desac22"name="Nacionalidad1" ID=""  ></input></div>
                 </div>
-                <div class="form-group"><label>Nacionalidad 2</label><input  id="desac23"name="Nacionalidad2" ID=""  ></input></div>
 
-                            <div class="form-group"><label>Departamento</label>
-                                <select id="desac24" name="Departamento">
-                                    <option value="">Seleccione Departamento</option>          
-                                </select> 
-                            <div class="form-group"><label>Municipio</label>
-                                <select id="desac25" name="IdMunicipio">
-                                    <option value="">Seleccione Municipio</option>               
-                                </select>
-                            </div>        
-                            
-                            <div class="form-group"><label>Departamento Empresa</label>
-                                <select id="desac24" name="Departamento">
-                                    <option value="">Seleccione Departamento</option>         
-                                </select></div>
+                <div class="col-sm-12">
+                    <div class="form-group"><label>Dirección</label><textarea id="Direccion" name="Direccion" rows="3" style="width: 100%;" ></textarea></div>
+                </div>
 
-                            <div class="form-group"><label>Cargo</label>
-                                    <select  id="desac26"name="IdCargo">
-                                        <option value="">Seleccione Cargo</option>
-                                    </select>
-                                </div>
-
-                            <div class="form-group"><label>Jefe</label>
-                                    <select  id="desac27" name="IdJefe">
-                                        <option value="">Seleccione Jefe</option>
-                                    </select>
-                            </div>                    
+                <div class="col-sm-6">
+                    <div class="form-group"><label>Departamento</label>
+                        <select id="cboDepto" name="Departamento">
+                            <option value="0">Seleccione Departamento</option>
+                            <?php foreach ($this->Departamentos as $row){?> 
+                            <option value="<?php echo $row->IdDepartamento; ?>"> <?php echo $row->Nombre; ?></option>
+                            <?php } ?>
+                        </select>
+                </div> 
+                    <div class="form-group"><label>Depto. Empresa</label>
+                        <select id="dptoEmp" name="Departamento">
+                            <option value="0">Seleccione Depto Empresa</option>
+                            <?php foreach ($this->DeptoEmp as $row){?> 
+                            <option value="<?php echo $row->IdDep; ?>"> <?php echo $row->Nombre; ?></option>
+                            <?php } ?>         
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="col-sm-6">
+                    <div class="form-group"><label>Municipio</label>
+                        <select id="cboMun" name="IdMunicipio">
+                            <option value="">Seleccione Municipio</option>               
+                        </select>
+                    </div>  
+                    <div class="form-group"><label>Cargo</label>
+                        <select  id="cargos"name="IdCargo">
+                            <option value="">Seleccione Cargo</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Jefe</label>
+                        <select  id="jefe" name="IdJefe">
+                            <option value="">Seleccione</option>
+                        </select>
+                    </div>
+                </div>                              
 
                 <div class="modal-footer">
-                    <center><input type="submit" class="btn btn-primary"  value="Guardar Empleado"></input></center>
+                    <center><input type="submit" class="btn btn-primary" value="Guardar Empleado"></input></center>
                 </div>
             </div>
         </div>
