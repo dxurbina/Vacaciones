@@ -35,10 +35,10 @@ class LoadController{
     }
 
     public function close(){
-        if(isset($_SESSION['nickname'])){
-            session_unset();
-            header('Location: index.php?c=Principal');
+    if(isset($_SESSION['nickname'])){
+                session_unset();
         }
+        header('Location: index.php?c=Principal');
     }
 }
 ?>

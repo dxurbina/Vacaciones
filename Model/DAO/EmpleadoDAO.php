@@ -16,8 +16,8 @@ class EmpleadoDAO{
       try{
         $resultSet = array();
         $consult = $this->db->prepare("select e.IdEmpleado, e.PNombre, e.PApellido, e.Telefono, d.Nombre as Dep, c.NombreCargo, ej.PNombre as NJefe, ej.PApellido
-		as AJefe from Empleados e, Empleados ej, Cargos c,DeptosEmpresa d where
-        e.IdJefe = ej.IdEmpleado and e.IdCargo = c.IdCargo and c.IdDep = d.IdDep;");
+		as AJefe from Empleados e, Empleados ej, Cargos c, CentroCostos cc, DeptosEmpresa d where
+        e.IdJefe = ej.IdEmpleado and e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep;");
         $consult->execute(); 
             while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
                 $resulSet = $row; 
@@ -32,9 +32,9 @@ class EmpleadoDAO{
     public function ListEmployeebyId($id){
         try{
             $resultSet = array();
-            $consult = $this->db->prepare("select e.IdEmpleado, e.PNombre, e.SNombre, e.PApellido, e.SApellido, e.Residencia, e.Cedula, e.Pasaporte, e.NInss, e.FechaNac, e.Sexo, e.Hijos, e.NumHijos, e.Hermanos, e.NumHermanos, e.Telefono, e.EstadoCivil, e.Correo, e.Escolaridad, e.NRuc, e.Profesion, e.Direccion, e.Nacionalidad1, e.Nacionalidad2, e.IdMunicipio,dt.IdDepartamento, d.Nombre as Dep, d.IdDep, c.NombreCargo, c.IdCargo,  ej.PNombre as NJefe, ej.PApellido
-            as AJefe, ej.IdEmpleado as IdJefeE from Empleados e, Empleados ej, Cargos c,DeptosEmpresa d, Municipio dt where
-            e.IdJefe = ej.IdEmpleado and e.IdCargo = c.IdCargo and c.IdDep = d.IdDep and dt.IdMunicipio = e.IdMunicipio  and e.IdEmpleado = ?;");
+            $consult = $this->db->prepare("select e.IdEmpleado, e.PNombre, e.SNombre, e.PApellido, e.SApellido, e.Residencia, e.Cedula, e.Pasaporte, e.NInss, e.FechaNac, e.Sexo, e.Hijos, e.NumHijos, e.Hermanos, e.NumHermanos, e.Telefono, e.EstadoCivil, e.Correo, e.Escolaridad, e.NRuc, e.Profesion, e.Direccion, e.Nacionalidad1, e.Nacionalidad2, e.IdMunicipio,dt.IdDepartamento, d.Nombre as Dep, d.IdDep, c.NombreCargo, c.IdCargo, cc.IdCosto, cc.Nombre,  ej.PNombre as NJefe, ej.PApellido
+            as AJefe, ej.IdEmpleado as IdJefeE from Empleados e, Empleados ej, Cargos c, CentroCostos cc, DeptosEmpresa d, Municipio dt where
+            e.IdJefe = ej.IdEmpleado and e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and dt.IdMunicipio = e.IdMunicipio  and e.IdEmpleado = ?;");
             $consult->execute(array($id)); 
                 while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
                     $resulSet = $row; 
@@ -220,7 +220,6 @@ public function listarMunPorDepto($dep){
                     $resulSet = $row; 
                 }
                 return $resulSet;
-
     }
 
     public function showMunicipality($dep){
@@ -235,9 +234,35 @@ public function listarMunPorDepto($dep){
 
     }
 
+    public function showDptosEmpresa(){
+        $sql = "select IdDep, Nombre from DeptosEmpresa";
+        $resulSet = array();
+        $consult = $this->db->prepare($sql);
+        $consult->execute();
+                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                    $resulSet = $row; 
+                }
+                return $resulSet;
+
+    }
+
 
     public function showCargos($id){
-        $sql = "select IdCargo, NombreCargo from Cargos where IdDep = ?";
+        $sql = "select c.IdCargo, c.NombreCargo from DeptosEmpresa dp
+        inner join CentroCostos cc on dp.IdDep=cc.IdDptoEmp
+        inner join Cargos c on c.IdCosto=cc.IdCosto
+        where IdDep = ?;";
+        $resulSet = array();
+        $consult = $this->db->prepare($sql);
+        $consult->execute(array($id));
+                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                    $resulSet = $row; 
+                }
+                return $resulSet;
+    }
+
+    public function showCCostobyId($id){
+        $sql = "select Codigo from CentroCostos where IdCosto = ?";
         $resulSet = array();
         $consult = $this->db->prepare($sql);
         $consult->execute(array($id));

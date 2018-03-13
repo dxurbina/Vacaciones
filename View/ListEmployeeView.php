@@ -73,6 +73,10 @@
                                     <label>Fecha de Nacimiento</label>
                                 </div>
                                 <div class="form-group"><input  id="desac9" name ="FechaNac" type= "date" min="1950-01-01" max="2018-05-03"ID=""  Text=""  Enabled="false"></input></div>
+                                <div class="form-group">
+                                    <label>Fecha de Ingreso</label>
+                                </div>
+                                <div class="form-group"><input  id="desac29" name ="FechaIng" type= "date" min="1950-01-01" max="2018-05-03"ID=""  Text=""  Enabled="false"></input></div>
                                 
                                 <div class="form-group">
                                     <div class="row row-fluid">
@@ -155,7 +159,11 @@
                                 
                                 <div class="form-group"><label>Dirección</label></div>
                                 <textarea id="desac21" name="Direccion" rows="3" style="width: 100%;" >Write something here</textarea>
-                            
+                                <div class="form-group">
+                                    <label>Centro Costos</label>
+                                </div>
+                                <div class="form-group"><input  id="desac30" name ="FechaNac"  Text=""  Enabled="false"></input></div>
+                                
                                 
                         </div>
 
@@ -188,7 +196,7 @@
 
                                 <div class="form-group">
                                 <label>Depto Empresa</label></div>
-                                <div class="form-group"><select  id="desac26"name="IdCargo">
+                                <div class="form-group"><select  id="desac26"name="DptoEmpresa">
                                                 
                                             </select>
                                 </div>
@@ -208,6 +216,7 @@
                                                
                                             </select>
                                 </div>
+                                
                                
                         </div>
                         
