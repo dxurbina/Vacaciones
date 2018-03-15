@@ -185,6 +185,23 @@ $(document).ready(function(){
             
                                         $("#desac28").append('<option value="' + v.IdEmpleado + '">' + (v.PNombre + " "+ v.SNombre ) + '</option>');
                                     })
+                                    $.ajax({
+                                        data: obj,
+                                        url: "?c=Empleado&a=showCCostobyId",
+                                        type: "POST",
+                                        dataType: 'json',
+                                        contentType: 'application/json; charset= utf-8',
+                                        beforeSend: function () 
+                                        {
+                                            $("#desac27").prop('disabled', true);
+                                        },
+                                        error: function(xhr, ajaxOptions, thrownError){
+                                            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+                                        },
+                                        success: function (data) {
+                                            $("#desac30").val(data.Nombre);
+                                        }
+                                        });
                                 }
                                 });
                             
@@ -551,6 +568,7 @@ function fillModalData(dato){
            $("#desac21").val(data[0].Direccion);
            $("#desac22").val(data[0].Nacionalidad1);
            $("#desac23").val(data[0].Nacionalidad2);
+           $("#desac30").val(data[0].Nombre);
            $("#CargarEmpleado").val(data[0].IdEmpleado);
            loadDeparment(data[0].IdDepartamento);
            loadMunicipality(data);
