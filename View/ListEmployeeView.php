@@ -189,8 +189,7 @@
 
                             <div class="form-group">
                                 <label>Municipio</label></div>
-                                <div class="form-group"><select id="desac25" name="IdMunicipio">
-                                                
+                                <div class="form-group"><select id="desac25" name="IdMunicipio"> 
                                             </select>
                                 </div>
 

@@ -12,13 +12,13 @@
 
         public function login(Empleado $data){
             $flag = false;
-            $sql = "select Usuario from Usuarios where Usuario = ? and Pass = ?";
+            $sql = "select e.IdEmpleado from Empleados e inner join Usuarios u where u.Usuario = ? and u.Pass = ?";
             $result = $this->db->prepare($sql);
             $result->execute(array($data->__GET('user'), $data->__GET('pass')));
             
             if($row = $result->fetch(PDO::FETCH_OBJ)){
                 $flag = true;
-                
+                $_SESSION['ID'] = $row;
                 $_SESSION['nickname'] = $data->__GET('user');
             }else{
                 $_SESSION['nickname'] = 'Error';

@@ -262,7 +262,8 @@ public function listarMunPorDepto($dep){
     }
 
     public function showCCostobyId($id){
-        $sql = "select Codigo from CentroCostos where IdCosto = ?";
+        $sql = "select cc.Nombre from CentroCostos cc inner join Cargos c on cc.IdCosto = c.IdCosto
+        where c.IdCargo = ?;";
         $resulSet = array();
         $consult = $this->db->prepare($sql);
         $consult->execute(array($id));

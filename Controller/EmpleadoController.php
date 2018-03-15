@@ -290,9 +290,7 @@ public function listarMunPorDepto(){
         
     }
 
-    public function showCCostos(){
-
-    }
+    
 
     public function showCCostosbyId(){
         if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
