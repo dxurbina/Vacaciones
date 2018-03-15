@@ -592,6 +592,26 @@ $(document).on('click', '.btn-edit', function (e) {
 
 });
 
+// evento click para boton actualizar
+$(document).on('click', '.btn-del', function (e) {
+    e.preventDefault();
+
+    var _row = $(this).parent().parent()[0];
+    //data = tabla.row(_row).data();
+    
+    dato = tabla.fnGetData(_row);
+             var $miSelect = $('#casilla');
+             $miSelect.val($miSelect.children('option:eq(0)').val());
+             DisabledField();
+    
+    idEmp = dato[0];
+    //console.log(data[0]);
+    clear();
+    fillModalData(dato);
+    //$("#desac1").val(dato[0].IdEmpleado);
+    
+
+});
 
 
 

@@ -27,6 +27,9 @@ session_start();
     <script>alert("Bienvenido")</script>
     <p>Usted tiene personal a cargo</p><br>
     <a href="?c=Load&a=close">Cerrar Sesión</a><br>
+<?php }else if( isset($_SESSION['access']) && $_SESSION['access'] == 1){ ?> <!--Este lo agregue 14/03 -->
+    <a href="?c=SaldoVacaciones">Ver Saldo Vacaciones</a><br> <!-- Este es para ver saldo vacaciones -->
+    <a href="?c=Load&a=close">Cerrar Sesión</a><br>
 <?php }else if($_SESSION['nickname'] == "Error"){ ?>
     <script>alert("Usuario o contraseña incorrectos!!!")</script>
     <form method="POST" action="?c=Load&a=load">
