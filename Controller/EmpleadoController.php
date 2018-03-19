@@ -1,5 +1,4 @@
 <?php
- session_start();
 class EmpleadoController{
     public $obj, $model, $obju;
     public  $Departamentos, $html, $DeptoEmp, $cargo, $jefe, $datos, $var;
@@ -11,7 +10,6 @@ public function __construct(){
     $this->obj = new Empleado();
     $this->obju = new User();
     $this->model = new EmpleadoDAO();
- 
 }
 
 public function index (){

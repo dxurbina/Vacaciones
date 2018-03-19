@@ -6,7 +6,7 @@
             require_once("Model/Entity/Empleado.php");       
             $this->con = new Conexion();
             $this->db = $this->con->conex();
-            session_start();
+            
         }
 
 

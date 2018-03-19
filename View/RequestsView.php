@@ -1,7 +1,7 @@
-<?php if(isset($_SESSION['nickname']) and $_SESSION['access'] == 2 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+<?php if((isset($_SESSION['nickname']) and $_SESSION['access'] == 2 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5)){
            ?>
-<div class="row">
-            <div class="col-xs-12">
+
+        <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title" style="font-size: 200%;">Solicitudes de Vacaciones</h3>
@@ -9,7 +9,7 @@
 
                 </div>
                 <div class="box-body table-responsive">
-                    <table id="tbl_Empleados"  class="table table-bordered table-hover">
+                    <table id="tbl_Solicitud"  class="table table-bordered table-hover">
                         <thead>
                             <tr style="text-align: center;">
                                 <th>IdVacaciones</th>
@@ -22,24 +22,28 @@
                             </tr>
                         </thead>
                         <tbody id="tbl_body_table">
-                                <!--Cargar Empleados por medio de AJAX -->
+                                <!--Cargar Solicitudes por medio de AJAX -->
                         </tbody>
                     </table>
                 </div>
-                </div>
-            </div>
-        </div>
+                <div class="form-group">
+                            <label>Comentarios</label>
+                        </div>
         <div class="form-group">
+                            
                             <textarea class="form-control" name="" id="" cols="50" rows="5" readonly="readonly"></textarea>
         </div>
-
+            </div>
+        </div>
+        
+        <!--
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title" style="font-size: 200%;">Historial de Solicitudes</h3>
                 </div>
                 <div class="box-body table-responsive">
-                    <table id="tbl_Empleados"  class="table table-bordered table-hover">
+                    <table id="tbl_Historial"  class="table table-bordered table-hover">
                         <thead>
                             <tr style="text-align: center;">
                                 <th>IdVacaciones</th>
@@ -54,14 +58,15 @@
                             </tr>
                         </thead>
                         <tbody id="tbl_body_table">
-                                <!--Cargar Empleados por medio de AJAX -->
+                                Cargar Historial por medio de AJAX
                         </tbody>
                     </table>
                 </div>
                 </div>
             </div>
         </div>
-
+        -->
+        <script src="View/js/RequestVacation.js" type="text/javascript"></script>
         <?php
     }else {
         echo "Site not Found";
