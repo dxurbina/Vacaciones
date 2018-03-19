@@ -1,7 +1,7 @@
 <?php if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
            ?>  
     <!-- Inicia la tabla con los valores -->
-<form class="form" action="?c=Empleado&a=AddEmpleados" method="POST">
+<form class="form" action="?c=Empleado&a=AddEmpleados" method="POST"> 
     <!-- POP UP -->
     <div class="modal-dialog" role="document">
         <div style="width: 130%;" class="modal-content">
@@ -90,15 +90,14 @@
                             <option value="<?php echo $row->IdDepartamento; ?>"> <?php echo $row->Nombre; ?></option>
                             <?php } ?>
                         </select>
-                </div> 
-                    <div class="form-group"><label>Depto. Empresa</label>
-                        <select id="dptoEmp" name="Departamento">
-                            <option value="0">Seleccione Depto Empresa</option>
-                            <?php foreach ($this->DeptoEmp as $row){?> 
-                            <option value="<?php echo $row->IdDep; ?>"> <?php echo $row->Nombre; ?></option>
-                            <?php } ?>         
+                    </div>
+                    <div class="form-group"><label>Fecha de Ingreso</label><input  id="FechaIng" name ="FechaIng" type= "date" min="1950-01-01" max="2018-05-03"ID=""  Text="" ></input></div> 
+                    <div class="form-group"><label>Cargo</label>
+                        <select  id="cargos"name="IdCargo">
+                            <option value="">Seleccione Cargo</option>
                         </select>
                     </div>
+                    <div class="form-group"><label>Centro Costo</label><input  id="ccostos" name ="ccostos"  Text=""  disabled="true"></input></div>
                 </div>
                 
                 <div class="col-sm-6">
@@ -106,10 +105,13 @@
                         <select id="cboMun" name="IdMunicipio">
                             <option value="">Seleccione Municipio</option>               
                         </select>
-                    </div>  
-                    <div class="form-group"><label>Cargo</label>
-                        <select  id="cargos"name="IdCargo">
-                            <option value="">Seleccione Cargo</option>
+                    </div>
+                    <div class="form-group"><label>Depto. Empresa</label>
+                        <select id="dptoEmp" name="Departamento">
+                            <option value="0">Seleccione Depto Empresa</option>
+                            <?php foreach ($this->DeptoEmp as $row){?> 
+                            <option value="<?php echo $row->IdDep; ?>"> <?php echo $row->Nombre; ?></option>
+                            <?php } ?>         
                         </select>
                     </div>
                     <div class="form-group"><label>Jefe</label>
@@ -127,6 +129,7 @@
         </div>
     </div>
 </form>
+<script src="View/js/RegistarEmp.js" type="text/javascript"></script>
 
 <!-- valida que solo se escriba números -->
 <script>
@@ -157,7 +160,7 @@ function validaLetras(e){
     }
         
     // Patron de entrada, en este caso solo acepta numeros
-    patron =/[a-z]/;
+    patron =/[a-z-A-Z]/;
     tecla_final = String.fromCharCode(tecla);
     return patron.test(tecla_final);
 }
@@ -168,4 +171,3 @@ function validaLetras(e){
         echo "Site not Found";
     } ?>
 
- <script src="View/js/RegistarEmp.js" type="text/javascript"></script>

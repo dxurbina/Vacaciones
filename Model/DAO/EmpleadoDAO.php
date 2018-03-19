@@ -111,52 +111,53 @@ public function listarMunPorDepto($dep){
         $sql = "select * from Empleados where IdEmpleado = ?";
         $val = $this->db->prepare($sql)->execute(array($IdEmp));
     }    
-    
-    /*Agregar en la tabla Empleados*/ 
-    public function AddEmpleados(Empleado $data, User $datau){
-        $sql = "insert into Empleados values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?);"; /*Verificar esta línea de código*/
-        $consult = $this->db->prepare($sql);
-        $consult->execute(array(null,
-        $data->__GET('PNombre') /*= mysql_real_escape_string_PDO($clean['PNombre'])*/,
-        $data->__GET('SNombre'),
-        $data->__GET('PApellido'),
-        $data->__GET('SApellido'),
-        $data->__GET('Residencia'),
-        $data->__GET('Cedula'),
-        $data->__GET('Pasaporte'),
-        $data->__GET('NInss'),
-        $data->__GET('FechaNac'),
-        $data->__GET('Sexo'),
-        $data->__GET('Hijos'),
-        $data->__GET('NumHijos'),
-        $data->__GET('Hermanos'),
-        $data->__GET('NumHermanos'),
-        $data->__GET('Telefono'),
-        $data->__GET('EstadoCivil'),
-        $data->__GET('Correo'),
-        $data->__GET('Escolaridad'),
-        $data->__GET('NRuc'),
-        $data->__GET('Profesion'),
-        $data->__GET('Direccion'),
-        $data->__GET('Nacionalidad1'),
-        $data->__GET('Nacionalidad2'),
-        $data->__GET('IdCargo'),
-        $data->__GET('IdJefe'),
-        $data->__GET('IdMunicipio')
-        ));     
 
-        $lastid;
-        $sql = "select MAX(IdEmpleado) as valor from Empleados";
-        $result = $this->db->prepare($sql);
-        $result->execute();
-        if($row = $result->fetch(PDO::FETCH_OBJ)){
-            $lastid=$row->valor;
-        }
-        
-        $sql = "call adduser (?, ?, ?)";
-        $consult2 = $this->db->prepare($sql);
-        $consult->execute(array($datau->__GET('user'), $datau->__GET('pass'), $lastid));
+   /*Agregar en la tabla Empleados*/ 
+   public function AddEmpleados(Empleado $data, User $datau){
+    $sql = "insert into Empleados values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?);"; /*Verificar esta línea de código*/
+    $consult = $this->db->prepare($sql);
+    $consult->execute(array(null,
+    $data->__GET('PNombre'),
+    $data->__GET('SNombre'),
+    $data->__GET('PApellido'),
+    $data->__GET('SApellido'),
+    $data->__GET('Residencia'),
+    $data->__GET('Cedula'),
+    $data->__GET('Pasaporte'),
+    $data->__GET('NInss'),
+    $data->__GET('FechaNac'),
+    $data->__GET('FechaIng'),
+    $data->__GET('Sexo'),
+    $data->__GET('Hijos'),
+    $data->__GET('NumHijos'),
+    $data->__GET('Hermanos'),
+    $data->__GET('NumHermanos'),
+    $data->__GET('Telefono'),
+    $data->__GET('EstadoCivil'),
+    $data->__GET('Correo'),
+    $data->__GET('Escolaridad'),
+    $data->__GET('NRuc'),
+    $data->__GET('Profesion'),
+    $data->__GET('Direccion'),
+    $data->__GET('Nacionalidad1'),
+    $data->__GET('Nacionalidad2'),
+    $data->__GET('IdCargo'),
+    $data->__GET('IdJefe'),
+    $data->__GET('IdMunicipio')
+    ));     
+
+    $lastid;
+    $sql = "select MAX(IdEmpleado) as valor from Empleados";
+    $result = $this->db->prepare($sql);
+    $result->execute();
+    if($row = $result->fetch(PDO::FETCH_OBJ)){
+        $lastid=$row->valor;
     }
+    
+   /* $sql = "call adduser (?, ?, ?)";
+    $consult2 = $this->db->prepare($sql);
+    $consult->execute(array($datau->__GET('user'), $datau->__GET('pass'), $lastid));*/
+}
         
     
     

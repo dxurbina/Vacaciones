@@ -625,9 +625,9 @@ $(document).on('click', '.btn-del', function (e) {
     idEmp = dato[0];
     //console.log(data[0]);
     clear();
-    fillModalData(dato);
+    //fillModalData(dato);
     //$("#desac1").val(dato[0].IdEmpleado);
-    
+    tabla._row._select('IdEmpleado'); //ver aquí
 
 });
 

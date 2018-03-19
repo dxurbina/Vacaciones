@@ -39,6 +39,18 @@ public function index (){
     }
 }
 
+public function ListEmpleado(){
+    if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        $this->Departamentos = $this->model->listarDptos();
+        $this->DeptoEmp = $this->model->listarDptosEmp();
+            include("View/Head.php");
+            include("View/Empleados.php");
+            include("View/Footer.php");
+    }else {
+        header('Location: index.php?c=Principal&a=AccessError');
+    }
+}
+
 public function AddEmpleados(){
     if($_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
     $this->obj->__SET('Residencia', $_REQUEST['Residencia']);
@@ -65,7 +77,7 @@ public function AddEmpleados(){
     $this->obj->__SET('SApellido', $_REQUEST['SApellido']);
     
     $this->obj->__SET('Cedula', $_REQUEST['Cedula']);
-    $this->obj->__SET('Pasaporte', 'Pasaporte');
+    $this->obj->__SET('Pasaporte', $_REQUEST['Pasaporte']);
     $this->obj->__SET('NInss', $_REQUEST['NInss']);
     $this->obj->__SET('FechaNac', $_REQUEST['FechaNac']);
     $this->obj->__SET('FechaIng', $_REQUEST['FechaIng']);
@@ -77,11 +89,11 @@ public function AddEmpleados(){
     $this->obj->__SET('Escolaridad', $_REQUEST['Escolaridad']);
     $this->obj->__SET('NRuc', $_REQUEST['NRuc']);
     $this->obj->__SET('Profesion', $_REQUEST['Profesion']);
-    $this->obj->__SET('Direccion', 'Direccion');
+    $this->obj->__SET('Direccion', $_REQUEST['Direccion']);
     $this->obj->__SET('Nacionalidad1', $_REQUEST['Nacionalidad1']);
     $this->obj->__SET('Nacionalidad2', $_REQUEST['Nacionalidad2']);
     //$this->obj->__SET('Estado', '$_REQUEST['Estado']');
-   $this->obj->__SET('IdCargo', $_REQUEST['IdCargo']);
+    $this->obj->__SET('IdCargo', $_REQUEST['IdCargo']);
     $this->obj->__SET('IdJefe', $_REQUEST['IdJefe']);
     $this->obj->__SET('IdMunicipio', $_REQUEST['IdMunicipio']);
     /*
