@@ -120,6 +120,23 @@ $(document).ready(function(){
 
                     $("#jefe").append('<option value="' + v.IdEmpleado + '">' + (v.PNombre + " "+ v.SNombre ) + '</option>');
                 })
+                $.ajax({
+                    data: obj,
+                    url: "?c=Empleado&a=showCCostobyId",
+                    type: "POST",
+                    dataType: 'json',
+                    contentType: 'application/json; charset= utf-8',
+                    beforeSend: function () 
+                    {
+                        $("#cargos").prop('disabled', true);
+                    },
+                    error: function(xhr, ajaxOptions, thrownError){
+                        console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+                    },
+                    success: function (data) {
+                        $("#ccostos").val(data.Nombre);
+                    }
+                    });
             }
             });
     });

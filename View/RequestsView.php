@@ -12,8 +12,9 @@
                     <table id="tbl_Solicitud"  class="table table-bordered table-hover">
                         <thead>
                             <tr style="text-align: center;">
-                                <th>IdVacaciones</th>
+                                <th>Num. de Solicitud</th>
                                 <th>Nombre</th>
+                                <th>Cargo</th>
                                 <th>Cant Días</th>
                                 <th>Fecha Inicio</th>
                                 <th>Fecha Final</th>
@@ -31,12 +32,12 @@
                         </div>
         <div class="form-group">
                             
-                            <textarea class="form-control" name="" id="" cols="50" rows="5" readonly="readonly"></textarea>
+                            <textarea class="form-control" name="" id="Descrip" cols="50" rows="5" readonly="readonly"></textarea>
         </div>
             </div>
         </div>
         
-        <!--
+        
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header">
@@ -48,24 +49,65 @@
                             <tr style="text-align: center;">
                                 <th>IdVacaciones</th>
                                 <th>Nombre</th>
+                                <th>Cargo</th>
                                 <th>Cant Días</th>
-                                <th>Fecha Inicio</th>
-                                <th>Fecha Final</th>
+                                <th>Desde - Hasta</th>
                                 <th>Tipo</th>
                                 <th>Fecha Solicitud</th>
                                 <th>Fecha Respuesta</th>
-                                <th>Aprobadá Por</th>
+                                <th>Respuesta</th>
                             </tr>
                         </thead>
                         <tbody id="tbl_body_table">
-                                Cargar Historial por medio de AJAX
+                                <!--Cargar Solicitudes por medio de AJAX -->
                         </tbody>
                     </table>
                 </div>
                 </div>
             </div>
         </div>
-        -->
+    
+
+    <div class="modal fade" id="imodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Confirmar</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>¿Seguro desea Aprobar las vacaciones al empleado?</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-primary" id="update" value ="Aceptar" />
+                    <button type="button" data-dismiss="modal" class="btn btn-danger" id="btnCancel">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="imodal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Confirmar</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>¿Seguro desea rechazar la solicitud al empleado?</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-primary" id="update" value="Rechazar" />
+                    <button type="button"  data-dismiss="modal" class="btn btn-danger" id="btnCancel">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
         <script src="View/js/RequestVacation.js" type="text/javascript"></script>
         <?php
     }else {

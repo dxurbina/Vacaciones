@@ -149,7 +149,7 @@ $(document).ready(function(){
                                         //console.log(data);
                                         $("#desac28").find('option').remove();
                                         $(data).each(function(i, v){ // indice, valor
-                                            $("#desac28").append('<option value="' + v.IdEmpleado + '">' + (v.PNombre + " "+ v.SNombre ) + '</option>');
+                                            $("#desac28").append('<option value="' + v.IdEmpleado + '">' + (v.PNombre + " "+ v.PApellido ) + '</option>');
                                            
                                         })
                                         }
@@ -163,10 +163,10 @@ $(document).ready(function(){
                             var _Jefe = $("#desac28");
                             var _select = $("#desac27").val();
                             var obj = JSON.stringify({ id: _select });
-                           // console.log($("#desac24").val());
+                           console.log(_select);
                             $.ajax({
                                 data: obj,
-                                url: "?c=Empleado&a=showJefe",
+                                url: "?c=Empleado&a=showJefebyPosition",
                                 type: "POST",
                                 dataType: 'json',
                                 contentType: 'application/json; charset= utf-8',
@@ -183,11 +183,11 @@ $(document).ready(function(){
                                     _Jefe.find('option').remove();
                                     $(data).each(function(i, v){ // indice, valor
             
-                                        $("#desac28").append('<option value="' + v.IdEmpleado + '">' + (v.PNombre + " "+ v.SNombre ) + '</option>');
+                                        $("#desac28").append('<option value="' + v.IdEmpleado + '">' + (v.PNombre + " "+ v.PApellido ) + '</option>');
                                     })
                                     $.ajax({
                                         data: obj,
-                                        url: "?c=Empleado&a=showCCostobyId",
+                                        url: "?c=Empleado&a=showCCostosbyId",
                                         type: "POST",
                                         dataType: 'json',
                                         contentType: 'application/json; charset= utf-8',
@@ -199,14 +199,13 @@ $(document).ready(function(){
                                             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
                                         },
                                         success: function (data) {
+                                            $("#desac27").prop('disabled', false);
                                             $("#desac30").val(data.Nombre);
                                         }
                                         });
                                 }
                                 });
-                            
                             });
-        
                             $("#CargarEmpleado").change(function(){
                                 console.log(idEmp);
                                 $("#CargarEmpleado").val(idEmp);
@@ -249,7 +248,7 @@ function addRowDT(data) {
 function sendDataAjax() {
     $.ajax({
         type: "POST",
-        url: "?c=Empleado&a=ListEmployee",
+        url: "?c=Empleado&a=showGeneralManager",
         data: {},
         dataType: 'json',
         contentType: 'application/json; charset= utf-8',
@@ -261,19 +260,48 @@ function sendDataAjax() {
             console.log(data.length);
             //addRowDT(data.d);
             tabla = $("#tbl_Empleados").DataTable();
-    for (var i = 0; i < data.length; i++) {
-        tabla.fnAddData([
-            data[i].IdEmpleado,
-            ( data[i].PNombre + " "+ data[i].PApellido),
-            data[i].Telefono,
-            data[i].Dep,
-            data[i].NombreCargo,
-            (data[i].NJefe + " " + data[i].AJefe),
-            '<button title= "Editar/ver" value= "Actualizar" class="btn btn-primary btn-edit " data-target="#imodal" data-toggle="modal"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
-            '<button title= "Eliminar" value= "Borrar" class="btn btn-danger btn-del "><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
-            '<button title= "Vacaciones" value= "VerVacaciones" class="btn btn-primary btn-vac " data-target="#imodalver" data-toggle="modal"><i class="fa fa-plus-square" aria-hidden="true"></i></button>'
-        ]);
-    }
+            for (var i = 0; i < data.length; i++) {
+                tabla.fnAddData([
+                    data[i].IdEmpleado,
+                    ( data[i].PNombre + " "+ data[i].PApellido),
+                    data[i].Telefono,
+                    data[i].Dep,
+                    data[i].NombreCargo,
+                    (' - '),
+                    '<button title= "Editar/ver" value= "Actualizar" class="btn btn-primary btn-edit " data-target="#imodal" data-toggle="modal"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
+                    '<button title= "Eliminar" value= "Borrar" class="btn btn-danger btn-del "><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
+                    '<button title= "Vacaciones" value= "VerVacaciones" class="btn btn-primary btn-vac " data-target="#imodalver" data-toggle="modal"><i class="fa fa-plus-square" aria-hidden="true"></i></button>'
+                ]);
+            }
+            $.ajax({
+                type: "POST",
+                url: "?c=Empleado&a=ListEmployee",
+                data: {},
+                dataType: 'json',
+                contentType: 'application/json; charset= utf-8',
+                error: function(xhr, ajaxOptions, thrownError){
+                    console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+                },
+                success: function (data) {
+                    console.log(data);
+                    console.log(data.length);
+                    //addRowDT(data.d);
+                    tabla = $("#tbl_Empleados").DataTable();
+                    for (var i = 0; i < data.length; i++) {
+                        tabla.fnAddData([
+                            data[i].IdEmpleado,
+                            ( data[i].PNombre + " "+ data[i].PApellido),
+                            data[i].Telefono,
+                            data[i].Dep,
+                            data[i].NombreCargo,
+                            (data[i].NJefe + " " + data[i].AJefe),
+                            '<button title= "Editar/ver" value= "Actualizar" class="btn btn-primary btn-edit " data-target="#imodal" data-toggle="modal"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
+                            '<button title= "Eliminar" value= "Borrar" class="btn btn-danger btn-del "><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
+                            '<button title= "Vacaciones" value= "VerVacaciones" class="btn btn-primary btn-vac " data-target="#imodalver" data-toggle="modal"><i class="fa fa-plus-square" aria-hidden="true"></i></button>'
+                        ]);
+                    }
+                }
+            });
         }
     });
 }
@@ -433,7 +461,7 @@ function loadJefe(datos){
             console.log(data);
             _Jefe.find('option').remove();
             $(data).each(function(i, v){ // indice, valor
-                _Jefe.append('<option value="' + v.IdEmpleado + '">' + (v.PNombre + " "+ v.SNombre ) + '</option>');
+                _Jefe.append('<option value="' + v.IdEmpleado + '">' + (v.PNombre + " "+ v.PApellido ) + '</option>');
                
             })
             var $miSelect = $('#desac28');
@@ -574,7 +602,10 @@ function fillModalData(dato){
            loadMunicipality(data);
            loadDptosEmpresa(data);
            loadCargos(data);
-           loadJefe(data);
+           if($('#desac27').val() != 'Gerente General'){
+            loadJefe(data);
+           }
+           
            //$("#idEmpleado").val(data[0].IdEmpleado);
           // $("#desac1").val(data[0].IdEmpleado);
            
@@ -625,9 +656,9 @@ $(document).on('click', '.btn-del', function (e) {
     idEmp = dato[0];
     //console.log(data[0]);
     clear();
-    fillModalData(dato);
+    //fillModalData(dato);
     //$("#desac1").val(dato[0].IdEmpleado);
-    
+    tabla._row._select('IdEmpleado'); //ver aquí
 
 });
 

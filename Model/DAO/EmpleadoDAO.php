@@ -27,18 +27,57 @@ class EmpleadoDAO{
         {
             die($e->getMessage());
         }
-}
+    }
+
+
+      public function showGeneralManager(){
+        try{
+          $resultSet = array();
+          $consult = $this->db->prepare("select e.IdEmpleado, e.PNombre, e.PApellido, e.Telefono, d.Nombre as Dep, c.NombreCargo
+          from Empleados e inner join Cargos c on e.IdCargo = c.Idcargo inner join Centrocostos cc on c.IdCosto = cc.IdCosto
+                           inner join deptosempresa d on cc.IdDptoEmp = d.IdDep where e.IdJefe is Null;");
+          $consult->execute(); 
+              while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                  $resulSet = $row; 
+              }
+              return $resulSet;
+        } catch(Exception $e)
+            {
+                die($e->getMessage());
+            }
+        }
 
     public function ListEmployeebyId($id){
         try{
-            $resultSet = array();
-            $consult = $this->db->prepare("select e.IdEmpleado, e.PNombre, e.SNombre, e.PApellido, e.SApellido, e.Residencia, e.Cedula, e.Pasaporte, e.NInss, e.FechaNac, e.Sexo, e.Hijos, e.NumHijos, e.Hermanos, e.NumHermanos, e.Telefono, e.EstadoCivil, e.Correo, e.Escolaridad, e.NRuc, e.Profesion, e.Direccion, e.Nacionalidad1, e.Nacionalidad2, e.IdMunicipio,dt.IdDepartamento, d.Nombre as Dep, d.IdDep, c.NombreCargo, c.IdCargo, cc.IdCosto, cc.Nombre,  ej.PNombre as NJefe, ej.PApellido
-            as AJefe, ej.IdEmpleado as IdJefeE from Empleados e, Empleados ej, Cargos c, CentroCostos cc, DeptosEmpresa d, Municipio dt where
-            e.IdJefe = ej.IdEmpleado and e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and dt.IdMunicipio = e.IdMunicipio  and e.IdEmpleado = ?;");
-            $consult->execute(array($id)); 
-                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
-                    $resulSet = $row; 
+            $sql = "select IdEmpleado from Empleados where IdJefe is null";
+            $result = $this->db->prepare($sql);
+            $result->execute();
+            if($row = $result->fetch(PDO::FETCH_OBJ)){
+                $lastid=$row->IdEmpleado;
+                if($lastid == $id){
+                    $resultSet = array();
+                    $consult = $this->db->prepare("select e.IdEmpleado, e.PNombre, e.SNombre, e.PApellido, e.SApellido, e.Residencia, e.Cedula, e.Pasaporte, e.NInss, e.FechaNac, e.Sexo, e.Hijos, e.NumHijos, e.Hermanos, e.NumHermanos, e.Telefono, e.EstadoCivil, e.Correo, e.Escolaridad, e.NRuc, e.Profesion, e.Direccion, e.Nacionalidad1, e.Nacionalidad2, e.IdMunicipio,dt.IdDepartamento, d.Nombre as Dep, d.IdDep, c.NombreCargo, c.IdCargo, cc.IdCosto, cc.Nombre
+                    from Empleados e, Cargos c, CentroCostos cc, DeptosEmpresa d, Municipio dt where
+                      e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and dt.IdMunicipio = e.IdMunicipio  and e.IdEmpleado = ?;");
+                    $consult->execute(array($id)); 
+                    while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                        $resulSet = $row; 
+                    }
+                }else {
+                    $resultSet = array();
+                    $consult = $this->db->prepare("select e.IdEmpleado, e.PNombre, e.SNombre, e.PApellido, e.SApellido, e.Residencia, e.Cedula, e.Pasaporte, e.NInss, e.FechaNac, e.Sexo, e.Hijos, e.NumHijos, e.Hermanos, e.NumHermanos, e.Telefono, e.EstadoCivil, e.Correo, e.Escolaridad, e.NRuc, e.Profesion, e.Direccion, e.Nacionalidad1, e.Nacionalidad2, e.IdMunicipio,dt.IdDepartamento, d.Nombre as Dep, d.IdDep, c.NombreCargo, c.IdCargo, cc.IdCosto, cc.Nombre,  ej.PNombre as NJefe, ej.PApellido
+                    as AJefe, ej.IdEmpleado as IdJefeE from Empleados e, Empleados ej, Cargos c, CentroCostos cc, DeptosEmpresa d, Municipio dt where
+                    e.IdJefe = ej.IdEmpleado and e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and dt.IdMunicipio = e.IdMunicipio  and e.IdEmpleado = ?;");
+                    $consult->execute(array($id)); 
+                    while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                        $resulSet = $row; 
+                    }
                 }
+            }
+
+
+
+            
                 return $resulSet; /*esto estaba ahí*/
         } catch(Exception $e)
             {
@@ -111,52 +150,53 @@ public function listarMunPorDepto($dep){
         $sql = "select * from Empleados where IdEmpleado = ?";
         $val = $this->db->prepare($sql)->execute(array($IdEmp));
     }    
-    
-    /*Agregar en la tabla Empleados*/ 
-    public function AddEmpleados(Empleado $data, User $datau){
-        $sql = "insert into Empleados values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?);"; /*Verificar esta línea de código*/
-        $consult = $this->db->prepare($sql);
-        $consult->execute(array(null,
-        $data->__GET('PNombre') /*= mysql_real_escape_string_PDO($clean['PNombre'])*/,
-        $data->__GET('SNombre'),
-        $data->__GET('PApellido'),
-        $data->__GET('SApellido'),
-        $data->__GET('Residencia'),
-        $data->__GET('Cedula'),
-        $data->__GET('Pasaporte'),
-        $data->__GET('NInss'),
-        $data->__GET('FechaNac'),
-        $data->__GET('Sexo'),
-        $data->__GET('Hijos'),
-        $data->__GET('NumHijos'),
-        $data->__GET('Hermanos'),
-        $data->__GET('NumHermanos'),
-        $data->__GET('Telefono'),
-        $data->__GET('EstadoCivil'),
-        $data->__GET('Correo'),
-        $data->__GET('Escolaridad'),
-        $data->__GET('NRuc'),
-        $data->__GET('Profesion'),
-        $data->__GET('Direccion'),
-        $data->__GET('Nacionalidad1'),
-        $data->__GET('Nacionalidad2'),
-        $data->__GET('IdCargo'),
-        $data->__GET('IdJefe'),
-        $data->__GET('IdMunicipio')
-        ));     
 
-        $lastid;
-        $sql = "select MAX(IdEmpleado) as valor from Empleados";
-        $result = $this->db->prepare($sql);
-        $result->execute();
-        if($row = $result->fetch(PDO::FETCH_OBJ)){
-            $lastid=$row->valor;
-        }
-        
-        $sql = "call adduser (?, ?, ?)";
-        $consult2 = $this->db->prepare($sql);
-        $consult->execute(array($datau->__GET('user'), $datau->__GET('pass'), $lastid));
+   /*Agregar en la tabla Empleados*/ 
+   public function AddEmpleados(Empleado $data, User $datau){
+    $sql = "insert into Empleados values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?);"; /*Verificar esta línea de código*/
+    $consult = $this->db->prepare($sql);
+    $consult->execute(array(null,
+    $data->__GET('PNombre'),
+    $data->__GET('SNombre'),
+    $data->__GET('PApellido'),
+    $data->__GET('SApellido'),
+    $data->__GET('Residencia'),
+    $data->__GET('Cedula'),
+    $data->__GET('Pasaporte'),
+    $data->__GET('NInss'),
+    $data->__GET('FechaNac'),
+    $data->__GET('FechaIng'),
+    $data->__GET('Sexo'),
+    $data->__GET('Hijos'),
+    $data->__GET('NumHijos'),
+    $data->__GET('Hermanos'),
+    $data->__GET('NumHermanos'),
+    $data->__GET('Telefono'),
+    $data->__GET('EstadoCivil'),
+    $data->__GET('Correo'),
+    $data->__GET('Escolaridad'),
+    $data->__GET('NRuc'),
+    $data->__GET('Profesion'),
+    $data->__GET('Direccion'),
+    $data->__GET('Nacionalidad1'),
+    $data->__GET('Nacionalidad2'),
+    $data->__GET('IdCargo'),
+    $data->__GET('IdJefe'),
+    $data->__GET('IdMunicipio')
+    ));     
+
+    $lastid;
+    $sql = "select MAX(IdEmpleado) as valor from Empleados";
+    $result = $this->db->prepare($sql);
+    $result->execute();
+    if($row = $result->fetch(PDO::FETCH_OBJ)){
+        $lastid=$row->valor;
     }
+    
+   /* $sql = "call adduser (?, ?, ?)";
+    $consult2 = $this->db->prepare($sql);
+    $consult->execute(array($datau->__GET('user'), $datau->__GET('pass'), $lastid));*/
+}
         
     
     
@@ -274,7 +314,19 @@ public function listarMunPorDepto($dep){
     }
 
     public function showJefe($id){
-        $sql = "select IdEmpleado, PNombre, SNombre from Empleados where IdEmpleado = ?";
+        $sql = "select IdEmpleado, PNombre, PApellido from Empleados where IdEmpleado = ?";
+        $resulSet = array();
+        $consult = $this->db->prepare($sql);
+        $consult->execute(array($id));
+                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                    $resulSet = $row; 
+                }
+                return $resulSet;
+    }
+
+    public function showJefebyPosition($id){
+        $sql = "select e.IdEmpleado, e.PNombre, e.PApellido from empleados e inner join Cargos c on e.IdCargo = c.IdCargo 
+        where c.IdCargo = (select IdJefe from Cargos where IdCargo = ?);";
         $resulSet = array();
         $consult = $this->db->prepare($sql);
         $consult->execute(array($id));

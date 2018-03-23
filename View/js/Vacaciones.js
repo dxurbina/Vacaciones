@@ -48,13 +48,18 @@ $(document).ready(function(){
        // var da = new Date();
         //da.setHours(da.getDate() + sumar);
        // console.log(da);
+       var fecha2 = new Date(fecha);
         var fecha = new Date(fecha);
         console.log(fecha);
         dia = fecha.getDate();
         mes = fecha.getMonth() + 1;
         anio = fecha.getFullYear();
+        if(sumar % 1 == 0){
+            addTime = (sumar * 24) - 24; //Tiempo en horas
+        }else{
+            addTime = (sumar * 24); //Tiempo en horas
+        }
         
-        addTime = (sumar * 24) - 24; //Tiempo en segundos
  
     fecha.setHours(addTime); //Añado el tiempo
  
@@ -70,7 +75,17 @@ $(document).ready(function(){
        var options = { year: 'numeric', month: 'long', day: 'numeric' };
 
             $('#dateF').val(fecha.toLocaleDateString("es-ES", options));
-            $('#ExtraDateIni').val(fecha.toLocaleDateString("es-ES", options));
+            console.log(fecha2);
+            $('#pointer').val(fecha2.toLocaleDateString("es-ES", options));
+            console.log($('input:radio[name=Tipo]:checked').val());
+            if($('input:radio[name=Tipo]:checked').val() == 'Vacaciones'){
+                var factor =  $("label[for='factor']").text();
+                var saldo = parseFloat(factor) * sumar; 
+                $("label[for='Saldo']").text(saldo);
+            }
+            
+            //$('#ExtraDateEnd').val(fecha.toLocaleDateString("es-ES", options));
+            //$('#ExtraDateIni').val(fecha.toLocaleDateString("es-ES", options));
             $('#ExtraDateIni').datepicker(
                 { 
                    minDate: new Date(newAnio, newMes, newDay),
@@ -100,6 +115,23 @@ function sumarDias(fecha, dias){
     fecha.setDate(fecha.getDate() + dias);
     return fecha;
   }
+
+  $(document).on('click','#enter', function(){
+
+  });
+
+    restaFechas = function(f1,f2)
+    {
+    var aFecha1 = f1.split('/');
+    var aFecha2 = f2.split('/');
+    var fFecha1 = Date.UTC(aFecha1[2],aFecha1[1]-1,aFecha1[0]);
+    var fFecha2 = Date.UTC(aFecha2[2],aFecha2[1]-1,aFecha2[0]);
+    var dif = fFecha2 - fFecha1;
+    var dias = Math.floor(dif / (1000 * 60 * 60 * 24));
+    return dias;
+    }
+
+  
   
 function hideExtra(){
     $('#ExtraDay').hide();
