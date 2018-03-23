@@ -101,13 +101,13 @@ $(document).ready(function(){
        // console.log($("#desac24").val());
         $.ajax({
             data: obj,
-            url: "?c=Empleado&a=showJefe",
+            url: "?c=Empleado&a=showJefeAdd",
             type: "POST",
             dataType: 'json',
             contentType: 'application/json; charset= utf-8',
             beforeSend: function () 
             {
-                $("#cargos").prop('disabled', true);
+                $("#cargos").prop('disabled', false);
             },
             error: function(xhr, ajaxOptions, thrownError){
                 console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
@@ -118,28 +118,30 @@ $(document).ready(function(){
                 _Jefe.find('option').remove();
                 $(data).each(function(i, v){ // indice, valor
 
-                    $("#jefe").append('<option value="' + v.IdEmpleado + '">' + (v.PNombre + " "+ v.SNombre ) + '</option>');
+                    $("#jefe").append('<option value="' + v.IdEmpleado + '">' + (v.PNombre + " "+ v.PApellido ) + '</option>');
                 })
                 $.ajax({
                     data: obj,
-                    url: "?c=Empleado&a=showCCostobyId",
+                    url: "?c=Empleado&a=showCCostosbyId",
                     type: "POST",
                     dataType: 'json',
                     contentType: 'application/json; charset= utf-8',
                     beforeSend: function () 
                     {
-                        $("#cargos").prop('disabled', true);
+                        $("#cargos").prop('disabled', false);
                     },
                     error: function(xhr, ajaxOptions, thrownError){
                         console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
                     },
                     success: function (data) {
-                        $("#ccostos").val(data.Nombre);
+                        console.log(data)
+                        $("#cc").val(data[0].Nombre);
                     }
                     });
             }
             });
     });
+
 });
 
 //Aquí empiezan las funciones que uso.
@@ -183,7 +185,7 @@ $(document).ready(function(){
     {
       $("#deptoEmp").change(function(){
         var _Mun = $("#cargos");
-        var _select = $("#deptoEmo").val();
+        var _select = $("#deptoEmp").val();
         var obj = JSON.stringify({ id: _select });
         console.log($("#deptoEmp").val());
         $.ajax({
@@ -221,7 +223,7 @@ $(document).ready(function(){
         
         $.ajax({
             data: obj,
-            url: "?c=Empleado&a=showJefe",
+            url: "?c=Empleado&a=showJefeAdd",
             type: "POST",
             dataType: 'json',
             contentType: 'application/json; charset= utf-8',
@@ -248,4 +250,3 @@ $(document).ready(function(){
             }
             });
     }
-    

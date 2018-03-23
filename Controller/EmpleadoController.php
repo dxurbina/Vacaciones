@@ -1,5 +1,4 @@
 <?php
- session_start();
 class EmpleadoController{
     public $obj, $model, $obju;
     public  $Departamentos, $html, $DeptoEmp, $cargo, $jefe, $datos, $var;
@@ -11,7 +10,6 @@ public function __construct(){
     $this->obj = new Empleado();
     $this->obju = new User();
     $this->model = new EmpleadoDAO();
- 
 }
 
 public function index (){
@@ -33,18 +31,6 @@ public function index (){
     if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
             include("View/Head.php");
             include("View/ListEmployeeView.php");
-            include("View/Footer.php");
-    }else {
-        header('Location: index.php?c=Principal&a=AccessError');
-    }
-}
-
-public function ListEmpleado(){
-    if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
-        $this->Departamentos = $this->model->listarDptos();
-        $this->DeptoEmp = $this->model->listarDptosEmp();
-            include("View/Head.php");
-            include("View/Empleados.php");
             include("View/Footer.php");
     }else {
         header('Location: index.php?c=Principal&a=AccessError');
@@ -302,6 +288,22 @@ public function listarMunPorDepto(){
         
     }
 
+    public function showJefeAdd(){
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        
+            header('Content-Type: application/json; charset=utf-8');
+            $json_str = file_get_contents('php://input');
+            $json_obj = json_decode($json_str);
+            $_array = $this->model->showJefeAdd($json_obj->id);
+            $var = json_encode( $_array);
+            $json = json_last_error();
+            echo $var; 
+            }else {
+                header('Location: index.php?c=Principal&a=AccessError');
+            }
+        
+    }
+
     
 
     public function showCCostosbyId(){
@@ -325,6 +327,19 @@ public function listarMunPorDepto(){
             }else {
                 header('Location: index.php?c=Principal&a=AccessError');
             }
+    }
+
+    public function EliminarEmpId(){
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        
+        header('Content-Type: application/json; charset=utf-8');
+    $json_str = file_get_contents('php://input');
+        $json_obj = json_decode($json_str);
+                $datos = $this->model->EliminarEmp($json_obj->id);
+        }else {
+            header('Location: index.php?c=Principal&a=AccessError');
+        }
+
     }
 }
 

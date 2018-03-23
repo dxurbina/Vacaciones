@@ -11,7 +11,7 @@
                 <div class="box-body table-responsive">
                     <table id="tbl_Empleados"  class="table table-bordered table-hover">
                         <thead>
-                            <tr style="text-align: center;">
+                            <tr style="text-align: center;">    
                                 <th>IdEmpleado</th>
                                 <th>Nombre</th>
                                 <th>Telefono</th>
@@ -235,12 +235,7 @@
                 </form>
             </div>
         </div>
-
     </div>
-    
-
-
-
         <script src="View/js/Empleado.js" type="text/javascript"></script>
 
         <?php

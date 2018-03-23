@@ -1,5 +1,4 @@
 <?php 
-session_start();
     if(!(isset($_SESSION['nickname']))){ ?>
 <form method="POST" action="?c=Load&a=load">
     <center>Usuario</center>
@@ -38,7 +37,7 @@ session_start();
     <center>Usuario</center>
     <center><input type="text" name="user" /></center>
     <center>Contraseña</center>
-    <center><input type="text" name="pass" /></center>
+    <center><input type="password" name="pass" /></center>
     <center><input type="submit" value="Log In"/></center>
     </form>
     <?php  }

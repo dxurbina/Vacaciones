@@ -17,7 +17,7 @@ class EmpleadoDAO{
         $resultSet = array();
         $consult = $this->db->prepare("select e.IdEmpleado, e.PNombre, e.PApellido, e.Telefono, d.Nombre as Dep, c.NombreCargo, ej.PNombre as NJefe, ej.PApellido
 		as AJefe from Empleados e, Empleados ej, Cargos c, CentroCostos cc, DeptosEmpresa d where
-        e.IdJefe = ej.IdEmpleado and e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep;");
+        e.IdJefe = ej.IdEmpleado and e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and e.Estado !=0;");
         $consult->execute(); 
             while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
                 $resulSet = $row; 
@@ -46,15 +46,16 @@ class EmpleadoDAO{
             }
     }
 
-    public function ListaEmpEliminar($id){
+    public function EliminarEmp($id){
         try{
             $resultSet = array();
-            $consult = $this->db->prepare("delete from Empleado where id = ?");
+            //$consult = $this->db->prepare("delete from Empleados where IdEmpleado = ?;");
+            $consult = $this->db->prepare("update Empleados set empleados.Estado = 0
+            where IdEmpleado = ?;");
             $consult->execute(array($id)); 
-                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
-                    $resulSet = $row; 
-                }
-                return $resulSet; /*esto estaba ahí*/
+            echo"<script type='text/javascript'>
+            alert('El registro ha sido eliminado correctamente');
+            </script>";
         } catch(Exception $e)
             {
                 die($e->getMessage());
@@ -144,7 +145,7 @@ public function listarMunPorDepto($dep){
     $data->__GET('IdCargo'),
     $data->__GET('IdJefe'),
     $data->__GET('IdMunicipio')
-    ));     
+    ));         
 
     $lastid;
     $sql = "select MAX(IdEmpleado) as valor from Empleados";
@@ -263,7 +264,7 @@ public function listarMunPorDepto($dep){
     }
 
     public function showCCostobyId($id){
-        $sql = "select cc.Nombre from CentroCostos cc inner join Cargos c on cc.IdCosto = c.IdCosto
+        $sql = "select cc.Codigo, cc.Nombre from CentroCostos cc inner join Cargos c on cc.IdCosto = c.IdCosto
         where c.IdCargo = ?;";
         $resulSet = array();
         $consult = $this->db->prepare($sql);
@@ -276,6 +277,18 @@ public function listarMunPorDepto($dep){
 
     public function showJefe($id){
         $sql = "select IdEmpleado, PNombre, SNombre from Empleados where IdEmpleado = ?";
+        $resulSet = array();
+        $consult = $this->db->prepare($sql);
+        $consult->execute(array($id));
+                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                    $resulSet = $row; 
+                }
+                return $resulSet;
+    }
+
+    public function showJefeAdd($id){
+        $sql = "select e.IdEmpleado, e.PNombre, e.PApellido from empleados e inner join Cargos c on e.IdCargo = c.IdCargo 
+        where c.IdCargo = (select IdJefe from Cargos where IdCargo = ?);";
         $resulSet = array();
         $consult = $this->db->prepare($sql);
         $consult->execute(array($id));

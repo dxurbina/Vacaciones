@@ -9,8 +9,6 @@ $(document).ready(function(){
             $('#NumDayExtra').show();
             $('#ExtraEnd').show();
             $('#ExtraDateEnd').show();
-            
-            
         }else {
             hideExtra();
         }
