@@ -30,10 +30,10 @@
                 <div class="form-group">
                             <label>Comentarios</label>
                         </div>
-        <div class="form-group">
-                            
-                            <textarea class="form-control" name="" id="Descrip" cols="50" rows="5" readonly="readonly"></textarea>
-        </div>
+                <div class="form-group">
+                                    
+                                    <textarea class="form-control" name="" id="Descrip" cols="50" rows="5" readonly="readonly"></textarea>
+                </div>
             </div>
         </div>
         

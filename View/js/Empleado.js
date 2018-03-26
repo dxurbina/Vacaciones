@@ -611,14 +611,10 @@ function fillModalData(dato){
            
            //$('#desac25 option[value='+ _dep + ']').attr("selected",true);
            
-           
-
-
         }
     });
     
 }
-
 
 // evento click para boton actualizar
 $(document).on('click', '.btn-edit', function (e) {
@@ -637,42 +633,30 @@ $(document).on('click', '.btn-edit', function (e) {
     clear();
     fillModalData(dato);
     //$("#desac1").val(dato[0].IdEmpleado);
-    
-
 });
 
-// evento click para boton actualizar
+// evento click para boton Eliminar
 $(document).on('click', '.btn-del', function (e) {
-    e.preventDefault();
-
+    var eliminar = confirm('¿Desea eliminar el empleado seleccionado?');
+    if(eliminar) {
+    e.preventDefault;
     var _row = $(this).parent().parent()[0];
-    //data = tabla.row(_row).data();
-    
+    console.log(_row);
     dato = tabla.fnGetData(_row);
-             var $miSelect = $('#casilla');
-             $miSelect.val($miSelect.children('option:eq(0)').val());
-             DisabledField();
-    
     idEmp = dato[0];
-    //console.log(data[0]);
-    clear();
-    //fillModalData(dato);
-    //$("#desac1").val(dato[0].IdEmpleado);
-    tabla._row._select('IdEmpleado'); //ver aquí
-
+    console.log(idEmp);
+    var obj = JSON.stringify({ id: idEmp });
+    $.ajax({
+        url: "?c=Empleado&a=EliminarEmpId",
+        type: "POST",
+        data: obj,
+        dataType: 'json',
+        contentType: 'application/json; charset= utf-8',
+        success: function(data){
+        }
+        });
+        alert('Registro eliminado correctamente.');
+    }
+     return false;  
 });
 
-
-
-//Ajax para cargar municipios
-function CargarMunicipios(val)
-{  
-    $.ajax({
-        type: "POST",
-        url: "?c=Empleado&a=listarMunicipios",
-        data: 'IdDepartamento='+val,
-        success: function(resp){
-            $('#cboDepto').html(resp);
-        }
-    });
-}

@@ -108,7 +108,7 @@
 
 
                        /* List the vacation of General Manager */
-                       $sql = "select IdEmpleado from Empleados where IdJefe is null";
+                       $sql = "select IdEmpleado from Empleados where IdJefe is null and Estado = 1";
                         $result = $this->db->prepare($sql);
                         $result->execute();
                         if($row = $result->fetch(PDO::FETCH_OBJ)){
@@ -153,11 +153,11 @@
 
 
         public function showHistory(){
-            $flag = true; $flag2 = true;
+        $flag = true; $flag2 = true;
         $resulSet = array();
         $global = array();
         $resulSet2= array();
-        $sql = "select IdEmpleado from Empleados where IdJefe = ?;";
+        $sql = "select IdEmpleado from Empleados where IdJefe = ? order by IdEmpleado desc;";
         $consult = $this->db->prepare($sql);
         $id = $_SESSION['ID']->IdEmpleado;
         $consult->execute(array($id));
@@ -173,7 +173,7 @@
                 $subjefe = array(); 
                 for($i = 0; $i < count($resulSet); $i++){
                     for($j = 0; $j < count($resulSet[$i]); $j++){
-                        $sql = "select IdEmpleado from Empleados where IdJefe = ?;";
+                        $sql = "select IdEmpleado from Empleados where IdJefe = ? order by IdEmpleado desc;";
                         $consult = $this->db->prepare($sql);
                         $consult->execute(array($resulSet[$i][$j]->IdEmpleado));
                         while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
@@ -199,7 +199,7 @@
                         from Vacaciones v inner join Empleados e on v.IdEmpleado = e.IdEmpleado 
                             inner join Empleados ej on v.IdRespSup = ej.IdEmpleado,
                             Cargos c, CentroCostos cc, DeptosEmpresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and v.Estado != 'Pendiente'
-                        and e.IdJefe = ?;"; 
+                        and e.IdJefe = ? order by IdVacaciones desc;"; 
                         
                         $consult = $this->db->prepare($sql);
                         $foo = $global[$i][$j]->IdEmpleado;
@@ -228,7 +228,7 @@
                    from Vacaciones v inner join Empleados e on v.IdEmpleado = e.IdEmpleado 
                        inner join Empleados ej on v.IdRespSup = ej.IdEmpleado,
                        Cargos c, CentroCostos cc, DeptosEmpresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and v.Estado != 'Pendiente'
-                   and e.IdJefe = ?;"; 
+                   and e.IdJefe = ? order by IdVacaciones desc;"; 
                    
                    $consult = $this->db->prepare($sql);
                    $consult->execute(array($id));
@@ -240,7 +240,8 @@
                         }
                        }
             //} 
-            $sql = "select IdEmpleado from Empleados where IdJefe is null";
+            /* List the vacation of General Manager */
+            $sql = "select IdEmpleado from Empleados where IdJefe is null and Estado = 1";
             $result = $this->db->prepare($sql);
             $result->execute();
             if($row = $result->fetch(PDO::FETCH_OBJ)){
@@ -251,7 +252,7 @@
                 from Vacaciones v inner join Empleados e on v.IdEmpleado = e.IdEmpleado 
                     inner join Empleados ej on v.IdRespSup = ej.IdEmpleado,
                     Cargos c, CentroCostos cc, DeptosEmpresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and v.Estado != 'Pendiente'
-                and e.IdEmpleado = ?;"; 
+                and e.IdEmpleado = ? order by IdVacaciones desc;"; 
                 
                 $consult = $this->db->prepare($sql);
                 $consult->execute(array( $_SESSION['ID']->IdEmpleado));
@@ -263,7 +264,7 @@
                         }
                     }
             }
-            /* List the vacation of General Manager */
+            
                 return $resulSet2;
             }
 

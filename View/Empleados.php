@@ -39,7 +39,7 @@
                             <option value="M">Masculino</option>
                             <option value="F">Femenino</option>
                         </select></div>
-                    <div class="form-group"><label>Número Hijos</label><input type="text" name="NumHijos" size="5" placeholder="0" onkeypress="return valida(event)" maxlength="2"></div>
+                    <div class="form-group"><label>Número Hijos</label><input type="text"  id="NumHijos" name="NumHijos" size="5" placeholder="0" onkeypress="return valida(event)" maxlength="2"></div>
 
                 </div> <!-- ver si aquí da error -->
 
@@ -63,7 +63,7 @@
                </div>
 
                 <div class="col-sm-6">
-                    <div class="form-group"><label>Número hermanos</label><input type="text" name="NumHijos" size="5" placeholder="0" onkeypress="return valida(event)" maxlength="2"></div>
+                    <div class="form-group"><label>Número hermanos</label><input type="text" id="NumHermanos" name="NumHermanos" size="5" placeholder="0" onkeypress="return valida(event)" maxlength="2"></div>
                     <div class="form-group"><label>Profesión</label><input id="Profesion" name ="Profesion" </input></div>
                     <div class="form-group"><label>N° Ruc</label><input id="NRuc" name ="NRuc" type= "text"  Enabled="false"></input></div> 
                     <div class="form-group"><label>Nacionalidad 2</label><input  id="Nacionalidad2"name="Nacionalidad2" ID=""  ></input></div>
@@ -97,7 +97,7 @@
                             <option value="">Seleccione Cargo</option>
                         </select>
                     </div>
-                    <div class="form-group"><label>Centro Costo</label><input  id="ccostos" name ="ccostos"  Text=""  disabled="true"></input></div>
+                    <div class="form-group"><label>Centro Costos</label><input  id="cc" name ="ccostos"  Text=""  disabled="true"></input></div>
                 </div>
                 
                 <div class="col-sm-6">
@@ -165,9 +165,18 @@ function validaLetras(e){
     return patron.test(tecla_final);
 }
 </script>
+
+<script>
+function confirmar(identificador, controlador){
+ if(confirm('¿Desea eliminar el empleado seleccionado?')==true){
+ window.location="?c=Empleado&a=EliminarEmpId";
+ //window.location="?accion="+controlador+"&idEmp"+identificador;
+ }else false; 
+ window.location="?c=Empleado&a=ListEmployeeView";
+}
+</script>
  <?php
     }else 
     {
         echo "Site not Found";
     } ?>
-

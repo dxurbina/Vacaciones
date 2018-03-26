@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 
 Class SaldoVacacionesController{
     public $obj, $obju, $model, $emp, $IdEmp;
@@ -38,6 +38,61 @@ public function SaldoVacacionesbyId(){
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function indexHistory(){
+        require('View/Head.php');
+        require('View/BalanceHistoryView.php');
+        require('View/Footer.php');
+    }
+
+    public function ShowHistory(){
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 2 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        header('Content-Type: application/json; charset=utf-8');
+        $datos = $this->model->ShowHistory();
+        $this->var = json_encode( $datos);
+        echo $this->var;
+        }else {
+            header('Location: index.php?c=Principal&a=AccessError');
+        }
+    }
     
 }
 ?>
