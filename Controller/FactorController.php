@@ -1,18 +1,15 @@
 <?php 
 class VacacionesController{
-    public $model, $obj, $factor;
+    public $model, $obj;
     public function __construct(){
-        include('Model/DAO/VacationDAO.php');
-        include('Model/Entity/Vacation.php');
-        $this->obj = new Vacation();
-        $this->model = new VacationDAO();
+        include('Model/DAO/FactorDAO.php');
+        //include('Model/Entity/Vacation.php');
+        //$this->obj = new Vacation();
+        $this->model = new FactorDAO();
     }
 
     public function index(){
         if(isset($_SESSION['nickname'])){
-        include('Model/DAO/FactorDAO.php');
-        $modelf = new FactorDAO();
-        $this->factor = $modelf->show();
         require "View/Head.php";
         require "View/VacacionesView.php";
         require "View/Footer.php";
@@ -30,15 +27,20 @@ class VacacionesController{
         header('Location: index.php?c=Principal&a=AccessError');
     }
     }
+
     public function store(){
         if(isset($_SESSION['nickname'])){
             $this->obj->__SET('Tipo', $_REQUEST['Tipo']);
             $this->obj->__SET('CantDias', $_REQUEST['CantDias']);
             $this->obj->__SET('FechaI', $_REQUEST['FechaI']);
-            $this->obj->__SET('FechaF', $_REQUEST['FechaF']);
+            if(isset($_REQUEST['Add'])){
+                $this->obj->__SET('FechaF', $_REQUEST['FechaF']);
+            }else{
+            $this->obj->__SET('FechaF', $_REQUEST['FechaF2']);
+            }
             $this->obj->__SET('Descripcion', $_REQUEST['Descripcion']);
             $this->model->store($this->obj);
-            header('Location: index.php?c=Principal');
+            header('Location: index.php?c=Vacaciones');
         }else {
             header('Location: index.php?c=Principal&a=AccessError');
         }
@@ -67,23 +69,19 @@ class VacacionesController{
             }
     }
 
+    public function show(){
+        if(isset($_SESSION['nickname'])){
+
+        }else {
+                header('Location: index.php?c=Principal&a=AccessError');
+            }
+    }
+
     public function showAll(){
         if(isset($_SESSION['nickname']) and $_SESSION['access'] == 2 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         
             header('Content-Type: application/json; charset=utf-8');
             $List = $this->model->showAll();
-            $var = json_encode($List);
-            $json = json_last_error();
-            echo $var; 
-            }else {
-                header('Location: index.php?c=Principal&a=AccessError');
-            }
-    }
-
-    public function showHistory(){
-        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 2 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
-            header('Content-Type: application/json; charset=utf-8');
-            $List = $this->model->showhistory();
             //$var = json_encode(array_map('utf8_encode', $cursos));
             # unset($cursos[5]);
             $var = json_encode($List);

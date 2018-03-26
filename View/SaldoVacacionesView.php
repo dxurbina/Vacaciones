@@ -5,10 +5,10 @@
     <div style="width: 100%;" class="modal-content">
         <div class="modal-header">
                     <?php foreach ($this->emp as $row){?>
-                    <h4 class="modal-title" id="myModalLabel">Saldo de Vacaciones <?php echo $row->PNombre; ?>  <?php echo $row->PApellido; ?> </h4>
+                    <h4 class="modal-title" id="myModalLabel">Saldo de Vacaciones <strong><?php echo $row->PNombre; ?>  <?php echo $row->PApellido; ?></strong> </h4>
                     <?php } ?> 
         </div>
-    <form class="form" action="?c=SaldoVacaciones&a=SaldoVacacionesbyId" method="POST">
+    <!--<form class="form" action="?c=SaldoVacaciones&a=SaldoVacacionesbyId" method="POST">-->
         <div class="modal-body">
             <div class="row row-fluid">
                 <div class="col-sm-5">
@@ -29,12 +29,44 @@
                     <?php } ?>  
                 </div>
             </div>
-    </form>
+    <!--</form>-->
         </div>
     </div>
     
 </div>
 
+<!--Botón que redirecciona a la interface de la creación de una solicitud de Vacaciones-->
+  <center><input type="submit"  id="solicitud" class="btn btn-primary" value="Solicitar Vacaciones" /></center>
+<br>
+<!-- Datatable para ver el historial de sus solicitudes de vacaciones-->
+<div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title" style="font-size: 200%;">Historial de Solicitudes</h3>
+                </div>
+                <div class="box-body table-responsive">
+                    <table id="tbl_Historial"  class="table table-bordered table-hover">
+                        <thead>
+                            <tr style="text-align: center;">
+                                <th>Nombre</th>
+                                <th>Cargo</th>
+                                <th>Cant Días</th>
+                                <th>Desde - Hasta</th>
+                                <th>Tipo</th>
+                                <th>Fecha Solicitud</th>
+                                <th>Fecha Respuesta</th>
+                                <th>Respuesta</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbl_body_table">
+                                <!--Cargar historial de Solicitudes por medio de AJAX -->
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+        </div>
+    <script type="text/javascript" src="View/js/SaldoVacaciones.js"></script>
 <?php
     }else {
         echo "Site not Found";

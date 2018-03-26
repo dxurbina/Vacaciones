@@ -38,6 +38,19 @@ public function SaldoVacacionesbyId(){
     }
 
 }
+
+public function HistVac(){
+    if(isset($_SESSION['nickname'])){
+    
+        header('Content-Type: application/json; charset=utf-8');
+        $List = $this->model->HistVac();
+        $var = json_encode($List);
+        $json = json_last_error();
+        echo $var; 
+        }else {
+            header('Location: index.php?c=Principal&a=AccessError');
+        }
+}
     
 }
 ?>
