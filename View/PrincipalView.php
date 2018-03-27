@@ -16,10 +16,10 @@
     <p>accedió como admin</p>
     <a href="?c=Empleado">Registrar Empleado</a><br>
     <a href="?c=Empleado&a=ListEmployeeView">Ver Empleados</a><br>
-    <a href="?c=Load&a=close">Cerrar Sesión</a><br>
-    <a href="?c=Vacaciones">Solicitar Vacaciones</a><br>
+    <a href="?c=SaldoVacaciones">Saldo Vacaciones</a><br>
     <a href="?c=Vacaciones&a=Requests">Solicitudes de Vacaciones</a><br>
-    <a href="?c=SaldoVacaciones&a=indexHistory">Balance Empleados a Cargo</a>
+    <a href="?c=SaldoVacaciones&a=indexHistory">Balance Empleados a Cargo</a><br>
+    <a href="?c=Load&a=close">Cerrar Sesión</a>
 <?php }else if( isset($_SESSION['access']) && $_SESSION['access'] == 3){ ?>
     <p>Accedió como Recursos humanos</p>
     <a href="?c=Empleado">Registrar Empleado</a><br>
@@ -30,8 +30,8 @@
     <p>Usted tiene personal a cargo</p><br>
     <a href="?c=Load&a=close">Cerrar Sesión</a><br>
 <?php }else if( isset($_SESSION['access']) && $_SESSION['access'] == 1){ ?> <!--Este lo agregue 14/03 -->
-    <a href="?c=SaldoVacaciones">Ver Saldo Vacaciones</a><br> <!-- Este es para ver saldo vacaciones -->
-    <a href="?c=Vacaciones">Solicitar Vacaciones</a><br>
+    <p>Accedió como Colaborador</p>
+    <a href="?c=SaldoVacaciones">Saldo Vacaciones</a><br> <!-- Este es para ver saldo vacaciones -->
     <a href="?c=Load&a=close">Cerrar Sesión</a><br>
 <?php }else if($_SESSION['nickname'] == "Error"){ ?>
     <script>alert("Usuario o contraseña incorrectos!!!")</script>
@@ -47,3 +47,6 @@
             <p>Accedió como Usuario Comun</p><br>
             <a href="?c=Load&a=close">Cerrar Sesión</a>
         <?php }  ?>
+
+
+

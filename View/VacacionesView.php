@@ -10,7 +10,7 @@
                         <label>Tipo Ausencia</label>
                     </div>-->
             
-            <div class="modal-body">   
+                    <div class="modal-body">   
                 <form action="?c=Vacaciones&a=store" method="POST">
                     <div class="row row-fluid">
                     

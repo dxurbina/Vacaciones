@@ -4,5 +4,5 @@
     define("HOST","localhost");
     define("DB","Vacaciones");
     define("_USER","root");
-    define("_PASS","LumberXD02");
+    define("_PASS","sa123");
 ?>
