@@ -74,10 +74,6 @@ class EmpleadoDAO{
                     }
                 }
             }
-
-
-
-            
                 return $resulSet; /*esto estaba ahí*/
         } catch(Exception $e)
             {
@@ -102,7 +98,7 @@ class EmpleadoDAO{
     }
 
    /*Lista de Departamentos, con las exepciones*/
-   public function listarDptos(){
+public function listarDptos(){
     try{
        $Departamentos = array();
        $consult = $this->db->prepare("select * from Departamento");
@@ -112,9 +108,9 @@ class EmpleadoDAO{
        }
        return $Departamentos ; /*esto estaba ahí*/
       
-  } catch(Exception $e)
+   } catch(Exception $e)
    {
-      // die($e->getMessage());
+       die($e->getMessage());
    }
 }
 
@@ -128,9 +124,9 @@ public function listarMunPorDepto($dep){
                 $resulSet = $row; 
             }
             return $resulSet;
-
 }
-   public function listarDptosEmp(){
+
+public function listarDptosEmp(){
     try{
        $DeptoEmp = array();
        $consult = $this->db->prepare("select * from DeptosEmpresa");
@@ -193,7 +189,6 @@ public function listarMunPorDepto($dep){
     if($row = $result->fetch(PDO::FETCH_OBJ)){
         $lastid=$row->valor;
     }
-    
    /* $sql = "call adduser (?, ?, ?)";
     $consult2 = $this->db->prepare($sql);
     $consult->execute(array($datau->__GET('user'), $datau->__GET('pass'), $lastid));*/

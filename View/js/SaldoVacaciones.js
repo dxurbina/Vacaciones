@@ -57,23 +57,13 @@ var dato, tabla, idEmp;
 }
 sendDataAjax();
 
-//Botón para Redireccionar a la pág de "Solicitar vacaciones"
-e.preventDefault();
-$(document).on('click', '#solicitud', function(e){
-    $.ajax({
-        data: {},
-        url: "?c=SaldoVacaciones",
-        type: "POST",
-        data: obj,
-        dataType: 'json',
-        contentType: 'application/json; charset= utf-8',
-        error: function(xhr, ajaxOptions, thrownError){
-            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
-        },
-        success: function (data) {
-            //location.reload(true); 
-             window.location="?c=Vacaciones";
-        }
-        });
-    
+//Botón para abrir la modal solicitar vacaciones.
+$('#openModal').on('click', function(e) {
+    e.preventDefault();
+    $("#modalsol").modal("show");
 });
+
+/*$(document).ready(function()
+{
+   $("#modalsol").modal("show");
+});*/

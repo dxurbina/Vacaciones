@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+    
 });
  var $dato, row;
 function sendDataAjax1() {
@@ -18,6 +18,7 @@ function sendDataAjax1() {
             dato = data;
             console.log(dato);
             //addRowDT(data.d);
+            
             tabla = $("#tbl_Solicitud").DataTable();
     for (var i = 0; i < data.length; i++) {
             tabla.fnAddData([
@@ -113,6 +114,7 @@ $(document).on('click', '#update-', function(e){
 
 
 function sendDataAjax2() {
+    var i;
     $.ajax({
         type: "POST",
         url: "?c=Vacaciones&a=showHistory",
@@ -125,9 +127,16 @@ function sendDataAjax2() {
         success: function (data) {
             console.log(data);
             console.log(data.length);
+            i = data.length - 1;
+/*
+            var myJsonString = JSON.stringify(data);
+            console.log(myJsonString);
+            dajs = JSON.parse(myJsonString);
+            console.log(dajs);*/
             //addRowDT(data.d);
-            tabla = $("#tbl_Historial").DataTable();
-    for (var i = 0; i < data.length; i++) {
+            tabla = $("#tbl_Historial").DataTable({
+                    "aaSorting": [[0, 'desc']]});
+        while(i != -1) {
         tabla.fnAddData([
             data[i].IdVacaciones,
             (data[i].PNombre + " "+ data[i].PApellido),
@@ -139,6 +148,7 @@ function sendDataAjax2() {
             data[i].FechaRespuesta,
             (data[i].NJefe + " " + data[i].AJefe + " - " + data[i].Estado)
         ]);
+        i = i - 1;
     }
         }
     });
