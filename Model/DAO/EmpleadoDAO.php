@@ -22,6 +22,20 @@ class EmpleadoDAO{
             while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
                 $resulSet = $row; 
             }
+
+
+         $consult = $this->db->prepare("select e.IdEmpleado, e.PNombre, e.PApellido, e.Telefono, d.Nombre as Dep, c.NombreCargo
+          from Empleados e inner join Cargos c on e.IdCargo = c.Idcargo inner join Centrocostos cc on c.IdCosto = cc.IdCosto
+                           inner join deptosempresa d on cc.IdDptoEmp = d.IdDep where e.IdJefe is Null and e.Estado = 1;");
+          $consult->execute(); 
+              while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                for($k = 0; $k < count($row); $k ++){
+                    $val = $row[$k];
+                    array_push($resulSet, $val);
+                }
+              }
+        
+
             return $resulSet; /*esto estaba ahí*/
     } catch(Exception $e)
         {
@@ -35,7 +49,7 @@ class EmpleadoDAO{
           $resultSet = array();
           $consult = $this->db->prepare("select e.IdEmpleado, e.PNombre, e.PApellido, e.Telefono, d.Nombre as Dep, c.NombreCargo
           from Empleados e inner join Cargos c on e.IdCargo = c.Idcargo inner join Centrocostos cc on c.IdCosto = cc.IdCosto
-                           inner join deptosempresa d on cc.IdDptoEmp = d.IdDep where e.IdJefe is Null;");
+                           inner join deptosempresa d on cc.IdDptoEmp = d.IdDep where e.IdJefe is Null an e.Estado = 1;");
           $consult->execute(); 
               while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
                   $resulSet = $row; 

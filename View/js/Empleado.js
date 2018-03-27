@@ -246,33 +246,6 @@ function addRowDT(data) {
 
 
 function sendDataAjax() {
-    $.ajax({
-        type: "POST",
-        url: "?c=Empleado&a=showGeneralManager",
-        data: {},
-        dataType: 'json',
-        contentType: 'application/json; charset= utf-8',
-        error: function(xhr, ajaxOptions, thrownError){
-            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
-        },
-        success: function (data) {
-            console.log(data);
-            console.log(data.length);
-            //addRowDT(data.d);
-            tabla = $("#tbl_Empleados").DataTable();
-            for (var i = 0; i < data.length; i++) {
-                tabla.fnAddData([
-                    data[i].IdEmpleado,
-                    ( data[i].PNombre + " "+ data[i].PApellido),
-                    data[i].Telefono,
-                    data[i].Dep,
-                    data[i].NombreCargo,
-                    (' - '),
-                    '<button title= "Editar/ver" value= "Actualizar" class="btn btn-primary btn-edit " data-target="#imodal" data-toggle="modal"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
-                    '<button title= "Eliminar" value= "Borrar" class="btn btn-danger btn-del "><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
-                    '<button title= "Vacaciones" value= "VerVacaciones" class="btn btn-primary btn-vac " data-target="#imodalver" data-toggle="modal"><i class="fa fa-plus-square" aria-hidden="true"></i></button>'
-                ]);
-            }
             $.ajax({
                 type: "POST",
                 url: "?c=Empleado&a=ListEmployee",
@@ -285,16 +258,21 @@ function sendDataAjax() {
                 success: function (data) {
                     console.log(data);
                     console.log(data.length);
+                    var boss;
                     //addRowDT(data.d);
                     tabla = $("#tbl_Empleados").DataTable();
+                    
                     for (var i = 0; i < data.length; i++) {
+                        if(typeof(data[i].NJefe) == "undefined"){
+                            boss = " - ";
+                        }else {boss = data[i].NJefe + " " + data[i].AJefe }
                         tabla.fnAddData([
                             data[i].IdEmpleado,
                             ( data[i].PNombre + " "+ data[i].PApellido),
                             data[i].Telefono,
                             data[i].Dep,
                             data[i].NombreCargo,
-                            (data[i].NJefe + " " + data[i].AJefe),
+                            boss,
                             '<button title= "Editar/ver" value= "Actualizar" class="btn btn-primary btn-edit " data-target="#imodal" data-toggle="modal"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
                             '<button title= "Eliminar" value= "Borrar" class="btn btn-danger btn-del "><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
                             '<button title= "Vacaciones" value= "VerVacaciones" class="btn btn-primary btn-vac " data-target="#imodalver" data-toggle="modal"><i class="fa fa-plus-square" aria-hidden="true"></i></button>'
@@ -302,8 +280,7 @@ function sendDataAjax() {
                     }
                 }
             });
-        }
-    });
+        
 }
 
 
