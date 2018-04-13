@@ -236,6 +236,28 @@
             </div>
         </div>
     </div>
+
+<!--Modal para confirmar-->
+   <div class="modal fade" id="imodalel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Confirmar</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>¿Desea eliminar el empleado seleccionado?</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-primary" id="update" value ="Aceptar" />
+                    <button type="button" data-dismiss="modal" class="btn btn-danger" id="btnCancel">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
         <script src="View/js/Empleado.js" type="text/javascript"></script>
 
         <?php

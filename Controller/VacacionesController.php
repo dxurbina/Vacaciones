@@ -30,20 +30,20 @@ class VacacionesController{
         header('Location: index.php?c=Principal&a=AccessError');
     }
     }
-    public function store(){
+ public function store(){
         if(isset($_SESSION['nickname'])){
-            $this->obj->__SET('Tipo', $_REQUEST['Tipo']);
+         $this->obj->__SET('Tipo', $_REQUEST['Tipo']);
             $this->obj->__SET('CantDias', $_REQUEST['CantDias']);
             $this->obj->__SET('FechaI', $_REQUEST['FechaI']);
             $this->obj->__SET('FechaF', $_REQUEST['FechaF']);
             $this->obj->__SET('Descripcion', $_REQUEST['Descripcion']);
             $this->model->store($this->obj);
-            header('Location: index.php?c=Principal');
+            header('Location: index.php?c=SaldoVacaciones');
         }else {
             header('Location: index.php?c=Principal&a=AccessError');
         }
-
     }
+    
     public function update(){
         if(isset($_SESSION['nickname']) and $_SESSION['access'] == 2 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         
@@ -96,6 +96,67 @@ class VacacionesController{
                 header('Location: index.php?c=Principal&a=AccessError');
             }
     }
+
+    public function ListSolicitudById(){
+    
+        if(isset($_SESSION['nickname'])){
+            header('Content-Type: application/json; charset=utf-8');
+            $json_str = file_get_contents('php://input');
+            $json_obj = json_decode($json_str);
+            $datos = $this->model->ListSolicitudById($json_obj->id);
+            $var = json_encode( $datos);
+            echo $var;
+        }else {
+            header('Location: index.php?c=Principal&a=AccessError');
+        }
+    }
+
+   //Función de la edición de una solicitud de vacaciones
+   /* public function EditSolicitud(){
+        if(isset($_SESSION['nickname'])){
+            header('Content-Type: application/json; charset=utf-8');
+            $json_str = file_get_contents('php://input');
+            $json_obj = json_decode($json_str);
+            $_array = $this->model->EditSolicitud($json_obj->id);
+            $var = json_encode( $_array);
+            $json = json_last_error();
+            echo $var; 
+            header('Location: index.php?c=SaldoVacaciones');
+            }else {
+                header('Location: index.php?c=Principal&a=AccessError');
+            }
+    }*/
+//Función de la edición de una solicitud de vacaciones
+public function EditSolicitud(){
+    if(isset($_SESSION['nickname'])){
+    $this->obj->__SET('Tipo', $_REQUEST['Tipo']);
+    $this->obj->__SET('CantDias', $_REQUEST['CantDias']);
+    $this->obj->__SET('FechaI', $_REQUEST['FechaI']);
+    $this->obj->__SET('FechaF', $_REQUEST['FechaF']);
+    $this->obj->__SET('Descripcion', $_REQUEST['Descripcion']);
+    $this->obj->__SET('IdVac', $_REQUEST['idVacaciones']);
+    $this->model->EditSolicitud($this->obj);
+    header('Location: index.php?c=SaldoVacaciones');
+}else {
+    header('Location: index.php?c=Principal&a=AccessError');
+}
+}
+    //Función de cancelar la solicitud de vacaciones
+    public function CancelarSolicitud(){
+        if(isset($_SESSION['nickname'])){
+            header('Content-Type: application/json; charset=utf-8');
+            $json_str = file_get_contents('php://input');
+            $json_obj = json_decode($json_str);
+            $_array = $this->model->CancelarSolicitud($json_obj->id);
+            $var = json_encode( $_array);
+            $json = json_last_error();
+            echo $var; 
+            header('Location: index.php?c=SaldoVacaciones');
+            }else {
+                header('Location: index.php?c=Principal&a=AccessError');
+            }
+    }
+
 
 }
 ?>

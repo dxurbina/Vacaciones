@@ -637,3 +637,51 @@ $(document).on('click', '.btn-del', function (e) {
      return false;  
 });
 
+//VER 
+/*$(document).on('click', '.btn-del', function(e){
+    var _row = $(this).parent().parent()[0];
+    console.log(_row);
+    dato = tabla.fnGetData(_row);
+    idEmp = dato[0];
+    console.log(idEmp);
+});
+
+$(document).on('click', '.btn-deny', function(e){
+    e.preventDefault();
+    var $d = $(this).parent("td");     
+    row = $d.parent().parent().children().index($d.parent());
+}); 
+
+// evento click para boton Eliminar
+$(document).on('click', '#update', function(e){
+    e.preventDefault();
+    if($(this).val() == "Aceptar"){
+        _state = "Aceptada";
+    }else if($(this).val() == "Rechazar"){
+        _state = "Rechazada";
+    }else{
+        alert('Datos Alterados');
+        location.reload(true);
+    }
+    var _row = $(this).parent().parent()[0];
+    console.log(_row);
+    dato = tabla.fnGetData(_row);
+    idEmp = dato[0];
+    console.log(idEmp);
+    var obj = JSON.stringify({ id: IdEmp });
+    $.ajax({
+        data: obj,
+        url: "?c=Empleado&a=EliminarEmpId",
+        type: "POST",
+        dataType: 'json',
+        contentType: 'application/json; charset= utf-8',
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+        },
+        success: function (data) {
+            location.reload(true); 
+        }
+        });
+    
+});*/
+

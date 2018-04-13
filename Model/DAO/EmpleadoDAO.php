@@ -98,14 +98,21 @@ class EmpleadoDAO{
     public function EliminarEmp($id){
         try{
             $resultSet = array();
+            if($row = $resultSet>0)
+            {
+                $consult = $this->db->prepare("delete from vacaciones where IdEmpleado = ?;");
+                $consult->execute(array($id)); //Elimina las vacaciones asociadas a ese Id de empleado.
+
+                $consult = $this->db->prepare("delete from SaldoVacaciones where IdEmpleado = ?;");
+                $consult->execute(array($id)); //Elimina el saldo de vacaciones asociado a ese id de empleado.
+            }
+            $consult = $this->db->prepare("delete from usuarios where IdEmpleado = ? ;");
+            $consult->execute(array($id)); //Elimina el usuario asociado a este id de empleado.
+
             //$consult = $this->db->prepare("delete from Empleados where IdEmpleado = ?;");
-            $consult = $this->db->prepare("update Empleados set empleados.Estado = 0
-            where IdEmpleado = ?;");
-            $consult->execute(array($id)); 
-            echo"<script type='text/javascript'>
-            alert('El registro ha sido eliminado correctamente');
-            </script>";
-        } catch(Exception $e)
+            $consult = $this->db->prepare("update Empleados set empleados.Estado = 0 where IdEmpleado = ?;");
+            $consult->execute(array($id)); //Actualiza el estado del empleado a inactivo.
+        }catch(Exception $e)
             {
                 die($e->getMessage());
             }

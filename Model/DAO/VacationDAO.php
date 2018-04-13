@@ -267,6 +267,56 @@
             
                 return $resulSet2;
             }
+        //Función para seleccionar 1 fila del datatable por el id seleccionado.
+        public function ListSolicitudById($id){
+          try{
+               //$idEmp = $_SESSION['ID']->IdEmpleado; //Captura el id del usuario logueado
+               $resulSet = array();
+               $consult = $this->db->prepare("select v.IdVacaciones, v.CantDias, v.FechaI, v.FechaF, v.Tipo, v.Descripcion 
+               from vacaciones v
+               inner join Empleados e on e.IdEmpleado=v.IdEmpleado
+               where  v.IdVacaciones = ?;");
+               $consult->execute(array($id));
+               while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                $resulSet = $row; 
+            }
+            return $resulSet; 
+            } catch(Exception $e)
+                    {
+                        die($e->getMessage());
+                    }
+        }    
 
+        //Función para editar una solicitud de vacaciones.
+        public function EditSolicitud(Vacation $data){
+            $idEmp = $_SESSION['ID']->IdEmpleado; //Captura el id del usuario logueado
+            $sql = "update Vacaciones set CantDias = ?, FechaI = ?, FechaF = ?, Tipo = ?, Descripcion = ?
+            where IdVacaciones = ? and IdEmpleado = ? and Estado = 'Pendiente' ";
+            $consult = $this->db->prepare($sql);
+            $consult->execute(array(
+            $data->__GET('CantDias'),
+            $data->__GET('FechaI'),
+            $data->__GET('FechaF'),
+            $data->__GET('Tipo'),
+            //$data->__GET('Estado'),
+            $data->__GET('Descripcion'),
+            $data->__GET('IdVac'),
+            //$data->__GET('IdEmpleado'),
+            $idEmp,
+            ));     
+        }
+
+        //Función para cancelar una solicitud de vacaciones.
+        public function CancelarSolicitud($id){
+          try{
+               $resultSet = array();
+               $consult = $this->db->prepare("delete from vacaciones 
+               where IdVacaciones= ? and Estado ='Pendiente';");
+               $consult->execute(array($id)); 
+            } catch(Exception $e)
+                    {
+                        die($e->getMessage());
+                    }
+            }
     }
 ?>
