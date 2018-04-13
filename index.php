@@ -16,7 +16,7 @@
         $controller = $cont.'Controller';
         $accion = isset($_REQUEST['a'])? $_REQUEST['a']: 'index';
         $controller =new $controller;
-        $controller ->$accion();
+        $controller ->$accion();    
     }
 
 ?>  

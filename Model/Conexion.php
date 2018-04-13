@@ -13,7 +13,7 @@
 
         public function conexLoad(){
             try{      
-                $con = new PDO('mysql:host=10.20.190.139; dbname=' . DB , $this->userP, $this->passP,
+                $con = new PDO('mysql:host=localhost; dbname=' . DB , $this->userP, $this->passP,
                 array(PDO::MYSQL_ATTR_INIT_COMMAND =>"SET NAMES 'utf8' "));
                 
                 return $con;

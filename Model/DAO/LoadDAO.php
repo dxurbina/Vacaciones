@@ -6,19 +6,19 @@
             require_once("Model/Entity/Empleado.php");       
             $this->con = new Conexion();
             $this->db = $this->con->conex();
-            session_start();
+            
         }
 
 
         public function login(Empleado $data){
             $flag = false;
-            $sql = "select Usuario from Usuarios where Usuario = ? and Pass = ?";
+            $sql = "select u.IdEmpleado from Usuarios u where u.Usuario = ? and u.Pass = ?";
             $result = $this->db->prepare($sql);
             $result->execute(array($data->__GET('user'), $data->__GET('pass')));
             
             if($row = $result->fetch(PDO::FETCH_OBJ)){
                 $flag = true;
-                
+                $_SESSION['ID'] = $row;
                 $_SESSION['nickname'] = $data->__GET('user');
             }else{
                 $_SESSION['nickname'] = 'Error';
