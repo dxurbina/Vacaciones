@@ -63,12 +63,10 @@ $(document).ready(function(){
         });
 
         $("#desac24").change(function(){
-            
-
                 var _Mun = $("#desac25");
                 var _select = $("#desac24").val();
                 var obj = JSON.stringify({ id: _select });
-                console.log($("#desac24").val());
+               // console.log($("#desac24").val());
                 $.ajax({
                     data: obj,
                     url: "?c=Empleado&a=showMunicipality",
@@ -86,7 +84,7 @@ $(document).ready(function(){
                     },
                     success: function (data) {
                         $("#desac24").prop('disabled', false);
-                        console.log(data);
+                        //console.log(data);
                         _Mun.find('option').remove();
                         $(data).each(function(i, v){ // indice, valor
 
@@ -109,7 +107,6 @@ $(document).ready(function(){
                             url: "?c=Empleado&a=showCargos",
                             type: "POST",
                             
-                            
                             dataType: 'json',
                             contentType: 'application/json; charset= utf-8',
                             beforeSend: function () 
@@ -121,7 +118,7 @@ $(document).ready(function(){
                             },
                             success: function (data) {
                                 $("#desac26").prop('disabled', false);
-                                console.log(data);
+                                //console.log(data);
                                 Cargo.find('option').remove();
                                 $(data).each(function(i, v){ // indice, valor
         
@@ -130,10 +127,11 @@ $(document).ready(function(){
                                 })
                                 var cargo2 = $("#desac27");
                                 var _select2 = $("#desac27").val();
+                               
                                 var obj2 = JSON.stringify({ id: _select2 });
                                 $.ajax({
                                     data: obj2,
-                                    url: "?c=Empleado&a=showJefe",
+                                    url: "?c=Empleado&a=showJefebyPosition",
                                     type: "POST",
                                     dataType: 'json',
                                     contentType: 'application/json; charset= utf-8',
@@ -256,8 +254,8 @@ function sendDataAjax() {
                     console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
                 },
                 success: function (data) {
-                    console.log(data);
-                    console.log(data.length);
+                    //console.log(data);
+                   // console.log(data.length);
                     var boss;
                     //addRowDT(data.d);
                     tabla = $("#tbl_Empleados").DataTable();
@@ -302,7 +300,7 @@ function loadDeparment(_dep) {
         },
         success: function (data) {
             _deptos.find('option').remove();
-            console.log(data);
+           // console.log(data);
             $(data).each(function(i, v){ // indice, valor
                 _deptos.append('<option value="' + v.IdDepartamento + '">' + v.Nombre + '</option>');
             })
@@ -334,7 +332,7 @@ function loadMunicipality(datos){
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
-            console.log(data);
+           // console.log(data);
             _Mun.find('option').remove();
             $(data).each(function(i, v){ // indice, valor
                 _Mun.append('<option value="' + v.IdMunicipio + '">' + v.Nombre + '</option>');
@@ -369,7 +367,7 @@ function loadDptosEmpresa(datos){
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
-            console.log(data);
+           // console.log(data);
             _Dptos.find('option').remove();
             $(data).each(function(i, v){ // indice, valor
                 _Dptos.append('<option value="' + v.IdDep + '">' + v.Nombre + '</option>');
@@ -403,7 +401,7 @@ function loadCargos(datos){
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             _Cargo.find('option').remove();
             $(data).each(function(i, v){ // indice, valor
                 _Cargo.append('<option value="' + v.IdCargo + '">' + v.NombreCargo + '</option>');
@@ -419,39 +417,43 @@ function loadCargos(datos){
 function loadJefe(datos){
     var _Jefe = $("#desac28");
     var _idJefe = datos[0].IdJefeE;
+     
     var obj = JSON.stringify({ id: datos[0].IdJefeE });
+    console.log(_idJefe);
+    if (typeof _idJefe != "undefined") {
+        $.ajax({
+            data: obj,
+            url: "?c=Empleado&a=showJefe",
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json; charset= utf-8',
+            beforeSend: function () 
+                    {
+                        _Jefe.prop('disabled', true);
+                    },
+            error: function(xhr, ajaxOptions, thrownError){
+                console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+            },
+            success: function (data) {
+               // console.log(data);
+                _Jefe.find('option').remove();
+                $(data).each(function(i, v){ // indice, valor
+                    _Jefe.append('<option value="' + v.IdEmpleado + '">' + (v.PNombre + " "+ v.PApellido ) + '</option>');
+                   
+                })
+                var $miSelect = $('#desac28');
+                //console.log($miSelect);
+                //console.log(datos[0].IdCargo);
+               $miSelect.val($miSelect.children('option[value= ' + _idJefe + ']').val());
+               var _Empleado  =  data[0].IdEmpleado;
+              // var $miSelect2 = $('#CargarEmpleado');
+              // console.log(_cargo);
+              // $miSelect2.val($miSelect2.children('option[value= ' + _Empleado + ']').val());
+              
+            }
+            });
+    }
     
-    $.ajax({
-        data: obj,
-        url: "?c=Empleado&a=showJefe",
-        type: "POST",
-        dataType: 'json',
-        contentType: 'application/json; charset= utf-8',
-        beforeSend: function () 
-                {
-                    _Jefe.prop('disabled', true);
-                },
-        error: function(xhr, ajaxOptions, thrownError){
-            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
-        },
-        success: function (data) {
-            console.log(data);
-            _Jefe.find('option').remove();
-            $(data).each(function(i, v){ // indice, valor
-                _Jefe.append('<option value="' + v.IdEmpleado + '">' + (v.PNombre + " "+ v.PApellido ) + '</option>');
-               
-            })
-            var $miSelect = $('#desac28');
-            console.log($miSelect);
-            //console.log(datos[0].IdCargo);
-           $miSelect.val($miSelect.children('option[value= ' + _idJefe + ']').val());
-           var _Empleado  =  data[0].IdEmpleado;
-          // var $miSelect2 = $('#CargarEmpleado');
-          // console.log(_cargo);
-          // $miSelect2.val($miSelect2.children('option[value= ' + _Empleado + ']').val());
-          
-        }
-        });
 }
 
 
@@ -463,7 +465,7 @@ sendDataAjax();
 function fillModalData(dato){
    // var obj = { id: dato[0] };
    var obj = JSON.stringify({ id: dato[0] });
-    console.log(obj);
+  console.log(obj);
     $.ajax({
         data: obj,
         url: "?c=Empleado&a=ListEmployeebyId",
@@ -476,7 +478,7 @@ function fillModalData(dato){
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             //console.log(data.length);
             //addRowDT(data.d);
            // tabla = $("#tbl_Empleados").DataTable();
@@ -618,10 +620,10 @@ $(document).on('click', '.btn-del', function (e) {
     if(eliminar) {
     e.preventDefault;
     var _row = $(this).parent().parent()[0];
-    console.log(_row);
+    //console.log(_row);
     dato = tabla.fnGetData(_row);
     idEmp = dato[0];
-    console.log(idEmp);
+    //console.log(idEmp);
     var obj = JSON.stringify({ id: idEmp });
     $.ajax({
         url: "?c=Empleado&a=EliminarEmpId",

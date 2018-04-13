@@ -12,7 +12,7 @@
                     <table id="tbl_Solicitud"  class="table table-bordered table-hover">
                         <thead>
                             <tr style="text-align: center;">
-                                <th>Num. de Solicitud</th>
+                                <th>Cod. Solicitud</th>
                                 <th>Nombre</th>
                                 <th>Cargo</th>
                                 <th>Cant Días</th>
@@ -47,7 +47,7 @@
                     <table id="tbl_Historial"  class="table table-bordered table-hover">
                         <thead>
                             <tr style="text-align: center;">
-                                <th>IdVacaciones</th>
+                                <th>Cod. Solicitud</th>
                                 <th>Nombre</th>
                                 <th>Cargo</th>
                                 <th>Cant Días</th>
@@ -56,6 +56,7 @@
                                 <th>Fecha Solicitud</th>
                                 <th>Fecha Respuesta</th>
                                 <th>Respuesta</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="tbl_body_table">
@@ -103,6 +104,26 @@
                 <div class="modal-footer">
                     <input type="button" class="btn btn-primary" id="update" value="Rechazar" />
                     <button type="button"  data-dismiss="modal" class="btn btn-danger" id="btnCancel">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="imodal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Confirmar</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>¿Seguro desea Revertir las vacaciones al empleado?</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-primary" id="update" value ="Revertir" />
+                    <button type="button" data-dismiss="modal" class="btn btn-danger" id="btnCancel">Cancelar</button>
                 </div>
             </div>
         </div>

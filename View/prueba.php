@@ -7,3 +7,16 @@
     </select>
     <input type = "submit" value="Proceder"/>
     </form>
+<?php
+    date_default_timezone_set('America/Managua');
+    echo "Buenos d&iacute;as, hoy es " . date("w");
+    $hoy = getdate();
+    echo $hoy['weekday'];
+    if($hoy['weekday']  == "Monday" || $hoy['weekday']  == "Saturday" && $hoy['hours'] < 20){
+        echo "Dia";    
+    }
+    echo $hoy['hours'];
+    if($hoy['hours'] > 20){
+        echo "sorteo de las 9";
+    }
+    ?>
