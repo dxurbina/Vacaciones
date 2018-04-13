@@ -11,6 +11,9 @@
     <p>accedió como RRHH-Supervisor</p>
     <a href="?c=Empleado">Registrar Empleado</a><br>
     <a href="?c=Empleado&a=ListEmployeeView">Ver Empleados</a><br>
+    <a href="?c=SaldoVacaciones">Saldo Vacaciones</a><br>
+    <a href="?c=Vacaciones&a=Requests">Solicitudes de Vacaciones</a><br>
+    <a href="?c=SaldoVacaciones&a=indexHistory">Balance Empleados a Cargo</a><br>
     <a href="?c=Load&a=close">Cerrar Sesión</a>
 <?php }else if( isset($_SESSION['access']) && $_SESSION['access'] == 4){ ?>
     <p>accedió como admin</p>

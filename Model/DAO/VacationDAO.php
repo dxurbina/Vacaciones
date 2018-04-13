@@ -20,13 +20,12 @@
            $sql= "update Vacaciones set Estado = ?, IdRespSup = ?, FechaRespuesta = now() where IdVacaciones = ?; ";
            $result = $this->db->prepare($sql);
            $result->execute(array($Estado, $_SESSION['ID']->IdEmpleado, $id));
-           if($Estado = "Aceptada"){
+           if($Estado == "Aceptada" || $Estado == "Revertida"){
             $sql = "call UpdateSaldoRequested(?)";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(1, $id, PDO::PARAM_INT, 10);
             $stmt->execute();
            }
-           
        }
 
     public function showAll(){
@@ -94,7 +93,7 @@
                    $sql = "select v.IdVacaciones, e.PNombre, e.PApellido, d.Nombre as Dep, c.NombreCargo, v.CantDias, v.FechaI, v.FechaF, v.tipo, v.Descripcion
                    from Vacaciones v inner join Empleados e on v.IdEmpleado = e.IdEmpleado,
                    Cargos c, CentroCostos cc, DeptosEmpresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and v.Estado = 'Pendiente'
-                   and e.IdJefe = ?"; 
+                   and e.IdJefe = ? and e.Estado = 1"; 
                    
                    $consult = $this->db->prepare($sql);
                    $consult->execute(array($id));
