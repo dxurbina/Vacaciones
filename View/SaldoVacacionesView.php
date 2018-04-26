@@ -16,7 +16,8 @@
                 </div>
                 <div class="col-sm-5">   
                     <?php foreach ($this->emp as $row){?>
-                    <div class="form-group"><input id="saldo" name="saldo" disabled value="<?php echo $row->Saldo; ?>"> </input></div>
+                   <!-- <div class="form-group"><input id="saldo" name="saldo" disabled value=""> </input></div>-->
+                    <div class="form-group"><label for="saldo"><?php echo $row->Saldo; ?></div>
                     <?php } ?>  
                 </div>
             </div>
@@ -62,7 +63,7 @@
 <!--Modal Para que el colaborador pueda editar su solicitud de vacaciones a partir de la pantalla de saldo de Vacaciones  -->
 <!-- POP UP -->
 <div  class="modal fade" id ="modalSolEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" name="formsol">
-<div class="modal-dialog" style="margin: 10%; margin-top: 5%;" role="document">
+<div class="modal-dialog" style="margin: 10%; margin-top: 15%;" role="document">
     <div style="width: 160%;" class="modal-content">
         <div class="modal-header">
        <b> <h4>Editar solicitud de vacaciones</b>
@@ -128,6 +129,11 @@
                         <input type="submit"  id="editSol" class="btn btn-primary" value="Enviar Solicitud" /> <!-- data-target="#imodal" data-toggle="modal" onclick="alert('Su solicitud ha sido enviada exitosamente')" -->
                        <!-- <button id="enter" type="button" class="btn btn-primary" onclick="alert('Su solicitud ha sido enviada exitosamente')">Solicitar </button>-->
                     </div>
+
+                    <div class="col-xs-offset-4">
+                       <label>Saldo Actual total: </label>&nbsp;
+                       <label for="SaldoTotal">0</label>&nbsp;&nbsp;
+                    </div>
             </div>
         </form>
         </div>
@@ -140,7 +146,7 @@
 <!--Modal Para que el colaborador pueda solicitar vacaciones a partir de la pantalla de saldo de Vacaciones  -->
 <!-- POP UP -->
 <div  class="modal fade" id ="modalsol" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" name="formsol">
-<div class="modal-dialog" style="margin: 10%; margin-top: 5%;" role="document">
+<div class="modal-dialog" style="margin: 10%; margin-top: 15%;" role="document">
     <div style="width: 160%;" class="modal-content">
         <div class="modal-header">
        <b> <h4>Solicitar Vacaciones</b>
@@ -213,6 +219,11 @@
                         <label for="Saldo">0</label>&nbsp;&nbsp;
                         <input type="submit"  id="enter" class="btn btn-primary" value="Solicitar" /> <!-- data-target="#imodal" data-toggle="modal" onclick="alert('Su solicitud ha sido enviada exitosamente')" -->
                        <!-- <button id="enter" type="button" class="btn btn-primary" onclick="alert('Su solicitud ha sido enviada exitosamente')">Solicitar </button>-->
+                    </div>
+                    
+                    <div class="col-xs-offset-4">
+                       <label>Saldo Actual total: </label>&nbsp;
+                       <label for="SaldoT">0</label>&nbsp;&nbsp;
                     </div>
             </div>
         </form>

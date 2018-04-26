@@ -115,6 +115,7 @@ function fillModalData(dato){
                //document.getElementByName("Tipo").checked = true;
                }
            }
+           console.log($('input:radio[name=Tipo]:checked').val());
            console.log(valor);
            $("#idVac").val(data[0].IdVacaciones)
            $("#NumDay2").val(data[0].CantDias);
@@ -170,23 +171,6 @@ $(document).on('click', '.btn-edit', function (e) {
     }   
      
   });*/
-
-  // Evento click para editar una solicitud de vacaciones 12/04/18 5:20 pm (si lo quito igual no pasa nada, porque se esta mandando a guardar desde el controller)
-  $(document).on('clik', '#editSol', function(e){
-    e.preventDefault();
-      var obj = idVacaciones = dato[0];
-      $ajax({
-          url: "?c=Vacaciones&a=EditSolicitud",
-          data: obj,
-          type: "POST",
-          dataType: 'json',
-          contentType: 'aplication/json; charset=utf8',
-          contentType: 'application/json; charset= utf-8',
-          success: function(data){
-              console.log(data);
-          }
-      });
-});
 
 // evento click para cancelar la solicitud de vacaciones
 $(document).on('click', '.btn-del', function (e) {

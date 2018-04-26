@@ -12,7 +12,7 @@
 
         public function login(Empleado $data){
             $flag = false;
-            $sql = "select u.IdEmpleado from Usuarios u where u.Usuario = ? and u.Pass = ?";
+            $sql = "select u.IdEmpleado from Usuarios u where u.Usuario = ? and u.Pass = ? and u.Estado!=0";
             $result = $this->db->prepare($sql);
             $result->execute(array($data->__GET('user'), $data->__GET('pass')));
             

@@ -1,11 +1,13 @@
 <?php 
 class VacacionesController{
-    public $model, $obj, $factor;
+    public $model, $obj, $factor, $modelFe;
     public function __construct(){
         include('Model/DAO/VacationDAO.php');
         include('Model/Entity/Vacation.php');
+        include('Model/DAO/FeriadosDAO.php'); //Agregado 18-04-2018 3:06pm
         $this->obj = new Vacation();
         $this->model = new VacationDAO();
+        $this->modelFe = new FeriadosDAO(); //Agregado 18-04-2018 3:06pm
     }
 
     public function index(){
@@ -37,7 +39,8 @@ class VacacionesController{
             $this->obj->__SET('FechaI', $_REQUEST['FechaI']);
             $this->obj->__SET('FechaF', $_REQUEST['FechaF']);
             $this->obj->__SET('Descripcion', $_REQUEST['Descripcion']);
-            $this->model->store($this->obj);
+            //$this->modelFe->Feriados(); //Agregado 18-04-2018 3:08pm
+            $this->model->store($this->obj, $this->obj->FechaI, $this->obj->FechaF);
             header('Location: index.php?c=SaldoVacaciones');
         }else {
             header('Location: index.php?c=Principal&a=AccessError');

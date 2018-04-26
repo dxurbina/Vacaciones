@@ -36,12 +36,10 @@ class SaldoVacacionesDAO{
             try{
                 $id = $_SESSION['ID']->IdEmpleado; //Captura el id del usuario logueado
                 $resulSet = array();
-                $consult = $this->db->prepare("select v.IdVacaciones, c.NombreCargo, v.CantDias, v.FechaI, v.FechaF, v.Tipo, v.FechaSolicitud, ej.PNombre as NJefe, ej.PApellido as AJefe, v.Estado, v.FechaRespuesta, v.Descripcion
-                from Vacaciones v 
-                inner join Empleados e on v.IdEmpleado = e.IdEmpleado 
-                inner join cargos car on car.IdCargo=e.IdCargo
-                left join Empleados ej on v.IdRespSup = ej.IdEmpleado,
-                Cargos c where e.IdCargo = c.IdCargo and v.IdEmpleado = ?
+                $consult = $this->db->prepare("select v.IdVacaciones, e.PNombre, e.PApellido,  c.NombreCargo, v.CantDias, v.FechaI, v.FechaF, v.Tipo, v.FechaSolicitud, v.FechaRespuesta, v.Estado, v.Descripcion from vacaciones v
+                inner join Empleados e on e.IdEmpleado=v.IdEmpleado
+                inner join cargos c on c.IdCargo=e.IdCargo
+                where e.IdCargo=c.IdCargo and v.IdEmpleado=?
                 order by v.FechaSolicitud desc;");
                 $consult -> execute(array($id));
                 while($row = $consult->fetchAll(PDO::FETCH_OBJ)){

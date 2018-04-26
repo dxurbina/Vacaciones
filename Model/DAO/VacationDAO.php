@@ -4,17 +4,19 @@
        public function __construct(){
         require_once('Model/Conexion.php');
         require_once('Model/Entity/Vacation.php');
+        require('Model/Entity/Feriados.php');
         $this->con = new Conexion();
         $this->db= $this->con->conex();
-       }
-
+       } 
+         
+    //Función buena 18-04-2018 3:45 pm (Está es la que funciona)  
        public function store(Vacation $data){
            $sql = 'insert into vacaciones values(null, ?, ?, ?, ?, "Pendiente", ?, null, now(), null, ?);';
            $result = $this->db->prepare($sql);
            $result->execute(array($data->__GET('FechaI'), $data->__GET('FechaF'),
                             $data->__GET('Tipo'), $data->__GET('CantDias'), 
                             $_SESSION['ID']->IdEmpleado, $data->__GET('Descripcion')));
-       }
+        }
 
        public function update($id, $Estado){
            $sql= "update Vacaciones set Estado = ?, IdRespSup = ?, FechaRespuesta = now() where IdVacaciones = ?; ";
