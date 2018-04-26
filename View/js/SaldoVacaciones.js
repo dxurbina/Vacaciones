@@ -12,8 +12,8 @@ var dato, tabla, idEmp, $row;
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
-            console.log(data);
-            console.log(data.length);
+           // console.log(data);
+           // console.log(data.length);
             var boss;
             tabla = $("#tbl_Historial").DataTable();
 
@@ -69,7 +69,7 @@ function radioSeleccionadoEdit(){
         $("#Tipo").val(data[0].Tipo).checked;
         }
     }
-    console.log(valor);
+   // console.log(valor);
    
   }
 
@@ -77,7 +77,7 @@ function radioSeleccionadoEdit(){
 function fillModalData(dato){
     //selectRadio();
     var obj = JSON.stringify({ id: dato[0] });
-    console.log(obj);
+  //  console.log(obj);
     $.ajax({
         data: obj,
         url: "?c=Vacaciones&a=ListSolicitudById",
@@ -88,7 +88,7 @@ function fillModalData(dato){
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
-            console.log(data);
+           // console.log(data);
             /*if((valor=='Vacaciones') || (valor=='Enfermedad') || (valor=='Permiso Especial')){ //aqui por favor
                 $("#Tipo").val(data[0].Tipo).checked;
             }*/
@@ -115,7 +115,7 @@ function fillModalData(dato){
                //document.getElementByName("Tipo").checked = true;
                }
            }
-           console.log(valor);
+          // console.log(valor);
            $("#idVac").val(data[0].IdVacaciones)
            $("#NumDay2").val(data[0].CantDias);
            $("#pointer2").val(data[0].FechaI);
@@ -129,7 +129,7 @@ function fillModalData(dato){
 $(document).on('click', '.btn-edit', function (e) {
     e.preventDefault();
     var valores = $(this).parents("tr").find("td")[6].innerHTML; // obtiene una columna especifica de la fila seleccionada
-    console.log(valores);
+    //console.log(valores);
     if(valores=='Pendiente'){
         $("#modalSolEdit").modal("show");
         var _row = $(this).parent().parent()[0];
@@ -183,7 +183,7 @@ $(document).on('click', '.btn-edit', function (e) {
           contentType: 'aplication/json; charset=utf8',
           contentType: 'application/json; charset= utf-8',
           success: function(data){
-              console.log(data);
+              //console.log(data);
           }
       });
 });
@@ -192,15 +192,15 @@ $(document).on('click', '.btn-edit', function (e) {
 $(document).on('click', '.btn-del', function (e) {
     var eliminar = confirm('¿Desea cancelar la solicitud de vacaciones?');
     var valores = $(this).parents("tr").find("td")[6].innerHTML; // obtiene una columna especifica de la fila seleccionada
-    console.log(valores);    0
+   // console.log(valores);    0
     if(eliminar) {
         if(valores!='Aceptada' && valores!='Rechazada'){
             e.preventDefault;
             var _row = $(this).parent().parent()[0];
-            console.log(_row);
+           // console.log(_row);
             dato = tabla.fnGetData(_row);
             idVac = dato[0];
-            console.log(idVac);
+            //console.log(idVac);
             var obj = JSON.stringify({ id: idVac });
                $.ajax({
                   url: "?c=Vacaciones&a=CancelarSolicitud",

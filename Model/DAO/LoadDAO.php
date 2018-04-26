@@ -21,7 +21,7 @@
                 $_SESSION['ID'] = $row;
                 $_SESSION['nickname'] = $data->__GET('user');
             }else{
-                $_SESSION['nickname'] = 'Error';
+               $_SESSION['nickname'] = 'Error';
                 $_SESSION['access'] = null;
             }
             
@@ -64,56 +64,21 @@
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       
+        public function GeneralData(){
+            $flag = false;
+            $sql = "select  e.PNombre, e.PApellido, c.NombreCargo from  Empleados e, Cargos c, CentroCostos cc, DeptosEmpresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep 
+            and e.IdEmpleado = ?;";
+            $result = $this->db->prepare($sql);
+            $result->execute(array( $_SESSION['ID']->IdEmpleado));
+            $data;
+            if($row = $result->fetch(PDO::FETCH_OBJ)){
+               
+                $_SESSION['data'] = $row;
+                
+            }
+            
+           
+        }
         
     }
 ?>

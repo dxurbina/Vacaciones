@@ -107,7 +107,8 @@
 
 
                        /* List the vacation of General Manager */
-                       $sql = "select IdEmpleado from Empleados where IdJefe is null and Estado = 1";
+                       $sql = "select IdEmpleado from Empleados e inner join Cargos c on  e.IdCargo = c.IdCargo where e.IdJefe is null and e.Estado = 1
+                       and c.NombreCargo = 'Gerente General';";
                         $result = $this->db->prepare($sql);
                         $result->execute();
                         if($row = $result->fetch(PDO::FETCH_OBJ)){
@@ -149,6 +150,22 @@
                     die($e->getMessage());
                 }
             }
+
+            public function showbyId($id){
+                try{
+                  $resultSet = array();
+                  $consult = $this->db->prepare("select v.Descripcion
+                  from Vacaciones v inner join Empleados e on v.IdEmpleado = e.IdEmpleado where v.IdVacaciones = ?");
+                  $consult->execute(array($id)); 
+                      while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                          $resulSet = $row; 
+                      }
+                      return $resulSet; 
+                } catch(Exception $e)
+                    {
+                        die($e->getMessage());
+                    }
+                }
 
 
         public function showHistory(){
@@ -240,7 +257,8 @@
                        }
             //} 
             /* List the vacation of General Manager */
-            $sql = "select IdEmpleado from Empleados where IdJefe is null and Estado = 1";
+            $sql = "select IdEmpleado from Empleados e inner join Cargos c on  e.IdCargo = c.IdCargo where e.IdJefe is null and e.Estado = 1
+            and c.NombreCargo = 'Gerente General';";
             $result = $this->db->prepare($sql);
             $result->execute();
             if($row = $result->fetch(PDO::FETCH_OBJ)){

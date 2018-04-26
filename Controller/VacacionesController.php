@@ -1,11 +1,14 @@
 <?php 
 class VacacionesController{
-    public $model, $obj, $factor;
+    public $model, $modelNotif,  $obj, $objNotif, $factor;
     public function __construct(){
         include('Model/DAO/VacationDAO.php');
+        include('Model/DAO/NotificationDAO.php');
         include('Model/Entity/Vacation.php');
+        include('Model/Entity/Notificaciones.php');
         $this->obj = new Vacation();
         $this->model = new VacationDAO();
+        $this->modelNotif = new NotificationDAO();
     }
 
     public function index(){
@@ -34,10 +37,24 @@ class VacacionesController{
         if(isset($_SESSION['nickname'])){
          $this->obj->__SET('Tipo', $_REQUEST['Tipo']);
             $this->obj->__SET('CantDias', $_REQUEST['CantDias']);
-            $this->obj->__SET('FechaI', $_REQUEST['FechaI']);
-            $this->obj->__SET('FechaF', $_REQUEST['FechaF']);
+            $originalDate = $_REQUEST['FechaI'];
+            //$DateI = date("Y-m-d", strtotime($originalDate));
+            $originalDate = ltrim($originalDate);
+            $originalDate = rtrim($originalDate);
+            $nums = explode('/', $originalDate);
+            $this->obj->__SET('FechaI', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
+            $originalDate = $_REQUEST['FechaF'];
+            $originalDate = ltrim($originalDate);
+            $originalDate = rtrim($originalDate);
+            $nums = explode('/', $originalDate);
+            //$DateE = date("Y-m-d", strtotime($originalDate));
+            
+            $this->obj->__SET('FechaF', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
+
             $this->obj->__SET('Descripcion', $_REQUEST['Descripcion']);
             $this->model->store($this->obj);
+            $estado = "Solicitud";
+            $this->modelNotif->store(null, $estado);
             header('Location: index.php?c=SaldoVacaciones');
         }else {
             header('Location: index.php?c=Principal&a=AccessError');
@@ -54,6 +71,7 @@ class VacacionesController{
             # Get as an object
             $json_obj = json_decode($json_str);
             $_array = $this->model->update($json_obj->id, $json_obj->Estado);
+            $this->modelNotif->store($json_obj->id, $json_obj->Estado);
             //$var = json_encode(array_map('utf8_encode', $cursos));
             # unset($cursos[5]);
             $var = json_encode( $_array);
@@ -74,6 +92,28 @@ class VacacionesController{
             $List = $this->model->showAll();
             $var = json_encode($List);
             $json = json_last_error();
+            echo $var; 
+            }else {
+                header('Location: index.php?c=Principal&a=AccessError');
+            }
+    }
+
+    public function showById(){
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 2 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        
+            header('Content-Type: application/json; charset=utf-8');
+             # Get JSON as a string
+            $json_str = file_get_contents('php://input');
+           // $json_str = $_POST['id'];
+            # Get as an object
+            $json_obj = json_decode($json_str);
+            $_array = $this->model->showById($json_obj->id);
+            # unset($cursos[5]);
+            $var = json_encode( $_array);
+            $json = json_last_error();
+           // $var2 = utf8_converter($cursos);
+            
+           # echo $json; #esta era la wea que lo jodia hace rato
             echo $var; 
             }else {
                 header('Location: index.php?c=Principal&a=AccessError');

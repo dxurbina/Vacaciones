@@ -13,13 +13,15 @@ function sendDataAjax1() {
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
-            //console.log(data);
+            console.log(data);
             //console.log(data.length);
             dato1 = data;
            // console.log(dato);
             //addRowDT(data.d);
             
-            tabla = $("#tbl_Solicitud").DataTable();
+           
+            tabla = $("#tbl_Solicitud").DataTable({
+                "aaSorting": [[0, 'desc']]});
     for (var i = 0; i < data.length; i++) {
             tabla.fnAddData([
                 data[i].IdVacaciones,
@@ -42,36 +44,57 @@ function sendDataAjax1() {
 $(document).on('click', '.btn-show', function(e){
     e.preventDefault();
     var flag = true; var sum;
-    var $d = $(this).parent("td");     
+    //var $d = $(this).parent("td");     
     //console.log($d);
     //var col = $d.parent().children().index($d);
     //console.log(col);
-    row = $d.parent().parent().children().index($d.parent());
+    //row = $d.parent().parent().children().index($d.parent());
+    //row = $('.btn-show').parent().parent()[0];
+    
+    rowid = $(this).parents("tr").find("td").eq(0).html();
+    //console.log(id);
+    //EData = tabla.fnGetData(id);
+   // console.log(EData);
     //alert(dato[row].Descripcion);
     
-    //console.log(row);
-    $("#Descrip").val(dato1[row].Descripcion);
+    console.log(rowid);
+    //$("#Descrip").val(dato1[EData[0]].Descripcion);
+    obj = JSON.stringify({ id: rowid });
+    $.ajax({
+        data: obj,
+        url: "?c=Vacaciones&a=showById",
+        type: "POST",
+        dataType: 'json',
+        contentType: 'application/json; charset= utf-8',
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+        },
+        success: function (data) {
+            console.log(data);
+           $("#Descrip").val(data[0].Descripcion);
+        }
+        });
 });
 
 $(document).on('click', '.btn-accept', function(e){
     e.preventDefault();
-    var $d = $(this).parent("td");     
-    row = $d.parent().parent().children().index($d.parent()); 
+    //var $d = $(this).parent("td");     
+    row = $(this).parents("tr").find("td").eq(0).html(); // $d.parent().parent().children().index($d.parent()); 
     console.log(row);
     console.log(dato1[row].IdVacaciones);
 });
 
 $(document).on('click', '.btn-deny', function(e){
     e.preventDefault();
-    var $d = $(this).parent("td");     
-    row = $d.parent().parent().children().index($d.parent());
+    //var $d = $(this).parent("td");     
+    row = $(this).parents("tr").find("td").eq(0).html(); //$d.parent().parent().children().index($d.parent());
     console.log(row);
 });
 
 $(document).on('click', '.btn-revert', function(e){
     e.preventDefault();
-    var $d = $(this).parent("td");     
-    row = $d.parent().parent().children().index($d.parent());
+   // var $d = $(this).parent("td");     
+    row = $(this).parents("tr").find("td").eq(0).html(); //$d.parent().parent().children().index($d.parent());
     console.log(row);
 });
 
@@ -80,13 +103,13 @@ $(document).on('click', '#update', function(e){
     e.preventDefault();
     if($(this).val() == "Aceptar"){
         _state = "Aceptada";
-        var obj = JSON.stringify({ id: dato1[row].IdVacaciones, Estado: _state });
+        var obj = JSON.stringify({ id: row, Estado: _state });
     }else if($(this).val() == "Rechazar"){
         _state = "Rechazada";
-        var obj = JSON.stringify({ id: dato1[row].IdVacaciones, Estado: _state });
+        var obj = JSON.stringify({ id: row, Estado: _state });
     }else if($(this).val() == "Revertir"){
         _state = "Revertida";
-        var obj = JSON.stringify({ id: dato2[row].IdVacaciones, Estado: _state });
+        var obj = JSON.stringify({ id: row, Estado: _state });
     }else{
         alert('Datos Alterados');
         location.reload(true);

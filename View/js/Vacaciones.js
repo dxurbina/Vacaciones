@@ -24,6 +24,7 @@ $(document).ready(function(){
 
         $('#dataF').datepicker(
                     {
+                    
                     defaultDate: "+1w",
                     beforeShow: function() {
                     $(this).datepicker('option', 'minDate', $('#pointer').val());
@@ -68,15 +69,42 @@ $(document).ready(function(){
     str3 = "Fecha final: " + fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear();
        console.log(str1 + ' ' + str2 +' ' + str3 +' ');
        
+       oldMes = (fecha2.getMonth() + 1);
+       oldDay = (fecha2.getDate());
+       oldAnio = (fecha2.getFullYear());
+
        newMes = (fecha.getMonth() + 1);
        newDay = (fecha.getDate());
        newAnio = (fecha.getFullYear());
-       
-       var options = { year: 'numeric', month: 'long', day: 'numeric' };
 
-            $('#dateF').val(fecha.toLocaleDateString("es-ES", options));
+
+       
+     //  var options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+     //console.log(newMes.toString().length);
+        if(newMes.toString().length > 1 && newDay.toString().length > 1){
+            $('#dateF').val(newDay + "/" + newMes + "/" + newAnio);
+        }else if(newMes.toString().length == 1 && newDay.toString().length == 1){
+            $('#dateF').val("0" + newDay + "/" + "0" +newMes + "/" + newAnio);
+        }else if(newDay.toString().length == 1){
+            $('#dateF').val("0" + newDay + "/"  +newMes + "/" + newAnio);
+        }else if (newMes.toString().length == 1){  
+            $('#dateF').val(newDay + "/" + "0" +newMes + "/" + newAnio);
+        }
+
+        if(oldMes.toString().length > 1 && oldDay.toString().length > 1){
+            $('#pointer').val(oldDay + "/" + oldMes + "/" + oldAnio);
+        }else if(oldMes.toString().length == 1 && oldDay.toString().length == 1){
+            $('#poiner').val("0" + oldDay + "/" + "0" + oldMes + "/" + oldAnio);
+        }else if(oldDay.toString().length == 1){
+            $('#pointer').val("0" + oldDay + "/"  + oldMes + "/" + oldAnio);
+        }else if (oldMes.toString().length == 1){  
+            $('#pointer').val(oldDay + "/" + "0" + oldMes + "/" + oldAnio);
+        }
+            
             console.log(fecha2);
-            $('#pointer').val(fecha2.toLocaleDateString("es-ES", options));
+           // $("#dateF").datepicker("setDate", fecha2);
+         //  $('#pointer').val(fecha2.toLocaleDateString("es-ES", options));
+            //$("#pointer").datepicker("setDate", fecha);
             console.log($('input:radio[name=Tipo]:checked').val());
             if($('input:radio[name=Tipo]:checked').val() == 'Vacaciones'){
                 var factor =  $("label[for='factor']").text();
@@ -203,16 +231,7 @@ function sumarDias(fecha, dias){
     var FechaI = document.getElementById('pointer').value;
     if((cantDias!=null && cantDias!= "") && valor!=null && (FechaI!=null && FechaI!= ""))
     {
-        $.ajax({
-            url: "?c=Vacaciones&a=store",
-            type: "POST",
-            dataType: 'json',
-            contentType: 'application/json; charset= utf-8',
-            success: function(data){
-                //console.log('Todo ha funcionado');
-                //location.reload(true); 
-            }
-            });
+       
              $("#imodalsolacep").modal("show");
             //alert('solicitud enviada correctamente.');
     } else {

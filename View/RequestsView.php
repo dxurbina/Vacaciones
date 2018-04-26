@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="button" class="btn btn-primary" id="update" value ="Aceptar" />
+                    <input type="button" class="btn btn-primary" id="update" value = "Aceptar" />
                     <button type="button" data-dismiss="modal" class="btn btn-danger" id="btnCancel">Cancelar</button>
                 </div>
             </div>
