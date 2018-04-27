@@ -108,6 +108,5 @@ public function HistVac(){
             header('Location: index.php?c=Principal&a=AccessError');
         }
     }
-    
 }
 ?>
