@@ -14,41 +14,6 @@ $(document).ready(function(){
         }
     });
 
-    /*var dia = 0;
-    var mes = 0;
-    var any = 0;
-    var fecha = 0;
-   
-    function feriados(date)
-    {
-        for (i = 0; i < feriados.length; i++)
-        {
-               //fecha=feriados[i].toString();
-               dia=fecha.substring(01);
-               mes=fecha.substring(5,7);
-               any=fecha.substring(0,4);
-               if ((date.getMonth() == mes - 1) && (date.getDate() == dia) && (date.getFullYear() == any)) 
-               {
-                     return [false];
-               }
-         }
-     return [true];
-    }
-   
-   $(function()
-   { 
-         $( "#pointer" ).datepicker(
-         {
-                  dateFormat:"dd/mm/yy", 
-                  firstDay:1, 
-                  maxDate:"+12m",
-                  minDate:"+1",
-                  beforeShowDay: feriados
-                  
-           }); 
-           console.log(feriados);
-   });*/
-
     $('#pointer').datepicker(
         {  
            minDate: -7,
@@ -61,8 +26,8 @@ $(document).ready(function(){
         });
 
         $('#dataF').datepicker(
-                    {
-                    //defaultDate: "+1w",
+                    {                    
+                    defaultDate: "+1w",
                     beforeShow: function() {
                     $(this).datepicker('option', 'minDate', $('#pointer').val());
         if ($('#pointer').val() === '') $(this).datepicker('option', 'minDate', 0);                             
@@ -93,33 +58,53 @@ $(document).ready(function(){
 
                 fecha.setHours(addTime); //Añado el tiempo
  
-            str1 = "Fecha actual: " + dia + "/" + mes + "/" + anio + "<br />";
-            str2 = "Tiempo añadido: " + sumar + " días<br />";
-            str3 = "Fecha final: " + fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear();
-               console.log(str1 + ' ' + str2 +' ' + str3 +' ');
-               
-               newMes = (fecha.getMonth() + 1);
-               newDay = (fecha.getDate());
-               newAnio = (fecha.getFullYear());
-        
-               var options = { year: 'numeric', month: 'long', day: 'numeric' };
-        
-                    $('#dateF').val(fecha.toLocaleDateString("es-ES", options));
-                    console.log(fecha2);
-                    $('#pointer').val(fecha2.toLocaleDateString("es-ES", options));
-                    console.log($('input:radio[name=Tipo]:checked').val());
-                    if($('input:radio[name=Tipo]:checked').val() == 'Vacaciones'){
-                        var factor =  $("label[for='factor']").text();
-                        var saldo = parseFloat(factor) * sumar;
-                        var result = saldo.toFixed(2); 
-                        $("label[for='Saldo']").text(result);
-                        //Aquí 16-04-18
-                        var saldoactual = $("label[for='saldo']").text();
-                        var sal = parseFloat(saldoactual) - saldo;
-                        var resultado = sal.toFixed(2);
-                        $("label[for='SaldoT']").text(resultado);
-                    }
+    str1 = "Fecha actual: " + dia + "/" + mes + "/" + anio + "<br />";
+    str2 = "Tiempo añadido: " + sumar + " días<br />";
+    str3 = "Fecha final: " + fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear();
+       console.log(str1 + ' ' + str2 +' ' + str3 +' ');
+       
+       oldMes = (fecha2.getMonth() + 1);
+       oldDay = (fecha2.getDate());
+       oldAnio = (fecha2.getFullYear());
 
+       newMes = (fecha.getMonth() + 1);
+       newDay = (fecha.getDate());
+       newAnio = (fecha.getFullYear());
+       
+     //  var options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+     //console.log(newMes.toString().length);
+        if(newMes.toString().length > 1 && newDay.toString().length > 1){
+            $('#dateF').val(newDay + "/" + newMes + "/" + newAnio);
+        }else if(newMes.toString().length == 1 && newDay.toString().length == 1){
+            $('#dateF').val("0" + newDay + "/" + "0" +newMes + "/" + newAnio);
+        }else if(newDay.toString().length == 1){
+            $('#dateF').val("0" + newDay + "/"  +newMes + "/" + newAnio);
+        }else if (newMes.toString().length == 1){  
+            $('#dateF').val(newDay + "/" + "0" +newMes + "/" + newAnio);
+        }
+
+        if(oldMes.toString().length > 1 && oldDay.toString().length > 1){
+            $('#pointer').val(oldDay + "/" + oldMes + "/" + oldAnio);
+        }else if(oldMes.toString().length == 1 && oldDay.toString().length == 1){
+            $('#poiner').val("0" + oldDay + "/" + "0" + oldMes + "/" + oldAnio);
+        }else if(oldDay.toString().length == 1){
+            $('#pointer').val("0" + oldDay + "/"  + oldMes + "/" + oldAnio);
+        }else if (oldMes.toString().length == 1){  
+            $('#pointer').val(oldDay + "/" + "0" + oldMes + "/" + oldAnio);
+        }
+            
+            console.log(fecha2);
+           // $("#dateF").datepicker("setDate", fecha2);
+         //  $('#pointer').val(fecha2.toLocaleDateString("es-ES", options));
+            //$("#pointer").datepicker("setDate", fecha);
+            console.log($('input:radio[name=Tipo]:checked').val());
+            if($('input:radio[name=Tipo]:checked').val() == 'Vacaciones'){
+                var factor =  $("label[for='factor']").text();
+                var saldo = parseFloat(factor) * sumar;
+                var resul = saldo.toFixed(2); 
+                $("label[for='Saldo']").text(resul);
+            }
+            
             //$('#ExtraDateEnd').val(fecha.toLocaleDateString("es-ES", options));
             //$('#ExtraDateIni').val(fecha.toLocaleDateString("es-ES", options));
             $('#ExtraDateIni').datepicker(
@@ -147,7 +132,7 @@ $(document).ready(function(){
 
         $('#dataF2').datepicker(
                     {
-                    //defaultDate: "+1w",
+                    defaultDate: "+1w",
                     beforeShow: function() {
                     $(this).datepicker('option', 'minDate', $('#pointer2').val());
         if ($('#pointer2').val() === '') $(this).datepicker('option', 'minDate', 0);                             
@@ -186,15 +171,39 @@ $(document).ready(function(){
     str3 = "Fecha final: " + fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear();
        console.log(str1 + ' ' + str2 +' ' + str3 +' ');
        
+       oldMes = (fecha2.getMonth() + 1);
+       oldDay = (fecha2.getDate());
+       oldAnio = (fecha2.getFullYear());
+
        newMes = (fecha.getMonth() + 1);
        newDay = (fecha.getDate());
        newAnio = (fecha.getFullYear());
        
-       var options = { year: 'numeric', month: 'long', day: 'numeric' };
+     //  var options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+     //console.log(newMes.toString().length);
+        if(newMes.toString().length > 1 && newDay.toString().length > 1){
+            $('#dateF2').val(newDay + "/" + newMes + "/" + newAnio);
+        }else if(newMes.toString().length == 1 && newDay.toString().length == 1){
+            $('#dateF2').val("0" + newDay + "/" + "0" +newMes + "/" + newAnio);
+        }else if(newDay.toString().length == 1){
+            $('#dateF2').val("0" + newDay + "/"  +newMes + "/" + newAnio);
+        }else if (newMes.toString().length == 1){  
+            $('#dateF2').val(newDay + "/" + "0" +newMes + "/" + newAnio);
+        }
 
-            $('#dateF2').val(fecha.toLocaleDateString("es-ES", options));
+        if(oldMes.toString().length > 1 && oldDay.toString().length > 1){
+            $('#pointer2').val(oldDay + "/" + oldMes + "/" + oldAnio);
+        }else if(oldMes.toString().length == 1 && oldDay.toString().length == 1){
+            $('#pointer2').val("0" + oldDay + "/" + "0" + oldMes + "/" + oldAnio);
+        }else if(oldDay.toString().length == 1){
+            $('#pointer2').val("0" + oldDay + "/"  + oldMes + "/" + oldAnio);
+        }else if (oldMes.toString().length == 1){  
+            $('#pointer2').val(oldDay + "/" + "0" + oldMes + "/" + oldAnio);
+        }
+
+            //$('#dateF2').val(fecha.toLocaleDateString("es-ES", options));
             console.log(fecha2);
-            $('#pointer2').val(fecha2.toLocaleDateString("es-ES", options));
+            //$('#pointer2').val(fecha2.toLocaleDateString("es-ES", options));
             console.log($('input:radio[name=Tipo]:checked').val());
             if($('input:radio[name=Tipo]:checked').val() == 'Vacaciones'){
                 var factor =  $("label[for='factor']").text();
@@ -264,6 +273,7 @@ function sumarDias(fecha, dias){
                 //location.reload(true); 
             }
             });*/
+       
              $("#imodalsolacep").modal("show");
             //alert('solicitud enviada correctamente.');
     } else {

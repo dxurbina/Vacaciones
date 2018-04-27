@@ -4,7 +4,7 @@
 <form class="form" action="?c=Empleado&a=AddEmpleados" method="POST"> 
     <!-- POP UP -->
     <div class="modal-dialog" role="document">
-        <div style="width: 130%;" class="modal-content">
+        <div style="width: 120%;" class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden = "true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Registar Empleado</h4>
