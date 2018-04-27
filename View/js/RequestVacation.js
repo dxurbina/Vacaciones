@@ -1,7 +1,7 @@
 $(document).ready(function(){
     
 });
- var $dato1, $dato2, row, f = new Date();;
+ var $dato1, $dato2, row, f = new Date();
 function sendDataAjax1() {
     $.ajax({
         type: "POST",
@@ -19,17 +19,19 @@ function sendDataAjax1() {
            // console.log(dato);
             //addRowDT(data.d);
             
-           
+            var options = { year: 'numeric', month: 'long', day: 'numeric' };
             tabla = $("#tbl_Solicitud").DataTable({
                 "aaSorting": [[0, 'desc']]});
     for (var i = 0; i < data.length; i++) {
+            var f = new Date(data[i].FechaI);
+            var t = new Date(data[i].FechaF);
             tabla.fnAddData([
                 data[i].IdVacaciones,
                 ( data[i].PNombre + " "+ data[i].PApellido),
                 (data[i].NombreCargo),
                 data[i].CantDias,
-                (data[i].FechaI ),
-                data[i].FechaF,
+                (f.toLocaleDateString("es-ES", options) ),
+                t.toLocaleDateString("es-ES", options),
                 data[i].tipo,
                 '<button title= "Aceptar" value= "show" class="btn btn-primary btn-accept " data-target="#imodal" data-toggle="modal"><i class="fa fa-check" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
                 '<button title= "Rechezar" value= "grant" class="btn btn-danger btn-deny" data-target="#imodal2" data-toggle="modal"><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
@@ -41,6 +43,7 @@ function sendDataAjax1() {
         }
     });
 }
+
 $(document).on('click', '.btn-show', function(e){
     e.preventDefault();
     var flag = true; var sum;

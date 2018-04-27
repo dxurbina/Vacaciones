@@ -5,8 +5,6 @@
             <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title" style="font-size: 200%;">Saldo de Empleados</h3>
-                   
-
                 </div>
                 <div class="box-body table-responsive">
                     <table id="tbl_History"  class="table table-bordered table-hover">
@@ -26,6 +24,7 @@
                 </div>
             </div>
         </div>
+        
         <script src="View/js/BalanceHistory.js" type="text/javascript"></script>
     <?php
 }else {

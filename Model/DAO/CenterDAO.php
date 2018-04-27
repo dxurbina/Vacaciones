@@ -1,5 +1,5 @@
 <?php 
-    class ReportDAO{
+    class CenterDAO{
         public $db;
         public function __construct(){
             include("Model/Conexion.php");
@@ -18,6 +18,18 @@
                 $resulSet[] = $row; 
             }
             return $resulSet;
+        }
+
+        public function showById($id){
+            $sql = "select cc.IdCosto, cc.Codigo, cc.Nombre from CentroCostos cc inner join deptosempresa d on cc.IdDptoEmp = d.IdDep
+            where d.IdDep = ?;";
+            $resulSet = array();
+            $consult = $this->db->prepare($sql);
+            $consult->execute(array($id));
+                    while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                        $resulSet = $row; 
+                    }
+                    return $resulSet;
         }
     }
 ?>
