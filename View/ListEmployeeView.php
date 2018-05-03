@@ -47,20 +47,20 @@
                         <div class="col-sm-3">
                             <input  hidden type = "text" id= "CargarEmpleado" name = "idEmpleado" />
                             <div class="form-group"><label>Primer Nombre</label></div>
-                            <div class="form-group"><input id="desac1" name = "PNombre" ID="txtFullName"  Text=""  Enabled="false"></input></div>
+                            <div class="form-group"><input id="desac1" class="input_let" name = "PNombre" ID="txtFullName"  Text=""  Enabled="false" required /></div>
                             <div class="form-group"><label>SegundoNombre</label></div>
-                            <div class="form-group"><input id="desac2" name ="SNombre" ID="txtmodaldireccion"  ></input></div>
+                            <div class="form-group"><input id="desac2" class="input_let" name ="SNombre" ID="txtmodaldireccion"  required></input></div>
                             <div class="form-group"><label>Primer Apellido</label></div>
-                            <div class="form-group"><input id="desac3" name ="PApellido"ID="txtFullName"  Text=""  Enabled="false"></input></div>
+                            <div class="form-group"><input id="desac3" class="input_let" name ="PApellido"ID="txtFullName"  Text=""  Enabled="false" required></input></div>
                             <div class="form-group"><label>Segundo Apellido</label></div>
-                            <div class="form-group"><input id="desac4" name="SApellido" ID="txtmodaldireccion"  ></input></div>
+                            <div class="form-group"><input id="desac4" class="input_let" name="SApellido" ID="txtmodaldireccion"  required></input></div>
                             <div class="form-group"><label>¿Reside en el país?</label></div>
                             <div class="form-group"><select id="desac5" name="Residencia">
                                 <option value="1">Si</option>
                                 <option value="0">No</option>
                             </select></div>
                             <div class="form-group"><label>Cedula</label></div>
-                            <div class="form-group"><input id="desac6" name ="Cedula" ID=""></input></div>
+                            <div class="form-group"><input id="desac6" name ="Cedula" ID="" required></input></div>
                             <div class="form-group"><label>Pasaporte</label></div>
                             <div class="form-group"><input id="desac7" name ="Pasaporte" ID=""  Text=""  Enabled="false"></input></div>
                             
@@ -76,7 +76,7 @@
                                 <div class="form-group">
                                     <label>Fecha de Ingreso</label>
                                 </div>
-                                <div class="form-group"><input  id="desac29" name ="FechaIng" type= "date" min="1950-01-01" max="2018-05-03"ID=""  Text=""  Enabled="false"></input></div>
+                                <div class="form-group"><input  id="desac29" name ="FechaIng" type= "date" min="1950-01-01" max="2018-05-03"ID=""  Text=""  Enabled="false" required></input></div>
                                 
                                 <div class="form-group">
                                     <div class="row row-fluid">
@@ -110,7 +110,7 @@
                                         </div>
                                         <div class="col-xs-6">
                                             <div class="form-group"><label>Numero</label></div>
-                                            <input  id="desac13" name = "NumHijos" type="number" name="edad" min="0" max="30" step="1">
+                                            <input  id="desac13" class="input_num" name = "NumHijos" type="number" name="edad" min="0" max="30" step="1">
                                         </div>
                                         
                                     </div>
@@ -119,26 +119,26 @@
                                     <div class="row row-fluid">
                                         <div class="col-xs-6">
                                             <div class="form-group"><label>Hermanos</label></div>
-                                            <div class="form-group"><select id="desac14" name="Hermanos">
+                                            <div class="form-group"><select  id="desac14" name="Hermanos">
                                             <option value="1">Si</option>
                                             <option value="0">No</option>
                                             </select></div>
                                         </div>
                                         <div class="col-xs-6">
                                             <div class="form-group"><label>Numero</label></div>
-                                            <input  type="number" id="desac15" name="NumHermanos" min="0" max="30" step="1">
+                                            <input  type="number" class="input_num" id="desac15" name="NumHermanos" min="0" max="30" step="1">
                                         </div>
                                         
                                     </div>
                                 </div>
 
                                 <div class="form-group"><label>Telefono</label></div>
-                                <div class="form-group"><input id="desac16" name ="Telefono" ID=""  Text=""  Enabled="false"></input></div>
+                                <div class="form-group"><input class="input_num" id="desac16" name ="Telefono" ID=""  Text=""  Enabled="false"></input></div>
                             
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group"><label>Correo</label></div>
-                            <div class="form-group"><input name="Correo" id="desac17"  ></input></div>
+                            <div class="form-group"><input type="email" name="Correo" id="desac17"  ></input></div>
 
                                 <div class="form-group">
                                     <label>Escolaridad</label></div>
@@ -155,7 +155,7 @@
                                 <div class="form-group"><label>Num Ruc</label></div>
                                 <div class="form-group"><input id="desac19" name ="NRuc" type= "text"  Enabled="false"></input></div>
                                 <div class="form-group"><label>Profesion</label></div>
-                                <div class="form-group"><input id="desac20" name ="Profesion" type= "text" Enabled="false"></input></div>
+                                <div class="form-group"><input id="desac20" class="input_let" name ="Profesion" type= "text" Enabled="false"></input></div>
                                 
                                 <div class="form-group"><label>Dirección</label></div>
                                 <textarea id="desac21" name="Direccion" rows="3" style="width: 100%;" >Write something here</textarea>
@@ -175,10 +175,10 @@
                             
 
                             <div class="form-group"><label>Nacionalidad 1</label></div>
-                            <div class="form-group"><input  id="desac22"name="Nacionalidad1" ID=""  ></input></div>
+                            <div class="form-group"><input  class="input_let" id="desac22"name="Nacionalidad1" ID=""  ></input></div>
 
                             <div class="form-group"><label>Nacionalidad2</label></div>
-                            <div class="form-group"><input  id="desac23"name="Nacionalidad2" ID=""  ></input></div>
+                            <div class="form-group"><input  class="input_let" id="desac23"name="Nacionalidad2" ID=""  ></input></div>
 
                                 <div class="form-group">
                                     <label>Departamento</label></div>
@@ -204,14 +204,14 @@
 
                                 <div class="form-group">
                                 <label>Cargo</label></div>
-                                <div class="form-group"><select  id="desac27"name="IdCargo">
+                                <div class="form-group"><select  id="desac27" name="IdCargo">
                                                 
                                             </select>
                                 </div>
 
                                 <div class="form-group">
                                 <label>Jefe</label></div>
-                                <div class="form-group"><select  id="desac28" name="IdJefe">
+                                <div class="form-group"><select  id="desac28" name="IdJefe" required>
                                                
                                             </select>
                                 </div>
@@ -258,8 +258,49 @@
         </div>
     </div>
 
-        <script src="View/js/Empleado.js" type="text/javascript"></script>
+    <div  class="modal fade" id ="imodalusr" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" style="margin: 15%; margin-top: 5%;" role="document">
+            <div style="width: 165%;" class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden = "true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Actualizar Usuario</h4>
+                    
+                </div>
+                <form action="#" method="POST" name ="send">
+                <div class="modal-body">
+                    <div class="row row-fluid">
 
+                        <div class="col-sm-6">
+
+                                <div class="form-group"><label>Usuario</label></div>
+                                <div class="form-group"><input  id="usr" name="Nombre"  required></input></div>
+                            
+
+                            
+                        </div>
+                        <div class="col-sm-6">
+                                <div class="form-group"><label>Contraseña</label></div>
+                                <div class="form-group"><input type="password" id="pass" name="Codigo" ID=""  required></input></div>
+                            
+
+                                    
+                        </div>
+                        
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" id="btnUser" value="Actualizar"></input>
+                </div>
+                
+                </form>
+            </div>
+        </div>
+    </div>
+
+        <script src="View/js/Empleado.js" type="text/javascript"></script>
+        <script src="View/js/Validate.js" type="text/javascript"></script>
+        
         <?php
     }else {
         echo "Site not Found";

@@ -84,7 +84,7 @@ $(document).on('click', '.btn-accept', function(e){
     //var $d = $(this).parent("td");     
     row = $(this).parents("tr").find("td").eq(0).html(); // $d.parent().parent().children().index($d.parent()); 
     console.log(row);
-    console.log(dato1[row].IdVacaciones);
+   // console.log(dato1[row].IdVacaciones);
 });
 
 $(document).on('click', '.btn-deny', function(e){
