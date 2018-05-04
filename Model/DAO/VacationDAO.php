@@ -4,17 +4,30 @@
        public function __construct(){
         require_once('Model/Conexion.php');
         require_once('Model/Entity/Vacation.php');
+        require('Model/Entity/Feriados.php');
         $this->con = new Conexion();
         $this->db= $this->con->conex();
-       }
+       } 
 
-       public function store(Vacation $data){
-           $sql = 'insert into vacaciones values(null, ?, ?, ?, ?, "Pendiente", ?, null, now(), null, ?);';
-           $result = $this->db->prepare($sql);
-           $result->execute(array($data->__GET('FechaI'), $data->__GET('FechaF'),
-                            $data->__GET('Tipo'), $data->__GET('CantDias'), 
-                            $_SESSION['ID']->IdEmpleado, $data->__GET('Descripcion')));
-       }
+       public function store(Vacation $data, $FechaI, $FechaF){
+            $resultado = array();
+            $sql="select Fecha from feriados where Fecha between ? and ?;";
+            $consult = $this->db->prepare($sql);
+            $consult -> execute(array($FechaI, $FechaF));
+                while($row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                    $resultado = $row;
+                }
+                    if(sizeof($resultado)==0){    
+                        $sql = 'insert into vacaciones values(null, ?, ?, ?, ?, "Pendiente", ?, null, now(), null, ?)';
+                        $result = $this->db->prepare($sql);
+                        $result->execute(array($data->__GET('FechaI'), $data->__GET('FechaF'),
+                        $data->__GET('Tipo'), $data->__GET('CantDias'), 
+                        $_SESSION['ID']->IdEmpleado, $data->__GET('Descripcion')));
+                    }else {
+                        echo 'Existen días feriados en el rango seleccionado, favor ingresar solicitudes independientes.';
+                    }            
+        }
+        
 
        public function update($id, $Estado){
            $sql= "update Vacaciones set Estado = ?, IdRespSup = ?, FechaRespuesta = now() where IdVacaciones = ?; ";
@@ -302,25 +315,34 @@
                     {
                         die($e->getMessage());
                     }
-        }    
+        }      
 
-        //Función para editar una solicitud de vacaciones.
-        public function EditSolicitud(Vacation $data){
-            $idEmp = $_SESSION['ID']->IdEmpleado; //Captura el id del usuario logueado
-            $sql = "update Vacaciones set CantDias = ?, FechaI = ?, FechaF = ?, Tipo = ?, Descripcion = ?
-            where IdVacaciones = ? and IdEmpleado = ? and Estado = 'Pendiente' ";
+        public function EditSolicitud(Vacation $data, $FechaI, $FechaF){
+            $cadena = "Su solicitud no ha sido editada porque existen días feriados en el rango seleccionado.";
+            //$array = explode(",", $cadena);
+            $resultado = array();
+            $sql="select Fecha from feriados where Fecha between ? and ?;";
             $consult = $this->db->prepare($sql);
-            $consult->execute(array(
-            $data->__GET('CantDias'),
-            $data->__GET('FechaI'),
-            $data->__GET('FechaF'),
-            $data->__GET('Tipo'),
-            //$data->__GET('Estado'),
-            $data->__GET('Descripcion'),
-            $data->__GET('IdVac'),
-            //$data->__GET('IdEmpleado'),
-            $idEmp,
-            ));     
+            $consult -> execute(array($FechaI, $FechaF));
+                while($row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                    $resultado = $row;
+                }
+                    if(sizeof($resultado)==0){    
+                        $sqlv = ("update Vacaciones set CantDias = ?, FechaI = ?, FechaF = ?, Tipo = ?, Descripcion = ?
+                        where IdVacaciones = ? and IdEmpleado = ? and Estado = 'Pendiente';");
+                        $result = $this->db->prepare($sqlv);
+                        $result->execute(array( 
+                        $data->__GET('CantDias'),
+                        $data->__GET('FechaI'), 
+                        $data->__GET('FechaF'),
+                        $data->__GET('Tipo'), 
+                        $data->__GET('Descripcion'),
+                        $data->__GET('IdVac'),
+                        $_SESSION['ID']->IdEmpleado)); 
+                        
+                    }else {
+                         return $cadena;
+                    }            
         }
 
         //Función para cancelar una solicitud de vacaciones.
