@@ -44,5 +44,20 @@ Class FeriadosController{
             header('Location: index.php?c=Principal&a=AccessError');
         }
     }
+
+    public function DeleteFeriados(){
+        if(isset($_SESSION['nickname'])){
+            header('Content-Type: application/json; charset=utf-8');
+            $json_str = file_get_contents('php://input');
+            $json_obj = json_decode($json_str);
+            $_array = $this->model->DeleteFeriados($json_obj->id);
+            $var = json_encode( $_array);
+            $json = json_last_error();
+            echo $var; 
+            header('Location: index.php?c=Feriados');
+        }else{
+                header('Location: index.php?c=Principal&a=AccessError');
+            }
+    }
 }
 ?>

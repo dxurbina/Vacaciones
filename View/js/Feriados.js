@@ -32,7 +32,7 @@ $(document).ready(function(){
             data[i].IdFeriado,
             data[i].Nombre,
             data[i].Fecha,
-           '<button title= "Editar" value= "Editar" class="btn btn-primary btn-edit "><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
+           //'<button title= "Editar" value= "Editar" class="btn btn-primary btn-edit "><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
            '<button title= "Eliminar" value= "Cancelar" class="btn btn-danger btn-del " data-target="#imodalel" data-toggle="modal"><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;'
         ]);
     }
@@ -45,3 +45,32 @@ $('#addfe').on('click', function(e) {
     e.preventDefault();
     $("#modal").modal("show");
 });
+
+// evento click para eliminar el día feriado
+$(document).on('click', '.btn-del', function (e) {
+    var eliminar = confirm('¿Desea cancelar la solicitud de vacaciones?');
+    if(eliminar) {
+            e.preventDefault;
+            var _row = $(this).parent().parent()[0];
+            dato = tabla.fnGetData(_row);
+            idVac = dato[0];
+            var obj = JSON.stringify({ id: idVac });
+               $.ajax({
+                  url: "?c=Feriados&a=DeleteFeriados",
+                  type: "POST",
+                  data: obj,
+                  dataType: 'json',
+                  contentType: 'application/json; charset= utf-8',
+                  success: function(data){
+                    }
+                });
+                  alert('Registro eliminado correctamente.');
+        }else 
+        {
+            //alert('Usted solo puede eliminar las solicitudes que están pendientes.')
+            return false;
+        } 
+               
+});
+
+

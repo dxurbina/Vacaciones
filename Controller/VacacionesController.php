@@ -40,7 +40,6 @@ class VacacionesController{
          $this->obj->__SET('Tipo', $_REQUEST['Tipo']);
             $this->obj->__SET('CantDias', $_REQUEST['CantDias']);
             $originalDate = $_REQUEST['FechaI'];
-            //$DateI = date("Y-m-d", strtotime($originalDate));
             $originalDate = ltrim($originalDate);
             $originalDate = rtrim($originalDate);
             $nums = explode('/', $originalDate);
@@ -49,14 +48,9 @@ class VacacionesController{
             $originalDate = ltrim($originalDate);
             $originalDate = rtrim($originalDate);
             $nums = explode('/', $originalDate);
-            //$DateE = date("Y-m-d", strtotime($originalDate));
-            
             $this->obj->__SET('FechaF', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
-
             $this->obj->__SET('Descripcion', $_REQUEST['Descripcion']);
-            //$this->modelFe->Feriados(); //Agregado 18-04-2018 3:08pm
             $this->model->store($this->obj, $this->obj->FechaI, $this->obj->FechaF);
-            //$this->model->store($this->obj);
             $estado = "Solicitud";
             $this->modelNotif->store(null, $estado);
             header('Location: index.php?c=SaldoVacaciones');
@@ -155,39 +149,7 @@ class VacacionesController{
         }
     }
 
-   //Función de la edición de una solicitud de vacaciones
-   /* public function EditSolicitud(){
-        if(isset($_SESSION['nickname'])){
-            header('Content-Type: application/json; charset=utf-8');
-            $json_str = file_get_contents('php://input');
-            $json_obj = json_decode($json_str);
-            $_array = $this->model->EditSolicitud($json_obj->id);
-            $var = json_encode( $_array);
-            $json = json_last_error();
-            echo $var; 
-            header('Location: index.php?c=SaldoVacaciones');
-            }else {
-                header('Location: index.php?c=Principal&a=AccessError');
-            }
-    }*/
-    
-//Función de la edición de una solicitud de vacaciones 27-04-18 10:51 am
-/*public function EditSolicitud(){
-    if(isset($_SESSION['nickname'])){
-    $this->obj->__SET('Tipo', $_REQUEST['Tipo']);
-    $this->obj->__SET('CantDias', $_REQUEST['CantDias']);
-    $this->obj->__SET('FechaI', $_REQUEST['FechaI']);
-    $this->obj->__SET('FechaF', $_REQUEST['FechaF']);
-    $this->obj->__SET('Descripcion', $_REQUEST['Descripcion']);
-    $this->obj->__SET('IdVac', $_REQUEST['idVacaciones']);
-    $this->model->EditSolicitud($this->obj);
-    header('Location: index.php?c=SaldoVacaciones');
-}else {
-    header('Location: index.php?c=Principal&a=AccessError');
-}
-}*/
-
-public function EditSolicitud(){
+public function EditSolicitud(){ //ESTA FUNCIONA 3/05/18 3:30
     if(isset($_SESSION['nickname'])){
      $this->obj->__SET('Tipo', $_REQUEST['Tipo']);
         $this->obj->__SET('CantDias', $_REQUEST['CantDias']);
@@ -202,12 +164,49 @@ public function EditSolicitud(){
         $nums = explode('/', $originalDate);
         $this->obj->__SET('FechaF', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
         $this->obj->__SET('Descripcion', $_REQUEST['Descripcion']);
+        $this->obj->__SET('IdVac', $_REQUEST['idVacaciones']);
         $this->model->EditSolicitud($this->obj, $this->obj->FechaI, $this->obj->FechaF);
+        $estado = "Solicitud";
+        $this->modelNotif->store(null, $estado);
         header('Location: index.php?c=SaldoVacaciones');
     }else {
         header('Location: index.php?c=Principal&a=AccessError');
     }
 }
+
+/*public function EditSolicitud(){
+    if(isset($_SESSION['nickname'])){
+     $this->obj->__SET('Tipo', $_REQUEST['Tipo']);
+     $this->obj->__SET('CantDias', $_REQUEST['CantDias']);
+            if($nums = explode('/', $originalDate)){
+            $originalDate = $_REQUEST['FechaI'];
+            $originalDate = ltrim($originalDate);
+            $originalDate = rtrim($originalDate);
+            $this->obj->__SET('FechaI', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
+        } elseif ($nums = explode('-', $originalDate)){
+            $this->obj->__SET('FechaI', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
+        }
+        $originalDate = $_REQUEST['FechaF'];
+        $originalDate = ltrim($originalDate);
+        $originalDate = rtrim($originalDate);
+        $cambio1 = true;
+        if($cambio1){
+            $nums = explode('/', $originalDate);
+            $this->obj->__SET('FechaF', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
+        } elseif ($nums = explode('-', $originalDate)){
+            $this->obj->__SET('FechaF', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
+        }
+
+        $this->obj->__SET('Descripcion', $_REQUEST['Descripcion']);
+        $this->obj->__SET('IdVac', $_REQUEST['idVacaciones']);
+        $this->model->EditSolicitud($this->obj, $this->obj->FechaI, $this->obj->FechaF);
+        $estado = "Solicitud";
+        $this->modelNotif->store(null, $estado);
+        header('Location: index.php?c=SaldoVacaciones');
+    }else {
+        header('Location: index.php?c=Principal&a=AccessError');
+    }
+}*/
 
     //Función de cancelar la solicitud de vacaciones
     public function CancelarSolicitud(){
@@ -220,7 +219,7 @@ public function EditSolicitud(){
             $json = json_last_error();
             echo $var; 
             header('Location: index.php?c=SaldoVacaciones');
-            }else {
+        }else{
                 header('Location: index.php?c=Principal&a=AccessError');
             }
     }

@@ -70,7 +70,7 @@
                                 <th>IdFeriado</th>
                                 <th>Descripción</th>
                                 <th>Fecha</th>
-                                <!--<th>Acciones</th>-->
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="tbl_body_table">

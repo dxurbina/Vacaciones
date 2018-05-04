@@ -1,7 +1,7 @@
 <?php
 
-class Factores{
-    private $IdFactor, $Nombre, $Factor, $Estado;  
+class DeptosEmpresa{
+    private $IdDep, $Nombre, $Descripcion, $Estado;  
     public function __SET($variable, $valor){ return $this->$variable = $valor;}
     public function __GET($variable){ return $this->$variable; }
      }

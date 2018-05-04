@@ -28,5 +28,18 @@ class FeriadosDAO{
         $result = $this->db->prepare($sql);
         $result->execute(array($data->__GET('Nombre'), $data->__GET('Fecha')));
     }
+
+    public function DeleteFeriados($id){
+        try{
+            $resultSet = array();
+            $consult = $this->db->prepare("delete from feriados 
+            where IdFeriado = ?;");
+            $consult->execute(array($id)); 
+         } catch(Exception $e)
+                 {
+                     die($e->getMessage());
+                 }
+    }
+
     }
 ?>
