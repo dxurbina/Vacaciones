@@ -61,7 +61,7 @@
                     <div class = "row-fluid" style = "margin-left: 15px; margin-right: 15px;">
                         
                             <div class= "form-group">
-                                <input name = "user" class = "form-control" type="text" placeholder="Usuario"></input>
+                                <input name = "user" class = "form-control" type="text" placeholder="Usuario" required></input>
                             </div>
                         
                     </div>
@@ -70,7 +70,7 @@
                     <div class = "row-fluid">
                         
                             <div class= "form-group" style = "margin-left: 15px; margin-right: 15px;">
-                                <input name = "pass"  type= "password" class="form-control" type="text" placeholder="Contraseña"></input>
+                                <input name = "pass"  type= "password" class="form-control" type="text" placeholder="Contraseña" required></input>
                             </div>
                         
                     </div>

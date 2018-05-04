@@ -154,6 +154,69 @@ public function AddEmpleados(){
 
     }
 
+    public function showUserById(){
+    
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        header('Content-Type: application/json; charset=utf-8');
+        # Get JSON as a string
+        $json_str = file_get_contents('php://input');
+        //$json_str = $_POST['obj'];
+        # Get as an object
+        $json_obj = json_decode($json_str);
+        $datos = $this->model->showUserById($json_obj->id);
+        # unset($cursos[5]);
+        //$var = json_encode( $datos);
+        $this->var = json_encode( $datos);
+        // echo $var; 
+        echo $this->var;
+        }else {
+            header('Location: index.php?c=Principal&a=AccessError');
+        }
+
+    }
+    
+    public function GetUser(){
+    
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        header('Content-Type: application/json; charset=utf-8');
+        # Get JSON as a string
+        $json_str = file_get_contents('php://input');
+        //$json_str = $_POST['obj'];
+        # Get as an object
+        $json_obj = json_decode($json_str);
+        $datos = $this->model->GetUser($json_obj->Nombre);
+        # unset($cursos[5]);
+        //$var = json_encode( $datos);
+        $this->var = json_encode( $datos);
+        // echo $var; 
+        echo $this->var;
+        }else {
+            header('Location: index.php?c=Principal&a=AccessError');
+        }
+
+    }
+
+    public function updateUser(){
+    
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        header('Content-Type: application/json; charset=utf-8');
+        # Get JSON as a string
+        $json_str = file_get_contents('php://input');
+        //$json_str = $_POST['obj'];
+        # Get as an object
+        $json_obj = json_decode($json_str);
+        $datos = $this->model->updateUser($json_obj->Id, $json_obj->Usuario, $json_obj->Pass);
+        # unset($cursos[5]);
+        //$var = json_encode( $datos);
+        $this->var = json_encode( $datos);
+        // echo $var; 
+        echo $this->var;
+        }else {
+            header('Location: index.php?c=Principal&a=AccessError');
+        }
+
+    }
+
 public function listarMunPorDepto(){
     if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         

@@ -245,6 +245,9 @@
               <li><a href="?c=Factores">Gestión de Factores</a></li>
               <li><a href="?c=DeptosEmpresa">Gestión de DeptosEmpresa</a></li>
               <li><a href="#">Link in level 2</a></li>
+              <li><a href="?c=Position">Gestión de Cargos</a></li>
+              <li><a href="?c=Center">Gestión de Centro de Costos</a></li>
+              <li><a href="?c=Deparment">Gestión de Departamentos</a></li>
             </ul>
 
 
@@ -261,8 +264,10 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-            <li><a href="?c=Report">Reporte Vacaciones</a></li>
-              <li><a href="#">Link in level 2</a></li>
+              <li><a href="?c=Report">Reporte Vacaciones</a></li>
+              <li><a href="?c=Position">Gestión de Cargos</a></li>
+              <li><a href="?c=Center">Gestión de Centro de Costos</a></li>
+              <li><a href="?c=Deparment">Gestión de Departamentos</a></li>
             </ul>
 
 

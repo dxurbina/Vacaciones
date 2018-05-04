@@ -1,4 +1,4 @@
-var dato, tabla, idEmp;
+var dato, tabla, idEmp, row;
 $(document).ready(function(){
 	$("#casilla").change(function(){
         if($("#casilla").val()=="Ver") {
@@ -182,28 +182,26 @@ $(document).ready(function(){
                                     $(data).each(function(i, v){ // indice, valor
             
                                         $("#desac28").append('<option value="' + v.IdEmpleado + '">' + (v.PNombre + " "+ v.PApellido ) + '</option>');
-                                    })
+                                    });
+                                    console.log(obj);
                                     $.ajax({
                                         data: obj,
                                         url: "?c=Empleado&a=showCCostosbyId",
                                         type: "POST",
                                         dataType: 'json',
                                         contentType: 'application/json; charset= utf-8',
-                                        beforeSend: function () 
-                                        {
-                                            $("#desac27").prop('disabled', true);
-                                        },
                                         error: function(xhr, ajaxOptions, thrownError){
                                             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
                                         },
                                         success: function (data) {
-                                            $("#desac27").prop('disabled', false);
-                                            $("#desac30").val(data.Nombre);
+                                            console.log(data);
+                                            $("#desac30").val(data[0].Nombre + "-" + data[0].Codigo);
                                         }
                                         });
                                 }
                                 });
                             });
+
                             $("#CargarEmpleado").change(function(){
                                 console.log(idEmp);
                                 $("#CargarEmpleado").val(idEmp);
@@ -272,8 +270,9 @@ function sendDataAjax() {
                             data[i].NombreCargo,
                             boss,
                             '<button title= "Editar/ver" value= "Actualizar" class="btn btn-primary btn-edit " data-target="#imodal" data-toggle="modal"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
-                            '<button title= "Eliminar" value= "Borrar" class="btn btn-danger btn-del "><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;' 
-                           // '<button title= "Vacaciones" value= "VerVacaciones" class="btn btn-primary btn-vac " data-target="#imodalver" data-toggle="modal"><i class="fa fa-plus-square" aria-hidden="true"></i></button>'
+                            '<button title= "Editar Usuario" value= "EditUser" class="btn btn-primary btn-usr " data-target="#imodalusr" data-toggle="modal"><i class="fa fa-user-o" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
+                            '<button title= "Eliminar" value= "Borrar" class="btn btn-danger btn-del "><i class="fa fa-eraser" aria-hidden="true"></i></button>'
+                            
                         ]);
                     }
                 }
@@ -478,7 +477,7 @@ function fillModalData(dato){
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
-            //console.log(data);
+            console.log(data);
             //console.log(data.length);
             //addRowDT(data.d);
            // tabla = $("#tbl_Empleados").DataTable();
@@ -575,7 +574,8 @@ function fillModalData(dato){
            $("#desac21").val(data[0].Direccion);
            $("#desac22").val(data[0].Nacionalidad1);
            $("#desac23").val(data[0].Nacionalidad2);
-           $("#desac30").val(data[0].Nombre);
+           $("#desac29").val(data[0].FechaIngreso);
+           $("#desac30").val(data[0].Nombre + " - " + data[0].Codigo);
            $("#CargarEmpleado").val(data[0].IdEmpleado);
            loadDeparment(data[0].IdDepartamento);
            loadMunicipality(data);
@@ -594,6 +594,85 @@ function fillModalData(dato){
     });
     
 }
+    function showusrById(){
+        var obj = JSON.stringify({ id: row });
+        //console.log(obj);
+         var dato;
+        $.ajax({
+            data: obj,
+            url: "?c=Empleado&a=showUserById",
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json; charset= utf-8',
+            error: function(xhr, ajaxOptions, thrownError){
+                console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+            },
+            success: function (data) {
+                dato = data;
+                console.log(dato);
+                $('#usr').val(dato[0].Usuario);
+            }
+        });
+    }
+
+    $(document).on('click', '#btnUser', function (e) {
+        e.preventDefault();
+
+        var _select = $("#usr").val();
+        console.log(_select);
+        var obj = JSON.stringify({ Nombre: _select });
+        flag = false;
+        $.ajax({
+            data: obj,
+            url: "?c=Empleado&a=GetUser",
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json; charset= utf-8',
+            error: function(xhr, ajaxOptions, thrownError){
+                console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+            },
+            success: function (data) {
+                console.log(data);
+                $(data).each(function(i, v){ // indice, valor
+                    if(v.Usuario == _select && v.IdUsuario != row ){
+                        flag = true;
+                    }
+                })
+                if(flag == false){
+                    var user = $('#usr').val();
+                    var pass = $('#pass').val();
+                    if( pass.length > 4 && pass.length < 20 && user.length > 3){
+                                
+                                var obj = JSON.stringify({ Id: row, Usuario: user, Pass: pass });
+                                flag = false;
+                                $.ajax({
+                                    data: obj,
+                                    url: "?c=Empleado&a=updateUser",
+                                    type: "POST",
+                                    dataType: 'json',
+                                    contentType: 'application/json; charset= utf-8',
+                                    error: function(xhr, ajaxOptions, thrownError){
+                                        console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+                                    },
+                                    success: function (data) {
+                                        location.reload();
+                                    }
+                                        
+                                    });  
+                            
+                    }else{
+                        alert('Dato no esperado');
+                    }
+                    
+
+                }else{
+                    alert("Nombre de usuario ya existe!!");
+                }
+            }
+                
+            });
+
+    });
 
 // evento click para boton actualizar
 $(document).on('click', '.btn-edit', function (e) {
@@ -613,6 +692,88 @@ $(document).on('click', '.btn-edit', function (e) {
     fillModalData(dato);
     //$("#desac1").val(dato[0].IdEmpleado);
 });
+
+$(document).on('click', '.btn-usr', function (e) {
+    e.preventDefault();
+    
+    row = $(this).parents("tr").find("td").eq(0).html();
+    showusrById();
+    //console.log(row);
+});
+
+$(document).on('click', '#btnActualizar', function (e) {
+    e.preventDefault();
+
+    var _select = $("#nameu").val();
+    var obj = JSON.stringify({ Nombre: _select });
+    flag = false;
+    $.ajax({
+        data: obj,
+        url: "?c=Position&a=GetPosition",
+        type: "POST",
+        dataType: 'json',
+        contentType: 'application/json; charset= utf-8',
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+        },
+        success: function (data) {
+            console.log(data);
+            $(data).each(function(i, v){ // indice, valor
+                if(v.NombreCargo == _select && v.IdCargo != row ){
+                    flag = true;
+                }
+            })
+            if(flag == false){
+                if(_select.length > 4 && _select.length < 20){
+                    console.log();
+                    $( ".remove" ).remove();
+                    $( ".del" ).remove();
+                    if($("#jefeu option:selected").html() != 'Seleccione' && $("#jefeu option:selected").html() != null){
+                        if($("#factoru option:selected").html() != 'Seleccione'){
+                            var nombre = $("#nameu").val();
+                            var costo = $('#costou').val();
+                            var jefe = $('#jefeu').val();
+                            var factor = $('#factoru').val();
+                            var obj = JSON.stringify({ Id: row, Nombre: nombre, IdCosto: costo, IdJefe: jefe, IdFactor: factor });
+                            flag = false;
+                            $.ajax({
+                                data: obj,
+                                url: "?c=Position&a=update",
+                                type: "POST",
+                                dataType: 'json',
+                                contentType: 'application/json; charset= utf-8',
+                                error: function(xhr, ajaxOptions, thrownError){
+                                    console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+                                },
+                                success: function (data) {
+                                    location.reload();
+                                }
+                                    
+                                });  
+                        }else{
+                           
+                            alert('Seleccione un factor');
+                        }
+                    }else{
+                        alert('Seleccione un cargo supervisor');
+                    }
+                }else{
+                    alert('Dato no esperado');
+                }
+                
+
+            }else{
+                alert("Nombre del Cargo ya Existe!!");
+            }
+        }
+            
+        });
+
+});
+
+
+
+
 
 // evento click para boton Eliminar
 $(document).on('click', '.btn-del', function (e) {

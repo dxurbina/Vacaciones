@@ -61,8 +61,6 @@ class VacacionesController{
             $var = json_encode( $_array);
             $json = json_last_error();
            // $var2 = utf8_converter($cursos);
-            
-           # echo $json; #esta era la wea que lo jodia hace rato
             echo $var; 
             }else {
                 header('Location: index.php?c=Principal&a=AccessError');
@@ -87,13 +85,14 @@ class VacacionesController{
             $var = json_encode($List);
             $json = json_last_error();
            // $var2 = utf8_converter($cursos);
-            
-           # echo $json; #esta era la wea que lo jodia hace rato
             echo $var; 
             }else {
                 header('Location: index.php?c=Principal&a=AccessError');
             }
     }
+
+    
+
 
 }
 ?>
