@@ -76,13 +76,14 @@
                                 <div class="form-group">
                                     <label>Fecha de Ingreso</label>
                                 </div>
-                                <div class="form-group"><input  id="desac29" name ="FechaIng" type= "date" min="1950-01-01" max="2018-05-03"ID=""  Text=""  Enabled="false" required></input></div>
+                                <div class="form-group"><input  id="desac29" name ="FechaIng" type= "date" min="1950-01-01" max="2018-05-03"ID=""  Text=""  Enabled="false"></input></div>
                                 
                                 <div class="form-group">
                                     <div class="row row-fluid">
                                         <div class="col-xs-6">
                                             <div class="form-group"><label>Sexo</label></div>
                                             <div class="form-group"><select id="desac10" name="Sexo">
+                                            <option value="">Seleccione</option>
                                             <option value="M">Masculino</option>
                                             <option value="F">Femenino</option>
                                             </select></div>
@@ -110,7 +111,7 @@
                                         </div>
                                         <div class="col-xs-6">
                                             <div class="form-group"><label>Numero</label></div>
-                                            <input  id="desac13" class="input_num" name = "NumHijos" type="number" name="edad" min="0" max="30" step="1">
+                                            <input  id="desac13" class="input_num" name = "NumHijos" type="number"  min="0" max="30" step="1">
                                         </div>
                                         
                                     </div>
@@ -126,7 +127,7 @@
                                         </div>
                                         <div class="col-xs-6">
                                             <div class="form-group"><label>Numero</label></div>
-                                            <input  type="number" class="input_num" id="desac15" name="NumHermanos" min="0" max="30" step="1">
+                                            <input id="desac15" class="input_num" name = "NumHermermanos" type="number"  min="0" max="30" step="1">
                                         </div>
                                         
                                     </div>

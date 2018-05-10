@@ -46,9 +46,9 @@ public function AddEmpleados(){
     }
 
 
-    if($_REQUEST['Hermanos'] == '1' ){
+    if($_REQUEST['Hermanos'] == '1' && isset($_POST['NumHermanos'])){
         $this->obj->__SET('Hermanos', 1);
-        $this->obj->__SET('NumHermanos', $_REQUEST['NumHermanos']);
+        $this->obj->__SET('NumHermanos', $_POST['NumHermanos']);
     }else{
         $this->obj->__SET('Hermanos', 0);
         $this->obj->__SET('NumHermanos', 0);
@@ -62,14 +62,35 @@ public function AddEmpleados(){
     $this->obj->__SET('Cedula', $_REQUEST['Cedula']);
     $this->obj->__SET('Pasaporte', $_REQUEST['Pasaporte']);
     $this->obj->__SET('NInss', $_REQUEST['NInss']);
-    $this->obj->__SET('FechaNac', $_REQUEST['FechaNac']);
-    $this->obj->__SET('FechaIng', $_REQUEST['FechaIng']);
+    if($_REQUEST['FechaNac'] == ""){
+        $this->obj->__SET('FechaNac', null);
+    }else{
+        $this->obj->__SET('FechaNac', $_REQUEST['FechaNac']);
+    }
+
+    if($_REQUEST['FechaNac'] == ""){
+        $this->obj->__SET('FechaIng', null);
+    }else{
+        $this->obj->__SET('FechaIng', $_REQUEST['FechaIng']);
+    }
+    
+    
     $this->obj->__SET('Sexo', $_REQUEST['Sexo']);
 
     $this->obj->__SET('Telefono', $_REQUEST['Telefono']);
-    $this->obj->__SET('EstadoCivil', $_REQUEST['EstadoCivil']);
+    if(isset($_REQUEST['EstadoCivil'])){
+        $this->obj->__SET('EstadoCivil', $_REQUEST['EstadoCivil']);
+    }else{
+        $this->obj->__SET('EstadoCivil', null);
+    }
+    
     $this->obj->__SET('Correo', $_REQUEST['Correo']);
-    $this->obj->__SET('Escolaridad', $_REQUEST['Escolaridad']);
+    if(isset($_REQUEST['Escolaridad'])){
+        $this->obj->__SET('Escolaridad', $_REQUEST['Escolaridad']);
+    }else{
+        $this->obj->__SET('Escolaridad', null);
+    }
+    
     $this->obj->__SET('NRuc', $_REQUEST['NRuc']);
     $this->obj->__SET('Profesion', $_REQUEST['Profesion']);
     $this->obj->__SET('Direccion', $_REQUEST['Direccion']);
@@ -78,7 +99,12 @@ public function AddEmpleados(){
     //$this->obj->__SET('Estado', '$_REQUEST['Estado']');
     $this->obj->__SET('IdCargo', $_REQUEST['IdCargo']);
     $this->obj->__SET('IdJefe', $_REQUEST['IdJefe']);
-    $this->obj->__SET('IdMunicipio', $_REQUEST['IdMunicipio']);
+    if(isset($_REQUEST['IdMunicipio'])){
+        $this->obj->__SET('IdMunicipio', $_REQUEST['IdMunicipio']);
+    }else{
+        $this->obj->__SET('IdMunicipio', null);
+    }
+   
     /*
     $Emp->id > 0 
             ? $this->model->Actualizar($Emp)
@@ -174,6 +200,8 @@ public function AddEmpleados(){
         }
 
     }
+
+    
     
     public function GetUser(){
     
@@ -258,7 +286,7 @@ public function listarMunPorDepto(){
             $json_str = file_get_contents('php://input');
             # Get as an object
             $json_obj = json_decode($json_str);
-            $_array = $this->model->showMunicipality($json_obj->id);
+            $_array = $this->model->showMunicipality($json_obj->MUN);
             $var = json_encode( $_array);
             $json = json_last_error();
            // $var2 = utf8_converter($cursos);

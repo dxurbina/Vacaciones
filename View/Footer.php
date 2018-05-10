@@ -90,7 +90,138 @@
   immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 </div>
+      <div  class="modal fade" id ="imodalusrI" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" style="margin: 15%; margin-top: 5%;" role="document">
+                  <div style="width: 165%;" class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden = "true">&times;</span></button>
+                          <h4 class="modal-title" id="myModalLabel">Actualizar Usuario</h4>
+                          
+                      </div>
+                      <form action="#" method="POST" name ="send">
+                      <div class="modal-body">
+                          <div class="row row-fluid">
+
+                              <div class="col-sm-6">
+
+                                      <div class="form-group"><label>Usuario</label></div>
+                                      <div class="form-group"><input  id="usrI" name="Nombre"  required></input></div>
+                                  
+
+                                  
+                              </div>
+                              <div class="col-sm-6">
+                                      <div class="form-group"><label>Contraseña</label></div>
+                                      <div class="form-group"><input type="password" id="passI" name="Codigo" ID=""  required></input></div>
+                                  
+
+                                          
+                              </div>
+                              
+
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                          <input type="submit" class="btn btn-primary" id="btnUserI" value="Actualizar"></input>
+                      </div>
+                      
+                      </form>
+                  </div>
+              </div>
+      </div>
+
+      
 </body>
+  <script type ="text/javascript">
+     var row;
+    $(document).on('click', '.btn-usrI', function (e) {
+    e.preventDefault();
+      row = <?php echo $_SESSION['ID']->IdEmpleado; ?>;
+      //console.log(row);
+      showusrByIdSession();
+
+    });
+
+     function showusrByIdSession(){
+        
+        //console.log(obj);
+        var obj = JSON.stringify({ id: row });
+        $.ajax({
+            data: obj,
+            url: "?c=Empleado&a=showUserById",
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json; charset= utf-8',
+            error: function(xhr, ajaxOptions, thrownError){
+                console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+            },
+            success: function (data) {
+                dato = data;
+                console.log(dato);
+                $('#usrI').val(dato[0].Usuario);
+            }
+        });
+    }
+
+    $(document).on('click', '#btnUserI', function (e) {
+        e.preventDefault();
+
+        var _select = $("#usrI").val();
+        //console.log(_select);
+        var obj = JSON.stringify({ Nombre: _select });
+        flag = false;
+        $.ajax({
+            data: obj,
+            url: "?c=Empleado&a=GetUser",
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json; charset= utf-8',
+            error: function(xhr, ajaxOptions, thrownError){
+                console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+            },
+            success: function (data) {
+              //  console.log(data);
+                $(data).each(function(i, v){ // indice, valor
+                    if(v.Usuario == _select && v.IdUsuario != row ){
+                        flag = true;
+                    }
+                })
+                if(flag == false){
+                    var user = $('#usrI').val();
+                    var pass = $('#passI').val();
+                    if( pass.length > 4 && pass.length < 20 && user.length > 3){
+                                
+                                var obj = JSON.stringify({ Id: row, Usuario: user, Pass: pass });
+                                flag = false;
+                                $.ajax({
+                                    data: obj,
+                                    url: "?c=Empleado&a=updateUser",
+                                    type: "POST",
+                                    dataType: 'json',
+                                    contentType: 'application/json; charset= utf-8',
+                                    error: function(xhr, ajaxOptions, thrownError){
+                                        console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+                                    },
+                                    success: function (data) {
+                                        location.reload();
+                                    }
+                                        
+                                    });  
+                            
+                    }else{
+                        alert('Dato no esperado');
+                    }
+                    
+
+                }else{
+                    alert("Nombre de usuario ya existe!!");
+                }
+            }
+                
+            });
+
+    });
+  </script>
 
 
 </html>

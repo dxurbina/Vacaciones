@@ -23,7 +23,7 @@
        }
 
        public function show(){
-        $factor;
+        $factor = null;
         $sql = "select f.Factor from Factor f, Cargos c, Empleados e, Vacaciones v where
         f.IdFactor = c.IdFactor and c.IdCargo = e.IdCargo and e.IdEmpleado = ?";
         $result = $this->db->prepare($sql);
