@@ -203,13 +203,13 @@
                 <?php 
             if( isset($_SESSION['access']) && $_SESSION['access'] == 5){ ?>
            <!--  <p>accedió como RRHH-Supervisor</p>-->
-            <li><a href="?c=Empleado"><i class="fa fa-link"></i> <span>Registrar Empleado</span></a></li>
-            <li><a href="?c=Empleado&a=ListEmployeeView"><i class="fa fa-link"></i> <span>Registros de Empleado</span></a></li>
+            <li><a href="?c=Empleado"><i class="fa fa-link"></i> <span>Nuevo Colaborador</span></a></li>
+            <li><a href="?c=Empleado&a=ListEmployeeView"><i class="fa fa-link"></i> <span>Registros de Colaboradores</span></a></li>
             <li><a href="?c=SaldoVacaciones"><i class="fa fa-link"></i> <span>Mi Saldo</span></a></li>
-            <li><a href="?c=Vacaciones&a=Requests"><i class="fa fa-link"></i> <span>Solicitudes de Colaborador</span></a></li>
+            <li><a href="?c=Vacaciones&a=Requests"><i class="fa fa-link"></i> <span>His Solicitudes Colaboradores</span></a></li>
             <li><a href="?c=SaldoVacaciones&a=indexHistory"><i class="fa fa-link"></i> <span>Saldo de Colaboradores</span></a></li>
               <li class="treeview">
-            <a href="#"><i class="fa fa-link"></i> <span>Catalogo</span>
+            <a href="#"><i class="fa fa-link"></i> <span>Catálogo</span>
               <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
@@ -218,24 +218,23 @@
               <li><a href="?c=Report">Reporte Vacaciones</a></li>
               <li><a href="?c=Position">Gestión de Cargos</a></li>
               <li><a href="?c=Center">Gestión de Centro de Costos</a></li>
-              <li><a href="?c=Deparment">Gestión de Departamentos</a></li>
               <li><a href="?c=Factores">Gestión de Factores</a></li>
               <li><a href="?c=DeptosEmpresa">Gestión de DeptosEmpresa</a></li>
+              <li><a href="?c=Feriados">Feriados</a></li>
             </ul>
 
 
           </li>
         <?php }else if( isset($_SESSION['access']) && $_SESSION['access'] == 4){ ?>
            <!--  <p>accedió como admin</p> -->
-            <li><a href="?c=Empleado"><i class="fa fa-link"></i> <span>Registrar Empleado</span></a></li>
-            <li><a href="?c=Empleado&a=ListEmployeeView"><i class="fa fa-link"></i> <span>Registros de Empleado</span></a></li>
+            <li><a href="?c=Empleado"><i class="fa fa-link"></i> <span>Nuevo Colaborador</span></a></li>
+            <li><a href="?c=Empleado&a=ListEmployeeView"><i class="fa fa-link"></i> <span>Registros de Colaboradores</span></a></li>
             <li><a href="?c=SaldoVacaciones"><i class="fa fa-link"></i> <span>Mi Saldo</span></a></li>
-            <li><a href="?c=Vacaciones&a=Requests"><i class="fa fa-link"></i> <span>Solicitudes de Colaborador</span></a></li>
+            <li><a href="?c=Vacaciones&a=Requests"><i class="fa fa-link"></i> <span>His Solicitudes Colaboradores</span></a></li>
             <li><a href="?c=SaldoVacaciones&a=indexHistory"><i class="fa fa-link"></i> <span>Saldo de Colaboradores</span></a></li>
-            <li><a href="?c=Feriados"><i class="fa fa-link"></i> <span>Feriados</span></a></li>
   
             <li class="treeview">
-            <a href="#"><i class="fa fa-link"></i> <span>Catalogo</span>
+            <a href="#"><i class="fa fa-link"></i> <span>Catálogo</span>
               <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
@@ -244,21 +243,20 @@
             <li><a href="?c=Report">Reporte Vacaciones</a></li>
               <li><a href="?c=Factores">Gestión de Factores</a></li>
               <li><a href="?c=DeptosEmpresa">Gestión de DeptosEmpresa</a></li>
-              <li><a href="#">Link in level 2</a></li>
               <li><a href="?c=Position">Gestión de Cargos</a></li>
               <li><a href="?c=Center">Gestión de Centro de Costos</a></li>
-              <li><a href="?c=Deparment">Gestión de Departamentos</a></li>
+              <li><a href="?c=Feriados">Feriados</a></li>
             </ul>
 
 
           </li>
         <?php }else if( isset($_SESSION['access']) && $_SESSION['access'] == 3){ ?>
            <!--  <p>Accedió como Recursos humanos</p>-->
-          <li><a href="?c=Empleado"><i class="fa fa-link"></i> <span>Registrar Empleado</span></a></li>
-          <li><a href="?c=Empleado&a=ListEmployeeView"><i class="fa fa-link"></i> <span>Registros de Empleado</span></a></li>
+          <li><a href="?c=Empleado"><i class="fa fa-link"></i> <span>Nuevo Colaborador</span></a></li>
+          <li><a href="?c=Empleado&a=ListEmployeeView"><i class="fa fa-link"></i> <span>Registros de Colaboradores</span></a></li>
           <li><a href="?c=SaldoVacaciones"><i class="fa fa-link"></i> <span>Mi Saldo</span></a></li>
             <li class="treeview">
-            <a href="#"><i class="fa fa-link"></i> <span>Catalogo</span>
+            <a href="#"><i class="fa fa-link"></i> <span>Catálogo</span>
               <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
@@ -267,7 +265,7 @@
               <li><a href="?c=Report">Reporte Vacaciones</a></li>
               <li><a href="?c=Position">Gestión de Cargos</a></li>
               <li><a href="?c=Center">Gestión de Centro de Costos</a></li>
-              <li><a href="?c=Deparment">Gestión de Departamentos</a></li>
+              <li><a href="?c=DeptosEmpresa">Gestión de DeptosEmpresa</a></li>
             </ul>
 
 
@@ -276,13 +274,13 @@
         <?php }else if( isset($_SESSION['access']) && $_SESSION['access'] == 2){ ?>
              <!-- <p>Usted tiene personal a cargo</p><br> -->
             <li><a href="?c=SaldoVacaciones"><i class="fa fa-link"></i> <span>Mi Saldo</span></a></li>
-            <li><a href="?c=Vacaciones&a=Requests"><i class="fa fa-link"></i> <span>Solicitudes de Colaborador</span></a></li>
+            <li><a href="?c=Vacaciones&a=Requests"><i class="fa fa-link"></i> <span>His Solicitudes Colaboradores</span></a></li>
             <li><a href="?c=SaldoVacaciones&a=indexHistory"><i class="fa fa-link"></i> <span>Saldo de Colaboradores</span></a></li>
             
         <?php }else if( isset($_SESSION['access']) && $_SESSION['access'] == 1){ ?> <!--Este lo agregue 14/03 -->
              <!-- <p>Accedió como Colaborador</p> -->
              <li><a href="?c=SaldoVacaciones"><i class="fa fa-link"></i> <span>Mi Saldo</span></a></li>
-             <li><a href="?c=Feriados"><i class="fa fa-link"></i> <span>Feriados</span></a></li>
+             <!--<li><a href="?c=Feriados"><i class="fa fa-link"></i> <span>Feriados</span></a></li>-->
         <?php }else if($_SESSION['nickname'] == "Error"){ ?>
             <script>alert("Usuario o contraseña incorrectos!!!")</script>
             <form method="POST" action="?c=Load&a=load">

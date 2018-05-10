@@ -38,6 +38,18 @@ class FactoresDAO{
                   }
       }
 
+    public function FactorId($id){
+        $resulSet = array();
+        $sql = "select * from factor where Factor = ? and Estado = 1;";
+        $resulSet = array();
+        $consult = $this->db->prepare($sql);
+        $consult->execute(array($id));
+                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                    $resulSet = $row; 
+                }
+                return $resulSet;
+    }
+
     public function AddFactor(Factores $data){
         $sql = 'insert into factor values(null, ?, ?, 1);';
         $result = $this->db->prepare($sql);
@@ -63,6 +75,68 @@ class FactoresDAO{
             die($e->getMessage());
         }
     }
+
+    public function GetPosition($factor){
+        $resulSet = array();
+        $sql = "select * from factor where Factor = ? and Estado = 1;";
+        $resulSet = array();
+        $consult = $this->db->prepare($sql);
+        $consult->execute(array($factor));
+                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                    $resulSet = $row; 
+                }
+                return $resulSet;
+    }
+
+    public function showAll(){
+        $flag = true;
+        $resulSet = array();
+        //$sql = "select IdJefe from Empleados where IdEmpleado = ?";
+        //$consult = $this->db->prepare($sql);
+        //$id = $_SESSION['ID']->IdEmpleado;
+        //$consult->execute(array($id));
+            //if($row = $consult->fetch(PDO::FETCH_OBJ)){
+               // $boss = $row->IdJefe;
+               $boss = $_SESSION['ID']->IdEmpleado;
+                while($flag == true){
+                    $sql = "select v.IdVacaciones, e.PNombre, e.PApellido, v.CantDias, v.FechaI, v.FechaF, v.tipo, v.Descripcion
+                    from Vacaciones v inner join Empleados e on v.IdEmpleado = e.IdEmpleado where v.Estado = 'Pendiente'
+                    and e.IdJefe = ?;"; 
+                     
+                    $consult = $this->db->prepare($sql);
+                    $consult->execute(array($boss));
+                        while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                             $resulSet = $row; 
+                        }
+                        
+                    $sql = "select IdJefe from Empleados where IdEmpleado = ?";
+                    $consult = $this->db->prepare($sql);
+                    $consult->execute(array($boss));
+                        if($row = $consult->fetch(PDO::FETCH_OBJ)){
+                            
+                            $boss = $row->IdJefe;
+                            if($boss == null){
+                                $flag = false;
+                            }
+                        }
+                }
+
+            //} 
+                return $resulSet;
+        }
+        
+        public function show(){
+            $factor;
+            $sql = "select f.Factor from Factor f, Cargos c, Empleados e, Vacaciones v where
+            f.IdFactor = c.IdFactor and c.IdCargo = e.IdCargo and e.IdEmpleado = ?";
+            $result = $this->db->prepare($sql);
+            $result->execute(array($_SESSION['ID']->IdEmpleado));
+            if($row = $result->fetch(PDO::FETCH_OBJ)){
+                $factor=$row->Factor;
+            }
+            return $factor;
+           }
 }
+
 
 ?>

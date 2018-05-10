@@ -63,7 +63,17 @@ class DeptosEmpresaDAO{
         }
     }
 
-
+    public function GetPosition($nombre){
+        $resulSet = array();
+        $sql = "select * from deptosempresa where Nombre = ? and Estado = 1;";
+        $resulSet = array();
+        $consult = $this->db->prepare($sql);
+        $consult->execute(array($nombre));
+                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                    $resulSet = $row; 
+                }
+                return $resulSet;
+    }
 }
 
 ?>

@@ -1,9 +1,48 @@
+var row;
 $(document).ready(function(){
     $(document).on('click', '.btn-add', function (e) {
         e.preventDefault();
         $("#modal").modal("show");
     });
 });
+
+//Funcionalidad que valida que no se repita los datos ya registrados
+$(document).on('click', '#btnGuardar', function (e) {
+    e.preventDefault();
+    var _select = $("#nombre").val();
+    var obj = JSON.stringify({ Nombre: _select });
+    flag = false;
+    $.ajax({
+        data: obj,
+        url: "?c=DeptosEmpresa&a=GetPosition",
+        type: "POST",
+        dataType: 'json',
+        contentType: 'application/json; charset= utf-8',
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+        },
+        success: function (data) {
+            console.log(data);
+            $(data).each(function(i, v){ // indice, valor
+                if(v.Nombre == _select){
+                    flag = true;
+                }
+            })
+            if(flag == false){
+                if(_select.length > 3 && _select.length < 20){
+                    document.send.submit()   
+                }else{
+                    alert('Dato no esperado');
+                }
+            }else{
+                alert("Ese Departamento empresa ya existe!!");
+            }
+
+
+        }
+    });
+});
+
 
 //Función para la carga de los valores del datatable
 function sendDataAjax() {
@@ -53,7 +92,7 @@ function fillModalData(dato){
     });
     }
 
-// evento click para boton actualizar
+// evento click para boton actualizar Este funciona 2:22 pm 04-05-2018
 $(document).on('click', '.btn-edit', function (e) {
     e.preventDefault();
         var _row = $(this).parent().parent()[0];
@@ -63,6 +102,60 @@ $(document).on('click', '.btn-edit', function (e) {
         //alert('Solo se pueden editar las Solicitudes que tienen un estado de Pendiente');
         $("#modalEdit").modal("show");
  
+});
+
+$(document).on('click', '#btnActualizar', function (e) {
+    e.preventDefault();
+    var _select = $("#nombre2").val();
+    var obj = JSON.stringify({ Nombre: _select });
+    flag = false;
+    $.ajax({    
+        data: obj,
+        url: "?c=DeptosEmpresa&a=GetPosition",
+        type: "POST",
+        dataType: 'json',
+        contentType: 'application/json; charset= utf-8',
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+        },
+        success: function (data) {
+            console.log(data);
+            $(data).each(function(i, v){ // indice, valor
+                if(v.Nombre == _select && v.IdDep != row ){
+                    flag = true;
+                }
+            })
+            if(flag == false){
+                if(_select.length > 4 && _select.length < 20){
+                            var nombre = $('#nombre2').val();
+                            var descripcion = $('#des2').val();
+                            var IdDep = $('#idDepEmpresa').val();
+                            var obj = JSON.stringify({ Id: row, Nombre: nombre, Descripcion: descripcion, IdDep: IdDep});
+                            flag = false;
+                            $.ajax({
+                                data: obj,
+                                url: "?c=DeptosEmpresa&a=EditDeptoEmp",
+                                type: "POST",
+                                dataType: 'json',
+                                contentType: 'application/json; charset= utf-8',
+                                error: function(xhr, ajaxOptions, thrownError){
+                                    console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+                                },
+                                success: function (data) {
+                                    location.reload();
+                                }
+                                    
+                                });  
+                }else{
+                    alert('Dato no esperado');
+                }
+            }else{
+                alert("Nombre del departamento empresa ya existe!!");
+            }
+
+
+        }
+    });
 });
 
 // evento click para eliminar los deptoEmpresa
@@ -81,6 +174,7 @@ $(document).on('click', '.btn-del', function (e) {
                   dataType: 'json',
                   contentType: 'application/json; charset= utf-8',
                   success: function(data){
+                    location.reload();
                     }
                 });
                   alert('Departamento empresa elimanado correctamente.'); 

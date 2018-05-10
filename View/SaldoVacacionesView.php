@@ -106,7 +106,7 @@
 
                         <div class="col-xs-4">
                             <div class="form-group">
-                                <label>Fecha de Inicio</label><input id="pointer2" name ="FechaI"type="text" required />
+                                <label>Fecha de Inicio</label><input id="pointer2" name ="FechaI"type="text" readonly = "true" required />
                             </div>
                         </div>
 
@@ -188,7 +188,7 @@
 
                         <div class="col-xs-4">
                             <div class="form-group">
-                                <label>Fecha de Inicio</label><input id="pointer" name ="FechaI"type="text" required />
+                                <label>Fecha de Inicio</label><input id="pointer" name ="FechaI"type="text" required readonly = "true"/>
                             </div>
                         </div>
 

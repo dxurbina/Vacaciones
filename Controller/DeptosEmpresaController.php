@@ -59,7 +59,7 @@ Class DeptosEmpresaController{
         }
     }
 
-    public function EditDeptoEmp(){
+    /*public function EditDeptoEmp(){
         if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
             $this->obj->__SET('Nombre', $_REQUEST['nombre']);
             $this->obj->__SET('Descripcion', $_REQUEST['des']);
@@ -69,9 +69,25 @@ Class DeptosEmpresaController{
             }else {
                 header('Location: index.php?c=Principal&a=AccessError');
             }
+    }*/
+
+    public function EditDeptoEmp(){
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+            header('Content-Type: application/json; charset=utf-8');
+            $json_str = file_get_contents('php://input');
+            $json_obj = json_decode($json_str);
+            $this->obj->__SET('Nombre', $json_obj->Nombre);
+            $this->obj->__SET('Descripcion', $json_obj->Descripcion);
+            $this->obj->__SET('IdDep',$json_obj->IdDep);
+            $_array = $this->model->EditDeptoEmp($this->obj);
+            $var = json_encode( $_array);
+            $json = json_last_error();
+            echo $var; 
+            }else {
+                header('Location: index.php?c=Principal&a=AccessError');
+            }
     }
 
-        //Función de cancelar la solicitud de vacaciones
     public function DeleteDeptosEmpresa(){
         if(isset($_SESSION['nickname'])){
            header('Content-Type: application/json; charset=utf-8');
@@ -85,6 +101,20 @@ Class DeptosEmpresaController{
         }else{
                header('Location: index.php?c=Principal&a=AccessError');
              }
+    }
+
+    public function GetPosition(){
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+            header('Content-Type: application/json; charset=utf-8');
+            $json_str = file_get_contents('php://input');
+            $json_obj = json_decode($json_str);
+            $_array = $this->model->GetPosition($json_obj->Nombre);
+            $var = json_encode( $_array);
+            $json = json_last_error();
+            echo $var; 
+            }else {
+                header('Location: index.php?c=Principal&a=AccessError');
+            }
     }
 
 }

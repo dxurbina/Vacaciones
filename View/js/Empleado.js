@@ -848,3 +848,29 @@ $(document).on('click', '#update', function(e){
     
 });*/
 
+//Nuevo colaborador
+
+$('#FechaNac').datepicker(
+    {  
+        //minDate: ("yearRange", "-99:+0"),
+        maxDate: "today",
+       //minDate: -7,
+       
+       beforeShow: function() {
+        //onSelect: ListaFeriados(),
+       //$(this).datepicker('option', 'maxDate', $('#dataF').val());
+         $(this).datepicker( "option", "yearRange", "-99:+0" );
+       
+       }
+       //beforeShowDay: $.datepicker.noWeekends -> DESACTIVA LOS FINDES DE SEMANA
+    });
+
+$('#FechaIng').datepicker(
+    {  
+        //minDate: -7,
+        beforeShow: function() {
+            //onSelect: ListaFeriados(),
+           //$(this).datepicker('option', 'maxDate', $('#dataF').val());
+        }
+           //beforeShowDay: $.datepicker.noWeekends -> DESACTIVA LOS FINDES DE SEMANA
+    });

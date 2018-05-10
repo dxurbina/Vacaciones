@@ -9,7 +9,8 @@
         $this->db= $this->con->conex();
        } 
 
-       public function store(Vacation $data, $FechaI, $FechaF){
+    //Funciona correctamente 08-05-18 3:05 pm
+       /*public function store(Vacation $data, $FechaI, $FechaF){
             $resultado = array();
             $sql="select Fecha from feriados where Fecha between ? and ?;";
             $consult = $this->db->prepare($sql);
@@ -26,8 +27,32 @@
                     }else {
                         echo 'Existen días feriados en el rango seleccionado, favor ingresar solicitudes independientes.';
                     }            
-        }
-        
+       }*/
+
+       public function store(Vacation $data, $FechaI, $FechaF, $CantDias){
+        $resultado = array();
+        $sql="select count(Fecha) from feriados where Fecha between ? and ?;";
+        $consult = $this->db->prepare($sql);
+        $consult -> execute(array($FechaI, $FechaF));
+            while($row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                $resultado = $row;
+            }
+            $contador = 0;
+            if((sizeof($resultado)>0) && ($CantDias>=1.5)){
+                $contador++;
+            }
+                $total = $CantDias-$contador;
+                    
+                //if(sizeof($resultado)==0){    
+                    $sql = 'insert into vacaciones values(null, ?, ?, ?, ?, "Pendiente", ?, null, now(), null, ?)';
+                    $result = $this->db->prepare($sql);
+                    $result->execute(array($data->__GET('FechaI'), $data->__GET('FechaF'),
+                    $data->__GET('Tipo'), $total, //$data->__GET('CantDias'), 
+                    $_SESSION['ID']->IdEmpleado, $data->__GET('Descripcion')));
+                /*}else {
+                    echo 'Existen días feriados en el rango seleccionado, favor ingresar solicitudes independientes.';
+                } */           
+   }
 
        public function update($id, $Estado){
            $sql= "update Vacaciones set Estado = ?, IdRespSup = ?, FechaRespuesta = now() where IdVacaciones = ?; ";
@@ -317,7 +342,7 @@
                     }
         }      
 
-        public function EditSolicitud(Vacation $data, $FechaI, $FechaF){
+        /*public function EditSolicitud(Vacation $data, $FechaI, $FechaF){
             $cadena = "Su solicitud no ha sido editada porque existen días feriados en el rango seleccionado.";
             //$array = explode(",", $cadena);
             $resultado = array();
@@ -343,7 +368,39 @@
                     }else {
                          return $cadena;
                     }            
-        }
+        }*/
+
+        public function EditSolicitud(Vacation $data, $FechaI, $FechaF, $CantDias){
+            $resultado = array();
+            $sql="select count(Fecha) from feriados where Fecha between ? and ?;";
+            $consult = $this->db->prepare($sql);
+            $consult -> execute(array($FechaI, $FechaF));
+                while($row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                    $resultado = $row;
+                }
+                $contador = 0;
+                if((sizeof($resultado)>0) && ($CantDias>=1.5)){
+                    $contador++;
+                }
+                    $total = $CantDias-$contador;
+                        
+                    //if(sizeof($resultado)==0){    
+                        $sqlv = ("update Vacaciones set CantDias = ?, FechaI = ?, FechaF = ?, Tipo = ?, Descripcion = ?
+                        where IdVacaciones = ? and IdEmpleado = ? and Estado = 'Pendiente';");
+                        $result = $this->db->prepare($sqlv);
+                        $result->execute(array( 
+                        //$data->__GET('CantDias'),
+                        $total,
+                        $data->__GET('FechaI'), 
+                        $data->__GET('FechaF'),
+                        $data->__GET('Tipo'), 
+                        $data->__GET('Descripcion'),
+                        $data->__GET('IdVac'),
+                        $_SESSION['ID']->IdEmpleado)); 
+                    /*}else {
+                        echo 'Existen días feriados en el rango seleccionado, favor ingresar solicitudes independientes.';
+                    } */           
+       }
 
         //Función para cancelar una solicitud de vacaciones.
         public function CancelarSolicitud($id){

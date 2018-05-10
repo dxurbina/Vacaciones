@@ -7,7 +7,7 @@
         <div style="width: 120%;" class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden = "true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Registar Empleado</h4>
+                <h4 class="modal-title" id="myModalLabel">Registar Colaborador</h4>
             </div>
 
         <div class="modal-body">
@@ -22,7 +22,7 @@
                             </select></div>
                         <div class="form-group"><label>Número INSS</label><input id="NInss" name="NInss" size="20" ></input></div>
                         <div class="form-group"><label>Fecha de Nacimiento</label>
-                            <input  id="FechaNac" name ="FechaNac" type= "date" min="1950-01-01" max="2018-05-03"ID=""  Text=""  Enabled="false"></input></div>
+                            <input  id="FechaNac" name ="FechaNac" type="text" ></input></div>
                         <div class="form-group"><label>Hijos</label>
                             <select id="Hijos" name="Hijos" onkeypress="return valida(event)">
                                 <option value="1">Si</option>
@@ -91,7 +91,7 @@
                             <?php } ?>
                         </select>
                     </div>
-                    <div class="form-group"><label>Fecha de Ingreso</label><input  id="FechaIng" name ="FechaIng" type= "date" min="1950-01-01" max="2018-05-03"ID=""  Text="" ></input></div> 
+                    <div class="form-group"><label>Fecha de Ingreso</label><input  id="FechaIng" name ="FechaIng" type="text" readonly = "true"></input></div> 
                     <div class="form-group"><label>Cargo</label>
                         <select  id="cargos"name="IdCargo">
                             <option value="">Seleccione Cargo</option>
@@ -119,10 +119,21 @@
                             <option value="">Seleccione</option>
                         </select>
                     </div>
-                </div>                              
+                </div>  
 
+                <!--Registar el usuario y la contraseña en esta pantalla 10-05-18 -->
+                <div class="col-sm-12">
+                    <div class="col-sm-6"> 
+                        <div class="form-group"><label>Usuario</label><input id="usuario" name = "usuario" size="20" required onkeypress="return validaLetras(event)" ></input></div>
+                    </div>   
+
+                    <div class="col-sm-6"> 
+                        <div class="form-group"><label>Contraseña</label><input id="pass" name = "pass" size="20" required></input></div>    
+                    </div>    
+                </div> 
+                </div>
                 <div class="modal-footer">
-                    <center><input type="submit" class="btn btn-primary" value="Guardar Empleado"></input></center>
+                   <input type="submit" class="btn btn-primary" value="Registrar"></input>
                 </div>
             </div>
         </div>
@@ -175,6 +186,8 @@ function confirmar(identificador, controlador){
  window.location="?c=Empleado&a=ListEmployeeView";
 }
 </script>
+
+<script type="text/javascript" src="View/js/Empleado.js"></script>
  <?php
     }else 
     {

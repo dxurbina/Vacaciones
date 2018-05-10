@@ -9,11 +9,11 @@ Class SaldoVacacionesController{
     include('Model/Entity/SaldoVacaciones.php');
     include('Model/Entity/User.php');
     require('Model/DAO/LoadDAO.php');
-    include('Model/DAO/FactorDAO.php');  //Lo acabo de agregar, esto esta en VacacionesController
+    include('Model/DAO/FactoresDAO.php');  //Lo acabo de agregar, esto esta en VacacionesController
     $this->obj = new SaldoVacaciones();
     $this->obju = new User();
     $this->model = new SaldoVacacionesDAO();
-    $this->modelf= new FactorDAO();  //Lo acabo de agregar, esto esta en VacacionesController
+    $this->modelf= new FactoresDAO();  //Lo acabo de agregar, esto esta en VacacionesController
 }
 
     public function index(){

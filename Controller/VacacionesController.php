@@ -16,7 +16,7 @@ class VacacionesController{
     public function index(){
         if(isset($_SESSION['nickname'])){
         include('Model/DAO/FactorDAO.php');
-        $modelf = new FactorDAO();
+        $modelf = new FactoresDAO();
         $this->factor = $modelf->show();
         require "View/Head.php";
         require "View/VacacionesView.php";
@@ -35,7 +35,8 @@ class VacacionesController{
         header('Location: index.php?c=Principal&a=AccessError');
     }
     }
- public function store(){
+       //Funciona correctamente 08-05-18 3:05 pm
+    /*public function store(){
         if(isset($_SESSION['nickname'])){
          $this->obj->__SET('Tipo', $_REQUEST['Tipo']);
             $this->obj->__SET('CantDias', $_REQUEST['CantDias']);
@@ -57,7 +58,32 @@ class VacacionesController{
         }else {
             header('Location: index.php?c=Principal&a=AccessError');
         }
+    }*/
+
+
+ public function store(){
+    if(isset($_SESSION['nickname'])){
+     $this->obj->__SET('Tipo', $_REQUEST['Tipo']);
+        $this->obj->__SET('CantDias', $_REQUEST['CantDias']);
+        $originalDate = $_REQUEST['FechaI'];
+        $originalDate = ltrim($originalDate);
+        $originalDate = rtrim($originalDate);
+        $nums = explode('/', $originalDate);
+        $this->obj->__SET('FechaI', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
+        $originalDate = $_REQUEST['FechaF'];
+        $originalDate = ltrim($originalDate);
+        $originalDate = rtrim($originalDate);
+        $nums = explode('/', $originalDate);
+        $this->obj->__SET('FechaF', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
+        $this->obj->__SET('Descripcion', $_REQUEST['Descripcion']);
+        $this->model->store($this->obj, $this->obj->FechaI, $this->obj->FechaF, $this->obj->CantDias);
+        $estado = "Solicitud";
+        $this->modelNotif->store(null, $estado);
+        header('Location: index.php?c=SaldoVacaciones');
+    }else {
+        header('Location: index.php?c=Principal&a=AccessError');
     }
+}
     
     public function update(){
         if(isset($_SESSION['nickname']) and $_SESSION['access'] == 2 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
@@ -165,7 +191,8 @@ public function EditSolicitud(){ //ESTA FUNCIONA 3/05/18 3:30
         $this->obj->__SET('FechaF', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
         $this->obj->__SET('Descripcion', $_REQUEST['Descripcion']);
         $this->obj->__SET('IdVac', $_REQUEST['idVacaciones']);
-        $this->model->EditSolicitud($this->obj, $this->obj->FechaI, $this->obj->FechaF);
+        //$this->model->EditSolicitud($this->obj, $this->obj->FechaI, $this->obj->FechaF);
+        $this->model->EditSolicitud($this->obj, $this->obj->FechaI, $this->obj->FechaF, $this->obj->CantDias);
         $estado = "Solicitud";
         $this->modelNotif->store(null, $estado);
         header('Location: index.php?c=SaldoVacaciones');

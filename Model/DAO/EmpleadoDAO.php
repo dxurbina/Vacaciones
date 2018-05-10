@@ -157,7 +157,7 @@ public function listarMunPorDepto($dep){
 public function listarDptosEmp(){
     try{
        $DeptoEmp = array();
-       $consult = $this->db->prepare("select * from DeptosEmpresa");
+       $consult = $this->db->prepare("select * from DeptosEmpresa where Estado = 1");
        $consult->execute();   
        while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
            $DeptoEmp = $row; 
@@ -220,6 +220,12 @@ public function listarDptosEmp(){
    /* $sql = "call adduser (?, ?, ?)";
     $consult2 = $this->db->prepare($sql);
     $consult->execute(array($datau->__GET('user'), $datau->__GET('pass'), $lastid));*/
+
+    /* Crear usuario 09-05-18 */
+    $sql = "call adduser(?, ?, ?)";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindParam(1, PDO::PARAM_INT, 10 );
+    $stmt->execute(array($datau->__GET('user'), $datau->__GET('pass'), $lastid));
 }
         
     

@@ -1,4 +1,4 @@
-var dato, tabla, idEmp, $row;
+var dato, tabla, idEmp, $row, $dato2;
 
 //Función para la carga de los valores del datatable
  function sendDataAjax() {
@@ -12,15 +12,26 @@ var dato, tabla, idEmp, $row;
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
-           // console.log(data);
-           // console.log(data.length);
+            console.log(data);
+            console.log(data.length);
+            dato2 = data;
             var boss;
-            tabla = $("#tbl_Historial").DataTable();
-
+            tabla = $("#tbl_Historial").DataTable({
+                "aaSorting": [[0, 'desc']]});
+                 
     for (var i = 0; i < data.length; i++) {
         if(typeof(data[i].NJefe) == "undefined"){
             boss = " - ";
         }else {boss = data[i].NJefe + " " + data[i].AJefe + " - " + data[i].Estado}
+        var cambio;
+        if((data[i].Estado=='Aceptada') || (data[i].Estado=='Rechazada')){
+            cambio = '-'
+            
+        }else{
+            cambio = '<button title= "Editar" value= "Editar" class="btn btn-primary btn-edit "><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
+            '<button title= "Eliminar" value= "Cancelar" class="btn btn-danger btn-del " data-target="#imodalel" data-toggle="modal"><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;'
+        }
+        
         tabla.fnAddData([
             //(data[i].PNombre + " "+ data[i].PApellido),
             //(data[i].NombreCargo),
@@ -33,8 +44,9 @@ var dato, tabla, idEmp, $row;
             //boss,
            //(data[i].NJefe + " " + data[i].AJefe + " - " + data[i].Estado),
            data[i].Estado,
-           '<button title= "Editar" value= "Editar" class="btn btn-primary btn-edit "><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
-           '<button title= "Eliminar" value= "Cancelar" class="btn btn-danger btn-del " data-target="#imodalel" data-toggle="modal"><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;'
+           cambio
+           //'<button title= "Editar" value= "Editar" class="btn btn-primary btn-edit "><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
+           //'<button title= "Eliminar" value= "Cancelar" class="btn btn-danger btn-del " data-target="#imodalel" data-toggle="modal"><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;'
         ]);
     }
         }

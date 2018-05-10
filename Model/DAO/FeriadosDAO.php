@@ -41,5 +41,17 @@ class FeriadosDAO{
                  }
     }
 
+    public function GetPosition($fecha){
+        $resulSet = array();
+        $sql = "select * from feriados where Fecha = ?;	";
+        $resulSet = array();
+        $consult = $this->db->prepare($sql);
+        $consult->execute(array($fecha));
+                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                    $resulSet = $row; 
+                }
+                return $resulSet;
     }
+
+}
 ?>

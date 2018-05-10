@@ -1,3 +1,4 @@
+var row, idFactor;
 $(document).ready(function(){
     $(document).on('click', '.btn-add', function (e) {
         e.preventDefault();
@@ -53,7 +54,49 @@ function fillModalData(dato){
     });
     }
 
-// evento click para boton actualizar
+//Funcionalidad que valida que no se repita los datos ya registrados
+$(document).on('click', '#btnGuardar', function (e) {
+    e.preventDefault();
+    var _select = $("#factor").val();
+    var obj = JSON.stringify({ Factor: _select });
+    flag = false;
+    $.ajax({
+        data: obj,
+        url: "?c=Factores&a=GetPosition",
+        type: "POST",
+        dataType: 'json',
+        contentType: 'application/json; charset= utf-8',
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+        },
+        success: function (data) {
+            console.log(data);
+            $(data).each(function(i, v){ // indice, valor
+                if(v.Factor == _select){
+                    flag = true;
+                }
+            })
+            if(flag == false){
+                if((_select.length >= 3) && (_select.length <= 4) && (_select != null)){
+                    //document.send.submit()   
+                    //document.getElementById('#formFac').submit();
+                    console.log(document.getElementById('#formFac'));
+                    $(document).on('click', function (e) {
+                        document.getElementById('#formFac').submit();
+                    })
+                }else{
+                    alert('Dato no esperado');
+                }
+            }else{
+                alert("Ese factor ya existe!!");
+            }
+
+
+        }
+    });
+});
+
+// evento click para boton actualizar Funciona 1:20 pm 04-05-2018
 $(document).on('click', '.btn-edit', function (e) {
     e.preventDefault();
         var _row = $(this).parent().parent()[0];
@@ -64,6 +107,57 @@ $(document).on('click', '.btn-edit', function (e) {
         $("#modalEdit").modal("show");
  
 });
+
+$(document).on('click', '#btnActualizar', function (e) {
+    e.preventDefault();
+    var _select = $("#factor2").val();
+    var obj = JSON.stringify({ Factor: _select });
+    flag = false;
+    $.ajax({
+        data: obj,
+        url: "?c=Factores&a=GetPosition",
+        type: "POST",
+        dataType: 'json',
+        contentType: 'application/json; charset= utf-8',
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+        },
+        success: function (data) {
+            console.log(data);
+            $(data).each(function(i, v){ // indice, valor
+                
+                if(v.Factor == _select && v.IdFactor != idFactor ){
+                    flag = true;
+                }
+            })
+            if(flag == false){
+                var nombre = $("#des2").val();
+                var factor = $('#factor2').val();
+                var idfac = $("#idFactor").val();
+                console.log(idfac);
+                var obj = JSON.stringify({ Nombre: nombre, Factor: factor, IdFactor: idfac });
+                flag = false;
+                    $.ajax({
+                        data: obj,
+                        url: "?c=Factores&a=EditFactor",
+                        type: "POST",
+                        dataType: 'json',
+                        contentType: 'application/json; charset= utf-8',
+                            error: function(xhr, ajaxOptions, thrownError){
+                                console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+                            },
+                            success: function (data) {
+                                location.reload();
+                            }
+                                    
+                    });  
+            }else{
+                alert("Este factor ya Existe!!");
+            }
+        }
+    });
+    });
+
 
 // evento click para eliminar los factores
 $(document).on('click', '.btn-del', function (e) {
@@ -86,3 +180,32 @@ $(document).on('click', '.btn-del', function (e) {
                   alert('Factor elimanado correctamente.'); 
     } return false;
 });
+
+/*
+function solo_JQdecimal(id) {
+    //PARA LLAMARLO EN EL OBJETO ---> onkeypress="solo_JQdecimal(this.id)"
+$('#factor2'+id).on('keypress', function (e) {
+    // Backspace = 8, Enter = 13, ’0′ = 48, ’9′ = 57, ‘.’ = 46
+    var field = $(this);
+    key = e.keyCode ? e.keyCode : e.which;
+
+    if (key == 8) return true;
+    if (key > 47 && key < 58) {
+      if (field.val() === "") return true;
+      var existePto = (/[.]/).test(field.val());
+      if (existePto === false){
+          regexp = /.[0-9]{3}$/; //PARTE ENTERA 10
+      }
+      else {
+        regexp = /.[0-9]{3}$/; //PARTE DECIMAL2
+      }
+      return !(regexp.test(field.val()));
+    }
+    if (key == 46) {
+      if (field.val() === "") return false;
+      regexp = /^[0-9]+$/;
+      return regexp.test(field.val());
+    }
+    return false;
+});
+}*/

@@ -1,4 +1,4 @@
-var newDay, newNes, newAnio;
+var newDay, newNes, newAnio, bDisable;
 $(document).ready(function(){
     $('#Add').click(function(){
         if( $('#Add').prop('checked') ) {
@@ -14,13 +14,29 @@ $(document).ready(function(){
         }
     });
 
+    //Agregado a las 2:51 pm 08-05-2018
+var arrDisabledDates = {};
+arrDisabledDates[new Date('05/01/2018')] = new Date('05/01/2018');
+arrDisabledDates[new Date('04/19/2018')] = new Date('04/19/2018');
+arrDisabledDates[new Date('07/19/2018')] = new Date('07/19/2018');
+
     $('#pointer').datepicker(
         {  
-           minDate: -7,
+            beforeShowDay: function (dt) {
+                var bDisable = arrDisabledDates[dt];
+                console.log(bDisable);
+                if (bDisable)
+                    return [false, '', ''];
+                else
+                   return [true, '', ''];
+        }
+                
+           /*minDate: -7,
            beforeShow: function() {
+            //onSelect: ListaFeriados(),
            $(this).datepicker('option', 'maxDate', $('#dataF').val());
            
-           }
+           }*/
 
            //beforeShowDay: $.datepicker.noWeekends -> DESACTIVA LOS FINDES DE SEMANA
         });
@@ -103,6 +119,12 @@ $(document).ready(function(){
                 var saldo = parseFloat(factor) * sumar;
                 var resul = saldo.toFixed(2); 
                 $("label[for='Saldo']").text(resul);
+                console.log(resul);
+                //Cálculo del saldo-saldoAct.
+                var saldoactual = $("label[for='saldo']").text();
+                var sal = parseFloat(saldoactual) - resul;
+                var resultado = sal.toFixed(2);
+                $("label[for='SaldoT']").text(resultado);
             }
             
             //$('#ExtraDateEnd').val(fecha.toLocaleDateString("es-ES", options));
@@ -212,7 +234,7 @@ $(document).ready(function(){
                 $("label[for='Saldo']").text(result);
                 //Cálculo del saldo-saldoAct.
                 var saldoactual = $("label[for='saldo']").text();
-                var sal = parseFloat(saldoactual) - saldo;
+                var sal = parseFloat(saldoactual) - result;
                 var resultado = sal.toFixed(2);
                 $("label[for='SaldoTotal']").text(resultado);
             }
@@ -337,3 +359,23 @@ function hideExtra(){
 
 hideExtra();
 
+
+//Ingresado el 08-05-18 11:58 am
+
+function ListaFeriados(){
+    $.ajax({
+        data: {},
+        
+        url: "?c=Feriados&a=ListFeriados",
+        type: "POST",
+        dataType: 'json',
+        contentType: 'application/json; charset= utf-8',
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+        },
+        success: function (data) {
+            console.log(data);
+        }
+    });
+}
+//ListaFeriados();
