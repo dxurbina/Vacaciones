@@ -83,7 +83,7 @@ $(document).ready(function(){
                         //console.log(data);
                         $("#jefe").find('option').remove();
                         $(data).each(function(i, v){ // indice, valor
-                            $("#jefe").append('<option value="' + v.IdEmpleado + '">' + (v.PNombre + " "+ v.SNombre ) + '</option>');
+                            $("#jefe").append('<option value="' + v.IdEmpleado + '">' + (v.PNombre + " "+ v.PApellido ) + '</option>');
                            
                         })
                         }
@@ -101,14 +101,14 @@ $(document).ready(function(){
        // console.log($("#desac24").val());
         $.ajax({
             data: obj,
-            url: "?c=Empleado&a=showJefeAdd",
+            url: "?c=Empleado&a=showJefebyPosition", //showJefeAdd
             type: "POST",
             dataType: 'json',
             contentType: 'application/json; charset= utf-8',
-            beforeSend: function () 
+            /*beforeSend: function () 
             {
                 $("#cargos").prop('disabled', false);
-            },
+            },*/
             error: function(xhr, ajaxOptions, thrownError){
                 console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
             },
@@ -126,16 +126,16 @@ $(document).ready(function(){
                     type: "POST",
                     dataType: 'json',
                     contentType: 'application/json; charset= utf-8',
-                    beforeSend: function () 
+                    /*beforeSend: function () 
                     {
                         $("#cargos").prop('disabled', false);
-                    },
+                    },*/
                     error: function(xhr, ajaxOptions, thrownError){
                         console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
                     },
                     success: function (data) {
                         console.log(data)
-                        $("#cc").val(data[0].Nombre);
+                        $("#cc").val(data[0].Nombre + "-" + data[0].Codigo);
                     }
                     });
             }
@@ -250,3 +250,66 @@ $(document).ready(function(){
             }
             });
     }
+//Nuevo colaborador
+
+$('#FechaNac').datepicker(
+    {  
+        //minDate: ("yearRange", "-99:+0"),
+        maxDate: "today",
+       //minDate: -7,
+       
+       beforeShow: function() {
+        //onSelect: ListaFeriados(),
+       //$(this).datepicker('option', 'maxDate', $('#dataF').val());
+         $(this).datepicker( "option", "yearRange", "-99:+0" );
+       
+       }
+       //beforeShowDay: $.datepicker.noWeekends -> DESACTIVA LOS FINDES DE SEMANA
+    });
+
+$('#FechaIng').datepicker(
+    {  
+        //minDate: -7,
+        beforeShow: function() {
+            //onSelect: ListaFeriados(),
+           //$(this).datepicker('option', 'maxDate', $('#dataF').val());
+        }
+           //beforeShowDay: $.datepicker.noWeekends -> DESACTIVA LOS FINDES DE SEMANA
+    });
+    
+//Funcionalidad que valida que no se repita los datos ya registrados
+/*$(document).on('click', '#btnRegistar', function (e) {
+    e.preventDefault();
+    var _select = $("#usuario").val();
+    var obj = JSON.stringify({ Usuario: _select });
+    flag = false;
+    $.ajax({
+        data: obj,
+        url: "?c=Empleado&a=GetPosition",
+        type: "POST",
+        dataType: 'json',
+        contentType: 'application/json; charset= utf-8',
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+        },
+        success: function (data) {
+            console.log(data);
+            $(data).each(function(i, v){ // indice, valor
+                if(v.Usuario == _select){
+                    flag = true;
+                }
+            })
+            if(flag == false){
+                if(_select.length > 3 && _select.length < 20){
+                    document.send.submit()   
+                }else{
+                    alert('Dato no esperado');
+                }
+            }else{
+                alert("Este nombre de usuario ya existe, favor ingresar otro.");
+            }
+
+
+        }
+    });
+});*/

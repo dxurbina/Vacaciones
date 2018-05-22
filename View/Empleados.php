@@ -1,7 +1,7 @@
 <?php if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
            ?>  
     <!-- Inicia la tabla con los valores -->
-<form class="form" action="?c=Empleado&a=AddEmpleados" method="POST"> 
+<form class="form" action="?c=Empleado&a=AddEmpleados" method="POST" name ="send"> 
     <!-- POP UP -->
     <div class="modal-dialog" role="document">
         <div style="width: 120%;" class="modal-content">
@@ -25,15 +25,15 @@
                             <input  id="FechaNac" name ="FechaNac" type="text" ></input></div>
                         <div class="form-group"><label>Hijos</label>
                             <select id="Hijos" name="Hijos" onkeypress="return valida(event)">
-                                <option value="1">Si</option>
                                 <option value="0">No</option>
+                                <option value="1">Si</option>
                             </select></div>
                         </div>
                 
                 <div class="col-sm-6">
                     <div class="form-group"><label>SegundoNombre</label><input id="SNombre" name ="SNombre" ID="txtmodaldireccion"  ></input></div>
                     <div class="form-group"><label>Segundo Apellido</label><input id="SApellido" name="SApellido" ID="txtmodaldireccion" onkeypress="return validaLetras(event)"></input></div>
-                    <div class="form-group"><label>Cédula</label><input id="Cedula" name ="Cedula" ID=""></input></div>
+                    <div class="form-group"><label>Cédula</label><input id="Cedula" name ="Cedula" ID="" required></input></div>
                     <div class="form-group"><label>Pasaporte</label><input id="Pasaporte" name ="Pasaporte" ID=""  Text=""  Enabled="false"></input></div>
                     <div class="form-group"><label>Sexo</label><select id="Sexo" name="Sexo">
                             <option value="M">Masculino</option>
@@ -45,8 +45,8 @@
 
                 <div class="col-sm-6">
                     <div class="form-group"><label>Hermanos</label><select id="Hermanos" name="Hermanos"></div>
-                            <option value="1">Si</option>
                             <option value="0">No</option>
+                            <option value="1">Si</option>
                         </select>
                     </div> 
                     <div class="form-group"><label>Teléfono</label><input id="Telefono" name ="Telefono" ID=""  Text=""  Enabled="false" onkeypress="return valida(event)" maxlength="8"></input></div>
@@ -84,16 +84,16 @@
 
                 <div class="col-sm-6">
                     <div class="form-group"><label>Departamento</label>
-                        <select id="cboDepto" name="Departamento">
+                        <select id="cboDepto" name="Departamento" required>
                             <option value="0">Seleccione Departamento</option>
                             <?php foreach ($this->Departamentos as $row){?> 
                             <option value="<?php echo $row->IdDepartamento; ?>"> <?php echo $row->Nombre; ?></option>
                             <?php } ?>
                         </select>
                     </div>
-                    <div class="form-group"><label>Fecha de Ingreso</label><input  id="FechaIng" name ="FechaIng" type="text" readonly = "true"></input></div> 
+                    <div class="form-group"><label>Fecha de Ingreso</label><input id="FechaIng" name ="FechaIng" type="text" readonly = "true" ></input></div> 
                     <div class="form-group"><label>Cargo</label>
-                        <select  id="cargos"name="IdCargo">
+                        <select  id="cargos"name="IdCargo" required>
                             <option value="">Seleccione Cargo</option>
                         </select>
                     </div>
@@ -102,12 +102,12 @@
                 
                 <div class="col-sm-6">
                     <div class="form-group"><label>Municipio</label>
-                        <select id="cboMun" name="IdMunicipio">
+                        <select id="cboMun" name="IdMunicipio" required>
                             <option value="">Seleccione Municipio</option>               
                         </select>
                     </div>
                     <div class="form-group"><label>Depto. Empresa</label>
-                        <select id="dptoEmp" name="Departamento">
+                        <select id="dptoEmp" name="Departamento" required>
                             <option value="0">Seleccione Depto Empresa</option>
                             <?php foreach ($this->DeptoEmp as $row){?> 
                             <option value="<?php echo $row->IdDep; ?>"> <?php echo $row->Nombre; ?></option>
@@ -115,7 +115,7 @@
                         </select>
                     </div>
                     <div class="form-group"><label>Jefe</label>
-                        <select  id="jefe" name="IdJefe">
+                        <select  id="jefe" name="IdJefe" required>
                             <option value="">Seleccione</option>
                         </select>
                     </div>
@@ -133,7 +133,7 @@
                 </div> 
                 </div>
                 <div class="modal-footer">
-                   <input type="submit" class="btn btn-primary" value="Registrar"></input>
+                   <input type="submit" id="btnRegistar" class="btn btn-primary" value="Registrar"></input>
                 </div>
             </div>
         </div>
@@ -187,7 +187,6 @@ function confirmar(identificador, controlador){
 }
 </script>
 
-<script type="text/javascript" src="View/js/Empleado.js"></script>
  <?php
     }else 
     {

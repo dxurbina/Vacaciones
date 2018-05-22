@@ -64,6 +64,8 @@
 
     <script src="View/js/notif.js" type="text/javascript"></script>
 
+    
+
       
     
 </head>
@@ -152,7 +154,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="?c=Principal" class="btn btn-default btn-flat">Inicio</a>
+                  <a href="" class="btn-usrI btn btn-default btn-flat" data-target="#imodalusrI" data-toggle="modal">Cambiar Contraseña</a>
                 </div>
                 <div class="pull-right">
                   <a href="?c=Load&a=close" class="btn btn-default btn-flat">Cerrar Sesión</a>

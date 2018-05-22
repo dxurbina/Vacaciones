@@ -161,7 +161,7 @@ $(document).ready(function(){
                             var _Jefe = $("#desac28");
                             var _select = $("#desac27").val();
                             var obj = JSON.stringify({ id: _select });
-                           console.log(_select);
+                           //console.log(_select);
                             $.ajax({
                                 data: obj,
                                 url: "?c=Empleado&a=showJefebyPosition",
@@ -177,13 +177,13 @@ $(document).ready(function(){
                                 },
                                 success: function (data) {
                                     $("#desac27").prop('disabled', false);
-                                    console.log(data);
+                                   // console.log(data);
                                     _Jefe.find('option').remove();
                                     $(data).each(function(i, v){ // indice, valor
             
                                         $("#desac28").append('<option value="' + v.IdEmpleado + '">' + (v.PNombre + " "+ v.PApellido ) + '</option>');
                                     });
-                                    console.log(obj);
+                                  //  console.log(obj);
                                     $.ajax({
                                         data: obj,
                                         url: "?c=Empleado&a=showCCostosbyId",
@@ -194,7 +194,7 @@ $(document).ready(function(){
                                             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
                                         },
                                         success: function (data) {
-                                            console.log(data);
+                                            //console.log(data);
                                             $("#desac30").val(data[0].Nombre + "-" + data[0].Codigo);
                                         }
                                         });
@@ -203,7 +203,7 @@ $(document).ready(function(){
                             });
 
                             $("#CargarEmpleado").change(function(){
-                                console.log(idEmp);
+                              //  console.log(idEmp);
                                 $("#CargarEmpleado").val(idEmp);
                             });
     
@@ -252,7 +252,7 @@ function sendDataAjax() {
                     console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
                 },
                 success: function (data) {
-                    //console.log(data);
+                    console.log(data);
                    // console.log(data.length);
                     var boss;
                     //addRowDT(data.d);
@@ -313,8 +313,9 @@ function loadDeparment(_dep) {
 function loadMunicipality(datos){
     var _Mun = $("#desac25");
     var _idmun = datos[0].IdMunicipio;
-    var obj = JSON.stringify({ id: datos[0].IdDepartamento });
-   // console.log(obj);
+    var obj = JSON.stringify({ MUN: _idmun });
+
+     //console.log(obj);
     $.ajax({
         data: obj,
         url: "?c=Empleado&a=showMunicipality",
@@ -328,10 +329,10 @@ function loadMunicipality(datos){
                     _Mun.prop('disabled', true);
                 },
         error: function(xhr, ajaxOptions, thrownError){
-            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+           // console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
-           // console.log(data);
+          // console.log(data);
             _Mun.find('option').remove();
             $(data).each(function(i, v){ // indice, valor
                 _Mun.append('<option value="' + v.IdMunicipio + '">' + v.Nombre + '</option>');
@@ -418,7 +419,7 @@ function loadJefe(datos){
     var _idJefe = datos[0].IdJefeE;
      
     var obj = JSON.stringify({ id: datos[0].IdJefeE });
-    console.log(_idJefe);
+    //console.log(_idJefe);
     if (typeof _idJefe != "undefined") {
         $.ajax({
             data: obj,
@@ -464,7 +465,7 @@ sendDataAjax();
 function fillModalData(dato){
    // var obj = { id: dato[0] };
    var obj = JSON.stringify({ id: dato[0] });
-  console.log(obj);
+  //console.log(obj);
     $.ajax({
         data: obj,
         url: "?c=Empleado&a=ListEmployeebyId",
@@ -477,7 +478,7 @@ function fillModalData(dato){
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             //console.log(data.length);
             //addRowDT(data.d);
            // tabla = $("#tbl_Empleados").DataTable();
@@ -501,19 +502,28 @@ function fillModalData(dato){
            $("#desac7").val(data[0].Pasaporte);
            $("#desac8").val(data[0].NInss);
            var _date = data[0].FechaNac;
-           _date.type = "date";
-           if(!(_date  == "0000-00-00")){
-            $("#desac9").val(_date);
+           if(data[0].FechaNac == null){
+                $("#desac9").val("");
            }else{
-            $("#desac9").val("");
+                    _date.type = "date";
+                if(!(_date  == "0000-00-00")){
+                    $("#desac9").val(_date);
+                }else{
+                    $("#desac9").val("");
+            }
            }
            
-           if(data[0].Sexo == "M"){
-             var $miSelect = $('#desac10');
+           if(data[0].Sexo == null || data[0].Sexo == ""){
+            var $miSelect = $('#desac10');
+           
              $miSelect.val($miSelect.children('option:eq(0)').val());
+           }else if(data[0].Sexo == "M"){
+             var $miSelect = $('#desac10');
+             
+             $miSelect.val($miSelect.children('option:eq(1)').val());
             }else{
              var $miSelect = $('#desac10');
-             $miSelect.val($miSelect.children('option:eq(1)').val());
+             $miSelect.val($miSelect.children('option:eq(2)').val());
             }
 
            if(data[0].EstadoCivil == "Casado"){
@@ -530,7 +540,7 @@ function fillModalData(dato){
              $miSelect.val($miSelect.children('option:eq(3)').val());
            }
 
-           if(data[0].Hijos == "0"){
+           if(data[0].Hijos == "0" || data[0].NumHijos == null){
             var $miSelect = $('#desac12');
             $miSelect.val($miSelect.children('option:eq(1)').val());
             
@@ -540,7 +550,7 @@ function fillModalData(dato){
             $("#desac13").val(data[0].NumHijos);
            }
 
-           if(data[0].Hermanos == "0"){
+           if(data[0].Hermanos == "0" || data[0].NumHermanos == null){
             var $miSelect = $('#desac14');
             $miSelect.val($miSelect.children('option:eq(1)').val());
             
@@ -609,7 +619,7 @@ function fillModalData(dato){
             },
             success: function (data) {
                 dato = data;
-                console.log(dato);
+               // console.log(dato);
                 $('#usr').val(dato[0].Usuario);
             }
         });
@@ -619,7 +629,7 @@ function fillModalData(dato){
         e.preventDefault();
 
         var _select = $("#usr").val();
-        console.log(_select);
+        //console.log(_select);
         var obj = JSON.stringify({ Nombre: _select });
         flag = false;
         $.ajax({
@@ -632,7 +642,7 @@ function fillModalData(dato){
                 console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
             },
             success: function (data) {
-                console.log(data);
+              //  console.log(data);
                 $(data).each(function(i, v){ // indice, valor
                     if(v.Usuario == _select && v.IdUsuario != row ){
                         flag = true;
@@ -701,75 +711,6 @@ $(document).on('click', '.btn-usr', function (e) {
     //console.log(row);
 });
 
-$(document).on('click', '#btnActualizar', function (e) {
-    e.preventDefault();
-
-    var _select = $("#nameu").val();
-    var obj = JSON.stringify({ Nombre: _select });
-    flag = false;
-    $.ajax({
-        data: obj,
-        url: "?c=Position&a=GetPosition",
-        type: "POST",
-        dataType: 'json',
-        contentType: 'application/json; charset= utf-8',
-        error: function(xhr, ajaxOptions, thrownError){
-            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
-        },
-        success: function (data) {
-            console.log(data);
-            $(data).each(function(i, v){ // indice, valor
-                if(v.NombreCargo == _select && v.IdCargo != row ){
-                    flag = true;
-                }
-            })
-            if(flag == false){
-                if(_select.length > 4 && _select.length < 20){
-                    console.log();
-                    $( ".remove" ).remove();
-                    $( ".del" ).remove();
-                    if($("#jefeu option:selected").html() != 'Seleccione' && $("#jefeu option:selected").html() != null){
-                        if($("#factoru option:selected").html() != 'Seleccione'){
-                            var nombre = $("#nameu").val();
-                            var costo = $('#costou').val();
-                            var jefe = $('#jefeu').val();
-                            var factor = $('#factoru').val();
-                            var obj = JSON.stringify({ Id: row, Nombre: nombre, IdCosto: costo, IdJefe: jefe, IdFactor: factor });
-                            flag = false;
-                            $.ajax({
-                                data: obj,
-                                url: "?c=Position&a=update",
-                                type: "POST",
-                                dataType: 'json',
-                                contentType: 'application/json; charset= utf-8',
-                                error: function(xhr, ajaxOptions, thrownError){
-                                    console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
-                                },
-                                success: function (data) {
-                                    location.reload();
-                                }
-                                    
-                                });  
-                        }else{
-                           
-                            alert('Seleccione un factor');
-                        }
-                    }else{
-                        alert('Seleccione un cargo supervisor');
-                    }
-                }else{
-                    alert('Dato no esperado');
-                }
-                
-
-            }else{
-                alert("Nombre del Cargo ya Existe!!");
-            }
-        }
-            
-        });
-
-});
 
 
 
@@ -847,30 +788,3 @@ $(document).on('click', '#update', function(e){
         });
     
 });*/
-
-//Nuevo colaborador
-
-$('#FechaNac').datepicker(
-    {  
-        //minDate: ("yearRange", "-99:+0"),
-        maxDate: "today",
-       //minDate: -7,
-       
-       beforeShow: function() {
-        //onSelect: ListaFeriados(),
-       //$(this).datepicker('option', 'maxDate', $('#dataF').val());
-         $(this).datepicker( "option", "yearRange", "-99:+0" );
-       
-       }
-       //beforeShowDay: $.datepicker.noWeekends -> DESACTIVA LOS FINDES DE SEMANA
-    });
-
-$('#FechaIng').datepicker(
-    {  
-        //minDate: -7,
-        beforeShow: function() {
-            //onSelect: ListaFeriados(),
-           //$(this).datepicker('option', 'maxDate', $('#dataF').val());
-        }
-           //beforeShowDay: $.datepicker.noWeekends -> DESACTIVA LOS FINDES DE SEMANA
-    });
