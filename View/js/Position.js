@@ -64,7 +64,7 @@ $(document).ready(function(){
                     }
                 })
                 if(flag == false){
-                    if(_select.length > 4 && _select.length < 20){
+                    if(_select.length > 4 && _select.length < 30){
                         console.log();
                         $( ".remove" ).remove();
                         $( ".del" ).remove();
@@ -132,13 +132,13 @@ $(document).ready(function(){
                     }
                 })
                 if(flag == false){
-                    if(_select.length > 4 && _select.length < 20){
-                        console.log();
+                    if(_select.length > 4 && _select.length < 30){
+                        console.log(flag);
                         $( ".remove" ).remove();
                         $( ".del" ).remove();
                         if($("#jefe option:selected").html() != 'Seleccione' && $("#jefe option:selected").html() != null){
                             if($("#factor option:selected").html() != 'Seleccione'){
-                                document.send.submit()   
+                                document.forms["send"].submit();
                             }else{
                                
                                 alert('Seleccione un factor');

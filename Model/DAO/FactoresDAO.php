@@ -12,7 +12,7 @@ class FactoresDAO{
     public function ListFactores(){
         try{
             $resulSet = array();
-            $consult = $this->db->prepare("select * from Factor where Estado!=0;");
+            $consult = $this->db->prepare("select * from factor where Estado!=0;");
             $consult -> execute(array());
             while($row = $consult->fetchAll(PDO::FETCH_OBJ)){
                 $resulSet = $row;
@@ -26,7 +26,7 @@ class FactoresDAO{
     public function ListFactoresById($id){
         try{
              $resulSet = array();
-             $consult = $this->db->prepare("select * from Factor where IdFactor = ?;");
+             $consult = $this->db->prepare("select * from factor where IdFactor = ?;");
              $consult->execute(array($id));
              while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
               $resulSet = $row; 
@@ -45,7 +45,7 @@ class FactoresDAO{
     }
 
     public function EditFactor(Factores $data){
-        $sql = 'update Factor set Nombre = ?, Factor = ? where IdFactor = ? and Estado = 1;';
+        $sql = 'update factor set Nombre = ?, Factor = ? where IdFactor = ? and Estado = 1;';
         $result = $this->db->prepare($sql);
         $result->execute(array( 
         $data->__GET('Nombre'),
@@ -55,7 +55,7 @@ class FactoresDAO{
 
     public function DeleteFac($id){
         try{
-            $sql= 'update Factor set Estado = 0 where IdFactor = ?;';
+            $sql= 'update factor set Estado = 0 where IdFactor = ?;';
             $result = $this->db->prepare($sql);
             $result->execute(array($id));
         }catch(Exception $e)

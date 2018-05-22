@@ -27,7 +27,7 @@ $(document).ready(function(){
         if($('#name').val().length > 0 && $('#name').val().length < 20){
             if($('#codigo').val().length > 0 && $('#codigo').val().length < 20){
                 if($("#depto option:selected").html() != 'Seleccione' && $("#depto option:selected").html() != null){
-                        document.send.submit()       
+                    document.forms["send"].submit();       
                 }else{
                     alert('Seleccione Departamento');
                 }

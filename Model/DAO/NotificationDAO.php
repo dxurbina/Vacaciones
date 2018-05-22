@@ -22,7 +22,7 @@ class NotificationDAO{
         $consult = $this->db->prepare($sql);
         $remitente = $_SESSION['ID']->IdEmpleado;
             /* Cargar el jefe y nombre del empleado de la bd */
-            $sql2 = "select e.PNombre, e.PApellido, e.IdJefe, ej.correo from Empleados e inner join Empleados ej
+            $sql2 = "select e.PNombre, e.PApellido, e.IdJefe, ej.correo from empleados e inner join empleados ej
             on e.IdJefe = ej.IdEmpleado where e.IdEmpleado = ?";
             $consult2 = $this->db->prepare($sql2);
             $consult2->execute(array($remitente));
@@ -33,7 +33,7 @@ class NotificationDAO{
             }
 
             /* Cargar el destinatario por medio de la solicitud */
-            $sql2 = "select e.PNombre, e.PApellido, v.IdEmpleado, e.correo from Vacaciones v inner join Empleados e on e.IdEmpleado = v.IdEmpleado
+            $sql2 = "select e.PNombre, e.PApellido, v.IdEmpleado, e.correo from vacaciones v inner join empleados e on e.IdEmpleado = v.IdEmpleado
             where IdVacaciones = ?";
             $consult2 = $this->db->prepare($sql2);
             $consult2->execute(array($id_solicitud));
@@ -259,8 +259,8 @@ class NotificationDAO{
 
     public function show(){
         $resulSet = array();
-        $sql = "select  n.Fecha, er.PNombre, er.PApellido, n.Mensaje, n.Tipo from Notificaciones n inner join Empleados e
-        on n.IdDestinatario = e.IdEmpleado inner join Empleados er on n.IdRemitente = er.IdEmpleado
+        $sql = "select  n.Fecha, er.PNombre, er.PApellido, n.Mensaje, n.Tipo from notificaciones n inner join empleados e
+        on n.IdDestinatario = e.IdEmpleado inner join empleados er on n.IdRemitente = er.IdEmpleado
         where e.IdEmpleado = ? and n.Estado = 1";
                 $consult = $this->db->prepare($sql);
                 $consult->execute(array($_SESSION['ID']->IdEmpleado));
@@ -273,8 +273,8 @@ class NotificationDAO{
 
     public function showAll(){
         $resulSet = array();
-        $sql = "select  n.Fecha, er.PNombre, er.PApellido, n.Mensaje, n.Tipo from Notificaciones n inner join Empleados e
-        on n.IdDestinatario = e.IdEmpleado inner join Empleados er on n.IdRemitente = er.IdEmpleado
+        $sql = "select  n.Fecha, er.PNombre, er.PApellido, n.Mensaje, n.Tipo from notificaciones n inner join empleados e
+        on n.IdDestinatario = e.IdEmpleado inner join empleados er on n.IdRemitente = er.IdEmpleado
         where e.IdEmpleado = ? and n.Fecha > date_add(NOW(), INTERVAL -7 DAY)";
                 $consult = $this->db->prepare($sql);
                 $consult->execute(array($_SESSION['ID']->IdEmpleado));
@@ -287,7 +287,7 @@ class NotificationDAO{
 
     public function destroy(){
         $resulSet = array();
-        $sql = "update Notificaciones set Estado = 0 where IdDestinatario = ? and Estado = 1";
+        $sql = "update notificaciones set Estado = 0 where IdDestinatario = ? and Estado = 1";
                 $consult = $this->db->prepare($sql);
                 $consult->execute(array($_SESSION['ID']->IdEmpleado));
     }

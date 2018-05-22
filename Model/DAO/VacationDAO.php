@@ -46,7 +46,7 @@
         $resulSet = array();
         $global = array();
         $resulSet2= array();
-        $sql = "select IdEmpleado from Empleados where IdJefe = ?;";
+        $sql = "select IdEmpleado from empleados where IdJefe = ?;";
         $consult = $this->db->prepare($sql);
         $id = $_SESSION['ID']->IdEmpleado;
         $consult->execute(array($id));
@@ -62,7 +62,7 @@
                 $subjefe = array(); 
                 for($i = 0; $i < count($resulSet); $i++){
                     for($j = 0; $j < count($resulSet[$i]); $j++){
-                        $sql = "select IdEmpleado from Empleados where IdJefe = ?;";
+                        $sql = "select IdEmpleado from empleados where IdJefe = ?;";
                         $consult = $this->db->prepare($sql);
                         $consult->execute(array($resulSet[$i][$j]->IdEmpleado));
                         while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
@@ -84,8 +84,8 @@
                    for($i = 0; $i < count($global); $i++){
                     for($j = 0; $j < count($global[$i]); $j++){
                         $sql = "select v.IdVacaciones, e.PNombre, e.PApellido, d.Nombre as Dep, c.NombreCargo, v.CantDias, v.FechaI, v.FechaF, v.tipo, v.Descripcion
-                        from Vacaciones v inner join Empleados e on v.IdEmpleado = e.IdEmpleado,
-                        Cargos c, CentroCostos cc, DeptosEmpresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and v.Estado = 'Pendiente'
+                        from vacaciones v inner join empleados e on v.IdEmpleado = e.IdEmpleado,
+                        cargos c, centrocostos cc, deptosempresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and v.Estado = 'Pendiente'
                         and e.IdJefe = ?"; 
                         
                         $consult = $this->db->prepare($sql);
@@ -104,8 +104,8 @@
 
                    /*List employee vacations by IdSession*/
                    $sql = "select v.IdVacaciones, e.PNombre, e.PApellido, d.Nombre as Dep, c.NombreCargo, v.CantDias, v.FechaI, v.FechaF, v.tipo, v.Descripcion
-                   from Vacaciones v inner join Empleados e on v.IdEmpleado = e.IdEmpleado,
-                   Cargos c, CentroCostos cc, DeptosEmpresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and v.Estado = 'Pendiente'
+                   from vacaciones v inner join empleados e on v.IdEmpleado = e.IdEmpleado,
+                   cargos c, centrocostos cc, deptosempresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and v.Estado = 'Pendiente'
                    and e.IdJefe = ? and e.Estado = 1"; 
                    
                    $consult = $this->db->prepare($sql);
@@ -120,7 +120,7 @@
 
 
                        /* List the vacation of General Manager */
-                       $sql = "select IdEmpleado from Empleados e inner join Cargos c on  e.IdCargo = c.IdCargo where e.IdJefe is null and e.Estado = 1
+                       $sql = "select IdEmpleado from empleados e inner join cargos c on  e.IdCargo = c.IdCargo where e.IdJefe is null and e.Estado = 1
                        and c.NombreCargo = 'Gerente General';";
                         $result = $this->db->prepare($sql);
                         $result->execute();
@@ -129,8 +129,8 @@
                         }
                         if($lastid == $_SESSION['ID']->IdEmpleado){
                             $sql = "select v.IdVacaciones, e.PNombre, e.PApellido, d.Nombre as Dep, c.NombreCargo, v.CantDias, v.FechaI, v.FechaF, v.tipo, v.Descripcion
-                            from Vacaciones v inner join Empleados e on v.IdEmpleado = e.IdEmpleado,
-                            Cargos c, CentroCostos cc, DeptosEmpresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and v.Estado = 'Pendiente'
+                            from vacaciones v inner join empleados e on v.IdEmpleado = e.IdEmpleado,
+                            cargos c, centrocostos cc, deptosempresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and v.Estado = 'Pendiente'
                             and e.IdEmpleado = ?"; 
                             
                             $consult = $this->db->prepare($sql);
@@ -151,7 +151,7 @@
             try{
               $resultSet = array();
               $consult = $this->db->prepare("select v.IdVacaciones, e.PNombre, e.PApellido, v.CantDias, v.FechaI, v.FechaF, v.tipo, v.Descripcion
-              from Vacaciones v inner join Empleados e on v.IdEmpleado = e.IdEmpleado where v.Estado = 'Pendiente'
+              from vacaciones v inner join empleados e on v.IdEmpleado = e.IdEmpleado where v.Estado = 'Pendiente'
               and e.IdJefe = ?;");
               $consult->execute(); 
                   while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
@@ -168,7 +168,7 @@
                 try{
                   $resultSet = array();
                   $consult = $this->db->prepare("select v.Descripcion
-                  from Vacaciones v inner join Empleados e on v.IdEmpleado = e.IdEmpleado where v.IdVacaciones = ?");
+                  from vacaciones v inner join empleados e on v.IdEmpleado = e.IdEmpleado where v.IdVacaciones = ?");
                   $consult->execute(array($id)); 
                       while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
                           $resulSet = $row; 
@@ -186,7 +186,7 @@
         $resulSet = array();
         $global = array();
         $resulSet2= array();
-        $sql = "select IdEmpleado from Empleados where IdJefe = ? order by IdEmpleado desc;";
+        $sql = "select IdEmpleado from empleados where IdJefe = ? order by IdEmpleado desc;";
         $consult = $this->db->prepare($sql);
         $id = $_SESSION['ID']->IdEmpleado;
         $consult->execute(array($id));
@@ -202,7 +202,7 @@
                 $subjefe = array(); 
                 for($i = 0; $i < count($resulSet); $i++){
                     for($j = 0; $j < count($resulSet[$i]); $j++){
-                        $sql = "select IdEmpleado from Empleados where IdJefe = ? order by IdEmpleado desc;";
+                        $sql = "select IdEmpleado from empleados where IdJefe = ? order by IdEmpleado desc;";
                         $consult = $this->db->prepare($sql);
                         $consult->execute(array($resulSet[$i][$j]->IdEmpleado));
                         while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
@@ -225,9 +225,9 @@
                    for($i = 0; $i < count($global); $i++){
                     for($j = 0; $j < count($global[$i]); $j++){
                         $sql = "select v.IdVacaciones, e.PNombre, e.PApellido, d.Nombre as Dep, c.NombreCargo, v.CantDias, v.Estado, v.FechaI, v.FechaF, v.tipo, v.FechaSolicitud, ej.PNombre as NJefe, ej.PApellido as AJefe, v.FechaRespuesta, v.Descripcion
-                        from Vacaciones v inner join Empleados e on v.IdEmpleado = e.IdEmpleado 
-                            inner join Empleados ej on v.IdRespSup = ej.IdEmpleado,
-                            Cargos c, CentroCostos cc, DeptosEmpresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and v.Estado != 'Pendiente'
+                        from vacaciones v inner join empleados e on v.IdEmpleado = e.IdEmpleado 
+                            inner join empleados ej on v.IdRespSup = ej.IdEmpleado,
+                            cargos c, centroCostos cc, deptosempresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and v.Estado != 'Pendiente'
                         and e.IdJefe = ? order by IdVacaciones desc;"; 
                         
                         $consult = $this->db->prepare($sql);
@@ -254,9 +254,9 @@
                    /*List employee vacations by IdSession*/
                    
                    $sql = "select v.IdVacaciones, e.PNombre, e.PApellido, d.Nombre as Dep, c.NombreCargo, v.CantDias, v.Estado, v.FechaI, v.FechaF, v.tipo, v.FechaSolicitud, ej.PNombre as NJefe, ej.PApellido as AJefe, v.FechaRespuesta, v.Descripcion
-                   from Vacaciones v inner join Empleados e on v.IdEmpleado = e.IdEmpleado 
-                       inner join Empleados ej on v.IdRespSup = ej.IdEmpleado,
-                       Cargos c, CentroCostos cc, DeptosEmpresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and v.Estado != 'Pendiente'
+                   from vacaciones v inner join empleados e on v.IdEmpleado = e.IdEmpleado 
+                       inner join empleados ej on v.IdRespSup = ej.IdEmpleado,
+                       cargos c, centrocostos cc, deptosempresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and v.Estado != 'Pendiente'
                    and e.IdJefe = ? order by IdVacaciones desc;"; 
                    
                    $consult = $this->db->prepare($sql);
@@ -270,7 +270,7 @@
                        }
             //} 
             /* List the vacation of General Manager */
-            $sql = "select IdEmpleado from Empleados e inner join Cargos c on  e.IdCargo = c.IdCargo where e.IdJefe is null and e.Estado = 1
+            $sql = "select IdEmpleado from empleados e inner join cargos c on  e.IdCargo = c.IdCargo where e.IdJefe is null and e.Estado = 1
             and c.NombreCargo = 'Gerente General';";
             $result = $this->db->prepare($sql);
             $result->execute();
@@ -279,9 +279,9 @@
             }
             if($lastid == $_SESSION['ID']->IdEmpleado){
                 $sql = "select v.IdVacaciones, e.PNombre, e.PApellido, d.Nombre as Dep, c.NombreCargo, v.CantDias, v.Estado, v.FechaI, v.FechaF, v.tipo, v.FechaSolicitud, ej.PNombre as NJefe, ej.PApellido as AJefe, v.FechaRespuesta, v.Descripcion
-                from Vacaciones v inner join Empleados e on v.IdEmpleado = e.IdEmpleado 
-                    inner join Empleados ej on v.IdRespSup = ej.IdEmpleado,
-                    Cargos c, CentroCostos cc, DeptosEmpresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and v.Estado != 'Pendiente'
+                from vacaciones v inner join empleados e on v.IdEmpleado = e.IdEmpleado 
+                    inner join empleados ej on v.IdRespSup = ej.IdEmpleado,
+                    cargos c, centrocostos cc, deptosempresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and v.Estado != 'Pendiente'
                 and e.IdEmpleado = ? order by IdVacaciones desc;"; 
                 
                 $consult = $this->db->prepare($sql);
@@ -304,7 +304,7 @@
                $resulSet = array();
                $consult = $this->db->prepare("select v.IdVacaciones, v.CantDias, v.FechaI, v.FechaF, v.Tipo, v.Descripcion 
                from vacaciones v
-               inner join Empleados e on e.IdEmpleado=v.IdEmpleado
+               inner join empleados e on e.IdEmpleado=v.IdEmpleado
                where  v.IdVacaciones = ?;");
                $consult->execute(array($id));
                while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){

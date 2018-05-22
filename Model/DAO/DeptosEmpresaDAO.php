@@ -38,13 +38,13 @@ class DeptosEmpresaDAO{
     }
 
     public function AddDeptosEmpresa(DeptosEmpresa $data){
-        $sql = 'insert into DeptosEmpresa values(null, ?, ?, 1);';
+        $sql = 'insert into deptosempresa values(null, ?, ?, 1);';
         $result = $this->db->prepare($sql);
         $result->execute(array($data->__GET('Nombre'), $data->__GET('Descripcion')));
     }
 
     public function EditDeptoEmp(DeptosEmpresa $data){
-        $sql = 'update DeptosEmpresa set Nombre = ?, Descripcion = ? where IdDep = ? and Estado = 1;';
+        $sql = 'update deptosempresa set Nombre = ?, Descripcion = ? where IdDep = ? and Estado = 1;';
         $result = $this->db->prepare($sql);
         $result->execute(array( 
         $data->__GET('Nombre'),
@@ -55,7 +55,7 @@ class DeptosEmpresaDAO{
     public function DeleteDeptosEmpresa($id){
         try{
                 //$sql= 'delete from DeptosEmpresa where IdDep = ?; ';
-                $sql = 'update DeptosEmpresa set Estado = 0 where IdDep = ?';
+                $sql = 'update deptosempresa set Estado = 0 where IdDep = ?';
                 $consult = $this->db->prepare($sql);
                 $consult->execute(array($id));
         }catch(Exception $e){
