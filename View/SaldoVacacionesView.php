@@ -69,7 +69,7 @@
        <b> <h4>Editar solicitud de vacaciones</b>
         <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden = "true">&times;</span></button>
         </div>    
-        <form action="?c=Vacaciones&a=EditSolicitud" method="POST">
+        <form action="?c=Vacaciones&a=EditSolicitud" method="POST" name="send">
             <div class="modal-body">   
                     <div class="row row-fluid">
                         <div class="col-xs-4">

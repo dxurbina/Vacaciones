@@ -9,7 +9,7 @@
         }
 
         public function store(Position $data){
-            $sql = "insert into Cargos values(null, ?, ?, ?, ?, 1)";
+            $sql = "insert into cargos values(null, ?, ?, ?, ?, 1)";
             $consult = $this->db->prepare($sql);
             $consult->execute(array($data->__GET('Nombre'), $data->__GET('IdCosto'), $data->__GET('IdJefe'), $data->__GET('IdFactor')));
         }
@@ -20,8 +20,8 @@
             $consult->execute(array($data->__GET('Nombre'), $data->__GET('IdCosto'), $data->__GET('IdJefe'), $data->__GET('IdFactor'), $data->__GET('Id')));
         }
         public function show(){
-            $sql = "select c.IdCargo, d.Nombre, c.NombreCargo, cj.NombreCargo as 'CargoSup' from CentroCostos cc inner join 
-            Cargos c on cc.IdCosto = c.IdCosto inner join Cargos cj on c.IdJefe = cj.IdCargo
+            $sql = "select c.IdCargo, d.Nombre, c.NombreCargo, cj.NombreCargo as 'CargoSup' from centrocostos cc inner join 
+            cargos c on cc.IdCosto = c.IdCosto inner join cargos cj on c.IdJefe = cj.IdCargo
             inner join deptosempresa d on cc.IdDptoEmp = d.IdDep where c.Estado = 1;";
             $resulSet = array();
             $consult = $this->db->prepare($sql);
@@ -31,8 +31,8 @@
                     }
 
             
-                    $sql = "select c.IdCargo, d.Nombre, c.NombreCargo, '-' as 'CargoSup' from CentroCostos cc inner join 
-                    Cargos c on cc.IdCosto = c.IdCosto
+                    $sql = "select c.IdCargo, d.Nombre, c.NombreCargo, '-' as 'CargoSup' from centrocostos cc inner join 
+                    cargos c on cc.IdCosto = c.IdCosto
                     inner join deptosempresa d on cc.IdDptoEmp = d.IdDep where c.Estado = 1 and c.NombreCargo = 'Gerente General'"; 
                             
                             $consult = $this->db->prepare($sql);
@@ -55,7 +55,7 @@
 
         }
         public function showById($id){
-            $sql = "select c.IdCargo, c.NombreCargo from CentroCostos cc inner join Cargos c on cc.IdCosto = c.IdCosto
+            $sql = "select c.IdCargo, c.NombreCargo from centrocostos cc inner join cargos c on cc.IdCosto = c.IdCosto
             where c.IdCosto = ? and c.Estado = 1;";
             $resulSet = array();
             $consult = $this->db->prepare($sql);
@@ -64,7 +64,7 @@
                         $resulSet = $row; 
                     }
 
-            $sql = "select c.IdCargo, c.NombreCargo from CentroCostos cc inner join Cargos c on cc.IdCosto = c.IdCosto
+            $sql = "select c.IdCargo, c.NombreCargo from centrocostos cc inner join cargos c on cc.IdCosto = c.IdCosto
             where c.NombreCargo = 'Gerente General' and c.Estado = 1;"; 
                     
                     $consult = $this->db->prepare($sql);
@@ -83,7 +83,7 @@
 
         public function showToUpdate($id){
             $resulSet = array();
-            $sql = "select c.NombreCargo, d.IdDep, c.Idcosto, c.IdJefe, c.IdFactor from cargos c inner join CentroCostos cc
+            $sql = "select c.NombreCargo, d.IdDep, c.Idcosto, c.IdJefe, c.IdFactor from cargos c inner join centrocostos cc
             on cc.IdCosto = c.IdCosto 
             inner join deptosempresa d on cc.IdDptoEmp = d.IdDep
             where IdCargo = ?;";
@@ -97,7 +97,7 @@
 
         public function showEspecial($id)
         {
-            $sql = "select cc.IdCosto from CentroCostos cc inner join Cargos c on cc.IdCosto = c.IdCosto
+            $sql = "select cc.IdCosto from centrocostos cc inner join cargos c on cc.IdCosto = c.IdCosto
             where c.NombreCargo = 'Gerente General' and c.Estado = 1;";
             $resulSet = array();
             $consult = $this->db->prepare($sql);
@@ -109,7 +109,7 @@
         }
 
         public function showFactor(){
-            $sql = "select IdFactor, Factor from Factor;";
+            $sql = "select IdFactor, Factor from factor;";
             $resulSet = array();
             $consult = $this->db->prepare($sql);
             $consult->execute();

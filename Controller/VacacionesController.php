@@ -201,6 +201,7 @@ public function EditSolicitud(){ //ESTA FUNCIONA 3/05/18 3:30
     }
 }
 
+
 /*public function EditSolicitud(){
     if(isset($_SESSION['nickname'])){
      $this->obj->__SET('Tipo', $_REQUEST['Tipo']);

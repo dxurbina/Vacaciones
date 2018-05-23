@@ -80,10 +80,7 @@ $(document).on('click', '#btnGuardar', function (e) {
                 if((_select.length >= 3) && (_select.length <= 4) && (_select != null)){
                     //document.send.submit()   
                     //document.getElementById('#formFac').submit();
-                    console.log(document.getElementById('#formFac'));
-                    $(document).on('click', function (e) {
-                        document.getElementById('#formFac').submit();
-                    })
+                    document.forms["send"].submit();
                 }else{
                     alert('Dato no esperado');
                 }

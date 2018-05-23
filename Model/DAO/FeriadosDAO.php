@@ -13,7 +13,7 @@ class FeriadosDAO{
     public function ListFeriados(){
         try{
             $resulSet = array();
-            $consult = $this->db->prepare("select IdFeriado, Nombre, Fecha from Feriados order by IdFeriado;");
+            $consult = $this->db->prepare("select IdFeriado, Nombre, Fecha from feriados order by IdFeriado;");
             $consult -> execute(array());
             while($row = $consult->fetchAll(PDO::FETCH_OBJ)){
                 $resulSet = $row;

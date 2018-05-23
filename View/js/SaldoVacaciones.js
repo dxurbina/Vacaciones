@@ -1,4 +1,4 @@
-var dato, tabla, idEmp, $row, $dato2;
+var dato, tabla, idEmp, $row, $dato2, Tipo;
 
 //Función para la carga de los valores del datatable
  function sendDataAjax() {
@@ -100,43 +100,30 @@ function fillModalData(dato){
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
-           // console.log(data);
-            /*if((valor=='Vacaciones') || (valor=='Enfermedad') || (valor=='Permiso Especial')){ //aqui por favor
-                $("#Tipo").val(data[0].Tipo).checked;
-            }*/
-            /*for (i=0; i<document.getElementsByTagName('Tipo').length; i++) { 
-                if(document.getElementsByTagName('Tipo')[i].type=='radio') { 
-                if(document.getElementsByTagName('Tipo')[i].value == "clean") {
-                     document.getElementsByTagName('Tipo')[i].checked =true; } } }*/
-            /*var getElements = function(){ var oldname = ''; $.each($('input[type="Tipo"]'), function(){
-                 if($(this).attr('Tipo') != oldname && $(this).val() == 'clean'){
-                      $(this).checked = true; oldname = this.name; } }); };
-                      console.log("getElements");*/
-           //$("input[name='valor']:checked").val();
-           
-           radioSeleccionadoEdit();
-           if((valor=='Vacaciones')){
-               $("#Tipo").val(data[0].Tipo).checked;
-               //document.getElementByName("Tipo").checked = true;
-           if(valor=='Enfermedad'){
-               $("#Tipo").val(data[0].Tipo).checked;
-               //document.getElementByName("Tipo").checked = true;
-               }
-           if(valor=='Permiso Especial'){
-               $("#Tipo").val(data[0].Tipo).checked;
-               //document.getElementByName("Tipo").checked = true;
-               }
-           }
-           console.log($('input:radio[name=Tipo]:checked').val());
-           console.log(valor);
+
+            //Para marcar el radio button que trae de la base de datos.
+        if(data[0].Tipo=='Vacaciones'){
+           $('input:radio[name="Tipo"][value="Vacaciones"]').prop('checked', true);
+        }else if(data[0].Tipo=='Enfermedad'){
+            $('input:radio[name="Tipo"][value="Enfermedad"]').prop('checked', true);
+        }else if(data[0].Tipo=='Permiso Especial'){
+            $('input:radio[name="Tipo"][value="Permiso Especial"]').prop('checked', true);
+        }
            $("#idVac").val(data[0].IdVacaciones)
            $("#NumDay2").val(data[0].CantDias);
-           $("#pointer2").val(data[0].FechaI);
-           $("#dateF2").val(data[0].FechaF);
+           //Así estaba a las 9:50 am 23-05-18
+           /*$("#pointer2").val(data[0].FechaI);
+           $("#dateF2").val(data[0].FechaF);*/
+
+           //Formatear las fechas recibidas de la base de datos 23-05-18 11:29 am.
+           var FechaInicial = moment(data[0].FechaI).format("DD/MM/YYYY");
+           $('#pointer2').val(FechaInicial);
+           var FechaFinal = moment(data[0].FechaF).format("DD/MM/YYYY");
+           $('#dateF2').val(FechaFinal);
            $("#comentarios2").val(data[0].Descripcion);
         }
     });
-    }
+}
 
 // evento click para boton actualizar
 $(document).on('click', '.btn-edit', function (e) {

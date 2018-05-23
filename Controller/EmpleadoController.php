@@ -199,7 +199,7 @@ public function AddEmpleados(){
 }
 
 //16-05-18
-/*public function GetPosition(){
+public function GetPosition(){
     if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         header('Content-Type: application/json; charset=utf-8');
         $json_str = file_get_contents('php://input');
@@ -211,7 +211,7 @@ public function AddEmpleados(){
         }else {
             header('Location: index.php?c=Principal&a=AccessError');
         }
-}*/
+}
    /* public function utf8_converter($array){ 
         array_walk_recursive($array, function(&$item){     
         $item = utf8_encode( $item );   

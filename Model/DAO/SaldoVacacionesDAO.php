@@ -16,9 +16,9 @@ class SaldoVacacionesDAO{
             $id = $_SESSION['ID']->IdEmpleado; //Captura el id del usuario logueado
             $resulSet = array();
             $consult = $this->db->prepare("select e.PNombre, e.PApellido, sv.Saldo, u.Usuario
-            from Empleados e
-            inner join SaldoVacaciones sv on sv.IdEmpleado=e.IdEmpleado
-            inner join Usuarios u on u.IdEmpleado=e.IdEmpleado 
+            from empleados e
+            inner join saldovacaciones sv on sv.IdEmpleado=e.IdEmpleado
+            inner join usuarios u on u.IdEmpleado=e.IdEmpleado 
             where u.IdEmpleado = ?; ");
             $consult -> execute(array($id));
             while($row = $consult->fetchAll(PDO::FETCH_OBJ)){
@@ -37,7 +37,7 @@ class SaldoVacacionesDAO{
                 $id = $_SESSION['ID']->IdEmpleado; //Captura el id del usuario logueado
                 $resulSet = array();
                 $consult = $this->db->prepare("select v.IdVacaciones, e.PNombre, e.PApellido,  c.NombreCargo, v.CantDias, v.FechaI, v.FechaF, v.Tipo, v.FechaSolicitud, v.FechaRespuesta, v.Estado, v.Descripcion from vacaciones v
-                inner join Empleados e on e.IdEmpleado=v.IdEmpleado
+                inner join empleados e on e.IdEmpleado=v.IdEmpleado
                 inner join cargos c on c.IdCargo=e.IdCargo
                 where e.IdCargo=c.IdCargo and v.IdEmpleado=?
                 order by v.FechaSolicitud desc;");
@@ -104,7 +104,7 @@ class SaldoVacacionesDAO{
         $resulSet = array();
         $global = array();
         $resulSet2= array();
-        $sql = "select IdEmpleado from Empleados where IdJefe = ?;";
+        $sql = "select IdEmpleado from empleados where IdJefe = ?;";
         $consult = $this->db->prepare($sql);
         $id = $_SESSION['ID']->IdEmpleado;
         $consult->execute(array($id));
@@ -120,7 +120,7 @@ class SaldoVacacionesDAO{
             $subjefe = array(); 
             for($i = 0; $i < count($resulSet); $i++){
                 for($j = 0; $j < count($resulSet[$i]); $j++){
-                    $sql = "select IdEmpleado from Empleados where IdJefe = ?;";
+                    $sql = "select IdEmpleado from empleados where IdJefe = ?;";
                     $consult = $this->db->prepare($sql);
                     $consult->execute(array($resulSet[$i][$j]->IdEmpleado));
                     while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
@@ -141,9 +141,9 @@ class SaldoVacacionesDAO{
         for($i = 0; $i < count($global); $i++){
             for($j = 0; $j < count($global[$i]); $j++){
                 $sql = "select e.IdEmpleado, e.PNombre, e.PApellido, s.Saldo, c.NombreCargo, ej.PNombre as NJefe, ej.PApellido as AJefe
-                        from Empleados e inner join saldovacaciones s on e.IdEmpleado = s.IdEmpleado 
-                        inner join Empleados ej on e.IdJefe = ej.IdEmpleado,
-                            Cargos c where e.IdCargo = c.IdCargo and e.Estado = 1
+                        from empleados e inner join saldovacaciones s on e.IdEmpleado = s.IdEmpleado 
+                        inner join empleados ej on e.IdJefe = ej.IdEmpleado,
+                            cargos c where e.IdCargo = c.IdCargo and e.Estado = 1
                         and e.IdJefe = ?;"; 
                 
                 $consult = $this->db->prepare($sql);
@@ -161,9 +161,9 @@ class SaldoVacacionesDAO{
 
                    /*List employee Balance by IdSession*/      
         $sql = "select e.IdEmpleado, e.PNombre, e.PApellido, s.Saldo, c.NombreCargo, ej.PNombre as NJefe, ej.PApellido as AJefe
-                from Empleados e inner join saldovacaciones s on e.IdEmpleado = s.IdEmpleado 
-                inner join Empleados ej on e.IdJefe = ej.IdEmpleado,
-                    Cargos c where e.IdCargo = c.IdCargo and e.Estado = 1
+                from empleados e inner join saldovacaciones s on e.IdEmpleado = s.IdEmpleado 
+                inner join empleados ej on e.IdJefe = ej.IdEmpleado,
+                    cargos c where e.IdCargo = c.IdCargo and e.Estado = 1
                 and e.IdJefe = ?;";
         
         $consult = $this->db->prepare($sql);
@@ -176,7 +176,7 @@ class SaldoVacacionesDAO{
         }
             
         /* List the Balance of General Manager */
-        $sql = "select IdEmpleado from Empleados where IdJefe is null and Estado = 1";
+        $sql = "select IdEmpleado from empleados where IdJefe is null and Estado = 1";
         $result = $this->db->prepare($sql);
         $result->execute();
         if($row = $result->fetch(PDO::FETCH_OBJ)){
@@ -184,9 +184,9 @@ class SaldoVacacionesDAO{
         }
         if($lastid == $_SESSION['ID']->IdEmpleado){
             $sql = "select e.IdEmpleado, e.PNombre, e.PApellido, s.Saldo, c.NombreCargo, ej.PNombre as NJefe, ej.PApellido as AJefe
-                    from Empleados e inner join saldovacaciones s on e.IdEmpleado = s.IdEmpleado 
-                    inner join Empleados ej on e.IdJefe = ej.IdEmpleado,
-                        Cargos c where e.IdCargo = c.IdCargo and e.Estado = 1
+                    from empleados e inner join saldovacaciones s on e.IdEmpleado = s.IdEmpleado 
+                    inner join empleados ej on e.IdJefe = ej.IdEmpleado,
+                        cargos c where e.IdCargo = c.IdCargo and e.Estado = 1
                     and e.IdEmpleado = ?;"; 
             
             $consult = $this->db->prepare($sql);

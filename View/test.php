@@ -127,8 +127,8 @@ mail($correo,$asunto,$cuerpo,$correo2);*/
        // $consult = $this->db->prepare($sql);
        // $remitente = $_SESSION['ID']->IdEmpleado;
             /* Cargar el jefe y nombre del empleado de la bd */
-            $sql = "select e.PNombre, e.PApellido, e.IdJefe, ej.correo, n.Tipo from Empleados e inner join Empleados ej
-            on e.IdJefe = ej.IdEmpleado inner join Notificaciones n on n.IdRemitente = e.IdEmpleado
+            $sql = "select e.PNombre, e.PApellido, e.IdJefe, ej.correo, n.Tipo from empleados e inner join empleados ej
+            on e.IdJefe = ej.IdEmpleado inner join notificaciones n on n.IdRemitente = e.IdEmpleado
             where n.Tipo = 'Solicitud' and n.Estado = 1 and n.EstadoMail = 1;";
             $resulSet = array();
             $consult = $db->prepare($sql);
@@ -140,8 +140,8 @@ mail($correo,$asunto,$cuerpo,$correo2);*/
                
 
             /* Cargar el destinatario por medio de la solicitud */
-            $sql2 = "select e.PNombre, e.PApellido, e.IdJefe, e.correo, n.Tipo from Empleados e inner join Empleados ej
-            on e.IdJefe = ej.IdEmpleado inner join Notificaciones n on n.IdRemitente = e.IdEmpleado
+            $sql2 = "select e.PNombre, e.PApellido, e.IdJefe, e.correo, n.Tipo from empleados e inner join empleados ej
+            on e.IdJefe = ej.IdEmpleado inner join notificaciones n on n.IdRemitente = e.IdEmpleado
             where n.Tipo = 'Respuesta' and n.Estado = 1 and n.EstadoMail = 1;";
             $resultSet2 = array();
             $consult2 = $db->prepare($sql2);

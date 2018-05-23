@@ -63,8 +63,8 @@
     <script src="View/js/plugins/datatables/dataTables.bootstrap.js"></script>
 
     <script src="View/js/notif.js" type="text/javascript"></script>
-
-    
+    <!--Libreria min -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
 
       
     

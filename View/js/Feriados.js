@@ -75,7 +75,8 @@ $(document).on('click', '#btnGuardar', function (e) {
             })
             if(flag == false){
                 if(_select.length > 4 && _select.length < 20){
-                    document.send.submit()   
+                    //document.send.submit()
+                    document.forms["send"].submit();   
                 }else{
                     alert('Dato no esperado');
                 }

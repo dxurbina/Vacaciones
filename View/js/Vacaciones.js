@@ -15,28 +15,28 @@ $(document).ready(function(){
     });
 
     //Agregado a las 2:51 pm 08-05-2018
-var arrDisabledDates = {};
+/*var arrDisabledDates = {};
 arrDisabledDates[new Date('05/01/2018')] = new Date('05/01/2018');
 arrDisabledDates[new Date('04/19/2018')] = new Date('04/19/2018');
 arrDisabledDates[new Date('07/19/2018')] = new Date('07/19/2018');
-
+*/
     $('#pointer').datepicker(
         {  
-            beforeShowDay: function (dt) {
+            /*beforeShowDay: function (dt) {
                 var bDisable = arrDisabledDates[dt];
                 console.log(bDisable);
                 if (bDisable)
                     return [false, '', ''];
                 else
                    return [true, '', ''];
-        }
+            }*/
                 
-           /*minDate: -7,
+           minDate: -7,
            beforeShow: function() {
             //onSelect: ListaFeriados(),
            $(this).datepicker('option', 'maxDate', $('#dataF').val());
            
-           }*/
+           }
 
            //beforeShowDay: $.datepicker.noWeekends -> DESACTIVA LOS FINDES DE SEMANA
         });

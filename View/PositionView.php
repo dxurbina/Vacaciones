@@ -43,7 +43,7 @@
                         <div class="col-sm-4">
 
                                 <div class="form-group"><label>Nombre Cargo </label></div>
-                                <div class="form-group"><input class="input_let store-val" type="text" id="name" name="Nombre"  required /></div>
+                                <div class="form-group"><input class="store-val" type="text" id="name" name="Nombre"  required /></div>
                             
                             <div class="form-group">
                                         <label>Departamento</label></div>

@@ -278,7 +278,7 @@ $('#FechaIng').datepicker(
     });
     
 //Funcionalidad que valida que no se repita los datos ya registrados
-/*$(document).on('click', '#btnRegistar', function (e) {
+$(document).on('click', '#btnRegistar', function (e) {
     e.preventDefault();
     var _select = $("#usuario").val();
     var obj = JSON.stringify({ Usuario: _select });
@@ -301,7 +301,8 @@ $('#FechaIng').datepicker(
             })
             if(flag == false){
                 if(_select.length > 3 && _select.length < 20){
-                    document.send.submit()   
+                    //document.send.submit()   
+                    document.forms["send"].submit();
                 }else{
                     alert('Dato no esperado');
                 }
@@ -312,4 +313,4 @@ $('#FechaIng').datepicker(
 
         }
     });
-});*/
+});

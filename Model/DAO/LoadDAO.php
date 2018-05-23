@@ -12,7 +12,7 @@
 
         public function login(Empleado $data){
             $flag = false;
-            $sql = "select u.IdEmpleado from Usuarios u where u.Usuario = ? and u.Pass = ? and u.Estado!=0";
+            $sql = "select u.IdEmpleado from usuarios u where u.Usuario = ? and u.Pass = MD5(?) and u.Estado!=0";
             $result = $this->db->prepare($sql);
             $result->execute(array($data->__GET('user'), $data->__GET('pass')));
             
@@ -32,7 +32,7 @@
         public function LoadType(Empleado $data){
             try{
             $tipo; $var;
-            $sql = "select IdRol from Usuarios where Usuario = ?";
+            $sql = "select IdRol from usuarios where Usuario = ?";
 /*
             $resulSet = $this->db->prepare($sql);
             $sql = "select Usuario from Usuario where Usuario = ? and Pass = ?";
@@ -66,7 +66,7 @@
 
         public function GeneralData(){
             $flag = false;
-            $sql = "select  e.PNombre, e.PApellido, c.NombreCargo from  Empleados e, Cargos c, CentroCostos cc, DeptosEmpresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep 
+            $sql = "select  e.PNombre, e.PApellido, c.NombreCargo from  empleados e, cargos c, centrocostos cc, deptosempresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep 
             and e.IdEmpleado = ?;";
             $result = $this->db->prepare($sql);
             $result->execute(array( $_SESSION['ID']->IdEmpleado));
