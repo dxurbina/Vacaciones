@@ -121,7 +121,8 @@ function validaLetras(e){
     }
         
     // Patron de entrada, en este caso solo acepta numeros
-    patron =/[a-z-A-Z-]/;
+    //patron =/[a-z-A-Z-]/;
+    patron = /^[a-zA-ZñÑ\s\W]+/; //corecto acepta espacio, acentos, ñ y espacio
     tecla_final = String.fromCharCode(tecla);
     return patron.test(tecla_final);
 }

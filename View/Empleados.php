@@ -140,6 +140,26 @@
         </div>
     </div>
 </form>
+
+<!-- Modal informativa de cuando se guarda el empleado.-->
+    <div class="modal fade" id="imodalEmpacept" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" style="margin: 30%; margin-top: 20%; background:blue;" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                    <center><strong><label>El empleado se ha sido registrado satisfactoriamente.</label></strong></center>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <center><button class="btn btn-primary" type="button" data-dismiss="modal">Cerrar </button></center>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <script src="View/js/RegistarEmp.js" type="text/javascript"></script>
 
 <!-- valida que solo se escriba números -->
@@ -171,7 +191,8 @@ function validaLetras(e){
     }
         
     // Patron de entrada, en este caso solo acepta numeros
-    patron =/[a-z-A-Z]/;
+    //patron =/[a-z-A-Z]/;
+    patron = /^[a-zA-ZñÑ\s\W]+/;
     tecla_final = String.fromCharCode(tecla);
     return patron.test(tecla_final);
 }

@@ -303,6 +303,7 @@ $(document).on('click', '#btnRegistar', function (e) {
                 if(_select.length > 3 && _select.length < 20){
                     //document.send.submit()   
                     document.forms["send"].submit();
+                    //$("#imodalEmpacept").modal("show");
                 }else{
                     alert('Dato no esperado');
                 }
