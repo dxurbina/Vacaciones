@@ -227,6 +227,11 @@ public function listarDptosEmp(){
     $stmt->bindParam(3, $lastid, PDO::PARAM_INT, 10 );
     
     $stmt->execute(array($datau->__GET('user'), $datau->__GET('pass'), $lastid));
+
+    $sql = "insert into saldovacaciones values(null, 0.00, null, ?)";
+    $result = $this->db->prepare($sql);
+    $result->execute(array($lastid));
+
 }
 //16-05-18
 public function GetPosition($usuario){
@@ -402,7 +407,7 @@ public function GetPosition($usuario){
 
     public function showJefebyPosition($id){
         $sql = "select e.IdEmpleado, e.PNombre, e.PApellido from empleados e inner join cargos c on e.IdCargo = c.IdCargo 
-        where c.IdCargo = (select IdJefe from Cargos where IdCargo = ?)  and e.Estado = 1;";
+        where c.IdCargo = (select IdJefe from cargos where IdCargo = ?)  and e.Estado = 1;";
         $resulSet = array();
         $consult = $this->db->prepare($sql);
         $consult->execute(array($id));
