@@ -78,7 +78,7 @@ class FactoresDAO{
 
     public function GetPosition($factor){
         $resulSet = array();
-        $sql = "select * from factor where Factor = ? and Estado = 1;";
+        $sql = "select * from factor where factor = ? and Estado = 1;";
         $resulSet = array();
         $consult = $this->db->prepare($sql);
         $consult->execute(array($factor));
@@ -100,7 +100,7 @@ class FactoresDAO{
                $boss = $_SESSION['ID']->IdEmpleado;
                 while($flag == true){
                     $sql = "select v.IdVacaciones, e.PNombre, e.PApellido, v.CantDias, v.FechaI, v.FechaF, v.tipo, v.Descripcion
-                    from Vacaciones v inner join Empleados e on v.IdEmpleado = e.IdEmpleado where v.Estado = 'Pendiente'
+                    from vacaciones v inner join empleados e on v.IdEmpleado = e.IdEmpleado where v.Estado = 'Pendiente'
                     and e.IdJefe = ?;"; 
                      
                     $consult = $this->db->prepare($sql);
@@ -109,7 +109,7 @@ class FactoresDAO{
                              $resulSet = $row; 
                         }
                         
-                    $sql = "select IdJefe from Empleados where IdEmpleado = ?";
+                    $sql = "select IdJefe from empleados where IdEmpleado = ?";
                     $consult = $this->db->prepare($sql);
                     $consult->execute(array($boss));
                         if($row = $consult->fetch(PDO::FETCH_OBJ)){
@@ -126,8 +126,8 @@ class FactoresDAO{
         }
         
         public function show(){
-            $factor;
-            $sql = "select f.Factor from Factor f, Cargos c, Empleados e, Vacaciones v where
+            $factor = null;
+            $sql = "select f.Factor from factor f, cargos c, empleados e, vacaciones v where
             f.IdFactor = c.IdFactor and c.IdCargo = e.IdCargo and e.IdEmpleado = ?";
             $result = $this->db->prepare($sql);
             $result->execute(array($_SESSION['ID']->IdEmpleado));

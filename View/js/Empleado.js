@@ -737,6 +737,7 @@ $(document).on('click', '.btn-del', function (e) {
         }
         });
         alert('Registro eliminado correctamente.');
+        location.reload();
     }
      return false;  
 });
