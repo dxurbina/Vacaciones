@@ -29,8 +29,7 @@ arrDisabledDates[new Date('07/19/2018')] = new Date('07/19/2018');
                     return [false, '', ''];
                 else
                    return [true, '', ''];
-            }*/
-                
+            }*/ 
            minDate: -7,
            beforeShow: function() {
             //onSelect: ListaFeriados(),
@@ -53,7 +52,7 @@ arrDisabledDates[new Date('07/19/2018')] = new Date('07/19/2018');
     $('#pointer').change(function(){
         //var fecha = $('#pointer').val();
         var sumar = $('#NumDay').val();
-            
+
         if ((sumar == 0) && (sumar == "")){
             alert("Primero debe seleccionar  los días a tomar.");
         }else{

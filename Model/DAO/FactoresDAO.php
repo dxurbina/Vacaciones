@@ -127,7 +127,7 @@ class FactoresDAO{
         
         public function show(){
             $factor = null;
-            $sql = "select f.Factor from factor f, cargos c, empleados e, vacaciones v where
+            $sql = "select f.Factor from factor f, cargos c, empleados e, where
             f.IdFactor = c.IdFactor and c.IdCargo = e.IdCargo and e.IdEmpleado = ?";
             $result = $this->db->prepare($sql);
             $result->execute(array($_SESSION['ID']->IdEmpleado));

@@ -100,7 +100,7 @@
                     <div class="row row-fluid">
                         <div class="col-xs-4">
                             <div class="form-group">
-                                <label>Días A Tomar</label><input  id="NumDay2" name = "CantDias" type="number" name="edad" min="0" max="30" step="0.5" required>
+                                <label>Días A Tomar</label><input  id="NumDay2" name = "CantDias" type="number" name="edad" min="0" max="2" step="0.5" required onkeypress="return valida(event)">
                             </div>
                         </div>
 
@@ -182,7 +182,7 @@
                     <div class="row row-fluid">
                         <div class="col-xs-4">
                             <div class="form-group">
-                                <label>Días A Tomar</label><input  id="NumDay" name = "CantDias" type="number" name="edad" min="0" max="30" step="0.5" required>
+                                <label>Días A Tomar</label><input  id="NumDay" name = "CantDias" type="number" name="edad" min="0" max="2" step="0.5" required onkeypress="return valida(event)" maxlength="2">
                             </div>
                         </div>
 
@@ -311,6 +311,23 @@
         </div>
 
         <script type="text/javascript" src="View/js/Vacaciones.js"></script>
+
+<!-- valida que solo se escriba números -->
+<script>
+function valida(e){
+    tecla = (document.all) ? e.keyCode : e.which;
+
+    //Tecla de retroceso para borrar, siempre la permite
+    if (tecla==8){
+        return true;
+    }
+        
+    // Patron de entrada, en este caso solo acepta numeros
+    patron =/[0-9]/;
+    tecla_final = String.fromCharCode(tecla);
+    return patron.test(tecla_final);
+}
+</script>
 
 <?php
     }else {
