@@ -227,7 +227,7 @@ arrDisabledDates[new Date('07/19/2018')] = new Date('07/19/2018');
             //$('#pointer2').val(fecha2.toLocaleDateString("es-ES", options));
             console.log($('input:radio[name=Tipo]:checked').val());
             if($('input:radio[name=Tipo]:checked').val() == 'Vacaciones'){
-                var factor =  $("label[for='factor']").text();
+                var factor =  $("label[for='factor2']").text();
                 var saldo = parseFloat(factor) * sumar;
                 var result = saldo.toFixed(2); 
                 $("label[for='Saldo']").text(result);

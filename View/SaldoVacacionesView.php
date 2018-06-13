@@ -165,7 +165,7 @@
                         </div>
                         <div class="col-xs-4">
                                 <h3>Factor: </h3>
-                                <label for="factor"><?php echo $this->factor; ?></label>&nbsp;&nbsp;
+                                <label for="factor2"><?php echo $this->factor; ?></label>&nbsp;&nbsp;
                                 <label>Por Día</label>
                         </div>
                         <div class="col-xs-4">

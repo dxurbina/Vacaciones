@@ -65,7 +65,7 @@ class CenterController{
 
     public function show(){
         
-        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 2 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 2 || $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
         
             header('Content-Type: application/json; charset=utf-8');
             $List = $this->model->show();
