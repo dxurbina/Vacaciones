@@ -32,7 +32,7 @@
                 $libros = $this->model->report($dateI, $dateF);
                 if(!empty($libros)) {
 
-                    $filename = "reporte.xls";
+                    $filename = "reporte.csv";
                     
                     header("Content-Type: application/vnd.ms-excel");
                     

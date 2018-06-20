@@ -67,7 +67,7 @@ $(document).ready(function(){
                 var obj2 = JSON.stringify({ id: _select2 });
                 $.ajax({
                     data: obj2,
-                    url: "?c=Empleado&a=showJefe",
+                    url: "?c=Empleado&a=showJefebyPosition",
                     type: "POST",
                     dataType: 'json',
                     contentType: 'application/json; charset= utf-8',
@@ -261,7 +261,15 @@ $('#FechaNac').datepicker(
        beforeShow: function() {
         //onSelect: ListaFeriados(),
        //$(this).datepicker('option', 'maxDate', $('#dataF').val());
-         $(this).datepicker( "option", "yearRange", "-99:+0" );
+       $(this).datepicker( 
+        "option", "changeYear", true
+        );  
+       
+       $(this).datepicker( 
+             "option", "yearRange", "1950:2050"
+             );
+
+             
        
        }
        //beforeShowDay: $.datepicker.noWeekends -> DESACTIVA LOS FINDES DE SEMANA
@@ -271,9 +279,13 @@ $('#FechaIng').datepicker(
     {  
         //minDate: -7,
         beforeShow: function() {
-            //onSelect: ListaFeriados(),
-           //$(this).datepicker('option', 'maxDate', $('#dataF').val());
-        }
+            $(this).datepicker( 
+                "option", "changeYear", true
+                );  
+               
+               $(this).datepicker( 
+                     "option", "yearRange", "2011:2050"
+                     ); }
            //beforeShowDay: $.datepicker.noWeekends -> DESACTIVA LOS FINDES DE SEMANA
     });
     
