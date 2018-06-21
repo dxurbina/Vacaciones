@@ -1,7 +1,7 @@
 <html lang = es>
 <head>
     <meta charset = "UTF-8">
-    <title>Tipi Site</title>
+    <title>Sistema Vacaciones Loto</title>
     <link rel="stylesheet" type="text/css"href="View/AdminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="View/css/AdminLTE.css"/>
     <script src="View/js/jquery-3.3.1.min.js" type="text/javascript"></script>
