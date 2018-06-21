@@ -48,13 +48,13 @@
                     
                     if(!$mostrar_columnas) {
                     
-                    echo implode("\t", array_keys($libro)) . "\n";
+                    echo implode(",", array_keys($libro)) . "\r\n";
                     
                     $mostrar_columnas = true;
                     
                     }
                     
-                    echo implode("\t", array_values($libro)) . "\n";
+                    echo implode(",", array_values($libro)) . "\r\n";
                     
                     }
                     
