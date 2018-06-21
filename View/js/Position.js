@@ -225,10 +225,10 @@ $(document).ready(function(){
     });
 
     $("#costo").change(function(){
-        var _select = $("#costo").val();
+        var _select = $("#depto").val();
         var ncosto = $("#depto option:selected").html();;
 
-        console.log(ncosto);
+        console.log(_select);
         var obj = JSON.stringify({ id: _select });
         //console.log(obj);
         $.ajax({
@@ -250,7 +250,7 @@ $(document).ready(function(){
             $("#jefe").find('option').remove();
                 $("#jefe").append('<option value="">Seleccione</option>');
                 $(data).each(function(i, v){ // indice, valor
-                    $("#jefe").append('<option value="' + v.IdCargo + '">' + v.NombreCargo + '</option>');
+                    $("#jefe").append('<option value="' + v.IdCargo + '">' + v.NombreCargo + ' ' + v.Codigo  + '</option>');
                 })
                 if(ncosto == 'Gerencia General'){
                     $("#jefe").append('<option value="null">Sin Supervisor</option>');
@@ -289,7 +289,7 @@ $(document).ready(function(){
     });
 
     $("#costou").change(function(){
-        var _select = $("#costou").val();
+        var _select = $("#deptou").val();
         var obj = JSON.stringify({ id: _select });
         //console.log(obj);
         $.ajax({
@@ -311,7 +311,7 @@ $(document).ready(function(){
             $("#jefeu").find('option').remove();
                 $("#jefeu").append('<option value="">Seleccione</option>');
                 $(data).each(function(i, v){ // indice, valor
-                    $("#jefeu").append('<option value="' + v.IdCargo + '">' + v.NombreCargo + '</option>');
+                    $("#jefeu").append('<option value="' + v.IdCargo + '">' + v.NombreCargo + ' ' + v.Codigo +  '</option>');
                 })
                 $.ajax({
                     data: obj,

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
-    <title>Login</title>
+    <title>Vacaciones</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="View/AdminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -270,6 +270,7 @@
               <li><a href="?c=Position">Gestión de Cargos</a></li>
               <li><a href="?c=Center">Gestión de Centro de Costos</a></li>
               <li><a href="?c=DeptosEmpresa">Gestión de DeptosEmpresa</a></li>
+              <li><a href="?c=SaldoColaboradores">Saldo de colaboradores</a></li>
             </ul>
 
 

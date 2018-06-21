@@ -32,7 +32,7 @@
                 $libros = $this->model->report($dateI, $dateF);
                 if(!empty($libros)) {
 
-                    $filename = "reporte.xls";
+                    $filename = "reporte.csv";
                     
                     header("Content-Type: application/vnd.ms-excel");
                     
@@ -48,13 +48,13 @@
                     
                     if(!$mostrar_columnas) {
                     
-                    echo implode("\t", array_keys($libro)) . "\n";
+                    echo implode(",", array_keys($libro)) . "\r\n";
                     
                     $mostrar_columnas = true;
                     
                     }
                     
-                    echo implode("\t", array_values($libro)) . "\n";
+                    echo implode(",", array_values($libro)) . "\r\n";
                     
                     }
                     

@@ -55,8 +55,9 @@
 
         }
         public function showById($id){
-            $sql = "select c.IdCargo, c.NombreCargo from centrocostos cc inner join cargos c on cc.IdCosto = c.IdCosto
-            where c.IdCosto = ? and c.Estado = 1;";
+            $sql = "select c.IdCargo, c.NombreCargo, cc.Codigo from centrocostos cc inner join cargos c on cc.IdCosto = c.IdCosto
+            inner join deptosempresa d on d.IdDep = cc.IdDptoEmp
+where d.IdDep = ? and c.Estado = 1;";
             $resulSet = array();
             $consult = $this->db->prepare($sql);
             $consult->execute(array($id));
@@ -64,7 +65,7 @@
                         $resulSet = $row; 
                     }
 
-            $sql = "select c.IdCargo, c.NombreCargo from centrocostos cc inner join cargos c on cc.IdCosto = c.IdCosto
+            $sql = "select c.IdCargo, c.NombreCargo, cc.Codigo from centrocostos cc inner join cargos c on cc.IdCosto = c.IdCosto
             where c.NombreCargo = 'Gerente General' and c.Estado = 1;"; 
                     
                     $consult = $this->db->prepare($sql);

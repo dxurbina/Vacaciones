@@ -72,7 +72,7 @@ class EmpleadoDAO{
                 if($lastid == $id){
                     
                     $consult = $this->db->prepare("select e.IdEmpleado, e.PNombre, e.SNombre, e.PApellido, e.SApellido, e.Residencia, e.Cedula, e.Pasaporte, e.NInss, e.FechaNac, e.FechaIngreso, e.Sexo, e.Hijos, e.NumHijos, e.Hermanos, e.NumHermanos, e.Telefono, e.EstadoCivil, e.Correo, e.Escolaridad, e.NRuc, e.Profesion, e.Direccion, e.Nacionalidad1, e.Nacionalidad2, e.IdMunicipio, d.Nombre as Dep, d.IdDep, c.NombreCargo, c.IdCargo, cc.IdCosto, cc.Nombre, cc.Codigo
-                    from cmpleados e, cargos c, centrocostos cc, deptosempresa d where
+                    from empleados e, cargos c, centrocostos cc, deptosempresa d where
                  e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep and e.IdEmpleado = ?;");
                     $consult->execute(array($id)); 
                     while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
