@@ -16,8 +16,8 @@ function sendDataAjax() {
             for (var i = 0; i < data.length; i++) {
                 tabla.fnAddData([
                     //data[i].IdEmpleado,
-                    ( data[i].PNombre + " "+ data[i].SNombre),
-                    ( data[i].PApellido + " "+ data[i].SApellido),
+                    ( data[i].PNombre + " "+ data[i].PApellido),
+                    //( data[i].PApellido + " "+ data[i].SApellido),
                     data[i].Saldo,
                     /* '<button title= "Editar/ver" value= "Actualizar" class="btn btn-primary btn-edit " data-target="#imodal" data-toggle="modal"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
                     '<button title= "Editar Usuario" value= "EditUser" class="btn btn-primary btn-usr " data-target="#imodalusr" data-toggle="modal"><i class="fa fa-user-o" aria-hidden="true"></i></button>&nbsp;&nbsp;' +

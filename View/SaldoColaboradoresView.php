@@ -12,8 +12,7 @@
                         <thead>
                             <tr style="text-align: center;">
                                <!-- <th>IdEmpleado</th>-->
-                                <th>Nombres</th>
-                                <th>Apellidos</th>
+                                <th>Nombre y Apellido</th>
                                 <th>Saldo Vacaciones</th>
                                 <!--<th>Respuesta</th>
                                 <th>Acciones</th>-->
