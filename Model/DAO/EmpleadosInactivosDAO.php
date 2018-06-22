@@ -1,22 +1,22 @@
 <?php 
 
-class SaldoColaboradoresDAO{
+class EmpleadosInactivosDAO{
     public $user, $db, $con;
     public function __construct(){
         require_once("Model/Conexion.php");
-        include_once('Model/Entity/SaldoVacaciones.php');
+        include_once('Model/Entity/Empleado.php');
         include_once('Model/Entity/User.php');
         $this->con = new Conexion();
         $this->db = $this->con->conex();
     }
 
-    //Función para devolver el saldo de las vacaciones de todos los empleados
-    public function SaldoColaboradores(){
+    //Función para devolver los empleados inactivos
+    public function EmpleadosInactivos(){
         try{
             $resulSet = array();
-            $consult = $this->db->prepare("select PNombre, PApellido, NombreCargo, Saldo  from saldovacaciones sv 
-            inner join empleados e on e.IdEmpleado=sv.IdEmpleado
-            inner join cargos c on e.IdCargo=c.IdCargo; ");
+            $consult = $this->db->prepare("select IdEmpleado, PNombre, PApellido, FechaIngreso, NombreCargo  from empleados e
+            inner join cargos c on c.IdCargo=e.IdCargo
+            where e.Estado=0; ");
             $consult -> execute(array());
             while($row = $consult->fetchAll(PDO::FETCH_OBJ)){
                 $resulSet = $row;
