@@ -30,7 +30,7 @@
         }
         public function showById($id){
             $sql = "select distinct cc.IdCosto, cc.Codigo, cc.Nombre from centrocostos cc inner join deptosempresa d on cc.IdDptoEmp = d.IdDep
-            where d.IdDep = ? and cc.Estado = 1;";
+            where d.IdDep = ? and d.Estado = 1;";
             $resulSet = array();
             $consult = $this->db->prepare($sql);
             $consult->execute(array($id));

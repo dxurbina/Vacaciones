@@ -221,7 +221,7 @@
               <li><a href="?c=Center">Gestión de Centro de Costos</a></li>
               <li><a href="?c=Factores">Gestión de Factores</a></li>
               <li><a href="?c=DeptosEmpresa">Gestión de DeptosEmpresa</a></li>
-              <li><a href="?c=Feriados">Feriados</a></li>
+              <li><a href="?c=Feriados">Gestión Feriados</a></li>
               <li><a href="?c=SaldoColaboradores">Saldo de colaboradores</a></li>
               <li><a href="?c=EmpleadosInactivos">Colaboradores inactivos</a></li>
             </ul>
@@ -247,7 +247,7 @@
               <li><a href="?c=DeptosEmpresa">Gestión de DeptosEmpresa</a></li>
               <li><a href="?c=Position">Gestión de Cargos</a></li>
               <li><a href="?c=Center">Gestión de Centro de Costos</a></li>
-              <li><a href="?c=Feriados">Feriados</a></li>
+              <li><a href="?c=Feriados">Gestión Feriados</a></li>
               <li><a href="?c=SaldoColaboradores">Saldo de colaboradores</a></li>
               <li><a href="?c=EmpleadosInactivos">Colaboradores inactivos</a></li>
             </ul>
@@ -271,7 +271,7 @@
               <li><a href="?c=DeptosEmpresa">Gestión de DeptosEmpresa</a></li>
               <li><a href="?c=Position">Gestión de Cargos</a></li>
               <li><a href="?c=Center">Gestión de Centro de Costos</a></li>
-              <li><a href="?c=Feriados">Feriados</a></li>
+              <li><a href="?c=Feriados">Gestión Feriados</a></li>
               <li><a href="?c=SaldoColaboradores">Saldo de colaboradores</a></li>
               <li><a href="?c=EmpleadosInactivos">Colaboradores inactivos</a></li>
             </ul>
