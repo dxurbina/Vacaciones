@@ -4,6 +4,6 @@
     //define("HOST","10.20.190.172");
     define("HOST", "localhost");
     define("DB","vacaciones");
-    define("_USER","sa");
-    define("_PASS","sa123");
+    define("_USER","root");
+    define("_PASS","LumberXD02");
 ?>

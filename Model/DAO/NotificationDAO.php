@@ -18,7 +18,7 @@ class NotificationDAO{
         $nombreDesti;
         $correo;
         $fecha;
-        $sql = "insert into Notificaciones values(null, now(), ?, ?, ?, ?, 1, 1)";
+        $sql = "insert into notificaciones values(null, now(), ?, ?, ?, ?, 1, 1)";
         $consult = $this->db->prepare($sql);
         $remitente = $_SESSION['ID']->IdEmpleado;
             /* Cargar el jefe y nombre del empleado de la bd */

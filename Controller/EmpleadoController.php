@@ -36,7 +36,7 @@ public function index (){
 
 public function AddEmpleados(){
     if($_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
-        
+        $originalDate; $nums;
         $this->obj->__SET('PNombre', $_REQUEST['PNombre']);
         
         if($_REQUEST['SNombre'] == ""){
@@ -69,7 +69,7 @@ public function AddEmpleados(){
             $originalDate = ltrim($originalDate);
             $originalDate = rtrim($originalDate);
             $nums = explode('/', $originalDate);
-            $this->obj->__SET('FechaIng', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
+            $this->obj->__SET('FechaIng', $nums[2] . "-" . $nums[0] . "-" . $nums[1]);
             //$this->obj->__SET('FechaIng', $_REQUEST['FechaIng']);
         }
         
@@ -80,7 +80,7 @@ public function AddEmpleados(){
             $originalDate = ltrim($originalDate);
             $originalDate = rtrim($originalDate);
             $nums = explode('/', $originalDate);
-            $this->obj->__SET('FechaNac', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
+            $this->obj->__SET('FechaNac', $nums[2] . "-" . $nums[0] . "-" . $nums[1]);
         }
         
         if($_REQUEST['Sexo'] == ""){
