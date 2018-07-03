@@ -184,7 +184,7 @@ function showDeparment(){
 
     function showById(){
         var obj = JSON.stringify({ id: row });
-    //console.log(obj);
+    console.log(obj);
      var dato;
         $.ajax({
             data: obj,

@@ -43,7 +43,7 @@
         public function show(){
                 $sql = "
                 select c.IdCosto, c.Nombre, c.Codigo, d.Nombre as dpto from centrocostos c inner join deptosempresa d on c.IdDptoEmp = d.IdDep where
-                                        c.Estado = 1;";
+                                        d.Estado = 1;";
                 $resulSet = array();
                 $consult = $this->db->prepare($sql);
                 $consult->execute();
@@ -55,8 +55,8 @@
 
          public function showToUpdate($id){
             $resulSet = array();
-                $sql = "select c.IdCosto, c.Nombre, c.Codigo, d.IdDep, d.Nombre as dpto from centroCostos c inner join deptosempresa d on c.IdDptoEmp = d.IdDep where
-                c.Estado = 1 and c.IdCosto = ?";
+                $sql = "select c.IdCosto, c.Nombre, c.Codigo, d.IdDep, d.Nombre as dpto from centrocostos c inner join deptosempresa d on c.IdDptoEmp = d.IdDep where
+                d.Estado = 1 and c.IdCosto = ?";
                 $consult = $this->db->prepare($sql);
                 $consult->execute(array($id));
                         while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){

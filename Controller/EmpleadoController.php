@@ -65,13 +65,22 @@ public function AddEmpleados(){
         if($_REQUEST['FechaIng'] == ""){
             $this->obj->__SET('FechaIng', null);
         }else{
-            $this->obj->__SET('FechaIng', $_REQUEST['FechaIng']);
+            $originalDate = $_REQUEST['FechaIng'];
+            $originalDate = ltrim($originalDate);
+            $originalDate = rtrim($originalDate);
+            $nums = explode('/', $originalDate);
+            $this->obj->__SET('FechaIng', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
+            //$this->obj->__SET('FechaIng', $_REQUEST['FechaIng']);
         }
         
         if($_REQUEST['FechaNac'] == ""){
             $this->obj->__SET('FechaNac', null);
         }else{
-            $this->obj->__SET('FechaNac', $_REQUEST['FechaNac']);
+            $originalDate = $_REQUEST['FechaNac'];
+            $originalDate = ltrim($originalDate);
+            $originalDate = rtrim($originalDate);
+            $nums = explode('/', $originalDate);
+            $this->obj->__SET('FechaNac', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
         }
         
         if($_REQUEST['Sexo'] == ""){
