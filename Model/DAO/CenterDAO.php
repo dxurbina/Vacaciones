@@ -30,7 +30,7 @@
         }
         public function showById($id){
             $sql = "select distinct cc.IdCosto, cc.Codigo, cc.Nombre from centrocostos cc inner join deptosempresa d on cc.IdDptoEmp = d.IdDep
-            where d.IdDep = ? and cc.Estado = 1;";
+            where d.IdDep = ? and d.Estado = 1;";
             $resulSet = array();
             $consult = $this->db->prepare($sql);
             $consult->execute(array($id));
@@ -43,7 +43,7 @@
         public function show(){
                 $sql = "
                 select c.IdCosto, c.Nombre, c.Codigo, d.Nombre as dpto from centrocostos c inner join deptosempresa d on c.IdDptoEmp = d.IdDep where
-                                        c.Estado = 1;";
+                                        d.Estado = 1;";
                 $resulSet = array();
                 $consult = $this->db->prepare($sql);
                 $consult->execute();

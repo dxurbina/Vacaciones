@@ -91,7 +91,7 @@
                             <?php } ?>
                         </select>
                     </div>
-                    <div class="form-group"><label>Fecha de Ingreso</label><input id="FechaIng" name ="FechaIng" type="text" readonly = "true" ></input></div> 
+                    <div class="form-group"><label>Fecha de Ingreso *</label><input id="FechaIng" name ="FechaIng" type="text" readonly = "true" ></input></div> 
                     <div class="form-group"><label>Cargo * </label>
                         <select  id="cargos"name="IdCargo" required>
                             <option value="">Seleccione Cargo</option>

@@ -220,8 +220,10 @@ public function listarDptosEmp(){
     /* Crear usuario 09-05-18 */
     $sql = "call adduser(?, ?, ?)";
     $stmt = $this->db->prepare($sql);
-    $user = $datau->user;
-    $pass = $datau->pass;
+    /*$user = $datau->user;
+    $pass = $datau->pass;*/
+    $user = $datau->__GET('user');
+    $pass = $datau->__GET('pass');
     $stmt->bindParam(1, $user, PDO::PARAM_STR, 20 );
     $stmt->bindParam(2, $pass, PDO::PARAM_STR, 40 );
     $stmt->bindParam(3, $lastid, PDO::PARAM_INT, 10 );
@@ -322,7 +324,7 @@ public function GetPosition($usuario){
     }
 
     public function showDptosEmpresa(){
-        $sql = "select IdDep, Nombre from deptosempresa where Estado = 1";
+        $sql = "select * from deptosempresa where Estado = 1";
         $resulSet = array();
         $consult = $this->db->prepare($sql);
         $consult->execute();
