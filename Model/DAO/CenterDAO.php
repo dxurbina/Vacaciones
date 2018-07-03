@@ -55,7 +55,7 @@
 
          public function showToUpdate($id){
             $resulSet = array();
-                $sql = "select c.IdCosto, c.Nombre, c.Codigo, d.IdDep, d.Nombre as dpto from centroCostos c inner join deptosempresa d on c.IdDptoEmp = d.IdDep where
+                $sql = "select c.IdCosto, c.Nombre, c.Codigo, d.IdDep, d.Nombre as dpto from centrocostos c inner join deptosempresa d on c.IdDptoEmp = d.IdDep where
                 c.Estado = 1 and c.IdCosto = ?";
                 $consult = $this->db->prepare($sql);
                 $consult->execute(array($id));

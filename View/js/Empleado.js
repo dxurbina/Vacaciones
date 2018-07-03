@@ -252,7 +252,7 @@ function sendDataAjax() {
                     console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
                 },
                 success: function (data) {
-                    console.log(data);
+                   // console.log(data);
                    // console.log(data.length);
                     var boss;
                     //addRowDT(data.d);

@@ -140,7 +140,7 @@ function showDeparment(){
         e.preventDefault();
         
         row = $(this).parents("tr").find("td").eq(0).html();
-       // console.log(row);
+        console.log(row);
     });
 
     $(document).on('click', '.btn-del', function(e){

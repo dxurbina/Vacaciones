@@ -158,7 +158,7 @@
             success: function (data) {
                 dato = data;
                 console.log(dato);
-                $('#usrI').val(dato[0].Usuario);
+                $('#usrI').val(dato[0].usuario);
             }
         });
     }
