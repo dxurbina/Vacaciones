@@ -100,7 +100,7 @@
                     <div class="row row-fluid">
                         <div class="col-xs-4">
                             <div class="form-group">
-                                <label>Días A Tomar</label><input  id="NumDay2" name = "CantDias" type="number" name="edad" min="0" max="2" step="0.5" required onkeypress="return valida(event)">
+                                <label>Días A Tomar</label><input  id="NumDay2" name = "CantDias" type="number" name="edad" min="0" max="30" step="0.5" required onkeypress="return valida(event)">
                             </div>
                         </div>
 
@@ -182,7 +182,7 @@
                     <div class="row row-fluid">
                         <div class="col-xs-4">
                             <div class="form-group">
-                                <label>Días A Tomar</label><input  id="NumDay" name = "CantDias" type="number" name="edad" min="0" max="2" step="0.5" required onkeypress="return valida(event)" maxlength="2">
+                                <label>Días A Tomar</label><input  id="NumDay" name = "CantDias" type="number" name="edad" min="0" max="30" step="0.5" required onkeypress="return valida(event)" maxlength="2">
                             </div>
                         </div>
 
