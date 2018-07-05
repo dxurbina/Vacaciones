@@ -53,7 +53,7 @@
                             <div class="form-group">
                                 <label>Seleccione Fecha de Inicio de Vacaciones</label>
                             </div>
-                            <div class="form-group"><input id="pointer" name ="FechaI"type="text"  /></div>
+                            <div class="form-group"><input id="pointer3" name ="FechaI"type="text"  /></div>
                         </div>
                         <div class="col-xs-4">
                             <div class="form-group">

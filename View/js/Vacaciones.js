@@ -29,7 +29,8 @@ arrDisabledDates[new Date('07/19/2018')] = new Date('07/19/2018');
                     return [false, '', ''];
                 else
                    return [true, '', ''];
-            }*/ 
+            }*/
+        dateFormat: 'dd/mm/yy',
            minDate: -7,
            beforeShow: function() {
             //onSelect: ListaFeriados(),
