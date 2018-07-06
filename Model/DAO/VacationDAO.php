@@ -55,7 +55,7 @@
    }
 
        public function update($id, $Estado){
-           $sql= "update Vacaciones set Estado = ?, IdRespSup = ?, FechaRespuesta = now() where IdVacaciones = ?; ";
+           $sql= "update vacaciones set Estado = ?, IdRespSup = ?, FechaRespuesta = now() where IdVacaciones = ?; ";
            $result = $this->db->prepare($sql);
            $result->execute(array($Estado, $_SESSION['ID']->IdEmpleado, $id));
            if($Estado == "Aceptada" || $Estado == "Revertida"){
@@ -385,7 +385,7 @@
                     $total = $CantDias-$contador;
                         
                     //if(sizeof($resultado)==0){    
-                        $sqlv = ("update Vacaciones set CantDias = ?, FechaI = ?, FechaF = ?, Tipo = ?, Descripcion = ?
+                        $sqlv = ("update vacaciones set CantDias = ?, FechaI = ?, FechaF = ?, Tipo = ?, Descripcion = ?
                         where IdVacaciones = ? and IdEmpleado = ? and Estado = 'Pendiente';");
                         $result = $this->db->prepare($sqlv);
                         $result->execute(array( 

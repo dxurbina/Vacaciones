@@ -157,7 +157,7 @@ public function listarMunPorDepto($dep){
 public function listarDptosEmp(){
     try{
        $DeptoEmp = array();
-       $consult = $this->db->prepare("select * from deptosempresa");
+       $consult = $this->db->prepare("select * from deptosempresa where Estado = 1");
        $consult->execute();   
        while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
            $DeptoEmp = $row; 

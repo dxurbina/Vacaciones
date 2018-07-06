@@ -92,7 +92,28 @@ $(document).ready(function(){
             });
         
         });
+/*
+    $("FechaNac").change(function(){
+        
+        _date=$("FechaNac").val();
+            _date.type = "date";
+            console.log(_date);
+            if(!(_date  == "0000-00-00")){
+                $("#FechaNac").val(_date);
+            }else{
+                $("#FechaNac").val("");
+        }
+    });
 
+    $("FechaIng").change(function(){
+        _date=$("FechaIng").val();
+            _date.type = "date";
+            if(!(_date  == "0000-00-00")){
+                $("#FechaIng").val(_date);
+            }else{
+                $("#FechaIng").val("");
+        }
+    });*/
 
     $("#cargos").change(function(){
         var _Jefe = $("#jefe");
@@ -256,6 +277,7 @@ $('#FechaNac').datepicker(
     {  
         //minDate: ("yearRange", "-99:+0"),
         maxDate: "today",
+        dateFormat: 'yy-mm-dd',
        //minDate: -7,
        
        beforeShow: function() {
@@ -278,6 +300,8 @@ $('#FechaNac').datepicker(
 $('#FechaIng').datepicker(
     {  
         //minDate: -7,
+        maxDate: "today",
+        dateFormat: 'yy-mm-dd',
         beforeShow: function() {
             $(this).datepicker( 
                 "option", "changeYear", true

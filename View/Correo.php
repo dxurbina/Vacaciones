@@ -118,10 +118,10 @@ mail($correo,$asunto,$cuerpo,$correo2);*/
         $db = null;
         try{      
            
-            $db = new PDO('mysql:host=localhost;dbname=Vacaciones;charset=utf8mb4', 'root', 'LumberXD02',
+            $db = new PDO('mysql:host=localhost;dbname=vacaciones;charset=utf8mb4', 'root', '',
                 array(PDO::MYSQL_ATTR_INIT_COMMAND =>"SET NAMES 'utf8' "));
         } catch (PDOException $e) {
-            echo "se jodiò";
+            echo "Error";
         }
        // $sql = "insert into Notificaciones values(null, now(), ?, ?, ?, ?, 1)";
        // $consult = $this->db->prepare($sql);
@@ -130,11 +130,11 @@ mail($correo,$asunto,$cuerpo,$correo2);*/
             $sql = "select e.PNombre, e.PApellido, e.IdJefe, ej.correo, n.Tipo from empleados e inner join empleados ej
             on e.IdJefe = ej.IdEmpleado inner join notificaciones n on n.IdRemitente = e.IdEmpleado
             where n.Tipo = 'Solicitud' and n.Estado = 1 and n.EstadoMail = 1;";
-            $resulSet = array();
+            $resultSet = array();
             $consult = $db->prepare($sql);
             $consult->execute();
                 while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
-                    $resulSet = $row; 
+                    $resultSet = $row; 
                    
                 }
                
@@ -171,7 +171,7 @@ mail($correo,$asunto,$cuerpo,$correo2);*/
         
 
 
-    require("../libs/phpmailer/PHPMailerAutoload.php");
+    require("libs/phpmailer/PHPMailerAutoload.php");
     for($i = 0; $i < count($resulSet); $i ++){
         $mail = new PHPMailer(true);
         $mail->isSMTP();
@@ -195,7 +195,7 @@ mail($correo,$asunto,$cuerpo,$correo2);*/
                 </head>
                 <body>
                 <h1>Mensaje de Informacion: </h1>
-                <p>" . $MensajeS[$i] . " Visite el siguiente enlace: <a href='#'>Redireccionar</a></p>
+                <p>" . $MensajeS[$i] . " Visite el siguiente enlace: <a href='https://10.20.190.172'>Redireccionar</a></p>
                 </body>
                 </html>";
         $mail->Body    = $message;
@@ -227,7 +227,7 @@ mail($correo,$asunto,$cuerpo,$correo2);*/
                 </head>
                 <body>
                 <h1>Mensaje de Informacion: </h1>
-                <p>" . $MensajeR[$i] . " Visite el siguiente enlace: <a href='#'>Redireccionar</a></p>
+                <p>" . $MensajeR[$i] . " Visite el siguiente enlace: <a href='https://10.20.190.172'>Redireccionar</a></p>
                 </body>
                 </html>";
         $mail->Body    = $message;

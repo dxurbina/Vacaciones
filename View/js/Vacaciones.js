@@ -30,6 +30,7 @@ arrDisabledDates[new Date('07/19/2018')] = new Date('07/19/2018');
                 else
                    return [true, '', ''];
             }*/ 
+            dateFormat: 'dd/mm/yy',
            minDate: -7,
            beforeShow: function() {
             //onSelect: ListaFeriados(),
@@ -49,6 +50,27 @@ arrDisabledDates[new Date('07/19/2018')] = new Date('07/19/2018');
                     }
                 });
 
+                
+                
+
+function stringToDate(_date,_format,_delimiter)
+{
+            var formatLowerCase=_format.toLowerCase();
+            var formatItems=formatLowerCase.split(_delimiter);
+            var dateItems=_date.split(_delimiter);
+            var monthIndex=formatItems.indexOf("mm");
+            var dayIndex=formatItems.indexOf("dd");
+            var yearIndex=formatItems.indexOf("yyyy");
+            var month=parseInt(dateItems[monthIndex]);
+            month-=1;
+            var formatedDate = new Date(dateItems[yearIndex],month,dateItems[dayIndex]);
+            return formatedDate;
+}
+/*
+stringToDate("17/9/2014","dd/MM/yyyy","/");
+stringToDate("9/17/2014","mm/dd/yyyy","/")
+stringToDate("9-17-2014","mm-dd-yyyy","-")*/
+
     $('#pointer').change(function(){
         //var fecha = $('#pointer').val();
         var sumar = $('#NumDay').val();
@@ -57,10 +79,15 @@ arrDisabledDates[new Date('07/19/2018')] = new Date('07/19/2018');
             alert("Primero debe seleccionar  los días a tomar.");
         }else{
             if((sumar > 0)){
-                var fecha = $('#pointer').val();
-                var fecha2 = new Date(fecha);
-                var fecha = new Date(fecha);
-                console.log(fecha);
+               // $porciones = $('#pointer').val().split('/');
+               // console.log($porciones);
+                var fecha = stringToDate($('#pointer').val(),"dd/MM/yyyy","/");
+                var fecha2 = stringToDate($('#pointer').val(),"dd/MM/yyyy","/");
+                //$fecha = stringToDate("05/07/2018","dd/MM/yyyy","/");
+                //console.log(fecha);
+               /// var fecha2 = new Date($porciones[2], $porciones[1], $porciones[0]);
+               // var fecha = new Date();
+                //console.log(fecha);
                 dia = fecha.getDate();
                 mes = fecha.getMonth() + 1;
                 anio = fecha.getFullYear();
@@ -97,7 +124,7 @@ arrDisabledDates[new Date('07/19/2018')] = new Date('07/19/2018');
         }else if (newMes.toString().length == 1){  
             $('#dateF').val(newDay + "/" + "0" +newMes + "/" + newAnio);
         }
-
+/*
         if(oldMes.toString().length > 1 && oldDay.toString().length > 1){
             $('#pointer').val(oldDay + "/" + oldMes + "/" + oldAnio);
         }else if(oldMes.toString().length == 1 && oldDay.toString().length == 1){
@@ -106,7 +133,7 @@ arrDisabledDates[new Date('07/19/2018')] = new Date('07/19/2018');
             $('#pointer').val("0" + oldDay + "/"  + oldMes + "/" + oldAnio);
         }else if (oldMes.toString().length == 1){  
             $('#pointer').val(oldDay + "/" + "0" + oldMes + "/" + oldAnio);
-        }
+        }*/
             
             console.log(fecha2);
            // $("#dateF").datepicker("setDate", fecha2);
@@ -146,6 +173,7 @@ arrDisabledDates[new Date('07/19/2018')] = new Date('07/19/2018');
     $('#pointer2').datepicker(
         { 
            minDate: -7,
+           dateFormat: 'dd/mm/yy',
            beforeShow: function() {
            $(this).datepicker('option', 'maxDate', $('#dataF2').val());
          }
@@ -166,6 +194,9 @@ arrDisabledDates[new Date('07/19/2018')] = new Date('07/19/2018');
 
         var fecha2 = new Date(fecha);
         var fecha = new Date(fecha);
+
+        var fecha = stringToDate($('#pointer2').val(),"dd/MM/yyyy","/");
+        var fecha2 = stringToDate($('#pointer2').val(),"dd/MM/yyyy","/");
         console.log(fecha);
         dia = fecha.getDate();
         mes = fecha.getMonth() + 1;
@@ -211,7 +242,7 @@ arrDisabledDates[new Date('07/19/2018')] = new Date('07/19/2018');
         }else if (newMes.toString().length == 1){  
             $('#dateF2').val(newDay + "/" + "0" +newMes + "/" + newAnio);
         }
-
+/*
         if(oldMes.toString().length > 1 && oldDay.toString().length > 1){
             $('#pointer2').val(oldDay + "/" + oldMes + "/" + oldAnio);
         }else if(oldMes.toString().length == 1 && oldDay.toString().length == 1){
@@ -220,7 +251,7 @@ arrDisabledDates[new Date('07/19/2018')] = new Date('07/19/2018');
             $('#pointer2').val("0" + oldDay + "/"  + oldMes + "/" + oldAnio);
         }else if (oldMes.toString().length == 1){  
             $('#pointer2').val(oldDay + "/" + "0" + oldMes + "/" + oldAnio);
-        }
+        }*/
 
             //$('#dateF2').val(fecha.toLocaleDateString("es-ES", options));
             console.log(fecha2);

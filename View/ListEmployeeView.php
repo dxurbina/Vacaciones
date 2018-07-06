@@ -72,11 +72,11 @@
                                 <div class="form-group">
                                     <label>Fecha de Nacimiento</label>
                                 </div>
-                                <div class="form-group"><input  id="desac9" name ="FechaNac" type= "date" min="1950-01-01" max="2018-05-03"ID=""  Text=""  Enabled="false"></input></div>
+                                <div class="form-group"><input  id="desac9" class="FechaNac" name ="FechaNac"></input></div>
                                 <div class="form-group">
                                     <label>Fecha de Ingreso</label>
                                 </div>
-                                <div class="form-group"><input  id="desac29" name ="FechaIng" type= "date" min="1950-01-01" max="2018-05-03"ID=""  Text=""  Enabled="false"></input></div>
+                                <div class="form-group"><input  id="desac29" class="FechaIng"  name ="FechaIng"></input></div>
                                 
                                 <div class="form-group">
                                     <div class="row row-fluid">
@@ -212,7 +212,7 @@
 
                                 <div class="form-group">
                                 <label>Jefe</label></div>
-                                <div class="form-group"><select  id="desac28" name="IdJefe" required>
+                                <div class="form-group"><select  id="desac28" name="IdJefe">
                                                
                                             </select>
                                 </div>

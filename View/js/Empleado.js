@@ -206,6 +206,47 @@ $(document).ready(function(){
                               //  console.log(idEmp);
                                 $("#CargarEmpleado").val(idEmp);
                             });
+
+                            
+$('.FechaNac').datepicker(
+    {  
+        //minDate: ("yearRange", "-99:+0"),
+        maxDate: "today",
+        dateFormat: 'yy-mm-dd',
+       //minDate: -7,
+       
+       beforeShow: function() {
+        //onSelect: ListaFeriados(),
+       //$(this).datepicker('option', 'maxDate', $('#dataF').val());
+       $(this).datepicker( 
+        "option", "changeYear", true
+        );  
+       
+       $(this).datepicker( 
+             "option", "yearRange", "1950:2050"
+             );
+
+             
+       
+       }
+       //beforeShowDay: $.datepicker.noWeekends -> DESACTIVA LOS FINDES DE SEMANA
+    });
+
+$('.FechaIng').datepicker(
+    {  
+        //minDate: -7,
+        maxDate: "today",
+        dateFormat: 'yy-mm-dd',
+        beforeShow: function() {
+            $(this).datepicker( 
+                "option", "changeYear", true
+                );  
+               
+               $(this).datepicker( 
+                     "option", "yearRange", "2011:2050"
+                     ); }
+           //beforeShowDay: $.datepicker.noWeekends -> DESACTIVA LOS FINDES DE SEMANA
+    });
     
 
 
@@ -620,7 +661,7 @@ function fillModalData(dato){
             success: function (data) {
                 dato = data;
                // console.log(dato);
-                $('#usr').val(dato[0].Usuario);
+                $('#usr').val(dato[0].usuario);
             }
         });
     }
