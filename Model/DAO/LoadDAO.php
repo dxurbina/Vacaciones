@@ -12,11 +12,11 @@
 
         public function login(Empleado $data){
             $flag = false;
-            $sql = "select u.IdEmpleado from usuarios u where u.Usuario = ? and u.Pass = MD5(?) and u.Estado!=0";
+            $sql = "select u.IdEmpleado, u.IdUsuario from usuarios u where u.Usuario = ? and u.Pass = MD5(?) and u.Estado!=0";
             $result = $this->db->prepare($sql);
             $result->execute(array($data->__GET('user'), $data->__GET('pass')));
             
-            if($row = $result->fetch(PDO::FETCH_OBJ)){
+            if($row = $result->fetchAll(PDO::FETCH_OBJ)){
                 $flag = true;
                 $_SESSION['ID'] = $row;
                 $_SESSION['nickname'] = $data->__GET('user');

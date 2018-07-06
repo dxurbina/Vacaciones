@@ -14,7 +14,7 @@
                             <tr style="text-align: center;">    
                                 <th>IdEmpleado</th>
                                 <th>Nombre</th>
-                                <th>Telefono</th>
+                                <th>Teléfono</th>
                                 <th>Departamento</th>
                                 <th>Nombre del Cargo</th>
                                 <th>Nombre Jefe</th>
@@ -35,7 +35,7 @@
     
     <div  class="modal fade" id ="imodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" style="margin: 15%; margin-top: 5%;" role="document">
-            <div style="width: 165%;" class="modal-content">
+            <div style="width: 180%;" class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden = "true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Actualizar registro</h4>
@@ -48,18 +48,18 @@
                             <input  hidden type = "text" id= "CargarEmpleado" name = "idEmpleado" />
                             <div class="form-group"><label>Primer Nombre</label></div>
                             <div class="form-group"><input id="desac1" class="input_let" name = "PNombre" ID="txtFullName"  Text=""  Enabled="false" required /></div>
-                            <div class="form-group"><label>SegundoNombre</label></div>
-                            <div class="form-group"><input id="desac2" class="input_let" name ="SNombre" ID="txtmodaldireccion"  required></input></div>
+                            <div class="form-group"><label>Segundo Nombre</label></div>
+                            <div class="form-group"><input id="desac2" class="input_let" name ="SNombre" ID="txtmodaldireccion" ></input></div>
                             <div class="form-group"><label>Primer Apellido</label></div>
                             <div class="form-group"><input id="desac3" class="input_let" name ="PApellido"ID="txtFullName"  Text=""  Enabled="false" required></input></div>
                             <div class="form-group"><label>Segundo Apellido</label></div>
-                            <div class="form-group"><input id="desac4" class="input_let" name="SApellido" ID="txtmodaldireccion"  required></input></div>
+                            <div class="form-group"><input id="desac4" class="input_let" name="SApellido" ID="txtmodaldireccion" ></input></div>
                             <div class="form-group"><label>¿Reside en el país?</label></div>
                             <div class="form-group"><select id="desac5" name="Residencia">
                                 <option value="1">Si</option>
                                 <option value="0">No</option>
                             </select></div>
-                            <div class="form-group"><label>Cedula</label></div>
+                            <div class="form-group"><label>Cédula</label></div>
                             <div class="form-group"><input id="desac6" name ="Cedula" ID="" required></input></div>
                             <div class="form-group"><label>Pasaporte</label></div>
                             <div class="form-group"><input id="desac7" name ="Pasaporte" ID=""  Text=""  Enabled="false"></input></div>
@@ -67,7 +67,7 @@
                         </div>
                         <div class="col-sm-3">
                             
-                            <div class="form-group"><label>Numero INSS</label></div>
+                            <div class="form-group"><label>Número INSS</label></div>
                             <div class="form-group"><input id="desac8" name="NInss" ID=""  ></input></div>
                                 <div class="form-group">
                                     <label>Fecha de Nacimiento</label>
@@ -110,7 +110,7 @@
                                             </select></div>
                                         </div>
                                         <div class="col-xs-6">
-                                            <div class="form-group"><label>Numero</label></div>
+                                            <div class="form-group"><label>Número</label></div>
                                             <input  id="desac13" class="input_num" name = "NumHijos" type="number"  min="0" max="30" step="1">
                                         </div>
                                         
@@ -126,14 +126,14 @@
                                             </select></div>
                                         </div>
                                         <div class="col-xs-6">
-                                            <div class="form-group"><label>Numero</label></div>
+                                            <div class="form-group"><label>Número</label></div>
                                             <input id="desac15" class="input_num" name = "NumHermermanos" type="number"  min="0" max="30" step="1">
                                         </div>
                                         
                                     </div>
                                 </div>
 
-                                <div class="form-group"><label>Telefono</label></div>
+                                <div class="form-group"><label>Teléfono</label></div>
                                 <div class="form-group"><input class="input_num" id="desac16" name ="Telefono" ID=""  Text=""  Enabled="false"></input></div>
                             
                         </div>

@@ -336,7 +336,7 @@ public function GetPosition($usuario){
     }
 
     public function showUserById($id){
-        $sql = "select usuario from usuarios u inner join empleados e on e.IdEmpleado = u.IdEmpleado
+        $sql = "select Usuario from usuarios u inner join empleados e on e.IdEmpleado = u.IdEmpleado
                 where e.IdEmpleado = ?";
         $resulSet = array();
         $consult = $this->db->prepare($sql);
@@ -350,7 +350,7 @@ public function GetPosition($usuario){
 
 
     public function GetUser($id){
-        $sql = "select IdUsuario, Usuario from usuarios where Usuario = ?";
+        $sql = "select IdUsuario, IdEmpleado, Usuario from usuarios where Usuario = ?";
         $resulSet = array();
         $consult = $this->db->prepare($sql);
         $consult->execute(array($id));
