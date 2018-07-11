@@ -24,7 +24,7 @@ var dato, tabla, idEmp, $row, $dato2, Tipo;
             boss = " - ";
         }else {boss = data[i].NJefe + " " + data[i].AJefe + " - " + data[i].Estado}
         var cambio;
-        if((data[i].Estado=='Aceptada') || (data[i].Estado=='Rechazada')){
+        if((data[i].Estado=='Aceptada') || (data[i].Estado=='Rechazada') || (data[i].Estado=='Revertida')){
             cambio = '-'
             
         }else{
