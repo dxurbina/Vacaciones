@@ -1,4 +1,87 @@
 var dato, tabla;
+
+$(document).ready(function(){
+
+    $(document).on('click', '#btnStore', function (e) {
+        e.preventDefault();
+        var _select = $("#pass").val();
+        var cant = $("#NumDay").val();
+        var obj = JSON.stringify({ pass: _select });
+        flag = false;
+        $.ajax({
+            data: obj,
+            url: "?c=Load&a=verify",
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json; charset= utf-8',
+            error: function(xhr, ajaxOptions, thrownError){
+                console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+            },
+            success: function (data) {
+                console.log(data.d);
+                if(typeof data.IdEmpleado == "undefined"){
+                    flag=true;
+                }
+                if(flag == false){
+                    if(cant > 0 && cant < 30){
+                        console.log(flag);
+                       
+                                document.forms["send"].submit();
+                           
+                    }else{
+                        alert('Error en la cantidad de Dias');
+                    }
+                }else{
+                    alert("Verifique contraseña. Dato no esperado!!");
+                }
+            }
+                
+            });
+
+    });
+
+    $(document).on('click', '#btn_update', function (e) {
+        e.preventDefault();
+        var _select = $("#pass_1").val();
+        var cant = $("#NumDay_1").val();
+        var obj = JSON.stringify({ pass: _select });
+        flag = false;
+        $.ajax({
+            data: obj,
+            url: "?c=Load&a=verify",
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json; charset= utf-8',
+            error: function(xhr, ajaxOptions, thrownError){
+                console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+            },
+            success: function (data) {
+                console.log(data.d);
+                if(typeof data.IdEmpleado == "undefined"){
+                    flag=true;
+                }
+                if(flag == false){
+                    if(cant > 0 && cant < 30){
+                        console.log(flag);
+                       
+                                document.forms["send_1"].submit();
+                           
+                    }else{
+                        alert('Error en la cantidad de Dias');
+                    }
+                }else{
+                    alert("Verifique contraseña. Dato no esperado!!");
+                }
+            }
+                
+            });
+
+    });
+
+
+});
+
+
 function sendDataAjax() {
     $.ajax({
         type: "POST",
@@ -30,5 +113,7 @@ function sendDataAjax() {
     });
 
 }
+
+
 
 sendDataAjax();

@@ -113,12 +113,13 @@ mail($correo,$asunto,$cuerpo,$correo2);*/
         $fechaActual = strftime("%d de %B del %Y", strtotime($fechaActual));
         $destinatario;
         $nombreDesti;
+        $nombreDesti2;
         $correo;
         $fecha;
         $db = null;
         try{      
            
-            $db = new PDO('mysql:host=localhost;dbname=vacaciones;charset=utf8mb4', 'root', '',
+            $db = new PDO('mysql:host=localhost;dbname=vacaciones;charset=utf8mb4', 'root', 'LumberXD02',
                 array(PDO::MYSQL_ATTR_INIT_COMMAND =>"SET NAMES 'utf8' "));
         } catch (PDOException $e) {
             echo "Error";
@@ -138,10 +139,10 @@ mail($correo,$asunto,$cuerpo,$correo2);*/
                    
                 }
                
-
+                
             /* Cargar el destinatario por medio de la solicitud */
-            $sql2 = "select e.PNombre, e.PApellido, e.IdJefe, e.correo, n.Tipo from empleados e inner join empleados ej
-            on e.IdJefe = ej.IdEmpleado inner join notificaciones n on n.IdRemitente = e.IdEmpleado
+            $sql2 = "select ej.PNombre, ej.PApellido, e.IdJefe, e.correo, n.Tipo from empleados e inner join empleados ej
+            on e.IdJefe = ej.IdEmpleado inner join notificaciones n on n.IdDestinatario = e.IdEmpleado
             where n.Tipo = 'Respuesta' and n.Estado = 1 and n.EstadoMail = 1;";
             $resultSet2 = array();
             $consult2 = $db->prepare($sql2);
@@ -150,6 +151,7 @@ mail($correo,$asunto,$cuerpo,$correo2);*/
                 $resultSet2 = $row; 
                
             }
+           print_r($resultSet2);
 
         $mensajeR = array();
       
@@ -157,31 +159,43 @@ mail($correo,$asunto,$cuerpo,$correo2);*/
        if($resultSet2[$i]->Tipo == 'Respuesta'){
             $nombreDesti = $resultSet2[$i]->PNombre . " " . $resultSet2[$i]->PApellido;
             
-            $MensajeR[$i] =  $nombreDesti . " Respondió tu solicitud de vacaciones( Enviado: " . $fechaActual .").";
+            $MensajeR[$i] =  $nombreDesti . " ha respondido tu solicitud de vacaciones( Enviado: " . $fechaActual .").";
         }
       }
       $mensajeS  = array(); 
-    for($i = 0 ;  $i < count($resulSet); $i++){
+    for($i = 0 ;  $i < count($resultSet); $i++){
         if($resultSet[$i]->Tipo == "Solicitud"){
-            $nombreDesti = $resultSet[$i]->PNombre . " " . $resultSet[$i]->PApellido;
-            $MensajeS[$i] =  $nombreDesti . " está solicitando vacaciones. ( Enviado: " . $fechaActual .")." ;
+            $nombreDesti2 = $resultSet[$i]->PNombre . " " . $resultSet[$i]->PApellido;
+            $MensajeS[$i] =  $nombreDesti2 . " está solicitando vacaciones. ( Enviado: " . $fechaActual .")." ;
         // $consult->execute(array($remitente, $destinatario, $Mensaje, 'Solicitud'));
             }
     }
         
 
+    
+        $file = fopen("pass.txt", "r") or exit("Unable to open file!");
+        $pass = null;
+        //Output a line of the file until the end is reached
+        while(!feof($file))
+        {
+          // print_r(fgets($file)) . "<br />";
+            $pass = fgets($file);
+        }
+        fclose($file);
 
-    require("libs/phpmailer/PHPMailerAutoload.php");
-    for($i = 0; $i < count($resulSet); $i ++){
+
+
+    require("../libs/phpmailer/PHPMailerAutoload.php");
+    for($i = 0; $i < count($resultSet); $i++){
         $mail = new PHPMailer(true);
         $mail->isSMTP();
         $mail->Host = 'smtp.office365.com';
         $mail->Port       = 587;
         $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth   = true;
-        $mail->Username = 'dixon.urbina@loto.com.ni';
-        $mail->Password = 'TrafalgarLawXD02';
-        $mail->SetFrom('dixon.urbina@loto.com.ni', 'Sistema Vacaciones');
+        $mail->Username = 'admin@loto.com.ni';
+        $mail->Password = $pass;
+        $mail->SetFrom('admin@loto.com.ni', 'Sistema Vacaciones');
         $mail->addAddress($resultSet[$i]->correo, 'Colaborador');
         //$mail->SMTPDebug  = 3;
         //$mail->Debugoutput = function($str, $level) {echo "debug level $level; message: $str";}; //$mail->Debugoutput = 'echo';
@@ -194,8 +208,8 @@ mail($correo,$asunto,$cuerpo,$correo2);*/
                 <title>HTML</title>
                 </head>
                 <body>
-                <h1>Mensaje de Informacion: </h1>
-                <p>" . $MensajeS[$i] . " Visite el siguiente enlace: <a href='https://10.20.190.172'>Redireccionar</a></p>
+                <h1>Mensaje del Sistema: </h1>
+                <p>" . $MensajeS[$i] . " Visite el siguiente enlace: <a href='http://10.20.190.172'>Redireccionar</a></p>
                 </body>
                 </html>";
         $mail->Body    = $message;
@@ -204,16 +218,16 @@ mail($correo,$asunto,$cuerpo,$correo2);*/
         $mail->send();
     }
     
-    for($i = 0; $i < count($resultSet2); $i ++){
+    for($i = 0; $i < count($resultSet2); $i++){
         $mail = new PHPMailer(true);
         $mail->isSMTP();
         $mail->Host = 'smtp.office365.com';
         $mail->Port       = 587;
         $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth   = true;
-        $mail->Username = 'dixon.urbina@loto.com.ni';
-        $mail->Password = 'TrafalgarLawXD02';
-        $mail->SetFrom('dixon.urbina@loto.com.ni', 'Sistema Vacaciones');
+        $mail->Username = 'admin@loto.com.ni';
+        $mail->Password = $pass;
+        $mail->SetFrom('admin@loto.com.ni', 'Sistema Vacaciones');
         $mail->addAddress($resultSet2[$i]->correo, 'Colaborador');
         //$mail->SMTPDebug  = 3;
         //$mail->Debugoutput = function($str, $level) {echo "debug level $level; message: $str";}; //$mail->Debugoutput = 'echo';
@@ -226,8 +240,8 @@ mail($correo,$asunto,$cuerpo,$correo2);*/
                 <title>HTML</title>
                 </head>
                 <body>
-                <h1>Mensaje de Informacion: </h1>
-                <p>" . $MensajeR[$i] . " Visite el siguiente enlace: <a href='https://10.20.190.172'>Redireccionar</a></p>
+                <h1>Mensaje del Sistema: </h1>
+                <p>" . $MensajeR[$i] . " Visite el siguiente enlace: <a href='http://10.20.190.172'>Redireccionar</a></p>
                 </body>
                 </html>";
         $mail->Body    = $message;
@@ -236,7 +250,7 @@ mail($correo,$asunto,$cuerpo,$correo2);*/
         $mail->send();
     }
 
-    $sql = "update Notificaciones set EstadoMail = 0 
+    $sql = "update notificaciones set EstadoMail = 0 
             where EstadoMail = 1;";
             $consult = $db->prepare($sql);
             $consult->execute();
