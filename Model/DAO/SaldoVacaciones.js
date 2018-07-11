@@ -195,7 +195,6 @@ $(document).on('click', '.btn-del', function (e) {
                     }
                 });
                   alert('Solicitud de vacaciones cancelada correctamente.');
-                  location.reload();
         }else 
         {
             alert('Usted solo puede eliminar las solicitudes que están pendientes.')
