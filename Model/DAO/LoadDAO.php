@@ -28,6 +28,19 @@
             return $flag;
         }
 
+        public function verify($pass){
+            $result;
+            $sql = "select u.IdEmpleado from usuarios u where u.Usuario = ? and u.Pass = MD5(?) and u.Estado!=0";
+            $result = $this->db->prepare($sql);
+            $result->execute(array( $_SESSION['nickname'], $pass));
+
+            if($row = $result->fetch(PDO::FETCH_OBJ)){
+                $flag = true;
+                $result= $row;
+            }
+            return $result;
+        }
+
 
         public function LoadType(Empleado $data){
             try{

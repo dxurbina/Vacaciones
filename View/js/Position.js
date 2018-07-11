@@ -64,7 +64,7 @@ $(document).ready(function(){
                     }
                 })
                 if(flag == false){
-                    if(_select.length > 4 && _select.length < 30){
+                    if(_select.length > 4 && _select.length < 40){
                         console.log();
                         $( ".remove" ).remove();
                         $( ".del" ).remove();

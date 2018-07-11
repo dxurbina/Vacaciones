@@ -36,5 +36,27 @@ public function SaldoColaboradores(){
         }
 }
 
+    public function deduce(){
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+            $cant = $_REQUEST['CantDias'];
+            $this->model->deduce($cant);
+            header('Location: index.php?c=SaldoColaboradores&a=index');
+
+             }else {
+                 header('Location: index.php?c=Principal&a=AccessError');
+             }
+    }
+
+    public function increase(){
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+            $cant = $_REQUEST['CantDias_1'];
+            $this->model->increase($cant);
+            header('Location: index.php?c=SaldoColaboradores&a=index');
+
+             }else {
+                 header('Location: index.php?c=Principal&a=AccessError');
+             }
+    }
+
 }
 ?>

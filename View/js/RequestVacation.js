@@ -1,6 +1,22 @@
 $(document).ready(function(){
     
 });
+
+function stringToDate(_date,_format,_delimiter)
+{
+            var formatLowerCase=_format.toLowerCase();
+            var formatItems=formatLowerCase.split(_delimiter);
+            var dateItems=_date.split(_delimiter);
+            var monthIndex=formatItems.indexOf("mm");
+            var dayIndex=formatItems.indexOf("dd");
+            var yearIndex=formatItems.indexOf("yyyy");
+            var month=parseInt(dateItems[monthIndex]);
+            month-=1;
+            var formatedDate = new Date(dateItems[yearIndex],month,dateItems[dayIndex]);
+            return formatedDate;
+}
+
+
  var $dato1, $dato2, row, f = new Date();
 function sendDataAjax1() {
     $.ajax({
@@ -13,7 +29,7 @@ function sendDataAjax1() {
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             //console.log(data.length);
             dato1 = data;
            // console.log(dato);
@@ -23,8 +39,13 @@ function sendDataAjax1() {
             tabla = $("#tbl_Solicitud").DataTable({
                 "aaSorting": [[0, 'desc']]});
     for (var i = 0; i < data.length; i++) {
-            var f = new Date(data[i].FechaI);
-            var t = new Date(data[i].FechaF);
+        $porciones =data[i].FechaI.split('-');
+        $newDateI = $porciones[2] + "/" + $porciones[1] + "/" + $porciones[0];
+        $porciones =data[i].FechaF.split('-');
+        $newDateF = $porciones[2] + "/" + $porciones[1] + "/" + $porciones[0]; 
+       
+            var f = stringToDate($newDateI,"dd/MM/yyyy","/");
+            var t = stringToDate($newDateF,"dd/MM/yyyy","/");
             tabla.fnAddData([
                 data[i].IdVacaciones,
                 ( data[i].PNombre + " "+ data[i].PApellido),
@@ -148,8 +169,8 @@ function sendDataAjax2() {
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
-            console.log(data);
-            console.log(data.length);
+            //console.log(data);
+           // console.log(data.length);
             dato2 = data;
             i = data.length - 1;
 /*
