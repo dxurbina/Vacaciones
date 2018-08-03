@@ -42,13 +42,13 @@
                                         <div class="col-sm-2" style="margin-left: 3%;">
                                             <div class="form-group"><label>Fecha Inicio</label></div>
                                             <div class="form-group">
-                                                <input id="entrada" name="Fecha1" type="text" required />
+                                                <input id="entrada" name="Fecha1" type="text" required readonly = "true" />
                                             </div>
                                         </div>
                                         <div class="col-sm-2" style="margin-left: 3%;">
                                             <div class="form-group"><label>Fecha Final</label></div>
                                             <div class="form-group">
-                                                <input id="salida" name="Fecha2" type="text"/>
+                                                <input id="salida" name="Fecha2" type="text" readonly = "true"/>
                                             </div>
                                         </div> 
                                          

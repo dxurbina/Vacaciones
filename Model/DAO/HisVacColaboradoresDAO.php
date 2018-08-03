@@ -33,13 +33,13 @@ class HisVacColaboradoresDAO{
     public function GenerarReporte($Fecha1, $Fecha2){
         $resulSet = array();
         //$i = 0;
-        $sql = "select V.IdVacaciones, e.PNombre, e.PApellido, dp.Nombre, c.NombreCargo, v.CantDias, v.FechaI, v.FechaF
+        $sql = "select v.IdVacaciones, e.PNombre, e.PApellido, dp.Nombre, c.NombreCargo, v.CantDias, v.FechaI, v.FechaF
         from vacaciones v 
         inner join empleados e on v.IdEmpleado = e.IdEmpleado
         inner join cargos c on c.IdCargo=e.IdCargo
-        inner join centrocostos cc on cc.IdCosto=c.IdCargo
+        inner join centrocostos cc on cc.IdCosto=c.IdCosto
         inner join deptosempresa dp on dp.IdDep=cc.IdDptoEmp
-        where v.Tipo = 'Vacaciones' and v.Estado = 'Aceptada' between ? and ?;";
+        where v.Tipo = 'Vacaciones' and v.Estado = 'Aceptada' and v.FechaRespuesta between ? and ?;";
         $consult = $this->db->prepare($sql);
         $consult->execute(array($Fecha1, $Fecha2));
         while( $row = $consult->fetch(PDO::FETCH_ASSOC)){

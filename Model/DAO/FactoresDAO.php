@@ -1,6 +1,6 @@
 <?php 
 class FactoresDAO{
-    public $user, $db, $con;
+    public $user, $db, $con, $factor;
     public function __construct(){
         require_once("Model/Conexion.php");
         include_once('Model/Entity/Factores.php');
@@ -136,7 +136,27 @@ class FactoresDAO{
             }
             return $factor;
            }
-}
 
+        //#Lista de factores filtrados por el idEmpleado
+        public function listFacByEmp($id){
+        try{
+            $resultSet = array();
+            $consult = $this->db->prepare("select e.IdEmpleado, f.Factor, sv.Saldo from empleados e
+            inner join cargos c on e.IdCargo=c.IdCargo
+            inner join factor f on f.IdFactor=c.IdFactor
+            inner join saldovacaciones sv on sv.IdSaldo=e.IdEmpleado
+            where e.IdEmpleado = ?;");
+            $consult->execute(array($id));
+                while($row = $consult->fetch(PDO::FETCH_OBJ)) {
+                    $resultSet = $row;
+                }
+                return $resultSet;
+        }
+        catch(Exception $e)
+        {
+            die($e->getMessage());
+        }
+        }
+}
 
 ?>

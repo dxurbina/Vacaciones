@@ -152,6 +152,18 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
                 var resultado = sal.toFixed(2);
                 $("label[for='SaldoT']").text(resultado);
             }
+
+            //Nueva funcionalidad de donar vacaciones.
+            if($('input:radio[name=Tipo]:checked').val() == 'Donar'){
+                var donar = 1;
+                $("label[for='Saldo']").text(donar);
+                console.log(donar);
+                //Cálculo del saldo-saldoAct.
+                var saldoact = $("label[for='saldo']").text();
+                var sal = parseFloat(saldoact) - donar;
+                var resultado = sal.toFixed(2);
+                $("label[for='SaldoT']").text(resultado);
+            }
             
             //$('#ExtraDateEnd').val(fecha.toLocaleDateString("es-ES", options));
             //$('#ExtraDateIni').val(fecha.toLocaleDateString("es-ES", options));
@@ -280,6 +292,121 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
                 });
         
     });
+
+
+    //Modal de sugerir vacaciones desde la vista de saldo de colaboradores.
+    $('#pointer3').datepicker(
+        { 
+           minDate: -7,
+           dateFormat: 'dd/mm/yy',
+           beforeShow: function() {
+           $(this).datepicker('option', 'maxDate', $('#dataF3').val());
+         }
+                });
+
+        $('#dataF3').datepicker(
+                    {
+                    defaultDate: "+1w",
+                    beforeShow: function() {
+                    $(this).datepicker('option', 'minDate', $('#pointer3').val());
+        if ($('#pointer3').val() === '') $(this).datepicker('option', 'minDate', 0);                             
+                    }
+                });
+
+    $('#pointer3').change(function(){
+        var fecha = $('#pointer3').val();
+        var sumar = $('#NumDay3').val();
+
+        var fecha2 = new Date(fecha);
+        var fecha = new Date(fecha);
+
+        var fecha = stringToDate($('#pointer3').val(),"dd/MM/yyyy","/");
+        var fecha2 = stringToDate($('#pointer3').val(),"dd/MM/yyyy","/");
+        console.log(fecha);
+        dia = fecha.getDate();
+        mes = fecha.getMonth() + 1;
+        anio = fecha.getFullYear();
+        if ((sumar == 0) && (sumar == "")){
+            alert("Primero debe seleccionar  los días a tomar.");
+        }else{
+            if((sumar > 0)){
+                if(sumar % 1 == 0){
+                    addTime = (sumar * 24) - 24; //Tiempo en horas
+                }else{
+                    addTime = (sumar * 24); //Tiempo en horas
+                }
+            }else{
+                alert("La cantidad de días debe ser mayor a 0");
+            }
+            
+        }
+        
+    fecha.setHours(addTime); //Añado el tiempo
+ 
+    str1 = "Fecha actual: " + dia + "/" + mes + "/" + anio + "<br />";
+    str2 = "Tiempo añadido: " + sumar + " días<br />";
+    str3 = "Fecha final: " + fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear();
+       console.log(str1 + ' ' + str2 +' ' + str3 +' ');
+       
+       oldMes = (fecha2.getMonth() + 1);
+       oldDay = (fecha2.getDate());
+       oldAnio = (fecha2.getFullYear());
+
+       newMes = (fecha.getMonth() + 1);
+       newDay = (fecha.getDate());
+       newAnio = (fecha.getFullYear());
+       
+     //  var options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+     //console.log(newMes.toString().length);
+        if(newMes.toString().length > 1 && newDay.toString().length > 1){
+            $('#dateF3').val(newDay + "/" + newMes + "/" + newAnio);
+        }else if(newMes.toString().length == 1 && newDay.toString().length == 1){
+            $('#dateF3').val("0" + newDay + "/" + "0" +newMes + "/" + newAnio);
+        }else if(newDay.toString().length == 1){
+            $('#dateF3').val("0" + newDay + "/"  +newMes + "/" + newAnio);
+        }else if (newMes.toString().length == 1){  
+            $('#dateF3').val(newDay + "/" + "0" +newMes + "/" + newAnio);
+        }
+/*
+        if(oldMes.toString().length > 1 && oldDay.toString().length > 1){
+            $('#pointer2').val(oldDay + "/" + oldMes + "/" + oldAnio);
+        }else if(oldMes.toString().length == 1 && oldDay.toString().length == 1){
+            $('#pointer2').val("0" + oldDay + "/" + "0" + oldMes + "/" + oldAnio);
+        }else if(oldDay.toString().length == 1){
+            $('#pointer2').val("0" + oldDay + "/"  + oldMes + "/" + oldAnio);
+        }else if (oldMes.toString().length == 1){  
+            $('#pointer2').val(oldDay + "/" + "0" + oldMes + "/" + oldAnio);
+        }*/
+
+            //$('#dateF2').val(fecha.toLocaleDateString("es-ES", options));
+            console.log(fecha2);
+            //$('#pointer2').val(fecha2.toLocaleDateString("es-ES", options));
+            console.log($('input:radio[name=Tipo]:checked').val());
+            if($('input:radio[name=Tipo]:checked').val() == 'Vacaciones'){
+                //var factor =  $("label[for='factor3']").text();
+                var factor =  $("input[id='factor3']").val();
+                var saldo = parseFloat(factor) * sumar;
+                var result = saldo.toFixed(2); 
+                $("label[for='Saldo']").text(result);
+                //Cálculo del saldo-saldoAct.
+                var saldoactual = $("input[id='SaldoAct']").val();
+                var sal = parseFloat(saldoactual) - result;
+                var resultado = sal.toFixed(2);
+                $("label[for='SaldoT']").text(resultado);
+            }
+            
+            //$('#ExtraDateEnd').val(fecha.toLocaleDateString("es-ES", options));
+            //$('#ExtraDateIni').val(fecha.toLocaleDateString("es-ES", options));
+            $('#ExtraDateIni').datepicker(
+                { 
+                   minDate: new Date(newAnio, newMes, newDay),
+                   beforeShow: function() {
+                   $(this).datepicker('option', 'maxDate', $('#dataF2').val());
+                   }
+                });
+        
+    });
+
 
     $('#ExtraDateIni').change(function(){
             var fecha = $('#ExtraDateIni').val();
