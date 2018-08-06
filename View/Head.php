@@ -209,6 +209,7 @@
             <li><a href="?c=Empleado&a=ListEmployeeView"><i class="fa fa-link"></i> <span>Registros de Colaboradores</span></a></li>
             <li><a href="?c=SaldoVacaciones"><i class="fa fa-link"></i> <span>Mi Saldo</span></a></li>
             <li><a href="?c=Vacaciones&a=Requests"><i class="fa fa-link"></i> <span>Solicitudes de Colaboradores</span></a></li>
+            <li><a href="?c=SaldoVacaciones&a=indexHistory"><i class="fa fa-link"></i> <span>Saldo de colaboradores</span></a></li>
               <li class="treeview">
             <a href="#"><i class="fa fa-link"></i> <span>Catálogo</span>
               <span class="pull-right-container">
@@ -235,7 +236,7 @@
             <li><a href="?c=Empleado&a=ListEmployeeView"><i class="fa fa-link"></i> <span>Registros de Colaboradores</span></a></li>
             <li><a href="?c=SaldoVacaciones"><i class="fa fa-link"></i> <span>Mi Saldo</span></a></li>
             <li><a href="?c=Vacaciones&a=Requests"><i class="fa fa-link"></i> <span>Solicitudes de Colaboradores</span></a></li>
-  
+            <li><a href="?c=SaldoVacaciones&a=indexHistory"><i class="fa fa-link"></i> <span>Saldo de colaboradores</span></a></li>
             <li class="treeview">
             <a href="#"><i class="fa fa-link"></i> <span>Catálogo</span>
               <span class="pull-right-container">
@@ -286,8 +287,7 @@
              <!-- <p>Usted tiene personal a cargo</p><br> -->
             <li><a href="?c=SaldoVacaciones"><i class="fa fa-link"></i> <span>Mi Saldo</span></a></li>
             <li><a href="?c=Vacaciones&a=Requests"><i class="fa fa-link"></i> <span>Solicitudes de Colaboradores</span></a></li>
-            <li><a href="?c=SaldoColaboradores"><i class="fa fa-link"></i> <span>Saldo de colaboradores</span></a></li>
-            
+            <li><a href="?c=SaldoVacaciones&a=indexHistory"><i class="fa fa-link"></i> <span>Saldo de colaboradores</span></a></li>
         <?php }else if( isset($_SESSION['access']) && $_SESSION['access'] == 1){ ?> <!--Este lo agregue 14/03 -->
              <!-- <p>Accedió como Colaborador</p> -->
              <li><a href="?c=SaldoVacaciones"><i class="fa fa-link"></i> <span>Mi Saldo</span></a></li>

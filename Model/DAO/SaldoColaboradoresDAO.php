@@ -72,5 +72,55 @@ class SaldoColaboradoresDAO{
         $stmt->execute();
 
     }
+
+    public function send_notif_csv_($id){
+        $remitente = $_SESSION['ID']->IdEmpleado;
+        $destinatario;
+            /* Cargar el jefe y nombre del empleado de la bd */
+            $sql2 = "select e.PNombre, e.PApellido, e.IdJefe, ej.correo from empleados e inner join empleados ej
+            on e.IdJefe = ej.IdEmpleado where e.IdEmpleado = ?";
+            $consult2 = $this->db->prepare($sql2);
+            $consult2->execute(array($remitente));
+            if($row = $consult2->fetch(PDO::FETCH_OBJ)){
+                $nombreDesti = $row->PNombre . " " . $row->PApellido;
+                $destinatario = $row->IdJefe;
+                $correo = $row->correo;
+            }
+
+
+        $sql = "insert into notificaciones values (null, now(), ?, ?, ?, ?, 1, 1, ?)";
+        $consult = $this->db->prepare($sql);
+        $mensaje = "Solicitud de aprobación de carga masiva de saldos.";
+        $tipo = "aprobacion";
+        $consult->execute(array($remitente, $destinatario, $mensaje, $tipo, $id));
+
+    }
+
+
+    public function update_csv_($__file__, $linea){
+        /* Registrar el usuario que realiza esta accion */
+       /* $sql ="insert into deduc_cuenta_vacaciones values(null, ?, now(), 'Revertir');";
+        $consult = $this->db->prepare($sql);
+        $consult->execute(array($_SESSION['nickname']));
+*/
+        echo "before";
+        for($i = 1; $i < $linea; $i++){
+        
+        /* incrementar saldo a todo los colaboradores*/
+            $cedula = $__file__[$i][0];
+            $saldo = $__file__[$i][1];
+            $saldo = ltrim($saldo);
+            $saldo = rtrim($saldo);
+            var_dump($saldo);
+        $sql = "call updatesaldoupload(?, ?);ç";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(1, $cedula, PDO::PARAM_STR, 20);
+        $stmt->bindParam(2, $saldo, PDO::PARAM_STR, 10);
+        $stmt->execute();
+        }
+
+      
+
+    }
 }
 ?>

@@ -11,7 +11,7 @@
                         <thead>
                             <tr style="text-align: center;">
                                 <th>IdEmpleado</th>
-                                <th>Nombre</th>
+                                <th>Nombre y apellido</th>
                                 <th>Cargo</th>
                                 <th>Saldo</th>
                                 <th>Jefe Inmediato</th>

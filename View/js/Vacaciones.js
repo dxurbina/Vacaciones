@@ -155,12 +155,12 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
 
             //Nueva funcionalidad de donar vacaciones.
             if($('input:radio[name=Tipo]:checked').val() == 'Donar'){
-                var donar = 1;
-                $("label[for='Saldo']").text(donar);
-                console.log(donar);
+              //  var donar = 1;
+                $("label[for='Saldo']").text(sumar);
+                //console.log(donar);
                 //Cálculo del saldo-saldoAct.
                 var saldoact = $("label[for='saldo']").text();
-                var sal = parseFloat(saldoact) - donar;
+                var sal = parseFloat(saldoact) - sumar;
                 var resultado = sal.toFixed(2);
                 $("label[for='SaldoT']").text(resultado);
             }
@@ -281,6 +281,20 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
                 $("label[for='SaldoTotal']").text(resultado);
             }
             
+             //Nueva funcionalidad de donar vacaciones.
+             if($('input:radio[name=Tipo]:checked').val() == 'Donar'){
+                //  var donar = 1;
+                  $("label[for='Saldo']").text(sumar);
+                  //console.log(donar);
+                  //Cálculo del saldo-saldoAct.
+                  var saldoact = $("label[for='saldo']").text();
+                  var sal = parseFloat(saldoact) - sumar;
+                  var resultado = sal.toFixed(2);
+                  $("label[for='SaldoT']").text(resultado);
+              }
+              
+
+
             //$('#ExtraDateEnd').val(fecha.toLocaleDateString("es-ES", options));
             //$('#ExtraDateIni').val(fecha.toLocaleDateString("es-ES", options));
             $('#ExtraDateIni').datepicker(

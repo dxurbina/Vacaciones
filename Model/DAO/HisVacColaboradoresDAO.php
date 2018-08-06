@@ -39,7 +39,7 @@ class HisVacColaboradoresDAO{
         inner join cargos c on c.IdCargo=e.IdCargo
         inner join centrocostos cc on cc.IdCosto=c.IdCosto
         inner join deptosempresa dp on dp.IdDep=cc.IdDptoEmp
-        where v.Tipo = 'Vacaciones' and v.Estado != 'Rechazada' and v.Estado !='Cancelada' and v.FechaRespuesta between ? and ?;";
+        where v.Tipo = 'Vacaciones' and v.Estado != 'Rechazada' and v.Estado !='Cancelada' and v.FechaSolicitud between ? and ?;";
         $consult = $this->db->prepare($sql);
         $consult->execute(array($Fecha1, $Fecha2));
         while( $row = $consult->fetch(PDO::FETCH_ASSOC)){

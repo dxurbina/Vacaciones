@@ -53,10 +53,38 @@ function addmsg(type, msg) {
                       ' </div>'+
                         '</li>'
                         );
+            }else if(msg[i].Tipo == 'aprobacion'){
+                $.ajax({
+                    url: "?c=Notificaciones&a=destroy",
+                    type: "POST",
+                    data: {},
+                    dataType: 'json',
+                    contentType: 'application/json; charset= utf-8',
+                    success: function(data){
+                        
+                    }
+                    });
+                    $(".menu").prepend(
+                        
+                        '<li>' + 
+                       // '<a href="?c=Vacaciones&a=requests"><span class="tab fa fa-info-circle">  ' + data[i].Mensaje + '</span></a> ' + 
+                      ' <div class="col-md-3 col-sm-3 col-xs-3"><span class="fa fa-calendar"></div>'+
+                      ' <div class="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href="javascript:my_function();"> '+ data[i].Mensaje + '</a>'+
+                       
+                      '<hr>'+
+                      ' </div>'+
+                        '</li>'
+                        );
             }
         }
     }
 }
+
+function my_function(){
+    alert('you click me...');
+}
+
+
 function showAll(){
     
         $.ajax({
@@ -97,6 +125,18 @@ function showAll(){
                             '</li>'
                             );
                         
+                    }else if(data[i].Tipo == 'aprobacion'){
+                            $(".menu").prepend(
+                                
+                                '<li>' + 
+                               // '<a href="?c=Vacaciones&a=requests"><span class="tab fa fa-info-circle">  ' + data[i].Mensaje + '</span></a> ' + 
+                              ' <div class="col-md-3 col-sm-3 col-xs-3"><span class="fa fa-calendar"></div>'+
+                              ' <div class="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href="javascript:my_function();"> '+ data[i].Mensaje + '</a>'+
+                               
+                              '<hr>'+
+                              ' </div>'+
+                                '</li>'
+                                );
                     }
                 }
             }

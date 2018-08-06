@@ -79,6 +79,7 @@
                                 <input type="radio" name="Tipo" value="Vacaciones" > Vacaciones<br>
                                 <input type="radio" name="Tipo" value="Enfermedad" > Enfermedad<br>
                                 <input type="radio" name="Tipo" value="Permiso Especial" > Permiso Especial
+                                <input type="radio" name="Tipo" value="Donar"> Donar
                             </div>
                         </div>
                         <div class="col-xs-4">

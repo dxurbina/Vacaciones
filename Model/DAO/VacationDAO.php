@@ -401,7 +401,7 @@
 
         public function EditSolicitud(Vacation $data, $FechaI, $FechaF, $CantDias){
             $resultado = array();
-            $sql="select count(Fecha) from feriados where Fecha between ? and ?;";
+            $sql="select count(Fecha) as cfecha from feriados where Fecha between ? and ?;";
             $consult = $this->db->prepare($sql);
             $consult -> execute(array($FechaI, $FechaF));
                 while($row = $consult->fetchAll(PDO::FETCH_OBJ)){
