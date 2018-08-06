@@ -89,6 +89,7 @@ function sendDataAjax() {
             data[i].NombreCargo,
             (data[i].FechaI + " al " + data[i].FechaF),
             data[i].CantDias,
+            data[i].Estado,
         ]);
     }
         }
@@ -97,6 +98,6 @@ function sendDataAjax() {
 //sendDataAjax();
 
 $(document).on('click', "#btnGenerar", function (e) {
-    e.preventDefault();
+   e.preventDefault();
     sendDataAjax();
 });
