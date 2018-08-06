@@ -5,10 +5,19 @@
 <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header">
+                <form action="?c=SaldoColaboradores&a=deduce_csv_" method="POST" name="_send" enctype="multipart/form-data">
                     <h3 class="box-title" style="font-size: 200%;">Saldo de los colaboradores</h3>
                 </div>
-                <button title= "Add" value= "Agregar" class="btn btn-primary btn-add col-md-offset-9" data-target="#imodal" data-toggle="modal">Deducir Saldo</button>
+                <button title= "Add" value= "Agregar" class="btn btn-primary btn-add col-md-offset-5" data-target="#imodal" data-toggle="modal">Deducir Saldo</button>
                 <button title= "Add" value= "Agregar" class="btn btn-danger btn-add" data-target="#imodal_1" data-toggle="modal">Revertir Deduccion</button>
+                
+                
+                <label class="btn btn-default">Cargar CSV <input name ="archivo" id="_upload_" type="file" hidden>
+                <button title= "Add" id="_update_" name ="_file_" value= "Agregar" class="btn btn-primary btn-add"y>Actualizar saldos</button>
+                </label>
+                </form>
+                
+                
                 <div class="box-body table-responsive">
                     <table id="tbl_saldo_vacaciones"  class="table table-bordered table-hover">
                         <thead>
@@ -29,6 +38,43 @@
                 </div>
             </div>
         </div>
+
+        <div  class="modal fade" id ="_open_" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden = "true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Actualizar saldo por csv</h4>
+                    
+                </div>
+                
+                <div class="modal-body">
+                    <div class="row row-fluid">
+                    <div class="form-group"><label>Esta acción requiere autentificación.</label></div>
+                        <div class="col-sm-6">
+
+                                <div class="form-group"><label>Usuario</label></div>
+                                <div class="form-group"><input class="store-val" value="<?php echo $_SESSION['nickname'] ?>" type="text" id="user_2" name="user_2"  readonly="readonly" /></div>
+                            
+                            
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group"><label>Contraseña</label></div>
+                            <div class="form-group"><input class="store-val" type="password" id="pass_2" name="pass_2"/></div>
+                                
+                        </div>
+
+                    
+                </div>
+                <div class="modal-footer">
+                
+                    <input type="submit" class="btn btn-primary" id="btn_update_csv" value="Deducir"></input>
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
 
         <div  class="modal fade" id ="imodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" style="margin: 15%; margin-top: 5%;" role="document">
@@ -98,7 +144,7 @@
                         <div class="col-sm-4">
 
                                 <div class="form-group"><label>Usuario</label></div>
-                                <div class="form-group"><input class="store-val" value="<?php echo $_SESSION['nickname'] ?>" type="text" id="user" name="user"  readonly="readonly" /></div>
+                                <div class="form-group"><input class="store-val" value="<?php echo $_SESSION['nickname'] ?>" type="text" id="_user_" name="user"  readonly="readonly" /></div>
                             
                             
                         </div>
@@ -121,7 +167,33 @@
     </div>
 
         <script type="text/javascript" src="View/js/SaldoColaboradores.js"></script>
+        <script type="text/javascript">
+            $(document).on('click', '#_update_', function(e){
+                e.preventDefault();
+                var rol = <?php echo $_SESSION['access'] ?>;
+           
+                var archivo = $("#_upload_").val();
+                console.log(archivo);
+                if( archivo != ''){
+                    var extensiones = archivo.substring(archivo.lastIndexOf("."));
 
+                    if(extensiones == '.csv')
+                    {
+                        if(rol == 3){
+                            console.log(rol);
+                            alert('Esta accion requerirá la aprobacion de su jefe inmediato');
+                            $('#_open_').modal();
+                        }else{
+                            $('#_open_').modal();
+                        }
+                    }else{
+                        alert("El archivo de tipo " + extensiones + " no es válido");
+                    }
+                }else{
+                    alert('No hay archivo');
+                }
+            });
+        </script>
 
 
 <?php
