@@ -120,5 +120,18 @@ class SaldoColaboradoresDAO{
       
 
     }
+
+    public function get_file($id){
+        $_file_ = "";
+        $sql = "select _file_ from notificaciones where IdNotificacion = ?";
+        $consult = $this->db->prepare($sql);
+        $consult->execute(array($id));
+
+        if($row = $consult->fetch(PDO::FETCH_OBJ)){
+            $_file_ = $row->_file_;
+           
+        }
+        return $_file_;
+    }
 }
 ?>

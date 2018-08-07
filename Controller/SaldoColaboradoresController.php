@@ -132,7 +132,7 @@ public function SaldoColaboradores(){
            // print_r($csv_upload[1][1] );
 
              $this->model->update_csv_($csv_upload, $linea);
-             echo "done...";
+             header('Location: index.php?c=SaldoColaboradores&a=index');
         }
             
 
@@ -141,30 +141,96 @@ public function SaldoColaboradores(){
         }
     }
 
+    public function downloadfile(){
+        if(isset($_SESSION['nickname']) && $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+            header('Content-Type: application/json; charset=utf-8');
+            
+            $fichero = 'uploads/reporte.csv';
+
+        if (file_exists($fichero)) {
+
+
+
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="'.basename($fichero).'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($fichero));
+            readfile($fichero);
+            exit;
+        }else{
+            echo"not found";
+        }
+        }else {
+            header('Location: index.php?c=Principal&a=AccessError');
+        }
+    }
+
+    public function get_file(){
+        if(isset($_SESSION['nickname']) && $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+            header('Content-Type: application/json; charset=utf-8');
+            $json_str = file_get_contents('php://input');
+            $json_obj = json_decode($json_str);
+            $_array = $this->model->get_file($json_obj->id);
+            $var = json_encode( $_array);
+            $json = json_last_error();
+            echo $var; 
+        }else {
+            header('Location: index.php?c=Principal&a=AccessError');
+        }
+    }
+
     public function deduce_csv_accepted(){
         if(isset($_SESSION['nickname']) && $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
-           
+            header('Content-Type: application/json; charset=utf-8');
+            $json_str = file_get_contents('php://input');
+            $json_obj = json_decode($json_str);
+            $_array = $this->model->get_file($json_obj->id);
+           // $var = json_encode( $_array);
+           // $json = json_last_error();
+           // echo $var; 
+            //echo $_array;
+
+            $csv_upload = array();
             $linea = 0;
          //Abrimos nuestro archivo
-        //    $archivo = fopen("clientes.csv", "r");*/
-            $origen = $_FILES["archivo"]['tmp_name'] ;
-            $archivo = fopen($origen, "r");
+          //  $archivo = fopen("clientes.csv", "r");*/
+            //$origen = $_FILES["archivo"]['tmp_name'] ;
+            $archivo = fopen("uploads/" . $_array , "r");
 
             //Lo recorremos
             while (($datos = fgetcsv($archivo, ",")) == true) 
             {
             $num = count($datos);
-            $linea++;
+            
+            //echo " " . $num;
+            //var_dump($datos);
             //Recorremos las columnas de esa linea
-            for ($columna = 0; $columna > $num; $columna++) 
+            $row = array();
+            for ($columna = 0; $columna < $num; $columna++) 
                 {
-                    echo $datos[$columna] . "\n";
+                    $result = $datos[$columna] . "\n";
+                    array_push($row, $result);
                 }
+                echo $linea;
+             $csv_upload[$linea] = $row;
+             $linea++;
             }
             //Cerramos el archivo
             fclose($archivo);
+            //var_dump($csv_upload);
+            //print_r($csv_upload[1][0] );
+           // print_r($csv_upload[1][1] );
 
-           // $this->model->update_csv_($__file__);
+             $this->model->update_csv_($csv_upload, $linea);
+             //header('Location: index.php?c=SaldoColaboradores&a=index');
+             //$var = json_encode($csv_upload);
+             //$json = json_last_error();
+             //echo $var; 
+
+            
         }else {
             header('Location: index.php?c=Principal&a=AccessError');
         }

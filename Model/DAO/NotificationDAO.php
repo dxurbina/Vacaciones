@@ -273,15 +273,14 @@ class NotificationDAO{
 
     public function showAll(){
         $resulSet = array();
-        $sql = "select  n.Fecha, er.PNombre, er.PApellido, n.Mensaje, n.Tipo from notificaciones n inner join empleados e
+        $sql = "select  n.IdNotificacion, n.Fecha, er.PNombre, er.PApellido, n.Mensaje, n.Tipo, n._file_ from notificaciones n inner join empleados e
         on n.IdDestinatario = e.IdEmpleado inner join empleados er on n.IdRemitente = er.IdEmpleado
-        where e.IdEmpleado = ? and n.Fecha > date_add(NOW(), INTERVAL -7 DAY)";
+        where e.IdEmpleado = 1 and n.Fecha > date_add(NOW(), INTERVAL -7 DAY)";
                 $consult = $this->db->prepare($sql);
                 $consult->execute(array($_SESSION['ID']->IdEmpleado));
                 while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
                     $resulSet = $row; 
                 }
-            
                 return $resulSet; 
     }
 

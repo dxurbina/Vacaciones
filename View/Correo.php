@@ -153,6 +153,19 @@ mail($correo,$asunto,$cuerpo,$correo2);*/
             }
            print_r($resultSet2);
 
+
+           /* Cargar el jefe y nombre del empleado de la bd para el csv */
+           $sql = "select e.PNombre, e.PApellido, e.IdJefe, ej.correo, n.Tipo from empleados e inner join empleados ej
+           on e.IdJefe = ej.IdEmpleado inner join notificaciones n on n.IdRemitente = e.IdEmpleado
+           where n.Tipo = 'aprobacion' and n.Estado = 1 and n.EstadoMail = 1;";
+           $resultSet3 = array();
+           $consult = $db->prepare($sql);
+           $consult->execute();
+               while( $row = $consult->fetchAll(PDO::FETCH_OBJ)){
+                   $resultSet3 = $row; 
+                  
+               }
+
         $mensajeR = array();
       
       for($i = 0 ; $i < count($resultSet2); $i++){
@@ -170,6 +183,17 @@ mail($correo,$asunto,$cuerpo,$correo2);*/
         // $consult->execute(array($remitente, $destinatario, $Mensaje, 'Solicitud'));
             }
     }
+
+    $mensajeA  = array(); 
+    for($i = 0 ;  $i < count($resultSet3); $i++){
+        if($resultSet[$i]->Tipo == "aprobacion"){
+            $nombreDesti2 = $resultSet3[$i]->PNombre . " " . $resultSet3[$i]->PApellido;
+            $MensajeA[$i] =  $nombreDesti2 . " está solicitando aprobar una carga masiva de saldos. ( Enviado: " . $fechaActual .")." ;
+        // $consult->execute(array($remitente, $destinatario, $Mensaje, 'Solicitud'));
+            }
+    }
+
+    
         
 
     
@@ -249,6 +273,39 @@ mail($correo,$asunto,$cuerpo,$correo2);*/
 
         $mail->send();
     }
+
+    for($i = 0; $i < count($resultSet3); $i++){
+        $mail = new PHPMailer(true);
+        $mail->isSMTP();
+        $mail->Host = 'smtp.office365.com';
+        $mail->Port       = 587;
+        $mail->SMTPSecure = 'tls';
+        $mail->SMTPAuth   = true;
+        $mail->Username = 'admin@loto.com.ni';
+        $mail->Password = $pass;
+        $mail->SetFrom('admin@loto.com.ni', 'Sistema Vacaciones');
+        $mail->addAddress($resultSet3[$i]->correo, 'Colaborador');
+        //$mail->SMTPDebug  = 3;
+        //$mail->Debugoutput = function($str, $level) {echo "debug level $level; message: $str";}; //$mail->Debugoutput = 'echo';
+        $mail->IsHTML(true);
+
+        $mail->Subject = 'Mensaje del sistema de Vacaciones';
+        $message = "
+                <html>
+                <head>
+                <title>HTML</title>
+                </head>
+                <body>
+                <h1>Mensaje del Sistema: </h1>
+                <p>" . $MensajeA[$i] . " Visite el siguiente enlace: <a href='http://10.20.190.172'>Redireccionar</a></p>
+                </body>
+                </html>";
+        $mail->Body    = $message;
+        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+        $mail->send();
+    }
+
 
     $sql = "update notificaciones set EstadoMail = 0 
             where EstadoMail = 1;";
