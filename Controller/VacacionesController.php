@@ -84,6 +84,36 @@ class VacacionesController{
         header('Location: index.php?c=Principal&a=AccessError');
     }
 }
+
+//Lista para guardar la sugerencia del colaborador desde saldo colaboradores
+public function storeSugerir(){
+    if(isset($_SESSION['nickname'])){
+     $this->obj->__SET('Tipo', $_REQUEST['Tipo']);
+        $this->obj->__SET('CantDias', $_REQUEST['CantDias']);
+        $originalDate = $_REQUEST['FechaI'];
+        $originalDate = ltrim($originalDate);
+        $originalDate = rtrim($originalDate);
+        $nums = explode('/', $originalDate);
+        $this->obj->__SET('FechaI', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
+        $originalDate = $_REQUEST['FechaF'];
+        $originalDate = ltrim($originalDate);
+        $originalDate = rtrim($originalDate);
+        $nums = explode('/', $originalDate);
+        $this->obj->__SET('FechaF', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
+        $this->obj->__SET('Descripcion', $_REQUEST['Descripcion']);
+        $this->obj->__SET('IdEmpleado', $_REQUEST['idEmpleado']);
+        $this->model->storeSugerir($this->obj, $this->obj->FechaI, $this->obj->FechaF, $this->obj->CantDias);
+        $estado = "Solicitud";
+        $this->modelNotif->store(null, $estado);
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+            header('Location: index.php?c=SaldoColaboradores');
+        }else if(isset($_SESSION['nickname'])and $_SESSION['access'] == 2){
+            header('Location: index.php?c=SaldoVacaciones&a=indexHistory');
+        }
+    }else {
+        header('Location: index.php?c=Principal&a=AccessError');
+    }
+}
     
     public function update(){
         if(isset($_SESSION['nickname']) and $_SESSION['access'] == 2 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){

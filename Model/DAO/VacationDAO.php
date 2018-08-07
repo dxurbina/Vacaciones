@@ -53,6 +53,35 @@
                     echo 'Existen días feriados en el rango seleccionado, favor ingresar solicitudes independientes.';
                 } */           
    }
+    
+   //Lista para guardar la sugerencia de vacaciones a un colaborador.
+   public function storeSugerir(Vacation $data, $FechaI, $FechaF, $CantDias){
+       $resultado = array();
+       $sql="select count(Fecha) as cfecha from feriados where Fecha between ? and ?;";
+       $consult = $this->db->prepare($sql);
+       $consult -> execute(array($FechaI, $FechaF));
+           while($row = $consult->fetchAll(PDO::FETCH_OBJ)){
+               $resultado = $row;
+           }
+           $contador = 0;
+           if(($resultado[0]->cfecha)>0 && ($CantDias>=1.5)){
+               $contador++;
+           }
+               $total = $CantDias-$contador;
+                   
+               //if(sizeof($resultado)==0){    
+                   $sql = 'insert into vacaciones values(null, ?, ?, ?, ?, "Pendiente", ?, null, now(), null, ?)';
+                   $result = $this->db->prepare($sql);
+                   $result->execute(array($data->__GET('FechaI'), 
+                   $data->__GET('FechaF'),
+                   $data->__GET('Tipo'), 
+                   $total, //$data->__GET('CantDias'), 
+                   $data->__GET('IdEmpleado'),
+                   $data->__GET('Descripcion')));
+               /*}else {
+                   echo 'Existen días feriados en el rango seleccionado, favor ingresar solicitudes independientes.';
+               } */           
+  }
 
        public function update($id, $Estado){
            $sql= "update vacaciones set Estado = ?, IdRespSup = ?, FechaRespuesta = now() where IdVacaciones = ?; ";

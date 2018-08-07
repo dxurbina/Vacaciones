@@ -79,8 +79,6 @@ $(document).ready(function(){
             });
 
     });
-
-
 });
 
 $(document).on('click', '#btn_update_csv', function (e) {
@@ -131,22 +129,53 @@ function sendDataAjax() {
             
             for (var i = 0; i < data.length; i++) {
                 tabla.fnAddData([
-                    //data[i].IdEmpleado,
+                    data[i].IdEmpleado,
                     ( data[i].PNombre + " "+ data[i].PApellido),
                     //( data[i].PApellido + " "+ data[i].SApellido),
                     data[i].NombreCargo,
                     data[i].Saldo,
-                    /* '<button title= "Editar/ver" value= "Actualizar" class="btn btn-primary btn-edit " data-target="#imodal" data-toggle="modal"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
-                    '<button title= "Editar Usuario" value= "EditUser" class="btn btn-primary btn-usr " data-target="#imodalusr" data-toggle="modal"><i class="fa fa-user-o" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
+                    data[i].Factor,
+                    '<button title= "Sugerir vacaciones" value= "Sugerir" class="btn btn-primary btn-edit "><i class="fa fa-calendar" aria-hidden="true"></i></button>&nbsp;&nbsp;'
+                    /* '<button title= "Editar Usuario" value= "EditUser" class="btn btn-primary btn-usr " data-target="#imodalusr" data-toggle="modal"><i class="fa fa-user-o" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
                     '<button title= "Eliminar" value= "Borrar" class="btn btn-danger btn-del "><i class="fa fa-eraser" aria-hidden="true"></i></button>'
                    */
                 ]);
             }
         }
     });
+}
+sendDataAjax();
+
+// evento click para boton actualizar
+$(document).on('click', '.btn-edit', function (e) {
+    e.preventDefault();
+    $("#modalSolSugerir").modal("show");
+    var _row = $(this).parent().parent()[0];
+    dato = tabla.fnGetData(_row);
+    idEmpleado = dato[0];
+    fillModalData(dato);
+ 
+});
+
+function fillModalData(dato){
+    var obj = JSON.stringify({ id: dato[0] });
+    console.log(obj);
+    $.ajax({
+        data: obj,
+        url: "?c=SaldoColaboradores&a=listFacByEmp",
+        type: "POST",
+        dataType: 'json',
+        contentType: 'application/json; charset= utf-8',
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+        },
+        success: function (data) {
+            //console.log(data.IdEmpleado);
+            $("#idEmp").val(data.IdEmpleado);
+            $("#factor3").val(data.Factor);
+            $("#SaldoAct").val(data.Saldo);
+        }
+    });
 
 }
 
-
-
-sendDataAjax();
