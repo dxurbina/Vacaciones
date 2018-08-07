@@ -15,10 +15,10 @@ class SaldoColaboradoresDAO{
     public function SaldoColaboradores(){
         try{
             $resulSet = array();
-            $consult = $this->db->prepare("select e.IdEmpleado, PNombre, PApellido, NombreCargo, Saldo, f.Factor from saldovacaciones sv 
+            $consult = $this->db->prepare("select e.IdEmpleado, e.PNombre, e.PApellido, c.NombreCargo, sv.Saldo, f.Factor from saldovacaciones sv 
             inner join empleados e on e.IdEmpleado=sv.IdEmpleado
             inner join cargos c on e.IdCargo=c.IdCargo
-            inner join Factor f on f.IdFactor=c.IdFactor; ");
+            inner join factor f on f.IdFactor=c.IdFactor; ");
             $consult -> execute(array());
             while($row = $consult->fetchAll(PDO::FETCH_OBJ)){
                 $resulSet = $row;

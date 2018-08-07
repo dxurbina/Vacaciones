@@ -104,7 +104,7 @@ public function storeSugerir(){
         $this->obj->__SET('IdEmpleado', $_REQUEST['idEmpleado']);
         $this->model->storeSugerir($this->obj, $this->obj->FechaI, $this->obj->FechaF, $this->obj->CantDias);
         $estado = "Solicitud";
-        $this->modelNotif->store(null, $estado);
+        $this->modelNotif->storeNotiSugerir(null, $estado, $this->obj->IdEmpleado);
         if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
             header('Location: index.php?c=SaldoColaboradores');
         }else if(isset($_SESSION['nickname'])and $_SESSION['access'] == 2){
