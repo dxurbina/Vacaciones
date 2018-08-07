@@ -70,7 +70,7 @@ function addmsg(type, msg) {
                         '<li >' + 
                        // '<a href="?c=Vacaciones&a=requests"><span class="tab fa fa-info-circle">  ' + data[i].Mensaje + '</span></a> ' + 
                       ' <div class="col-md-3 col-sm-3 col-xs-3"><span class="fa fa-calendar"></div>'+
-                      ' <div class="col-md-9 col-sm-9 col-xs-9 pd-l0"><a onclick="riseup_modal(' +  data[i].IdNotificacion + ')" href="#" '+ data[i].Mensaje + '</a>'+
+                      ' <div class="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href="#" '+ data[i].Mensaje + '</a>'+
                        
                       '<hr>'+
                       ' </div>'+
@@ -91,7 +91,7 @@ function riseup_modal(var_id){
 
 $(document).on('click', '#btn_update_csv_accepted', function (e) {
     e.preventDefault();
-    var _select = $("#pass_3").val();
+    var _select = $("#pass_4").val();
     var obj = JSON.stringify({ pass: _select });
     
     flag = false;
@@ -228,7 +228,7 @@ $(document).ready(function() {
     });
     
     $(document).on("click", "#_download_", function(e){
-       // console.log(id_file);
+        console.log(id_file);
         var obj = JSON.stringify({ id: id_file });
         $.ajax({
             url: "?c=SaldoColaboradores&a=get_file",
@@ -237,7 +237,7 @@ $(document).ready(function() {
             dataType: 'json',
             contentType: 'application/json; charset= utf-8',
             success: function(data){
-               // console.log(data);  
+                console.log(data);  
                 dow_file = data;
                window.location.href='uploads/' + dow_file;
             }

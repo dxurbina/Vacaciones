@@ -157,7 +157,7 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group"><label>Contraseña</label></div>
-                            <div class="form-group"><input class="store-val" type="password" id="pass_3" name="p"/></div>
+                            <div class="form-group"><input class="store-val" type="password" id="pass_4" name="p"/></div>
                                 
                         </div>
                     </div> 

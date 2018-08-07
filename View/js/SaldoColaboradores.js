@@ -83,7 +83,7 @@ $(document).ready(function(){
 
 $(document).on('click', '#btn_update_csv', function (e) {
     e.preventDefault();
-    var _select = $("#pass_2").val();
+    var _select = $("#pass_3").val();
     var obj = JSON.stringify({ pass: _select });
     flag = false;
     $.ajax({
