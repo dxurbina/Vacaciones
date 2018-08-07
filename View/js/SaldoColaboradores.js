@@ -142,13 +142,12 @@ function sendDataAjax() {
             }
         }
     });
-
 }
 sendDataAjax();
 
 // evento click para boton actualizar
 $(document).on('click', '.btn-edit', function (e) {
-    //e.preventDefault();
+    e.preventDefault();
     $("#modalSolSugerir").modal("show");
     var _row = $(this).parent().parent()[0];
     dato = tabla.fnGetData(_row);
@@ -170,7 +169,7 @@ function fillModalData(dato){
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
-            console.log(data.IdEmpleado);
+            //console.log(data.IdEmpleado);
             $("#idEmp").val(data.IdEmpleado);
             $("#factor3").val(data.Factor);
             $("#SaldoAct").val(data.Saldo);

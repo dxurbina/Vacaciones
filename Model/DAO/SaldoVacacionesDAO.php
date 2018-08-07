@@ -140,11 +140,12 @@ class SaldoVacacionesDAO{
              /* List Balance by each Id obtained in the past method*/
         for($i = 0; $i < count($global); $i++){
             for($j = 0; $j < count($global[$i]); $j++){
-                $sql = "select e.IdEmpleado, e.PNombre, e.PApellido, s.Saldo, c.NombreCargo, ej.PNombre as NJefe, ej.PApellido as AJefe
-                        from empleados e inner join saldovacaciones s on e.IdEmpleado = s.IdEmpleado 
-                        inner join empleados ej on e.IdJefe = ej.IdEmpleado,
-                            cargos c where e.IdCargo = c.IdCargo and e.Estado = 1
-                        and e.IdJefe = ?;"; 
+                $sql = "select e.IdEmpleado, e.PNombre, e.PApellido, s.Saldo, c.NombreCargo, ej.PNombre as NJefe, ej.PApellido as AJefe, f.Factor
+                        from empleados e 
+                        inner join saldovacaciones s on e.IdEmpleado = s.IdEmpleado 
+                        inner join empleados ej on e.IdJefe = ej.IdEmpleado, cargos c
+                        inner join factor f on f.IdFactor=c.IdFactor  
+                        where e.IdCargo = c.IdCargo and e.Estado = 1 and e.IdJefe = ?;"; 
                 
                 $consult = $this->db->prepare($sql);
                 $foo = $global[$i][$j]->IdEmpleado;

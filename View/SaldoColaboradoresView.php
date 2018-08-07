@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <div  class="modal fade" id ="_open_" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div  class="modal fade" id ="_open_" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -64,11 +64,10 @@
                             <div class="form-group"><input class="store-val" type="password" id="pass_3" name="pass_3"/></div>
                                 
                         </div>
-
+                    </div>
                     
                 </div>
                 <div class="modal-footer">
-                
                     <input type="submit" class="btn btn-primary" id="btn_update_csv" value="Deducir"></input>
                 </div>
                 
