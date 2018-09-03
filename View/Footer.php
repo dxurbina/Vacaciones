@@ -209,7 +209,7 @@
         e.preventDefault();
 
         var _select = $("#usrI").val();
-        //console.log(_select);
+        console.log(_select);
         var obj = JSON.stringify({ Nombre: _select });
         flag = false;
         $.ajax({
@@ -224,7 +224,8 @@
             success: function (data) {
               //  console.log(data);
                 $(data).each(function(i, v){ // indice, valor
-                    if(v.Usuario == _select && v.IdUsuario != row ){
+                    console.log(v.IdEmpleado);
+                    if(v.Usuario == _select && v.IdEmpleado != row ){
                         flag = true;
                     }
                 })

@@ -14,6 +14,7 @@
             $consult = $this->db->prepare($sql);
             $consult->execute(array($data->__GET('Nombre'), $data->__GET('Codigo'), $data->__GET('IdDep')));
         
+            
         }
 
         public function destroy($id){

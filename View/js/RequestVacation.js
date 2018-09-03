@@ -147,6 +147,7 @@ $(document).on('click', '#update', function(e){
         dataType: 'json',
         contentType: 'application/json; charset= utf-8',
         error: function(xhr, ajaxOptions, thrownError){
+            location.reload(true); 
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {

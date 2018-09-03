@@ -668,7 +668,7 @@ function fillModalData(dato){
 
     $(document).on('click', '#btnUser', function (e) {
         e.preventDefault();
-
+        console.log(row);
         var _select = $("#usr").val();
         //console.log(_select);
         var obj = JSON.stringify({ Nombre: _select });
@@ -685,7 +685,7 @@ function fillModalData(dato){
             success: function (data) {
               //  console.log(data);
                 $(data).each(function(i, v){ // indice, valor
-                    if(v.Usuario == _select && v.IdUsuario != row ){
+                    if(v.Usuario == _select && v.IdEmpleado != row ){
                         flag = true;
                     }
                 })

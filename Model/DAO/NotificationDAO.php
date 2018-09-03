@@ -30,6 +30,8 @@ class NotificationDAO{
                 $nombreDesti = $row->PNombre . " " . $row->PApellido;
                 $destinatario = $row->IdJefe;
                 $correo = $row->correo;
+            }else{
+                exit;
             }
 
             /* Cargar el destinatario por medio de la solicitud */
@@ -38,7 +40,7 @@ class NotificationDAO{
             $consult2 = $this->db->prepare($sql2);
             $consult2->execute(array($id_solicitud));
             if($row = $consult2->fetch(PDO::FETCH_OBJ)){
-                $nombreDesti = $row->PNombre . " " . $row->PApellido;
+               // $nombreDesti = $row->PNombre . " " . $row->PApellido;
                 $destinatario = $row->IdEmpleado;
                 $correo = $row->correo;
             }

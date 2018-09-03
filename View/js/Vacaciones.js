@@ -135,7 +135,7 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
             $('#pointer').val(oldDay + "/" + "0" + oldMes + "/" + oldAnio);
         }*/
             
-            console.log(fecha2);
+            //console.log(fecha2);
            // $("#dateF").datepicker("setDate", fecha2);
          //  $('#pointer').val(fecha2.toLocaleDateString("es-ES", options));
             //$("#pointer").datepicker("setDate", fecha);
@@ -408,7 +408,7 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
                 var resultado = sal.toFixed(2);
                 $("label[for='SaldoT']").text(resultado);
             }
-            
+            /**/
             //$('#ExtraDateEnd').val(fecha.toLocaleDateString("es-ES", options));
             //$('#ExtraDateIni').val(fecha.toLocaleDateString("es-ES", options));
             $('#ExtraDateIni').datepicker(
@@ -454,8 +454,15 @@ function sumarDias(fecha, dias){
     radioSeleccionado();
     var cantDias = document.getElementById('NumDay').value;
     var FechaI = document.getElementById('pointer').value;
+    var _text_area = document.getElementById('comentarios').value;
+    console.log(_text_area);
     if((cantDias!=null && cantDias!= "") && valor!=null && (FechaI!=null && FechaI!= ""))
     {
+        if(_text_area.length < 100 ){
+            $("#imodalsolacep").modal("show");
+        }else{
+            alert("El comentario debe tener maximo 100 caracteres");
+        }
         /*$.ajax({
             url: "?c=Vacaciones&a=store",
             type: "POST",
@@ -467,7 +474,7 @@ function sumarDias(fecha, dias){
             }
             });*/
        
-             $("#imodalsolacep").modal("show");
+             
             //alert('solicitud enviada correctamente.');
     } else {
         //alert("Debe completar los campos");
@@ -550,3 +557,66 @@ function ListaFeriados(){
     });
 }
 //ListaFeriados();
+
+/*$(document).on('click', '#ActDonar', function (e) {
+    e.preventDefault();
+console.log("Entra aquí");
+
+//Mandar un mensaje de confirmación para capturar el valor y hace según 
+    var act = confirm('¿Seguro que desea activar la opción de donar vacaciones en el sistema?');
+    if(act) {
+    e.preventDefault;
+    console.log(act);
+    /*$("#Donar").show();
+        location.reload();*/
+       // $(':radio:not(:checked)').attr('disabled', true); 
+      /* function mostrar(){
+        document.getElementById('oculto').style.display = 'block';}
+    } else{
+        $("#Donar").hide();
+    }
+});*/
+
+//Clic para guardar el estado de Habilitar a través de ajax 
+$(document).on('click', '#ActDonarMostar', function (e) {
+        e.preventDefault();
+        //Mandar un mensaje de confirmación para capturar el valor y hace según 
+    var act = confirm('¿Seguro que desea activar la opción de donar vacaciones en el sistema?');
+    if(act) {
+        $.ajax({
+            data: {}, 
+            url: "?c=SaldoVacaciones&a=ActEstadoConfig",
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json; charset= utf-8',
+            error: function(xhr, ajaxOptions, thrownError){
+                console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+            },
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    }return false;
+});
+
+$(document).on('click', '#ActDonarOcultar', function (e) {
+    e.preventDefault();
+    //Mandar un mensaje de confirmación para capturar el valor y hace según 
+var act = confirm('¿Seguro que desea inhabilitar la opción de donar vacaciones en el sistema?');
+if(act) {
+    $.ajax({
+        data: {}, 
+        url: "?c=SaldoVacaciones&a=ActEstadoConfig2",
+        type: "POST",
+        dataType: 'json',
+        contentType: 'application/json; charset= utf-8',
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+        },
+        success: function (data) {
+            console.log(data);
+        }
+    });
+}return false;
+});
+

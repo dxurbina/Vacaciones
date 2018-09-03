@@ -84,7 +84,16 @@
   }
 
        public function update($id, $Estado){
-           $sql= "update vacaciones set Estado = ?, IdRespSup = ?, FechaRespuesta = now() where IdVacaciones = ?; ";
+        $pend;
+        $sql = "select Estado from vacaciones where IdVacaciones = ?;";
+        $consult = $this->db->prepare($sql);
+        $consult->execute(array($id));
+            if($row = $consult->fetch(PDO::FETCH_OBJ)){
+                $pend = $row->Estado;
+        }
+
+        if($pend == 'Pendiente'){ 
+            $sql= "update vacaciones set Estado = ?, IdRespSup = ?, FechaRespuesta = now() where IdVacaciones = ?; ";
            $result = $this->db->prepare($sql);
            $result->execute(array($Estado, $_SESSION['ID']->IdEmpleado, $id));
            if($Estado == "Aceptada" || $Estado == "Revertida"){
@@ -93,6 +102,8 @@
             $stmt->bindParam(1, $id, PDO::PARAM_INT, 10);
             $stmt->execute();
            }
+        }
+
        }
 
     public function showAll(){
