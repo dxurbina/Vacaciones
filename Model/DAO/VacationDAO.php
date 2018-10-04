@@ -92,19 +92,21 @@
                 $pend = $row->Estado;
         }
 
-        if($pend == 'Pendiente'){ 
+        if($pend == $Estado){ 
+           
+           }else{
             $sql= "update vacaciones set Estado = ?, IdRespSup = ?, FechaRespuesta = now() where IdVacaciones = ?; ";
-           $result = $this->db->prepare($sql);
-           $result->execute(array($Estado, $_SESSION['ID']->IdEmpleado, $id));
-           if($Estado == "Aceptada" || $Estado == "Revertida"){
-            $sql = "call UpdateSaldoRequested(?)";
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(1, $id, PDO::PARAM_INT, 10);
-            $stmt->execute();
+            $result = $this->db->prepare($sql);
+            $result->execute(array($Estado, $_SESSION['ID']->IdEmpleado, $id));
+            if($Estado == "Aceptada" || $Estado == "Revertida"){
+             $sql = "call UpdateSaldoRequested(?)";
+             $stmt = $this->db->prepare($sql);
+             $stmt->bindParam(1, $id, PDO::PARAM_INT, 10);
+             $stmt->execute();
            }
         }
-
-       }
+    }
+       
 
     public function showAll(){
         $flag = true; $flag2 = true;

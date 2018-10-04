@@ -106,17 +106,20 @@ class SaldoColaboradoresDAO{
         echo "before";
         for($i = 1; $i < $linea; $i++){
         
-        /* incrementar saldo a todo los colaboradores*/
-            $cedula = $__file__[$i][0];
-            $saldo = $__file__[$i][1];
-            $saldo = ltrim($saldo);
-            $saldo = rtrim($saldo);
-            var_dump($saldo);
-        $sql = "call updatesaldoupload(?, ?);ç";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(1, $cedula, PDO::PARAM_STR, 20);
-        $stmt->bindParam(2, $saldo, PDO::PARAM_STR, 10);
-        $stmt->execute();
+            /* incrementar saldo a todo los colaboradores*/
+                $cedula = $__file__[$i][0];
+                $saldo = $__file__[$i][1];
+                $saldo = ltrim($saldo);
+                $saldo = rtrim($saldo);
+                $cedula = ltrim($cedula);
+                $cedula = rtrim($cedula);
+                var_dump($saldo);
+                var_dump($cedula);
+            $sql = "call updatesaldoupload(?, ?);";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(1, $cedula, PDO::PARAM_STR, 20);
+            $stmt->bindParam(2, $saldo, PDO::PARAM_STR, 10);
+            $stmt->execute();
         }
 
       

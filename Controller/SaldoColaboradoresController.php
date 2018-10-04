@@ -124,7 +124,7 @@ public function SaldoColaboradores(){
             //Abrimos nuestro archivo
             //$archivo = fopen("clientes.csv", "r");*/
             $origen = $_FILES["archivo"]['tmp_name'] ;
-            echo $origen;
+           // echo $origen;
             $archivo = fopen($origen, "r");
 
             //Lo recorremos
@@ -139,9 +139,10 @@ public function SaldoColaboradores(){
             for ($columna = 0; $columna < $num; $columna++) 
                 {
                     $result = $datos[$columna] . "\n";
+                    echo $result;
                     array_push($row, $result);
                 }
-                echo $linea;
+               // echo $linea;
              $csv_upload[$linea] = $row;
              $linea++;
             }
