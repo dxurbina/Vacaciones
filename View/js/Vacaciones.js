@@ -478,7 +478,7 @@ function sumarDias(fecha, dias){
             //alert('solicitud enviada correctamente.');
     } else {
         //alert("Debe completar los campos");
-        return $("#imodalsolinfo").modal("show");
+         //$("#imodalsolinfo").modal("show");
     }
   });
 
