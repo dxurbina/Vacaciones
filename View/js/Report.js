@@ -70,8 +70,6 @@ jQuery(function($){
           return date;
         }
       } );
-   
-        
 
     //Datepicker con solo los meses del año, con el año actual.
     $(function() {
@@ -97,4 +95,30 @@ jQuery(function($){
       "display": "none"
     });
   }); 
+
+  //Validación de los radio buton
+  function validacion() {
+    var rango = ($("input:radio[name=Tipo]:checked").val());
+    var mes =($("input:radio[name=Tipo]:checked").val());
+    
+    if(rango == 'RangoFechas'){
+      document.getElementById("mes").disabled = true;
+      document.getElementById("entrada").disabled = false;
+      document.getElementById("salida").disabled = false;
+      //Si hay valor en el input habilitado lo limpia.
+      document.getElementById("mes").value = "";
+    }else if(mes=='Mes'){
+      document.getElementById("entrada").disabled = true;
+      document.getElementById("salida").disabled = true;
+      document.getElementById("mes").disabled = false;
+      //Si hay valor en el input habilitado lo limpia.
+      document.getElementById("entrada").value = "";
+      document.getElementById("salida").value = "";
+    }
+  }
+
+  $("input:radio[name=Tipo]").on('click', this, function(){
+    validacion();
+   });
+
 });
