@@ -408,7 +408,7 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
                 var resultado = sal.toFixed(2);
                 $("label[for='SaldoT']").text(resultado);
             }
-            
+            /**/
             //$('#ExtraDateEnd').val(fecha.toLocaleDateString("es-ES", options));
             //$('#ExtraDateIni').val(fecha.toLocaleDateString("es-ES", options));
             $('#ExtraDateIni').datepicker(
@@ -454,24 +454,18 @@ function sumarDias(fecha, dias){
     radioSeleccionado();
     var cantDias = document.getElementById('NumDay').value;
     var FechaI = document.getElementById('pointer').value;
-    if((cantDias!=null && cantDias!= "") && valor!=null && (FechaI!=null && FechaI!= ""))
-    {
-        /*$.ajax({
-            url: "?c=Vacaciones&a=store",
-            type: "POST",
-            dataType: 'json',
-            contentType: 'application/json; charset= utf-8',
-            success: function(data){
-                //console.log('Todo ha funcionado');
-                //location.reload(true); 
-            }
-            });*/
-       
-             $("#imodalsolacep").modal("show");
-            //alert('solicitud enviada correctamente.');
-    } else {
+    var txtarea = document.getElementById('comentarios').value;
+    if(cantDias==null || cantDias== ""){
+        alert("Debe ingresar los días de vacaciones");
+    }else if(valor==null ){
+        alert("Debe seleccionar el tipo de vacaciones");
+    } else if(FechaI==null || FechaI== ""){
+        alert("Debe seleccionar la fecha de inicio de vacaciones");
+    }
+    // $("#imodalsolacep").modal("show");
+  else {
         //alert("Debe completar los campos");
-        return $("#imodalsolinfo").modal("show");
+         //$("#imodalsolinfo").modal("show");
     }
   });
 
@@ -550,3 +544,66 @@ function ListaFeriados(){
     });
 }
 //ListaFeriados();
+
+/*$(document).on('click', '#ActDonar', function (e) {
+    e.preventDefault();
+console.log("Entra aquí");
+
+//Mandar un mensaje de confirmación para capturar el valor y hace según 
+    var act = confirm('¿Seguro que desea activar la opción de donar vacaciones en el sistema?');
+    if(act) {
+    e.preventDefault;
+    console.log(act);
+    /*$("#Donar").show();
+        location.reload();*/
+       // $(':radio:not(:checked)').attr('disabled', true); 
+      /* function mostrar(){
+        document.getElementById('oculto').style.display = 'block';}
+    } else{
+        $("#Donar").hide();
+    }
+});*/
+
+//Clic para guardar el estado de Habilitar a través de ajax 
+$(document).on('click', '#ActDonarMostar', function (e) {
+        e.preventDefault();
+        //Mandar un mensaje de confirmación para capturar el valor y hace según 
+    var act = confirm('¿Seguro que desea activar la opción de donar vacaciones en el sistema?');
+    if(act) {
+        $.ajax({
+            data: {}, 
+            url: "?c=SaldoVacaciones&a=ActEstadoConfig",
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json; charset= utf-8',
+            error: function(xhr, ajaxOptions, thrownError){
+                console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+            },
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    }return false;
+});
+
+$(document).on('click', '#ActDonarOcultar', function (e) {
+    e.preventDefault();
+    //Mandar un mensaje de confirmación para capturar el valor y hace según 
+var act = confirm('¿Seguro que desea inhabilitar la opción de donar vacaciones en el sistema?');
+if(act) {
+    $.ajax({
+        data: {}, 
+        url: "?c=SaldoVacaciones&a=ActEstadoConfig2",
+        type: "POST",
+        dataType: 'json',
+        contentType: 'application/json; charset= utf-8',
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+        },
+        success: function (data) {
+            console.log(data);
+        }
+    });
+}return false;
+});
+

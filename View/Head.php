@@ -211,7 +211,7 @@
             <li><a href="?c=Vacaciones&a=Requests"><i class="fa fa-link"></i> <span>Solicitudes de Colaboradores</span></a></li>
             <li><a href="?c=SaldoVacaciones&a=indexHistory"><i class="fa fa-link"></i> <span>Saldo de colaboradores</span></a></li>
               <li class="treeview">
-            <a href="#"><i class="fa fa-link"></i> <span>Catálogo</span>
+            <a href="#"><i class="fa fa-th-list"></i> <span>Catálogo</span>
               <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
@@ -238,7 +238,7 @@
             <li><a href="?c=Vacaciones&a=Requests"><i class="fa fa-link"></i> <span>Solicitudes de Colaboradores</span></a></li>
             <li><a href="?c=SaldoVacaciones&a=indexHistory"><i class="fa fa-link"></i> <span>Saldo de colaboradores</span></a></li>
             <li class="treeview">
-            <a href="#"><i class="fa fa-link"></i> <span>Catálogo</span>
+            <a href="#"><i class="fa fa-th-list"></i> <span>Catálogo</span>
               <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
@@ -263,7 +263,7 @@
           <li><a href="?c=Empleado&a=ListEmployeeView"><i class="fa fa-link"></i> <span>Registros de Colaboradores</span></a></li>
           <li><a href="?c=SaldoVacaciones"><i class="fa fa-link"></i> <span>Mi Saldo</span></a></li>
             <li class="treeview">
-            <a href="#"><i class="fa fa-link"></i> <span>Catálogo</span>
+            <a href="#"><i class="fa fa-th-list"></i> <span>Catálogo</span>
               <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
@@ -279,9 +279,8 @@
               <li><a href="?c=SaldoColaboradores">Saldo de colaboradores</a></li>
               <li><a href="?c=EmpleadosInactivos">Colaboradores inactivos</a></li>
             </ul>
-
-
           </li>
+          <li><a href="?c=SaldoVacaciones&a=indexConfigurar"><i class="fa fa-cog"></i> <span>Configurar Donación</span></a></li>
           
         <?php }else if( isset($_SESSION['access']) && $_SESSION['access'] == 2){ ?>
              <!-- <p>Usted tiene personal a cargo</p><br> -->

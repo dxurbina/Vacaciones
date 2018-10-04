@@ -36,7 +36,8 @@ class SaldoVacacionesDAO{
             try{
                 $id = $_SESSION['ID']->IdEmpleado; //Captura el id del usuario logueado
                 $resulSet = array();
-                $consult = $this->db->prepare("select v.IdVacaciones, e.PNombre, e.PApellido,  c.NombreCargo, v.CantDias, v.FechaI, v.FechaF, v.Tipo, v.FechaSolicitud, v.FechaRespuesta, v.Estado, v.Descripcion from vacaciones v
+                $consult = $this->db->prepare("select v.IdVacaciones, e.PNombre, e.PApellido,  c.NombreCargo, v.CantDias, v.FechaI, v.FechaF, v.Tipo, v.FechaSolicitud, v.FechaRespuesta, v.Estado, v.Descripcion 
+                from vacaciones v
                 inner join empleados e on e.IdEmpleado=v.IdEmpleado
                 inner join cargos c on c.IdCargo=e.IdCargo
                 where e.IdCargo=c.IdCargo and v.IdEmpleado=?
@@ -51,53 +52,6 @@ class SaldoVacacionesDAO{
             }
         
         }
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public function ShowHistory(){
         $flag = true; $flag2 = true;
@@ -203,6 +157,42 @@ class SaldoVacacionesDAO{
            
         return $resulSet2;
     }
+
+    //Función que retorna lista de las configuraciones.
+    public function ListConfig(){
+        $donar = null;
+        $sql = "select * from configuraciones where Tipo = 'Donar' and Estado = 1;";
+        $result = $this->db->prepare($sql);
+        $result->execute(array());
+        if($row = $result->fetch(PDO::FETCH_OBJ)){
+            $donar=$row->Estado;
+        }
+        return $donar;
+       }
+
+         
    
+    //Función para actualizar en la tabla configuraciones
+    public function ActEstadoConfig(){
+        try{
+            $consult = $this->db->prepare("update configuraciones set Estado = 1 where IdConfig = 1;");
+            $consult->execute();
+        }catch (Exception $e){
+            die($e->getMessage());
+        }
+    
+    }
+
+    //Función para actualizar en la tabla configuraciones
+    public function ActEstadoConfig2(){
+        try{
+            $consult = $this->db->prepare("update configuraciones set Estado = 0 where IdConfig = 1;");
+            $consult->execute();
+        }catch (Exception $e){
+            die($e->getMessage());
+        }
+    
+    }
+
 }
 ?>

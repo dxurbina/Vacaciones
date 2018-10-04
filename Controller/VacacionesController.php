@@ -35,8 +35,8 @@ class VacacionesController{
         header('Location: index.php?c=Principal&a=AccessError');
     }
     }
-       //Funciona correctamente 08-05-18 3:05 pm
-    /*public function store(){
+
+    public function store(){
         if(isset($_SESSION['nickname'])){
          $this->obj->__SET('Tipo', $_REQUEST['Tipo']);
             $this->obj->__SET('CantDias', $_REQUEST['CantDias']);
@@ -51,39 +51,14 @@ class VacacionesController{
             $nums = explode('/', $originalDate);
             $this->obj->__SET('FechaF', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
             $this->obj->__SET('Descripcion', $_REQUEST['Descripcion']);
-            $this->model->store($this->obj, $this->obj->FechaI, $this->obj->FechaF);
+            $this->model->store($this->obj, $this->obj->FechaI, $this->obj->FechaF, $this->obj->CantDias);
             $estado = "Solicitud";
             $this->modelNotif->store(null, $estado);
             header('Location: index.php?c=SaldoVacaciones');
         }else {
             header('Location: index.php?c=Principal&a=AccessError');
         }
-    }*/
-
-
- public function store(){
-    if(isset($_SESSION['nickname'])){
-     $this->obj->__SET('Tipo', $_REQUEST['Tipo']);
-        $this->obj->__SET('CantDias', $_REQUEST['CantDias']);
-        $originalDate = $_REQUEST['FechaI'];
-        $originalDate = ltrim($originalDate);
-        $originalDate = rtrim($originalDate);
-        $nums = explode('/', $originalDate);
-        $this->obj->__SET('FechaI', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
-        $originalDate = $_REQUEST['FechaF'];
-        $originalDate = ltrim($originalDate);
-        $originalDate = rtrim($originalDate);
-        $nums = explode('/', $originalDate);
-        $this->obj->__SET('FechaF', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
-        $this->obj->__SET('Descripcion', $_REQUEST['Descripcion']);
-        $this->model->store($this->obj, $this->obj->FechaI, $this->obj->FechaF, $this->obj->CantDias);
-        $estado = "Solicitud";
-        $this->modelNotif->store(null, $estado);
-        header('Location: index.php?c=SaldoVacaciones');
-    }else {
-        header('Location: index.php?c=Principal&a=AccessError');
     }
-}
 
 //Lista para guardar la sugerencia del colaborador desde saldo colaboradores
 public function storeSugerir(){
@@ -104,7 +79,7 @@ public function storeSugerir(){
         $this->obj->__SET('IdEmpleado', $_REQUEST['idEmpleado']);
         $this->model->storeSugerir($this->obj, $this->obj->FechaI, $this->obj->FechaF, $this->obj->CantDias);
         $estado = "Solicitud";
-        $this->modelNotif->store(null, $estado);
+        $this->modelNotif->storeNotiSugerir(null, $estado, $this->obj->IdEmpleado);
         if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
             header('Location: index.php?c=SaldoColaboradores');
         }else if(isset($_SESSION['nickname'])and $_SESSION['access'] == 2){
@@ -230,42 +205,6 @@ public function EditSolicitud(){ //ESTA FUNCIONA 3/05/18 3:30
         header('Location: index.php?c=Principal&a=AccessError');
     }
 }
-
-
-/*public function EditSolicitud(){
-    if(isset($_SESSION['nickname'])){
-     $this->obj->__SET('Tipo', $_REQUEST['Tipo']);
-     $this->obj->__SET('CantDias', $_REQUEST['CantDias']);
-            if($nums = explode('/', $originalDate)){
-            $originalDate = $_REQUEST['FechaI'];
-            $originalDate = ltrim($originalDate);
-            $originalDate = rtrim($originalDate);
-            $this->obj->__SET('FechaI', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
-        } elseif ($nums = explode('-', $originalDate)){
-            $this->obj->__SET('FechaI', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
-        }
-        $originalDate = $_REQUEST['FechaF'];
-        $originalDate = ltrim($originalDate);
-        $originalDate = rtrim($originalDate);
-        $cambio1 = true;
-        if($cambio1){
-            $nums = explode('/', $originalDate);
-            $this->obj->__SET('FechaF', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
-        } elseif ($nums = explode('-', $originalDate)){
-            $this->obj->__SET('FechaF', $nums[2] . "-" . $nums[1] . "-" . $nums[0]);
-        }
-
-        $this->obj->__SET('Descripcion', $_REQUEST['Descripcion']);
-        $this->obj->__SET('IdVac', $_REQUEST['idVacaciones']);
-        $this->model->EditSolicitud($this->obj, $this->obj->FechaI, $this->obj->FechaF);
-        $estado = "Solicitud";
-        $this->modelNotif->store(null, $estado);
-        header('Location: index.php?c=SaldoVacaciones');
-    }else {
-        header('Location: index.php?c=Principal&a=AccessError');
-    }
-}*/
-
     //Función de cancelar la solicitud de vacaciones
     public function CancelarSolicitud(){
         if(isset($_SESSION['nickname'])){

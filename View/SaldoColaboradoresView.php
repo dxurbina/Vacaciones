@@ -186,7 +186,11 @@
                                 <input  hidden type = "text" id= "idEmp" name = "idEmpleado" />
                                 <input type="radio" name="Tipo" value="Vacaciones" checked> Vacaciones<br>
                                 <input type="radio" name="Tipo" value="Enfermedad"> Enfermedad<br>
-                                <input type="radio" name="Tipo" value="Permiso Especial"> Permiso Especial 
+                                <input type="radio" name="Tipo" value="Permiso Especial"> Permiso Especial <br>
+                                <?php if($this->donar == true){
+                                ?>
+                                <input type="radio" name="Tipo" value="Donar"> Donar
+                                <?php }?> 
                             </div>
                         </div>
                         <div class="col-xs-4">

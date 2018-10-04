@@ -144,32 +144,6 @@ $(document).on('click', '.btn-edit', function (e) {
     }   
  
 });
-  
- /* $(document).on('clik', '#editSol', function(e){
-      e.preventDefault();
-      var valores = $(this).parents("tr").find("td")[6].innerHTML; // obtiene una columna especifica de la fila seleccionada
-    console.log(valores);
-    if(valores=='Pendiente'){
-        var obj = idVacaciones = dato[0];
-        $ajax({
-            url: "?c=Vacaciones&a=EditSolicitud",
-            data: obj,
-            type: "POST",
-            dataType: 'json',
-            contentType: 'aplication/json; charset=utf8',
-            contentType: 'application/json; charset= utf-8',
-          error: function(xhr, ajaxOptions, thrownError){
-              console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
-          },
-            success: function(data){
-                console.log(data);
-            }
-        });
-    } else {
-        alert('Solo se pueden editar las Solicitudes que tienen un estado de Pendiente');
-    }   
-     
-  });*/
 
 // evento click para cancelar la solicitud de vacaciones
 $(document).on('click', '.btn-del', function (e) {
