@@ -186,7 +186,9 @@ function sendDataAjax2() {
         while(i != -1) {
           var accion;
           var dias =   calculardias(data[i].FechaRespuesta);
-          if(dias < 8 && data[i].Estado != 'Revertida' && data[i].Estado != 'Rechazada'){
+          console.log(dias);
+          //data[i].FechaF <= data[i].FechaRespuesta muestra el botón de revertir tomando como límite la fecha final.
+          if(data[i].FechaF <= data[i].FechaRespuesta && data[i].Estado != 'Revertida' && data[i].Estado != 'Rechazada'){
             accion = '<button title= "Revertir" value= "deny" class="btn btn-dark btn-revert" data-target="#imodal3" data-toggle="modal"><i class="fa fa-hand-o-left" aria-hidden="true"></i></i></button>'
         }else{
             accion = '-';

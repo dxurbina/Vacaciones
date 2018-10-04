@@ -78,8 +78,12 @@
                                 <input  hidden type = "text" id= "idVac" name = "idVacaciones" />
                                 <input type="radio" name="Tipo" value="Vacaciones" > Vacaciones<br>
                                 <input type="radio" name="Tipo" value="Enfermedad" > Enfermedad<br>
-                                <input type="radio" name="Tipo" value="Permiso Especial" > Permiso Especial
+                                <input type="radio" name="Tipo" value="Permiso Especial" > Permiso Especial<br>
+                                <!--Validación para mostar y ocultar el div según el estado de la tab config-->
+                                <?php if($this->donar == true){
+                                ?>
                                 <input type="radio" name="Tipo" value="Donar"> Donar
+                                <?php }?>
                             </div>
                         </div>
                         <div class="col-xs-4">
@@ -162,8 +166,22 @@
                                 <input type="radio" name="Tipo" value="Vacaciones" checked> Vacaciones<br>
                                 <input type="radio" name="Tipo" value="Enfermedad"> Enfermedad<br>
                                 <input type="radio" name="Tipo" value="Permiso Especial"> Permiso Especial <br>
+                                <!--<input type="radio" name="Tipo" value="Donar" disabled> Donar -->
+
+                                <!--Validación para mostar y ocultar el div según el estado de la tab config-->
+                                <?php if($this->donar == true){
+                                ?>
                                 <input type="radio" name="Tipo" value="Donar"> Donar
+                                <?php }?>
+
+                            <!--<label  class="donar" for="donar"></label>-->
                             </div>
+                            
+                            <!--Probando a ocultar el botón de donar -->
+                            <!--<div id = "donar" style='display:none;'>
+                                <input type="radio" name="Tipo" value="Donar"> Donar
+                            </div>-->
+                            
                         </div>
                         <div class="col-xs-4">
                                 <h3>Factor: </h3>
@@ -190,7 +208,7 @@
 
                         <div class="col-xs-4">
                             <div class="form-group">
-                                <label>Fecha de Inicio</label><input id="pointer" name ="FechaI"type="text" required readonly = "true"/>
+                                <label>Fecha de Inicio</label><input id="pointer" name ="FechaI"type="text" required class="readonly"/>
                             </div>
                         </div>
 
@@ -330,6 +348,8 @@ function valida(e){
     return patron.test(tecla_final);
 }
 </script>
+
+<script> $(".readonly").keydown(function(e){ e.preventDefault(); }); </script> 
 
 <?php
     }else {

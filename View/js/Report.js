@@ -70,57 +70,31 @@ jQuery(function($){
           return date;
         }
       } );
-      /*
-      $('#entrada').datepicker( { 
-        minDate: -7,
-        beforeShow: function() {
-        $(this).datepicker('option', 'maxDate', $('#salida').val());
-      }
-             });
-
-     $('#salida').datepicker(
-                 {
-                 defaultDate: "+1w",
-                 beforeShow: function() {
-                 $(this).datepicker('option', 'minDate', $('#salida').val());
-     if ($('#entrada').val() === '') $(this).datepicker('option', 'minDate', 0);                             
-                 }
-             });
-
-             $('#entrada').change(function(){
-              
-                    
-                       $('entrada').datepicker('option', 'maxDate', $('#salida').val());
-                     
-
-                
-                    $('#salida').datepicker('option', 'minDate', $('#entrada').val());
-                    if ($('#entrada').val() === '') $(this).datepicker('option', 'minDate', 0);                             
-                    
-            
-        });
-
-        $('#salida').change(function(){
-            $('#salida').datepicker(
-                {
-                defaultDate: "+1w",
-                beforeShow: function() {
-                $(this).datepicker('option', 'minDate', $('#salida').val());
-                if ($('#entrada').val() === '') $(this).datepicker('option', 'minDate', 0);                             
-                }
+   
         
-         });
-        });*/
- 
- /*
-    $('#entrada').datepicker(
-        { 
-            minDate: 0,
-            beforeShow: function() {
-            $(this).datepicker('option', 'maxDate', $('#salida').val());
-        }
-    });*/
-        
-    
-    
+
+    //Datepicker con solo los meses del año, con el año actual.
+    $(function() {
+      $('.date-picker').datepicker( {
+      closeText: 'Cerrar',
+      prevText: '<Ant',
+      nextText: 'Sig>',
+      currentText: 'Hoy',
+      monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+                changeMonth: true,
+                yearRange: "1900:2035",
+                showButtonPanel: true,
+                dateFormat: 'MM yy',
+                onClose: function(dateText, inst) { 
+                $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+            }
+      });
+  });
+
+  $('#mes').on('click', this, function(){
+    var element = $('.ui-datepicker-calendar').css({
+      "display": "none"
+    });
+  }); 
 });

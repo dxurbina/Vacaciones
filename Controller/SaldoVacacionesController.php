@@ -2,7 +2,7 @@
 //session_start();
 
 Class SaldoVacacionesController{
-    public $obj, $obju, $model, $emp,$IdEmp, $factor;
+    public $obj, $obju, $model, $emp,$IdEmp, $factor, $donar;
 
     public function __construct(){
     include('Model/DAO/SaldoVacacionesDAO.php');
@@ -18,6 +18,7 @@ Class SaldoVacacionesController{
 
     public function index(){
         if(isset($_SESSION['nickname'])){
+            $this->donar = $this->model->ListConfig();  // Lo agregue 09-08-2018 3:15 pm
             $this->emp = $this->model->SaldoVacaciones();
             $this->factor = $this->modelf->show();  //Lo acabo de agregar, esto esta en VacacionesController
             include("View/Head.php");
@@ -55,43 +56,6 @@ public function HistVac(){
         }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function indexHistory(){
         require('View/Head.php');
         require('View/BalanceHistoryView.php');
@@ -104,6 +68,38 @@ public function HistVac(){
         $datos = $this->model->ShowHistory();
         $this->var = json_encode( $datos);
         echo $this->var;
+        }else {
+            header('Location: index.php?c=Principal&a=AccessError');
+        }
+    }
+
+    //Desde aquí para mandar a llamar lo de la vista de Configurar donación. 07/08/2018
+    public function indexConfigurar(){
+        require('View/Head.php');
+        require('View/ConfigurarDonacionView.php');
+        require('View/Footer.php');
+    }
+
+    //Función para actualizar el estado de donar con estado true
+    public function ActEstadoConfig(){
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        header('Content-Type: application/json; charset=utf-8');
+        $datos = $this->model->ActEstadoConfig();
+        /*$this->var = json_encode( $datos);
+        echo $this->var;*/
+        $flag = true;
+        }else {
+            header('Location: index.php?c=Principal&a=AccessError');
+        }
+    }
+
+    //Función que carga la lista de los tipos de config
+    public function ActEstadoConfig2(){
+        if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
+        header('Content-Type: application/json; charset=utf-8');
+        $datos = $this->model->ActEstadoConfig2();
+        /*$this->var = json_encode( $datos);
+        echo $this->var;*/
         }else {
             header('Location: index.php?c=Principal&a=AccessError');
         }

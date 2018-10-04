@@ -317,6 +317,7 @@ $('#FechaIng').datepicker(
 $(document).on('click', '#btnRegistar', function (e) {
     e.preventDefault();
     var _select = $("#usuario").val();
+    var pass = $("#pass").val();
     var obj = JSON.stringify({ Usuario: _select });
     flag = false;
     $.ajax({
@@ -335,14 +336,22 @@ $(document).on('click', '#btnRegistar', function (e) {
                     flag = true;
                 }
             })
+            validacion();
             if(flag == false){
-                if(_select.length > 3 && _select.length < 20){
-                    //document.send.submit()   
-                    document.forms["send"].submit();
-                    //$("#imodalEmpacept").modal("show");
+                if(_select == "" || _select == null){
+                    alert("Debe ingresar el campo de usuario");                    
                 }else{
-                    alert('Dato no esperado');
+                    if(_select.length > 3 && _select.length < 20){
+                        if(pass == "" || pass == null){
+                            alert("Debe ingresar la contraseña del colaborador");    
+                        }else{
+                            document.forms["send"].submit();
+                        }
+                    }else{
+                        alert('El campo usuario debe ser mayor a 3 caracteres');
+                    }
                 }
+                
             }else{
                 alert("Este nombre de usuario ya existe, favor ingresar otro.");
             }
@@ -351,3 +360,42 @@ $(document).on('click', '#btnRegistar', function (e) {
         }
     });
 });
+
+function validacion(){
+/*Validación de los campos requeridos*/
+    var nombre = $("#PNombre").val();
+    var apellido = $("#PApellido").val();
+    var cedula = $("#Cedula").val();
+    var correo = $("#Correo").val();
+    var depto = $("#cboDepto").val();
+    var mun = $("#cboMun").val();
+    var ingreso = $("#FechaIng").val();
+    var deptoEmp = $("#dptoEmp").val();
+    var cargo = $("#cargos").val();
+    var jefe = $("#jefe").val();
+    
+
+            if((nombre == "") || (nombre == null)){
+                alert("Debe ingresar el nombre del colaborador");
+            }else if((apellido) == "" || (apellido == null)){
+                    alert("Debe ingresar el apellido del colaborador");
+            }else if((cedula == "") || (cedula == null)){
+                    alert("Debe ingresar la cédula del colaborador");
+            }else if((correo == "") || (correo == null)){
+                    alert("Debe ingresar el correo del colaborador");
+            }else if(depto == 0){
+                    alert("Debe seleccionar el departamento");
+            }else if(mun == 0){
+                    alert("Debe seleccionar el municipio");
+            }else if((ingreso == "") || (ingreso == null)){
+                    alert("Debe seleccionar la fecha de ingreso del colaborador");
+            }else if(deptoEmp == 0){
+                    alert("Debe seleccionar el departamento empresa");
+            }else if(cargo == 0){
+                    alert("Debe seleccionar el cargo del colaborador");
+            }else if(jefe == 0){
+                    alert("Debe seleccionar el jefe inmediato del colaborador");    
+            }else if(pass == "" || pass == null){
+                alert("Debe ingresar la contraseña del colaborador");    
+        }
+}

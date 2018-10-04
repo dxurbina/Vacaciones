@@ -10,15 +10,18 @@ Class SaldoColaboradoresController{
     require('Model/DAO/LoadDAO.php');
     include('Model/DAO/FactoresDAO.php'); //Agregado 30/07/2018 1:29pm
     include('Model/Entity/Vacation.php'); //Agregado 31/07/2018 9:21am
+    include('Model/DAO/SaldoVacacionesDAO.php'); //Agregado 09/08/2018 5:11pm
     $this->obj = new SaldoVacaciones();
     $this->obju = new User();
     $this->model = new SaldoColaboradoresDAO();
     $this->modelfe = new FactoresDAO(); //Agregado 30/07/2018 1:29pm
+    $this->modelVac = new SaldoVacacionesDAO(); //Agregado 09/08/2018 5:10pm
     
 }
 
     public function index(){
         if(isset($_SESSION['nickname'])){
+            $this->donar = $this->modelVac->ListConfig();  // Lo agregue 09-08-2018 3:15 pm
             include("View/Head.php");
             include("View/SaldoColaboradoresView.php");
             //$this->factor1;

@@ -70,7 +70,7 @@
                             <label>Comentarios</label>
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control" name="Descripcion" id="" cols="50" rows="5"></textarea>
+                            <textarea class="form-control" name="Descripcion" id="txtarea" cols="50" rows="5"></textarea>
                         </div>
 
                     </div>
