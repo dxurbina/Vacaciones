@@ -73,7 +73,30 @@ jQuery(function($){
 
     //Datepicker con solo los meses del año, con el año actual.
     $(function() {
-      $('.date-picker').datepicker( {
+      $(".date-picker").datepicker({
+        dateFormat: 'MM yy',
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+
+        onClose: function(dateText, inst) {
+            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            $(this).val($.datepicker.formatDate('dd/mm/yy', new Date(year, month, 1)));
+        }
+    });
+
+    $(".date-picker").focus(function () {
+      $(".ui-datepicker-calendar").hide();
+      $("#ui-datepicker-div").position({
+          my: "center top",
+          at: "center bottom",
+          of: $(this)
+      });
+  });
+
+
+    /*  $('.date-picker').datepicker( {
       closeText: 'Cerrar',
       prevText: '<Ant',
       nextText: 'Sig>',
@@ -81,20 +104,21 @@ jQuery(function($){
       monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
       monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
                 changeMonth: true,
-                yearRange: "1900:2035",
+                yearRange: "1900:2050",
                 showButtonPanel: true,
                 dateFormat: 'MM yy',
                 onClose: function(dateText, inst) { 
                 $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
             }
-      });
+      });*/
+      
   });
 
-  $('#mes').on('click', this, function(){
+ /* $('#mes').on('click', this, function(){
     var element = $('.ui-datepicker-calendar').css({
       "display": "none"
     });
-  }); 
+  }); */
 
   //Validación de los radio buton
   function validacion() {
