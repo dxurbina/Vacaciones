@@ -1,4 +1,5 @@
 var sum = 0;
+var id_file = 0;
 function addmsg(type, msg) {
     
  //console.log(msg[0].Tipo);
@@ -66,10 +67,10 @@ function addmsg(type, msg) {
                     });
                     $(".menu").prepend(
                         
-                        '<li>' + 
+                        '<li >' + 
                        // '<a href="?c=Vacaciones&a=requests"><span class="tab fa fa-info-circle">  ' + data[i].Mensaje + '</span></a> ' + 
                       ' <div class="col-md-3 col-sm-3 col-xs-3"><span class="fa fa-calendar"></div>'+
-                      ' <div class="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href="javascript:my_function();"> '+ data[i].Mensaje + '</a>'+
+                      ' <div class="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href="#" '+ data[i].Mensaje + '</a>'+
                        
                       '<hr>'+
                       ' </div>'+
@@ -80,9 +81,53 @@ function addmsg(type, msg) {
     }
 }
 
-function my_function(){
-    alert('you click me...');
+function riseup_modal(var_id){
+    id_file = var_id;
+    $("#_modal_notif_").modal("show");
+    
+   // value = _id;
+  //  console.log(_id);
 }
+
+$(document).on('click', '#btn_update_csv_accepted', function (e) {
+    e.preventDefault();
+    var _select = $("#pass_4").val();
+    var obj = JSON.stringify({ pass: _select });
+    
+    flag = false;
+    $.ajax({
+        data: obj,
+        url: "?c=Load&a=verify",
+        type: "POST",
+        dataType: 'json',
+        contentType: 'application/json; charset= utf-8',
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+        },
+        success: function (data) {
+            //console.log(data.d);
+            if(typeof data.IdEmpleado == "undefined"){
+                flag=true;
+            }
+            if(flag == false){
+                var obj = JSON.stringify({ id: id_file });
+                $.ajax({
+                    url: "?c=SaldoColaboradores&a=deduce_csv_accepted",
+                    type: "POST",
+                    data: obj,
+                    dataType: 'json',
+                    contentType: 'application/json; charset= utf-8'
+                    });  
+                    location.reload();
+            }else{
+                alert("Verifique contraseña. Dato no esperado!!");
+            }
+        }
+            
+        });
+
+});
+
 
 
 function showAll(){
@@ -128,10 +173,10 @@ function showAll(){
                     }else if(data[i].Tipo == 'aprobacion'){
                             $(".menu").prepend(
                                 
-                                '<li>' + 
+                                '<li id = "'+ data[i].IdNotificacion + ' ">' + 
                                // '<a href="?c=Vacaciones&a=requests"><span class="tab fa fa-info-circle">  ' + data[i].Mensaje + '</span></a> ' + 
                               ' <div class="col-md-3 col-sm-3 col-xs-3"><span class="fa fa-calendar"></div>'+
-                              ' <div class="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href="javascript:my_function();"> '+ data[i].Mensaje + '</a>'+
+                              ' <div class="col-md-9 col-sm-9 col-xs-9 pd-l0"><a onclick="riseup_modal(' +  data[i].IdNotificacion + ')" href="#"> '+ data[i].Mensaje + '</a>'+
                                
                               '<hr>'+
                               ' </div>'+
@@ -143,6 +188,7 @@ function showAll(){
             });
     
 }
+
 function waitForMsg() {
 
     $.ajax({
@@ -172,12 +218,32 @@ function waitForMsg() {
 
 
 
-$(document).ready(function() {
 
+
+$(document).ready(function() {
     waitForMsg();
     showAll();
-    
     $(document).on("click", "#notif", function(e){
                 $("#cont").text(""); 
     });
+    
+    $(document).on("click", "#_download_", function(e){
+        console.log(id_file);
+        var obj = JSON.stringify({ id: id_file });
+        $.ajax({
+            url: "?c=SaldoColaboradores&a=get_file",
+            type: "POST",
+            data: obj,
+            dataType: 'json',
+            contentType: 'application/json; charset= utf-8',
+            success: function(data){
+                console.log(data);  
+                dow_file = data;
+               window.location.href='uploads/' + dow_file;
+            }
+            });
+            
+        
+        
+    })
 });

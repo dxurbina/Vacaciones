@@ -15,10 +15,10 @@ class SaldoColaboradoresDAO{
     public function SaldoColaboradores(){
         try{
             $resulSet = array();
-            $consult = $this->db->prepare("select e.IdEmpleado, PNombre, PApellido, NombreCargo, Saldo, f.Factor from saldovacaciones sv 
+            $consult = $this->db->prepare("select e.IdEmpleado, e.PNombre, e.PApellido, c.NombreCargo, sv.Saldo, f.Factor from saldovacaciones sv 
             inner join empleados e on e.IdEmpleado=sv.IdEmpleado
             inner join cargos c on e.IdCargo=c.IdCargo
-            inner join Factor f on f.IdFactor=c.IdFactor; ");
+            inner join factor f on f.IdFactor=c.IdFactor; ");
             $consult -> execute(array());
             while($row = $consult->fetchAll(PDO::FETCH_OBJ)){
                 $resulSet = $row;
@@ -106,21 +106,37 @@ class SaldoColaboradoresDAO{
         echo "before";
         for($i = 1; $i < $linea; $i++){
         
-        /* incrementar saldo a todo los colaboradores*/
-            $cedula = $__file__[$i][0];
-            $saldo = $__file__[$i][1];
-            $saldo = ltrim($saldo);
-            $saldo = rtrim($saldo);
-            var_dump($saldo);
-        $sql = "call updatesaldoupload(?, ?);ç";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(1, $cedula, PDO::PARAM_STR, 20);
-        $stmt->bindParam(2, $saldo, PDO::PARAM_STR, 10);
-        $stmt->execute();
+            /* incrementar saldo a todo los colaboradores*/
+                $cedula = $__file__[$i][0];
+                $saldo = $__file__[$i][1];
+                $saldo = ltrim($saldo);
+                $saldo = rtrim($saldo);
+                $cedula = ltrim($cedula);
+                $cedula = rtrim($cedula);
+                var_dump($saldo);
+                var_dump($cedula);
+            $sql = "call updatesaldoupload(?, ?);";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(1, $cedula, PDO::PARAM_STR, 20);
+            $stmt->bindParam(2, $saldo, PDO::PARAM_STR, 10);
+            $stmt->execute();
         }
 
       
 
+    }
+
+    public function get_file($id){
+        $_file_ = "";
+        $sql = "select _file_ from notificaciones where IdNotificacion = ?";
+        $consult = $this->db->prepare($sql);
+        $consult->execute(array($id));
+
+        if($row = $consult->fetch(PDO::FETCH_OBJ)){
+            $_file_ = $row->_file_;
+           
+        }
+        return $_file_;
     }
 }
 ?>

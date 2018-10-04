@@ -132,9 +132,9 @@
 
 
 
-      <div  class="modal fade" id ="_open_" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div  class="modal fade" id ="_modal_notif_" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div style="width: 135%;" class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden = "true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Actualizar saldo por csv</h4>
@@ -142,26 +142,29 @@
                 </div>
                 
                 <div class="modal-body">
+                <div class="form-group"><label>Esta acción requiere de su autentificación.</label></div>
                     <div class="row row-fluid">
-                    <div class="form-group"><label>Esta acción requiere autentificación.</label></div>
-                        <div class="col-sm-6">
+                   
+                        <div class="col-sm-4">
+
+                        <div class="form-group"><label>Ver archivo CSV</label></div>
+                        <div class="form-group"><input type="submit" class="btn btn-primary" id="_download_" value="Descargar"></input></div>   
+                        </div>
+                        <div class="col-sm-4">
 
                                 <div class="form-group"><label>Usuario</label></div>
-                                <div class="form-group"><input class="store-val" value="<?php echo $_SESSION['nickname'] ?>" type="text" id="user_2" name="user_2"  readonly="readonly" /></div>
-                            
-                            
+                                <div class="form-group"><input class="store-val" value="<?php echo $_SESSION['nickname'] ?>" type="text" id="u" name="u"  readonly="readonly" /></div>   
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="form-group"><label>Contraseña</label></div>
-                            <div class="form-group"><input class="store-val" type="password" id="pass_2" name="pass_2"/></div>
+                            <div class="form-group"><input class="store-val" type="password" id="pass_4" name="p"/></div>
                                 
                         </div>
-
-                    
+                    </div> 
                 </div>
                 <div class="modal-footer">
                 
-                    <input type="submit" class="btn btn-primary" id="btn_update_csv" value="Deducir"></input>
+                    <input type="submit" class="btn btn-primary" id="btn_update_csv_accepted" value="Deducir"></input>
                 </div>
                 
                 
@@ -206,7 +209,7 @@
         e.preventDefault();
 
         var _select = $("#usrI").val();
-        //console.log(_select);
+        console.log(_select);
         var obj = JSON.stringify({ Nombre: _select });
         flag = false;
         $.ajax({
@@ -221,7 +224,8 @@
             success: function (data) {
               //  console.log(data);
                 $(data).each(function(i, v){ // indice, valor
-                    if(v.Usuario == _select && v.IdUsuario != row ){
+                    console.log(v.IdEmpleado);
+                    if(v.Usuario == _select && v.IdEmpleado != row ){
                         flag = true;
                     }
                 })

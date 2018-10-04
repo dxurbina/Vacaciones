@@ -125,6 +125,7 @@ $(document).on('click', '.btn-revert', function(e){
 
 $(document).on('click', '#update', function(e){
     e.preventDefault();
+    console.log($(this).val());
     if($(this).val() == "Aceptar"){
         _state = "Aceptada";
         var obj = JSON.stringify({ id: row, Estado: _state });
@@ -147,7 +148,8 @@ $(document).on('click', '#update', function(e){
         dataType: 'json',
         contentType: 'application/json; charset= utf-8',
         error: function(xhr, ajaxOptions, thrownError){
-            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+            location.reload(true); 
+            //console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
             location.reload(true); 

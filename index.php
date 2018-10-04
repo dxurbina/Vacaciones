@@ -11,12 +11,25 @@
         $view->index();
     }else{
         $cont = ucwords($_REQUEST['c']);
-            require_once('Controller/' . $cont.'Controller.php');
-            $controller = $cont.'Controller';
-        $controller = $cont.'Controller';
-        $accion = isset($_REQUEST['a'])? $_REQUEST['a']: 'index';
-        $controller =new $controller;
-        $controller ->$accion();    
+        $file = 'Controller/' . $cont.'Controller.php';
+        $directorio = 'Controller/';
+        $exist = file_exists($file);
+            if($exist == true){
+                require_once('Controller/' . $cont.'Controller.php');
+                $controller = $cont.'Controller';
+                $accion = isset($_REQUEST['a'])? $_REQUEST['a']: 'index';
+                $controller =new $controller;
+                $existAccion = method_exists($controller,$accion);
+                if($existAccion == true){
+                    $controller ->$accion();  
+                }else{
+                    echo '<strong>404 Not Found</strong>';
+                }
+                
+            }else{
+                echo '<strong>404 Not Found</strong>';
+            }
+              
     }
 
 ?>  

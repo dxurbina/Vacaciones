@@ -135,7 +135,7 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
             $('#pointer').val(oldDay + "/" + "0" + oldMes + "/" + oldAnio);
         }*/
             
-            console.log(fecha2);
+            //console.log(fecha2);
            // $("#dateF").datepicker("setDate", fecha2);
          //  $('#pointer').val(fecha2.toLocaleDateString("es-ES", options));
             //$("#pointer").datepicker("setDate", fecha);
@@ -454,16 +454,29 @@ function sumarDias(fecha, dias){
     radioSeleccionado();
     var cantDias = document.getElementById('NumDay').value;
     var FechaI = document.getElementById('pointer').value;
-    var txtarea = document.getElementById('comentarios').value;
-    if(cantDias==null || cantDias== ""){
-        alert("Debe ingresar los días de vacaciones");
-    }else if(valor==null ){
-        alert("Debe seleccionar el tipo de vacaciones");
-    } else if(FechaI==null || FechaI== ""){
-        alert("Debe seleccionar la fecha de inicio de vacaciones");
-    }
-    // $("#imodalsolacep").modal("show");
-  else {
+    var _text_area = document.getElementById('comentarios').value;
+    console.log(_text_area);
+    if((cantDias!=null && cantDias!= "") && valor!=null && (FechaI!=null && FechaI!= ""))
+    {
+        if(_text_area.length < 100 ){
+            $("#imodalsolacep").modal("show");
+        }else{
+            alert("El comentario debe tener maximo 100 caracteres");
+        }
+        /*$.ajax({
+            url: "?c=Vacaciones&a=store",
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json; charset= utf-8',
+            success: function(data){
+                //console.log('Todo ha funcionado');
+                //location.reload(true); 
+            }
+            });*/
+       
+             
+            //alert('solicitud enviada correctamente.');
+    } else {
         //alert("Debe completar los campos");
          //$("#imodalsolinfo").modal("show");
     }

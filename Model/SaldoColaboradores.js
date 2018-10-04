@@ -82,15 +82,15 @@ $(document).ready(function(){
 
 
     /*Poner los colores según la condición en el datatable*/
-    $ ( '#tbl_saldo_vacaciones' ).dataTable ({ 
-        "fnRowCallback" :   function(nRow , aData, iDisplayIndex, iDisplayIndexFull){ 
+  /*   $ ( '#tbl_saldo_vacaciones' ).dataTable ({ 
+       "fnRowCallback" :   function(nRow , aData, iDisplayIndex, iDisplayIndexFull){ 
           if(aData[3]>=15){ 
             $('td', nRow ).css('background-color', '#eeb2b2'); 
           }else{ 
             $('td', nRow ).css('background-color', '#e6f2f8'); 
           } 
         } 
-      }); 
+      }); */
 });
 
 $(document).on('click', '#btn_update_csv', function (e) {
@@ -124,7 +124,6 @@ $(document).on('click', '#btn_update_csv', function (e) {
 });
 
 
-
 function sendDataAjax() {
     $.ajax({
         type: "POST",
@@ -137,7 +136,16 @@ function sendDataAjax() {
         },
         success: function (data) {
             console.log(data);
-            tabla = $("#tbl_saldo_vacaciones").DataTable();
+            tabla = $("#tbl_saldo_vacaciones").DataTable({
+                "fnRowCallback" :   function(nRow , aData, iDisplayIndex, iDisplayIndexFull){ 
+                    if(aData[3]>=15){ 
+                      $('td', nRow ).css('background-color', '#eeb2b2'); 
+                    }else{ 
+                      $('td', nRow ).css('background-color', '#e6f2f8'); 
+                    } 
+                  }
+                }
+            );
             for (var i = 0; i < data.length; i++) {
                 tabla.fnAddData([
                     data[i].IdEmpleado,

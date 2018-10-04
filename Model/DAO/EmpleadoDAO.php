@@ -350,7 +350,7 @@ public function GetPosition($usuario){
 
 
     public function GetUser($id){
-        $sql = "select IdUsuario, Usuario from usuarios where Usuario = ?";
+        $sql = "select IdEmpleado, Usuario from usuarios where Usuario = ?";
         $resulSet = array();
         $consult = $this->db->prepare($sql);
         $consult->execute(array($id));
