@@ -18,18 +18,31 @@
 
         public function generate(){
             if(isset($_SESSION['nickname']) and $_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['access'] == 5){
-                $originalDate = $_REQUEST['dateI'];
-                //$DateI = date("Y-m-d", strtotime($originalDate));
-                $originalDate = ltrim($originalDate);
-                $originalDate = rtrim($originalDate);
-                $nums = explode('/', $originalDate);
-                $dateI = $nums[2] . "-" . $nums[1] . "-" . $nums[0];
-                $originalDate = $_REQUEST['dateE'];
-                $originalDate = ltrim($originalDate);
-                $originalDate = rtrim($originalDate);
-                $nums = explode('/', $originalDate);
-                $dateF = $nums[2] . "-" . $nums[1] . "-" . $nums[0];
-                $libros = $this->model->report($dateI, $dateF);
+                if(!(isset($_REQUEST['date'])) ){
+                    $originalDate = $_REQUEST['dateI'];
+                    //$DateI = date("Y-m-d", strtotime($originalDate));
+                    $originalDate = ltrim($originalDate);
+                    $originalDate = rtrim($originalDate);
+                    $nums = explode('/', $originalDate);
+                    $dateI = $nums[2] . "-" . $nums[1] . "-" . $nums[0];
+                    $originalDate = $_REQUEST['dateE'];
+                    $originalDate = ltrim($originalDate);
+                    $originalDate = rtrim($originalDate);
+                    $nums = explode('/', $originalDate);
+                    $dateF = $nums[2] . "-" . $nums[1] . "-" . $nums[0];
+                    $libros = $this->model->report($dateI, $dateF);
+                }else{
+                    $originalDate = $_REQUEST['date'];
+                    //$DateI = date("Y-m-d", strtotime($originalDate));
+                    $originalDate = ltrim($originalDate);
+                    $originalDate = rtrim($originalDate);
+                    $nums = explode('/', $originalDate);
+                    $date = $nums[2] . "-" . $nums[1] . "-" . $nums[0];
+                    $libros = $this->model->report2($date);
+                }
+                    
+
+
                 if(!empty($libros)) {
 
                     $filename = "reporte.csv";
@@ -54,7 +67,7 @@
                     
                     }
                     
-                    echo implode(",", array_values($libro)) . "\r\n";
+                    echo implode(",", array_values(str_replace(",",".", $libro))) . "\r\n";
                     
                     }
                     

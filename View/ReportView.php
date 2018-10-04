@@ -29,7 +29,7 @@
 
                                         <div class="col-sm-2" style="margin-left: 3%;">
                                         <div class="form-group"><label>Seleccionar Mes :</label></div>
-                                        <div class="form-group"><input id="mes" name="date" class="date-picker"/></div>
+                                        <div class="form-group"><input id="mes" value="" name="date" class="date-picker"/></div>
                                         </div>
                                         
                                          
