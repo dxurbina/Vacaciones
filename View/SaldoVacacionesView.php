@@ -70,7 +70,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden = "true">&times;</span></button>
         </div>    
         <form action="?c=Vacaciones&a=EditSolicitud" method="POST" name="send">
-            <div class="modal-body">   
+            <div class="modal-body modal-alert2">   
                     <div class="row row-fluid">
                         <div class="col-xs-4">
                             <div class="form-group">
@@ -158,7 +158,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden = "true">&times;</span></button>
         </div>    
         <form action="?c=Vacaciones&a=store" method="POST">
-            <div class="modal-body">   
+            <div class="modal-body modal-alert">   
                     <div class="row row-fluid">
                         <div class="col-xs-4">
                             <div class="form-group">
@@ -202,7 +202,7 @@
                     <div class="row row-fluid">
                         <div class="col-xs-4">
                             <div class="form-group">
-                                <label>Días A Tomar</label><input  id="NumDay" name = "CantDias" type="number" name="edad" min="0" max="30" step="0.5" required onkeypress="return valida(event)" maxlength="2">
+                                <label>Días A Tomar</label><input  id="NumDay" name = "CantDias" type="number" name="edad" min="0.5" max="30" step="0.5" required onkeypress="return valida(event)" maxlength="2">
                             </div>
                         </div>
 

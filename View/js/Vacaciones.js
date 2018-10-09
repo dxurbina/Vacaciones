@@ -76,7 +76,10 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
         var sumar = $('#NumDay').val();
 
         if ((sumar == 0) && (sumar == "")){
-            alert("Primero debe seleccionar  los días a tomar.");
+           // alert("Primero debe seleccionar  los días a tomar.");
+           $('#pointer').val('');
+           $('.alert').remove();
+           $('.modal-alert').append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><ul><li style="list-style:none;">Primero debe seleccionar  los días a tomar.</li></ul></div>');
         }else{
             if((sumar > 0)){
                // $porciones = $('#pointer').val().split('/');
@@ -176,7 +179,11 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
                         });
 
             }else{
-                alert("La cantidad de días debe ser mayor a 0");
+               // alert("La cantidad de días debe ser mayor a 0");
+               $('#pointer').val('');
+               $('.alert').remove();
+               $('.modal-alert').append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><ul><li style="list-style:none;">La cantidad de días debe ser mayor a 0</li></ul></div>');
+        
             }
         }
                
@@ -214,7 +221,11 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
         mes = fecha.getMonth() + 1;
         anio = fecha.getFullYear();
         if ((sumar == 0) && (sumar == "")){
-            alert("Primero debe seleccionar  los días a tomar.");
+            //alert("Primero debe seleccionar  los días a tomar.");
+            $('#pointer2').val('');
+            $('.alert').remove();
+            $('.modal-alert2').append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><ul><li style="list-style:none;">Primero debe seleccionar  los días a tomar.</li></ul></div>');
+        
         }else{
             if((sumar > 0)){
                 if(sumar % 1 == 0){
@@ -223,7 +234,10 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
                     addTime = (sumar * 24); //Tiempo en horas
                 }
             }else{
-                alert("La cantidad de días debe ser mayor a 0");
+                //alert("La cantidad de días debe ser mayor a 0");
+                $('#pointer2').val('');
+                $('.alert').remove();
+                $('.modal-alert2').append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><ul><li style="list-style:none;">Primero debe seleccionar  los días a tomar.</li></ul></div>');
             }
             
         }
@@ -477,7 +491,12 @@ function sumarDias(fecha, dias){
              
             //alert('solicitud enviada correctamente.');
     } else {
+        e.preventDefault(); 
         //alert("Debe completar los campos");
+        $('.alert').remove();
+        $('.modal-alert').append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><ul><li style="list-style:none;">Debe completar los campos</li></ul></div>');
+        
+
          //$("#imodalsolinfo").modal("show");
     }
   });
