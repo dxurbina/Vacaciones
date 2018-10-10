@@ -6,7 +6,7 @@
     define("HOST", "localhost");
     define("DB","vacaciones");
     define("_USER","root");
-    define("_PASS","LumberXD02");
+    define("_PASS","sa123");
 
     define("UPLOADS_DIR", dirname(__FILE__) . "/uploads/");
 ?>

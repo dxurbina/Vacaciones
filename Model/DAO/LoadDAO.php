@@ -20,6 +20,28 @@
                 $flag = true;
                 $_SESSION['ID'] = $row;
                 $_SESSION['nickname'] = $data->__GET('user');
+                
+                $sql = "insert into _logs values(null, ?, now(), ?, ?)";
+                $result = $this->db->prepare($sql);
+                $tipo = "Inicio Sesión";
+                
+                $sql = "select  e.PNombre, e.PApellido, c.NombreCargo from  empleados e, cargos c, centrocostos cc, deptosempresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep 
+                and e.IdEmpleado = ?;";
+                $data2 = array();
+                $result2 = $this->db->prepare($sql);
+                $result2->execute(array( $_SESSION['ID']->IdEmpleado));
+                $data2 = array();
+                if($row = $result2->fetch(PDO::FETCH_OBJ)){
+                   
+                    $data2 = $row;
+                    
+                }
+
+
+                $Nombre = $data2->PNombre . " " . $data2->PApellido . " (" . $data2->NombreCargo . ")";
+                $result->execute(array($_SESSION['nickname'], $tipo, $Nombre));
+
+
             }else{
                $_SESSION['nickname'] = 'Error';
                 $_SESSION['access'] = null;
@@ -81,6 +103,7 @@
             $flag = false;
             $sql = "select  e.PNombre, e.PApellido, c.NombreCargo from  empleados e, cargos c, centrocostos cc, deptosempresa d where e.IdCargo = c.IdCargo and c.IdCosto =  cc.IdCosto and cc.IdDptoEmp = d.IdDep 
             and e.IdEmpleado = ?;";
+            $data = array();
             $result = $this->db->prepare($sql);
             $result->execute(array( $_SESSION['ID']->IdEmpleado));
             $data;
@@ -90,7 +113,7 @@
                 
             }
             
-           
+        
         }
         
     }
