@@ -17,19 +17,19 @@
                                         <div class="col-sm-2" style="margin-left: 3%;">
                                             <div class="form-group"><label>Fecha Inicio</label></div>
                                             <div class="form-group">
-                                                <input id="entrada" name="dateI" type="text" required />
+                                                <input id="entrada" name="dateI" type="text" required disabled/>
                                             </div>
                                         </div>
                                         <div class="col-sm-2" style="margin-left: 3%;">
                                             <div class="form-group"><label>Fecha Final</label></div>
                                             <div class="form-group">
-                                                <input id="salida" name="dateE" type="text" required/>
+                                                <input id="salida" name="dateE" type="text" required disabled/>
                                             </div>
                                         </div> 
 
                                         <div class="col-sm-2" style="margin-left: 3%;">
                                         <div class="form-group"><label>Seleccionar Mes :</label></div>
-                                        <div class="form-group"><input id="mes" value="" name="date" class="date-picker"/></div>
+                                        <div class="form-group"><input id="mes" value="" name="date" class="date-picker" disabled/></div>
                                         </div>
                                         
                                          
