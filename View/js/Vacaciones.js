@@ -1,4 +1,9 @@
 var newDay, newNes, newAnio, bDisable;
+function addAlert(ClassAlerta, texto){
+    $('.alert').remove();
+    $(ClassAlerta).append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><ul><li style="list-style:none;"> ' + texto +'</li></ul></div>');
+}
+
 $(document).ready(function(){
     $('#Add').click(function(){
         if( $('#Add').prop('checked') ) {
@@ -13,7 +18,7 @@ $(document).ready(function(){
             hideExtra();
         }
     });
-
+    
     //Agregado a las 2:51 pm 08-05-2018
 /*var arrDisabledDates = {};
 arrDisabledDates[new Date('05/01/2018')] = new Date('05/01/2018');
@@ -76,11 +81,10 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
         var sumar = $('#NumDay').val();
 
         if ((sumar == 0) && (sumar == "")){
-           // alert("Primero debe seleccionar  los días a tomar.");
-           $('#pointer').val('');
-           $('.alert').remove();
-           $('.modal-alert').append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><ul><li style="list-style:none;">Primero debe seleccionar  los días a tomar.</li></ul></div>');
-        }else{
+            $('#pointer').val('');
+            $('.alert').remove();
+            $('.modal-alert').append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><ul><li style="list-style:none;">Primero debe seleccionar  los días a tomar.</li></ul></div>');
+         }else{
             if((sumar > 0)){
                // $porciones = $('#pointer').val().split('/');
                // console.log($porciones);
@@ -138,7 +142,7 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
             $('#pointer').val(oldDay + "/" + "0" + oldMes + "/" + oldAnio);
         }*/
             
-            //console.log(fecha2);
+            console.log(fecha2);
            // $("#dateF").datepicker("setDate", fecha2);
          //  $('#pointer').val(fecha2.toLocaleDateString("es-ES", options));
             //$("#pointer").datepicker("setDate", fecha);
@@ -179,8 +183,8 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
                         });
 
             }else{
-               // alert("La cantidad de días debe ser mayor a 0");
-               $('#pointer').val('');
+                //alert("La cantidad de días debe ser mayor a 0");
+                $('#pointer').val('');
                $('.alert').remove();
                $('.modal-alert').append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><ul><li style="list-style:none;">La cantidad de días debe ser mayor a 0</li></ul></div>');
         
@@ -234,7 +238,6 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
                     addTime = (sumar * 24); //Tiempo en horas
                 }
             }else{
-                //alert("La cantidad de días debe ser mayor a 0");
                 $('#pointer2').val('');
                 $('.alert').remove();
                 $('.modal-alert2').append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><ul><li style="list-style:none;">Primero debe seleccionar  los días a tomar.</li></ul></div>');
@@ -355,7 +358,9 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
         mes = fecha.getMonth() + 1;
         anio = fecha.getFullYear();
         if ((sumar == 0) && (sumar == "")){
-            alert("Primero debe seleccionar  los días a tomar.");
+            //alert("Primero debe seleccionar  los días a tomar.");
+            $('#pointer3').val('');
+            addAlert('.modal-alert2','Primero debe seleccionar  los días a tomar.');
         }else{
             if((sumar > 0)){
                 if(sumar % 1 == 0){
@@ -364,9 +369,10 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
                     addTime = (sumar * 24); //Tiempo en horas
                 }
             }else{
-                alert("La cantidad de días debe ser mayor a 0");
-            }
-            
+               // alert("La cantidad de días debe ser mayor a 0");
+               $('#pointer3').val('');
+               addAlert('.modal-alert2','La cantidad de días debe ser mayor a 0.');
+            } 
         }
         
     fecha.setHours(addTime); //Añado el tiempo
@@ -465,72 +471,112 @@ function sumarDias(fecha, dias){
   }
 
  $(document).on('click','#enter', function(e){
+     e.preventDefault();
     radioSeleccionado();
     var cantDias = document.getElementById('NumDay').value;
     var FechaI = document.getElementById('pointer').value;
-    var _text_area = document.getElementById('comentarios').value;
-    console.log(_text_area);
-    if((cantDias!=null && cantDias!= "") && valor!=null && (FechaI!=null && FechaI!= ""))
-    {
-        if(_text_area.length < 100 ){
-            $("#imodalsolacep").modal("show");
-        }else{
-            alert("El comentario debe tener maximo 100 caracteres");
-        }
-        /*$.ajax({
-            url: "?c=Vacaciones&a=store",
-            type: "POST",
-            dataType: 'json',
-            contentType: 'application/json; charset= utf-8',
-            success: function(data){
-                //console.log('Todo ha funcionado');
-                //location.reload(true); 
-            }
-            });*/
-       
-             
-            //alert('solicitud enviada correctamente.');
-    } else {
-        e.preventDefault(); 
-        //alert("Debe completar los campos");
-        $('.alert').remove();
-        $('.modal-alert').append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><ul><li style="list-style:none;">Debe completar los campos</li></ul></div>');
-        
+    var FechaF = document.getElementById('dateF').value;
+    var txtarea = document.getElementById('comentarios').value;
 
-         //$("#imodalsolinfo").modal("show");
+    var FechaIA = FechaI.split('/');
+    var FechaFA = FechaF.split('/');
+    var date_1 = new Date(FechaIA[2] + '-' + FechaIA[1] + '-' + FechaIA[0]).getTime();
+    var date_2 = new Date(FechaFA[2] + '-' + FechaFA[1] + '-' + FechaFA[0]).getTime();
+    var diff = date_2 - date_1;
+    NumDay = diff/(1000*60*60*24) + 1;
+
+    if(cantDias==null || cantDias== ""){
+        addAlert('.modal-alert','Debe ingresar los días de vacaciones');
+    }else if(cantDias <= 0 && cantDias > 30){
+        addAlert('.modal-alert', 'Numero de dias fuera de rango');
+    }else if(NumDay > cantDias && (NumDay - cantDias) >=0 && (cantDias - NumDay) <= 1 ){
+        addAlert('.modal-alert', 'Se esperaba igualdad entre el numero de Días Digitado y el rango de fechas seleccionado');
+    }else if(NumDay < cantDias && (NumDay - cantDias) <=0 && (cantDias - NumDay) >= 1 ){
+        addAlert('.modal-alert', 'Se esperaba igualdad entre el numero de Días Digitado y el rango de fechas seleccionado');
+    }else if(valor==null){
+        addAlert('.modal-alert', 'Debe seleccionar el tipo de vacaciones');
+    } else if(FechaI==null || FechaI== ""){
+        addAlert('.modal-alert', 'Debe seleccionar la fecha de inicio de vacaciones');
+    }else if(txtarea.length > 100){
+        addAlert('.modal-alert', 'El comentario debe ser menor a 100 caracteres.!!!');
+    }
+    else {
+            document.forms["sendNew"].submit();
+        }
+  });
+
+  $(document).on('click','#editSol', function(e){
+    e.preventDefault();
+    radioSeleccionado();
+    console.log('working ...');
+    var cantDias = document.getElementById('NumDay2').value;
+    var FechaI = document.getElementById('pointer2').value;
+    var FechaF = document.getElementById('dateF2').value;
+    var txtarea = document.getElementById('comentarios2').value;
+    
+    var FechaIA = FechaI.split('/');
+    var FechaFA = FechaF.split('/');
+    var date_1 = new Date(FechaIA[2] + '-' + FechaIA[1] + '-' + FechaIA[0]).getTime();
+    var date_2 = new Date(FechaFA[2] + '-' + FechaFA[1] + '-' + FechaFA[0]).getTime();
+    var diff = date_2 - date_1;
+    NumDay = diff/(1000*60*60*24) + 1;
+
+    if(cantDias==null || cantDias== ""){
+        addAlert('.modal-alert','Debe ingresar los días de vacaciones');
+    }else if(cantDias <= 0 && cantDias > 30){
+        addAlert('.modal-alert2', 'Numero de dias fuera de rango');
+    }else if(NumDay > cantDias && (NumDay - cantDias) >=0 && (cantDias - NumDay) <= 1 ){
+        addAlert('.modal-alert2', 'Se esperaba igualdad entre el numero de Días Digitado y el rango de fechas seleccionado');
+    }else if(NumDay < cantDias && (NumDay - cantDias) <=0 && (cantDias - NumDay) >= 1 ){
+        addAlert('.modal-alert2', 'Se esperaba igualdad entre el numero de Días Digitado y el rango de fechas seleccionado');
+    }else if(valor==null){
+        addAlert('.modal-alert2', 'Debe seleccionar el tipo de vacaciones');
+    } else if(FechaI==null || FechaI== ""){
+        addAlert('.modal-alert2', 'Debe seleccionar la fecha de inicio de vacaciones');
+    }else if(txtarea.length > 100){
+        addAlert('.modal-alert2', 'El comentario debe ser menor a 100 caracteres.!!!');
+    }
+  else {
+    document.forms["send"].submit();
     }
   });
 
- /* $(document).on('click', '.btn-accept', function(e){
-    e.preventDefault();
-    var $d = $(this).parent("td");     
-    row = $d.parent().parent().children().index($d.parent()); 
-});
 
-  $(document).on('click','#enter', function(e){
-    e.preventDefault();
+
+  $(document).on('click','#enter3', function(e){
+     e.preventDefault();
     radioSeleccionado();
-    var cantDias = document.getElementById('NumDay').value;
-    var FechaI = document.getElementById('pointer').value;
-    if((cantDias!=null && cantDias!= "") && valor!=null && (FechaI!=null && FechaI!= ""))
-    {
-        if($(this).val() == "Aceptar"){
-            _state = "Aceptada";
-        }else if($(this).val() == "Cancelar"){
-            //_state = "Rechazada";
-        }
-        $.ajax({
-            url: "?c=Vacaciones&a=store",
-            type: "POST",
-            dataType: 'json',
-            contentType: 'application/json; charset= utf-8',
-            success: function(data){
-            }
-            });
-   } else {
-        alert("Para poder enviar la solicitud de vacaciones debe completar los campos solicitados.");
+    var cantDias = document.getElementById('NumDay3').value;
+    var FechaI = document.getElementById('pointer3').value;
+    var FechaF = document.getElementById('dateF3').value;
+    var txtarea = document.getElementById('comentarios3').value;
+
+    var FechaIA = FechaI.split('/');
+    var FechaFA = FechaF.split('/');
+    var date_1 = new Date(FechaIA[2] + '-' + FechaIA[1] + '-' + FechaIA[0]).getTime();
+    var date_2 = new Date(FechaFA[2] + '-' + FechaFA[1] + '-' + FechaFA[0]).getTime();
+    var diff = date_2 - date_1;
+    NumDay = diff/(1000*60*60*24) + 1;
+
+    if(cantDias==null || cantDias== ""){
+        addAlert('.modal-alert3','Debe ingresar los días de vacaciones');
+    }else if(cantDias <= 0 && cantDias > 30){
+        addAlert('.modal-alert3', 'Numero de dias fuera de rango');
+    }else if(NumDay > cantDias && (NumDay - cantDias) >=0 && (cantDias - NumDay) <= 1 ){
+        addAlert('.modal-alert3', 'Se esperaba igualdad entre el numero de Días Digitado y el rango de fechas seleccionado');
+    }else if(NumDay < cantDias && (NumDay - cantDias) <=0 && (cantDias - NumDay) >= 1 ){
+        addAlert('.modal-alert3', 'Se esperaba igualdad entre el numero de Días Digitado y el rango de fechas seleccionado');
+    }else if(valor==null){
+        addAlert('.modal-alert3', 'Debe seleccionar el tipo de vacaciones');
+    } else if(FechaI==null || FechaI== ""){
+        addAlert('.modal-alert3', 'Debe seleccionar la fecha de inicio de vacaciones');
+    }else if(txtarea.length > 100){
+        addAlert('.modal-alert3', 'El comentario debe ser menor a 100 caracteres.!!!');
     }
-  });*/
+    else {
+            document.forms["sendNew3"].submit();
+        }
+  });
 
     restaFechas = function(f1,f2)
     {
@@ -571,7 +617,7 @@ function ListaFeriados(){
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
-            console.log(data);
+          //  console.log(data);
         }
     });
 }
@@ -612,7 +658,7 @@ $(document).on('click', '#ActDonarMostar', function (e) {
                 console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
             },
             success: function (data) {
-                console.log(data);
+               // console.log(data);
             }
         });
     }return false;
@@ -633,7 +679,7 @@ if(act) {
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
-            console.log(data);
+           // console.log(data);
         }
     });
 }return false;

@@ -55,8 +55,8 @@ function sendDataAjax1() {
                 t.toLocaleDateString("es-ES", options),
                 data[i].tipo,
                 '<button title= "Aceptar" value= "show" class="btn btn-primary btn-accept " data-target="#imodal" data-toggle="modal"><i class="fa fa-check" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
-                '<button title= "Rechezar" value= "grant" class="btn btn-danger btn-deny" data-target="#imodal2" data-toggle="modal"><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
-                '<button title= "Ver Descripcion" value= "deny" class="btn btn-primary btn-show "><i class="fa fa-commenting" aria-hidden="true"></i></button>'
+                '<button title= "Rechazar" value= "grant" class="btn btn-danger btn-deny" data-target="#imodal2" data-toggle="modal"><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
+                '<button title= "Ver Descripción" value= "deny" class="btn btn-primary btn-show "><i class="fa fa-commenting" aria-hidden="true"></i></button>'
             ]);
         
         
