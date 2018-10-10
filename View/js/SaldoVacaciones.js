@@ -116,6 +116,7 @@ function fillModalData(dato){
            $("#dateF2").val(data[0].FechaF);*/
 
            //Formatear las fechas recibidas de la base de datos 23-05-18 11:29 am.
+           console.log(data[0].FechaI);
            var FechaInicial = moment(data[0].FechaI).format("DD/MM/YYYY");
            $('#pointer2').val(FechaInicial);
            var FechaFinal = moment(data[0].FechaF).format("DD/MM/YYYY");

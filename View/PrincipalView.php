@@ -48,15 +48,28 @@
 
     
     <?php }else if($_SESSION['nickname'] == "Error"){ ?>
-        <script>alert("Usuario o Contraseña Incorrectos!!");</script>
+        
+
+
             <div class="form-box" >
+            
             <form method="POST" action="?c=Load&a=load">
                 <div class = "box" style = "border-top-width: 0px; border-radius: 15px 15px 0 0; ">
                     
                     <div class="header" id ="color-header" style = "margin-bottom: 20px; background: #1a709a; " >
                         <h1>Iniciar Sesión</h1>
                     </div>
-                    
+                    <div class="alert alert-danger alert-dismissible"
+                        style="margin-right: 15px;" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <ul>
+                        
+                                <li style="list-style:none;">!! Usuario o Contraseña incorrecto !!</li>
+                            
+                        </ul>
+                    </div>
 
                     <div class = "row-fluid" style = "margin-left: 15px; margin-right: 15px;">
                         
