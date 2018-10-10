@@ -177,8 +177,8 @@
        <b> <h4>Solicitar Vacaciones</b>
         <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden = "true">&times;</span></button>
         </div>    
-        <form action="?c=Vacaciones&a=storeSugerir" method="POST">
-            <div class="modal-body">   
+        <form action="?c=Vacaciones&a=storeSugerir" method="POST" name="sendNew3">
+            <div class="modal-body modal-alert3">   
                     <div class="row row-fluid">
                         <div class="col-xs-4">
                             <div class="form-group">
@@ -222,7 +222,7 @@
                     <div class="row row-fluid">
                         <div class="col-xs-4">
                             <div class="form-group">
-                                <label>Días A Tomar</label><input  id="NumDay3" name = "CantDias" type="number" name="edad" min="0" max="30" step="0.5" required onkeypress="return valida(event)" maxlength="2">
+                                <label>Días A Tomar</label><input  id="NumDay3" name = "CantDias" type="number" name="edad" min="0" max="30" step="0.5" required onkeypress="return valida(event)" maxlength="2"/>
                             </div>
                         </div>
 
@@ -248,7 +248,7 @@
                     <div class="col-xs-offset-4">
                         <label>Días de Vacaciones con Factor: </label>&nbsp;
                         <label for="Saldo">0</label>&nbsp;&nbsp;
-                        <input type="submit"  id="enter" class="btn btn-primary" value="Solicitar" />
+                        <input type="submit"  id="enter3" class="btn btn-primary" value="Solicitar" />
                     </div>
                     
                     <div class="col-xs-offset-4">

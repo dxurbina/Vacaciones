@@ -78,7 +78,7 @@
                                 <input  hidden type = "text" id= "idVac" name = "idVacaciones" />
                                 <input type="radio" name="Tipo" value="Vacaciones" > Vacaciones<br>
                                 <input type="radio" name="Tipo" value="Enfermedad" > Enfermedad<br>
-                                <input type="radio" name="Tipo" value="Permiso Especial" > Permiso Especial<br>
+                                <input type="radio" name="Tipo" value="Permiso Especial" > Permiso Especial
                                 <!--Validación para mostar y ocultar el div según el estado de la tab config-->
                                 <?php if($this->donar == true){
                                 ?>
@@ -157,7 +157,7 @@
        <b> <h4>Solicitar Vacaciones</b>
         <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden = "true">&times;</span></button>
         </div>    
-        <form action="?c=Vacaciones&a=store" method="POST">
+        <form action="?c=Vacaciones&a=store" method="POST" name="sendNew">
             <div class="modal-body modal-alert">   
                     <div class="row row-fluid">
                         <div class="col-xs-4">
@@ -166,22 +166,12 @@
                                 <input type="radio" name="Tipo" value="Vacaciones" checked> Vacaciones<br>
                                 <input type="radio" name="Tipo" value="Enfermedad"> Enfermedad<br>
                                 <input type="radio" name="Tipo" value="Permiso Especial"> Permiso Especial <br>
-                                <!--<input type="radio" name="Tipo" value="Donar" disabled> Donar -->
-
                                 <!--Validación para mostar y ocultar el div según el estado de la tab config-->
                                 <?php if($this->donar == true){
                                 ?>
                                 <input type="radio" name="Tipo" value="Donar"> Donar
                                 <?php }?>
-
-                            <!--<label  class="donar" for="donar"></label>-->
                             </div>
-                            
-                            <!--Probando a ocultar el botón de donar -->
-                            <!--<div id = "donar" style='display:none;'>
-                                <input type="radio" name="Tipo" value="Donar"> Donar
-                            </div>-->
-                            
                         </div>
                         <div class="col-xs-4">
                                 <h3>Factor: </h3>
@@ -202,13 +192,13 @@
                     <div class="row row-fluid">
                         <div class="col-xs-4">
                             <div class="form-group">
-                                <label>Días A Tomar</label><input  id="NumDay" name = "CantDias" type="number" name="edad" min="0.5" max="30" step="0.5" required onkeypress="return valida(event)" maxlength="2">
+                                <label>Días A Tomar</label><input  id="NumDay" name = "CantDias" type="number" name="edad" min="0" max="30" step="0.5" required onkeypress="return valida(event)" maxlength="2"/>
                             </div>
                         </div>
 
                         <div class="col-xs-4">
                             <div class="form-group">
-                                <label>Fecha de Inicio</label><input id="pointer" name ="FechaI"type="text" required class="readonly"/>
+                                <label>Fecha de Inicio</label><input id="pointer" name ="FechaI"type="text" required class = "readonly"/>
                             </div>
                         </div>
 
@@ -349,7 +339,7 @@ function valida(e){
 }
 </script>
 
-<script> $(".readonly").keydown(function(e){ e.preventDefault(); }); </script> 
+<script> $(".readonly").keydown(function(e){ e.preventDefault(); }); </script>
 
 <?php
     }else {
