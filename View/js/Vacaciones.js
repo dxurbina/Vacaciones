@@ -82,9 +82,8 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
 
         if ((sumar == 0) && (sumar == "")){
             $('#pointer').val('');
-            $('.alert').remove();
-            $('.modal-alert').append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><ul><li style="list-style:none;">Primero debe seleccionar  los días a tomar.</li></ul></div>');
-         }else{
+            addAlert('.modal-alert', 'Primero debe seleccionar  los días a tomar.');
+        }else{
             if((sumar > 0)){
                // $porciones = $('#pointer').val().split('/');
                // console.log($porciones);
@@ -185,9 +184,7 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
             }else{
                 //alert("La cantidad de días debe ser mayor a 0");
                 $('#pointer').val('');
-               $('.alert').remove();
-               $('.modal-alert').append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><ul><li style="list-style:none;">La cantidad de días debe ser mayor a 0</li></ul></div>');
-        
+               addAlert('.modal-alert', 'La cantidad de días debe ser mayor a 0');
             }
         }
                
@@ -227,9 +224,7 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
         if ((sumar == 0) && (sumar == "")){
             //alert("Primero debe seleccionar  los días a tomar.");
             $('#pointer2').val('');
-            $('.alert').remove();
-            $('.modal-alert2').append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><ul><li style="list-style:none;">Primero debe seleccionar  los días a tomar.</li></ul></div>');
-        
+            addAlert('.modal-alert2', 'Primero debe seleccionar  los días a tomar.');
         }else{
             if((sumar > 0)){
                 if(sumar % 1 == 0){
@@ -239,8 +234,7 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
                 }
             }else{
                 $('#pointer2').val('');
-                $('.alert').remove();
-                $('.modal-alert2').append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><ul><li style="list-style:none;">Primero debe seleccionar  los días a tomar.</li></ul></div>');
+                addAlert('.modal-alert2', 'Primero debe seleccionar  los días a tomar.');
             }
             
         }
@@ -347,7 +341,7 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
     $('#pointer3').change(function(){
         var fecha = $('#pointer3').val();
         var sumar = $('#NumDay3').val();
-
+        var addTime;
         var fecha2 = new Date(fecha);
         var fecha = new Date(fecha);
 
@@ -360,7 +354,7 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
         if ((sumar == 0) && (sumar == "")){
             //alert("Primero debe seleccionar  los días a tomar.");
             $('#pointer3').val('');
-            addAlert('.modal-alert2','Primero debe seleccionar  los días a tomar.');
+            addAlert('.modal-alert3','Primero debe seleccionar  los días a tomar.');
         }else{
             if((sumar > 0)){
                 if(sumar % 1 == 0){
@@ -371,7 +365,7 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
             }else{
                // alert("La cantidad de días debe ser mayor a 0");
                $('#pointer3').val('');
-               addAlert('.modal-alert2','La cantidad de días debe ser mayor a 0.');
+               addAlert('.modal-alert3','La cantidad de días debe ser mayor a 0.');
             } 
         }
         
