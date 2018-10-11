@@ -478,14 +478,13 @@ function sumarDias(fecha, dias){
     var date_2 = new Date(FechaFA[2] + '-' + FechaFA[1] + '-' + FechaFA[0]).getTime();
     var diff = date_2 - date_1;
     NumDay = diff/(1000*60*60*24) + 1;
-
     if(cantDias==null || cantDias== ""){
         addAlert('.modal-alert','Debe ingresar los días de vacaciones');
     }else if(cantDias <= 0 && cantDias > 30){
         addAlert('.modal-alert', 'Numero de dias fuera de rango');
-    }else if(NumDay > cantDias && (NumDay - cantDias) >=0 && (cantDias - NumDay) <= 1 ){
+    }else if(NumDay > cantDias && (cantDias - NumDay) <=0 && (NumDay - cantDias) >= 1 ){
         addAlert('.modal-alert', 'Se esperaba igualdad entre el numero de Días Digitado y el rango de fechas seleccionado');
-    }else if(NumDay < cantDias && (NumDay - cantDias) <=0 && (cantDias - NumDay) >= 1 ){
+    }else if(NumDay < cantDias && ( NumDay - cantDias ) <=0 && (cantDias - NumDay) >= 1 ){  
         addAlert('.modal-alert', 'Se esperaba igualdad entre el numero de Días Digitado y el rango de fechas seleccionado');
     }else if(valor==null){
         addAlert('.modal-alert', 'Debe seleccionar el tipo de vacaciones');
@@ -519,9 +518,9 @@ function sumarDias(fecha, dias){
         addAlert('.modal-alert','Debe ingresar los días de vacaciones');
     }else if(cantDias <= 0 && cantDias > 30){
         addAlert('.modal-alert2', 'Numero de dias fuera de rango');
-    }else if(NumDay > cantDias && (NumDay - cantDias) >=0 && (cantDias - NumDay) <= 1 ){
+    }else if(NumDay > cantDias && (cantDias - NumDay) <=0 && (NumDay - cantDias) >= 1 ){
         addAlert('.modal-alert2', 'Se esperaba igualdad entre el numero de Días Digitado y el rango de fechas seleccionado');
-    }else if(NumDay < cantDias && (NumDay - cantDias) <=0 && (cantDias - NumDay) >= 1 ){
+    }else if(NumDay < cantDias && ( NumDay - cantDias ) <=0 && (cantDias - NumDay) >= 1 ){  
         addAlert('.modal-alert2', 'Se esperaba igualdad entre el numero de Días Digitado y el rango de fechas seleccionado');
     }else if(valor==null){
         addAlert('.modal-alert2', 'Debe seleccionar el tipo de vacaciones');
@@ -551,14 +550,15 @@ function sumarDias(fecha, dias){
     var date_2 = new Date(FechaFA[2] + '-' + FechaFA[1] + '-' + FechaFA[0]).getTime();
     var diff = date_2 - date_1;
     NumDay = diff/(1000*60*60*24) + 1;
-
     if(cantDias==null || cantDias== ""){
         addAlert('.modal-alert3','Debe ingresar los días de vacaciones');
     }else if(cantDias <= 0 && cantDias > 30){
         addAlert('.modal-alert3', 'Numero de dias fuera de rango');
-    }else if(NumDay > cantDias && (NumDay - cantDias) >=0 && (cantDias - NumDay) <= 1 ){
+    }else if(NumDay > cantDias && (cantDias - NumDay) >=0 && (NumDay - cantDias) <= 1 ){
+        //1.5 - 2 = -0.5  >= 0 =f 
         addAlert('.modal-alert3', 'Se esperaba igualdad entre el numero de Días Digitado y el rango de fechas seleccionado');
-    }else if(NumDay < cantDias && (NumDay - cantDias) <=0 && (cantDias - NumDay) >= 1 ){
+    }else if(NumDay < cantDias && ( NumDay - cantDias ) >=0 && (cantDias - NumDay) <= 1 ){
+        
         addAlert('.modal-alert3', 'Se esperaba igualdad entre el numero de Días Digitado y el rango de fechas seleccionado');
     }else if(valor==null){
         addAlert('.modal-alert3', 'Debe seleccionar el tipo de vacaciones');
@@ -568,7 +568,7 @@ function sumarDias(fecha, dias){
         addAlert('.modal-alert3', 'El comentario debe ser menor a 100 caracteres.!!!');
     }
     else {
-            document.forms["sendNew3"].submit();
+            //document.forms["sendNew3"].submit();
         }
   });
 
