@@ -1,4 +1,4 @@
-var dato, tabla, idEmp, $row, $dato2, Tipo;
+var dato, tabla, idEmp, $row, $dato2, Tipo, row;
 
 //Función para la carga de los valores del datatable
  function sendDataAjax() {
@@ -29,7 +29,7 @@ var dato, tabla, idEmp, $row, $dato2, Tipo;
             
         }else{
             cambio = '<button title= "Editar" value= "Editar" class="btn btn-primary btn-edit "><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
-            '<button title= "Eliminar" value= "Cancelar" class="btn btn-danger btn-del " data-target="#imodalel" data-toggle="modal"><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;'
+            '<button title= "Eliminar" value="Cancelar" class="btn btn-danger btn-del" data-target="#modalDel" data-toggle="modal"><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;'
         }
         
         tabla.fnAddData([
@@ -146,18 +146,25 @@ $(document).on('click', '.btn-edit', function (e) {
  
 });
 
+$(document).on('click', '.btn-del', function(e){
+    e.preventDefault();
+    //var $d = $(this).parent("td");     
+    row = $(this).parents("tr").find("td").eq(0).html(); //$d.parent().parent().children().index($d.parent());
+    //console.log(row);
+});
+
 // evento click para cancelar la solicitud de vacaciones
-$(document).on('click', '.btn-del', function (e) {
-    var eliminar = confirm('¿Desea cancelar la solicitud de vacaciones?');
-    var valores = $(this).parents("tr").find("td")[6].innerHTML; // obtiene una columna especifica de la fila seleccionada
-   // console.log(valores);    0
-    if(eliminar) {
+$(document).on('click', '#btn-modalDel', function (e) {
+   // var eliminar = confirm('¿Desea cancelar la solicitud de vacaciones?');
+   var valores = $('.btn-del').parents("tr").find("td")[6].innerHTML; // obtiene una columna especifica de la fila seleccionada
+    console.log(valores);
+    //if(eliminar) {
         if(valores!='Aceptada' && valores!='Rechazada'){
             e.preventDefault;
             var _row = $(this).parent().parent()[0];
            // console.log(_row);
             dato = tabla.fnGetData(_row);
-            idVac = dato[0];
+            idVac = row;
             //console.log(idVac);
             var obj = JSON.stringify({ id: idVac });
                $.ajax({
@@ -169,12 +176,12 @@ $(document).on('click', '.btn-del', function (e) {
                   success: function(data){
                     }
                 });
-                  alert('Solicitud de vacaciones cancelada correctamente.');
+                  //alert('Solicitud de vacaciones cancelada correctamente.');
                   location.reload();
         }else 
         {
             alert('Usted solo puede eliminar las solicitudes que están pendientes.')
         } 
-    }
+    //}
           return false;     
 });
