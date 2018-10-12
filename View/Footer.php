@@ -22,7 +22,7 @@
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
-      <!-- Home tab content -->
+      <!-- Home tab content 
       <div class="tab-pane active" id="control-sidebar-home-tab">
         <h3 class="control-sidebar-heading">Recent Activity</h3>
         <ul class="control-sidebar-menu">
@@ -37,7 +37,7 @@
               </div>
             </a>
           </li>
-        </ul>
+        </ul>-->
         <!-- /.control-sidebar-menu -->
 
         <h3 class="control-sidebar-heading">Tasks Progress</h3>
@@ -74,7 +74,6 @@
               Report panel usage
               <input type="checkbox" class="pull-right" checked>
             </label>
-
             <p>
               Some information about this general settings option
             </p>
@@ -99,82 +98,66 @@
                           
                       </div>
                       <form action="#" method="POST" name ="send">
-                      <div class="modal-body">
+                      <div class="modal-body alert-usr">
                           <div class="row row-fluid">
 
                               <div class="col-sm-6">
-
                                       <div class="form-group"><label>Usuario</label></div>
                                       <div class="form-group"><input  id="usrI" name="Nombre"  required></input></div>
-                                  
-
-                                  
                               </div>
                               <div class="col-sm-6">
                                       <div class="form-group"><label>Contraseña</label></div>
-                                      <div class="form-group"><input type="password" id="passI" name="Codigo" ID=""  required></input></div>
-                                  
-
-                                          
+                                      <div class="form-group"><input type="password" id="passI" name="Codigo" ID=""  required></input></div>         
                               </div>
-                              
-
                           </div>
                       </div>
                       <div class="modal-footer">
                           <input type="submit" class="btn btn-primary" id="btnUserI" value="Actualizar"></input>
-                      </div>
-                      
+                      </div>              
                       </form>
                   </div>
               </div>
       </div>
-
-
 
       <div  class="modal fade" id ="_modal_notif_" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div style="width: 135%;" class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden = "true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Actualizar saldo por csv</h4>
-                    
-                </div>
-                
+                    <h4 class="modal-title" id="myModalLabel">Actualizar saldo por csv</h4>    
+                </div>       
                 <div class="modal-body">
                 <div class="form-group"><label>Esta acción requiere de su autentificación.</label></div>
                     <div class="row row-fluid">
-                   
                         <div class="col-sm-4">
-
                         <div class="form-group"><label>Ver archivo CSV</label></div>
                         <div class="form-group"><input type="submit" class="btn btn-primary" id="_download_" value="Descargar"></input></div>   
                         </div>
                         <div class="col-sm-4">
-
                                 <div class="form-group"><label>Usuario</label></div>
                                 <div class="form-group"><input class="store-val" value="<?php echo $_SESSION['nickname'] ?>" type="text" id="u" name="u"  readonly="readonly" /></div>   
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group"><label>Contraseña</label></div>
-                            <div class="form-group"><input class="store-val" type="password" id="pass_4" name="p"/></div>
-                                
+                            <div class="form-group"><input class="store-val" type="password" id="pass_4" name="p"/></div>     
                         </div>
                     </div> 
                 </div>
                 <div class="modal-footer">
                 
                     <input type="submit" class="btn btn-primary" id="btn_update_csv_accepted" value="Deducir"></input>
-                </div>
-                
-                
+                </div> 
             </div>
         </div>
     </div>
-
-      
+  
 </body>
   <script type ="text/javascript">
+    /*Agregar alerta luego de una clase */
+    function addAlertUsr(ClassAlerta, texto){
+        $('.alert').remove();
+        $(ClassAlerta).prepend('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><ul><li style="list-style:none;"> ' + texto +'</li></ul></div>');
+    }
      var row;
     $(document).on('click', '.btn-usrI', function (e) {
     e.preventDefault();
@@ -185,8 +168,6 @@
     });
 
      function showusrByIdSession(){
-        
-        //console.log(obj);
         var obj = JSON.stringify({ id: row });
         $.ajax({
             data: obj,
@@ -200,16 +181,15 @@
             success: function (data) {
                 dato = data;
                 console.log(dato);
-                $('#usrI').val(dato[0].usuario);
+                $('#usrI').val(dato[0].Usuario);
             }
         });
     }
 
     $(document).on('click', '#btnUserI', function (e) {
         e.preventDefault();
-
         var _select = $("#usrI").val();
-        console.log(_select);
+        //console.log(_select);
         var obj = JSON.stringify({ Nombre: _select });
         flag = false;
         $.ajax({
@@ -224,7 +204,6 @@
             success: function (data) {
               //  console.log(data);
                 $(data).each(function(i, v){ // indice, valor
-                    console.log(v.IdEmpleado);
                     if(v.Usuario == _select && v.IdEmpleado != row ){
                         flag = true;
                     }
@@ -232,8 +211,7 @@
                 if(flag == false){
                     var user = $('#usrI').val();
                     var pass = $('#passI').val();
-                    if( pass.length > 4 && pass.length < 20 && user.length > 3){
-                                
+                    if( pass.length > 4 && pass.length < 20 && user.length > 3){           
                                 var obj = JSON.stringify({ Id: row, Usuario: user, Pass: pass });
                                 flag = false;
                                 $.ajax({
@@ -247,24 +225,17 @@
                                     },
                                     success: function (data) {
                                         location.reload();
-                                    }
-                                        
+                                    }             
                                     });  
                             
-                    }else{
-                        alert('Dato no esperado');
+                                }else{
+                        addAlertUsr('.alert-usr', 'Dato no esparado (Verifique longitud de Usuario y contraseña).');
                     }
-                    
-
                 }else{
-                    alert("Nombre de usuario ya existe!!");
+                    addAlertUsr('.alert-usr', 'Nombre de usuario ya existe!!');
                 }
-            }
-                
+            }      
             });
-
     });
   </script>
-
-
 </html>

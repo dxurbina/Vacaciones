@@ -146,8 +146,6 @@
 </div>
 </div>
 
-<script type="text/javascript" src="View/js/SaldoVacaciones.js"></script>
-
 <!--Modal Para que el colaborador pueda solicitar vacaciones a partir de la pantalla de saldo de Vacaciones  -->
 <!-- POP UP -->
 <div  class="modal fade" id ="modalsol" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" name="formsol">
@@ -210,14 +208,6 @@
                     </div>
                 </div>
                     
-                   <!-- <div class="row">
-                        <div class="form-group">
-                            <label>Comentarios</label>
-                        </div>
-                        <div class="form-group">
-                            <textarea class="form-control" name="Descripcion" id="" cols="50" rows="5"></textarea>
-                        </div> --> <!-- Así estaba anteriormente 27-03-18 10.46 am -->
-
                         <div class="col-xs-12">
                             <div class="form-group">
                                 <label>Comentarios</label>
@@ -241,28 +231,6 @@
     </div>
 </div>
 </div>
-        
-
-<!--Modal para confirmar la solicitud de vacaciones-->
-<!--<div class="modal fade" id="imodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document" style="margin: 30%; margin-top: 20%;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <center><h4 class="modal-title" id="myModalLabel">Confirmar</h4></center>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>¿Seguro desea enviar la solicitud de vacaciones?</label>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-primary" id="aceptar" value ="Aceptar" />
-                    <button type="button" data-dismiss="modal" class="btn btn-danger" id="btnCancel">Cancelar</button>
-                </div>
-            </div>
-        </div>
-    </div>-->
 
     <!-- Este esta bueno 10:08 am 04-04-18 -->
     <div class="modal fade" id="imodalsolinfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -320,6 +288,27 @@
             </div>
         </div>
 
+            <div class="modal fade" id="modalDel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Confirmar</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>¿Desea cancelar la solicitud de vacaciones?</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-primary" id="btn-modalDel" value = "Aceptar" />
+                        <button type="button" data-dismiss="modal" class="btn btn-danger" id="btnCancel">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="View/js/SaldoVacaciones.js"></script>
         <script type="text/javascript" src="View/js/Vacaciones.js"></script>
 
 <!-- valida que solo se escriba números -->

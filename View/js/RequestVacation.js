@@ -55,8 +55,8 @@ function sendDataAjax1() {
                 t.toLocaleDateString("es-ES", options),
                 data[i].tipo,
                 '<button title= "Aceptar" value= "show" class="btn btn-primary btn-accept " data-target="#imodal" data-toggle="modal"><i class="fa fa-check" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
-                '<button title= "Rechazar" value= "grant" class="btn btn-danger btn-deny" data-target="#imodal2" data-toggle="modal"><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
-                '<button title= "Ver Descripción" value= "deny" class="btn btn-primary btn-show "><i class="fa fa-commenting" aria-hidden="true"></i></button>'
+                '<button title= "Rechezar" value= "grant" class="btn btn-danger btn-deny" data-target="#imodal2" data-toggle="modal"><i class="fa fa-eraser" aria-hidden="true"></i></button>&nbsp;&nbsp;' +
+                '<button title= "Ver Descripcion" value= "deny" class="btn btn-primary btn-show "><i class="fa fa-commenting" aria-hidden="true"></i></button>'
             ]);
         
         
@@ -81,7 +81,7 @@ $(document).on('click', '.btn-show', function(e){
    // console.log(EData);
     //alert(dato[row].Descripcion);
     
-    console.log(rowid);
+    //console.log(rowid);
     //$("#Descrip").val(dato1[EData[0]].Descripcion);
     obj = JSON.stringify({ id: rowid });
     $.ajax({
@@ -94,7 +94,7 @@ $(document).on('click', '.btn-show', function(e){
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
-            console.log(data);
+            //console.log(data);
            $("#Descrip").val(data[0].Descripcion);
         }
         });
@@ -104,7 +104,7 @@ $(document).on('click', '.btn-accept', function(e){
     e.preventDefault();
     //var $d = $(this).parent("td");     
     row = $(this).parents("tr").find("td").eq(0).html(); // $d.parent().parent().children().index($d.parent()); 
-    console.log(row);
+    //console.log(row);
    // console.log(dato1[row].IdVacaciones);
 });
 
@@ -112,20 +112,19 @@ $(document).on('click', '.btn-deny', function(e){
     e.preventDefault();
     //var $d = $(this).parent("td");     
     row = $(this).parents("tr").find("td").eq(0).html(); //$d.parent().parent().children().index($d.parent());
-    console.log(row);
+    //console.log(row);
 });
 
 $(document).on('click', '.btn-revert', function(e){
     e.preventDefault();
    // var $d = $(this).parent("td");     
     row = $(this).parents("tr").find("td").eq(0).html(); //$d.parent().parent().children().index($d.parent());
-    console.log(row);
+   // console.log(row);
 });
 
 
 $(document).on('click', '#update', function(e){
     e.preventDefault();
-    console.log($(this).val());
     if($(this).val() == "Aceptar"){
         _state = "Aceptada";
         var obj = JSON.stringify({ id: row, Estado: _state });
@@ -149,7 +148,7 @@ $(document).on('click', '#update', function(e){
         contentType: 'application/json; charset= utf-8',
         error: function(xhr, ajaxOptions, thrownError){
             location.reload(true); 
-            //console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
             location.reload(true); 
@@ -186,9 +185,9 @@ function sendDataAjax2() {
         while(i != -1) {
           var accion;
           var dias =   calculardias(data[i].FechaRespuesta);
-          console.log(dias);
-          //data[i].FechaF <= data[i].FechaRespuesta muestra el botón de revertir tomando como límite la fecha final.
-          if(data[i].FechaF <= data[i].FechaRespuesta && data[i].Estado != 'Revertida' && data[i].Estado != 'Rechazada'){
+          //if(dias < 8 && data[i].Estado != 'Revertida' && data[i].Estado != 'Rechazada'){
+        //data[i].FechaF <= data[i].FechaRespuesta muestra el botón de revertir tomando como límite la fecha final.
+        if(data[i].FechaF <= data[i].FechaRespuesta && data[i].Estado != 'Revertida' && data[i].Estado != 'Rechazada'){
             accion = '<button title= "Revertir" value= "deny" class="btn btn-dark btn-revert" data-target="#imodal3" data-toggle="modal"><i class="fa fa-hand-o-left" aria-hidden="true"></i></i></button>'
         }else{
             accion = '-';

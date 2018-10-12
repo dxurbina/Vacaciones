@@ -1,4 +1,5 @@
 var newDay, newNes, newAnio, bDisable;
+/*Agregar alerta luego de una clase */
 function addAlert(ClassAlerta, texto){
     $('.alert').remove();
     $(ClassAlerta).append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><ul><li style="list-style:none;"> ' + texto +'</li></ul></div>');
@@ -18,31 +19,14 @@ $(document).ready(function(){
             hideExtra();
         }
     });
-    
-    //Agregado a las 2:51 pm 08-05-2018
-/*var arrDisabledDates = {};
-arrDisabledDates[new Date('05/01/2018')] = new Date('05/01/2018');
-arrDisabledDates[new Date('04/19/2018')] = new Date('04/19/2018');
-arrDisabledDates[new Date('07/19/2018')] = new Date('07/19/2018');
-*/
+    /* Calendarios de fecha inicial y final, formato dd/mm/yy con maximo de dias anteriores a la fecha actual de 7 dias */
     $('#pointer').datepicker(
         {  
-            /*beforeShowDay: function (dt) {
-                var bDisable = arrDisabledDates[dt];
-                console.log(bDisable);
-                if (bDisable)
-                    return [false, '', ''];
-                else
-                   return [true, '', ''];
-            }*/ 
-            dateFormat: 'dd/mm/yy',
+           dateFormat: 'dd/mm/yy',
            minDate: -7,
            beforeShow: function() {
-            //onSelect: ListaFeriados(),
            $(this).datepicker('option', 'maxDate', $('#dataF').val());
-           
            }
-
            //beforeShowDay: $.datepicker.noWeekends -> DESACTIVA LOS FINDES DE SEMANA
         });
 
@@ -50,13 +34,11 @@ arrDisabledDates[new Date('07/19/2018')] = new Date('07/19/2018');
                     {                    
                     defaultDate: "+1w",
                     beforeShow: function() {
-                    $(this).datepicker('option', 'minDate', $('#pointer').val());
-        if ($('#pointer').val() === '') $(this).datepicker('option', 'minDate', 0);                             
+                        $(this).datepicker('option', 'minDate', $('#pointer').val());
+                        if($('#pointer').val() === '') $(this).datepicker('option', 'minDate', 0);                             
                     }
                 });
 
-                
-                
 
 function stringToDate(_date,_format,_delimiter)
 {
@@ -71,56 +53,38 @@ function stringToDate(_date,_format,_delimiter)
             var formatedDate = new Date(dateItems[yearIndex],month,dateItems[dayIndex]);
             return formatedDate;
 }
-/*
-stringToDate("17/9/2014","dd/MM/yyyy","/");
-stringToDate("9/17/2014","mm/dd/yyyy","/")
-stringToDate("9-17-2014","mm-dd-yyyy","-")*/
-
+    /* Change the final date at click de init date(Create Vacation Request) */
     $('#pointer').change(function(){
         //var fecha = $('#pointer').val();
         var sumar = $('#NumDay').val();
-
         if ((sumar == 0) && (sumar == "")){
             $('#pointer').val('');
             addAlert('.modal-alert', 'Primero debe seleccionar  los días a tomar.');
         }else{
             if((sumar > 0)){
-               // $porciones = $('#pointer').val().split('/');
-               // console.log($porciones);
                 var fecha = stringToDate($('#pointer').val(),"dd/MM/yyyy","/");
                 var fecha2 = stringToDate($('#pointer').val(),"dd/MM/yyyy","/");
-                //$fecha = stringToDate("05/07/2018","dd/MM/yyyy","/");
-                //console.log(fecha);
-               /// var fecha2 = new Date($porciones[2], $porciones[1], $porciones[0]);
-               // var fecha = new Date();
-                //console.log(fecha);
                 dia = fecha.getDate();
                 mes = fecha.getMonth() + 1;
                 anio = fecha.getFullYear();
-
                 if(sumar % 1 == 0){
                     addTime = (sumar * 24) - 24; //Tiempo en horas
                 }else{
                     addTime = (sumar * 24); //Tiempo en horas
                 }
-
                 fecha.setHours(addTime); //Añado el tiempo
  
-    str1 = "Fecha actual: " + dia + "/" + mes + "/" + anio + "<br />";
-    str2 = "Tiempo añadido: " + sumar + " días<br />";
-    str3 = "Fecha final: " + fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear();
-       console.log(str1 + ' ' + str2 +' ' + str3 +' ');
-       
+        str1 = "Fecha actual: " + dia + "/" + mes + "/" + anio + "<br />";
+        str2 = "Tiempo añadido: " + sumar + " días<br />";
+        str3 = "Fecha final: " + fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear();
+      // console.log(str1 + ' ' + str2 +' ' + str3 +' ');
        oldMes = (fecha2.getMonth() + 1);
        oldDay = (fecha2.getDate());
        oldAnio = (fecha2.getFullYear());
 
        newMes = (fecha.getMonth() + 1);
        newDay = (fecha.getDate());
-       newAnio = (fecha.getFullYear());
-       
-     //  var options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-     //console.log(newMes.toString().length);
+       newAnio = (fecha.getFullYear()); 
         if(newMes.toString().length > 1 && newDay.toString().length > 1){
             $('#dateF').val(newDay + "/" + newMes + "/" + newAnio);
         }else if(newMes.toString().length == 1 && newDay.toString().length == 1){
@@ -130,28 +94,12 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
         }else if (newMes.toString().length == 1){  
             $('#dateF').val(newDay + "/" + "0" +newMes + "/" + newAnio);
         }
-/*
-        if(oldMes.toString().length > 1 && oldDay.toString().length > 1){
-            $('#pointer').val(oldDay + "/" + oldMes + "/" + oldAnio);
-        }else if(oldMes.toString().length == 1 && oldDay.toString().length == 1){
-            $('#poiner').val("0" + oldDay + "/" + "0" + oldMes + "/" + oldAnio);
-        }else if(oldDay.toString().length == 1){
-            $('#pointer').val("0" + oldDay + "/"  + oldMes + "/" + oldAnio);
-        }else if (oldMes.toString().length == 1){  
-            $('#pointer').val(oldDay + "/" + "0" + oldMes + "/" + oldAnio);
-        }*/
-            
-            console.log(fecha2);
-           // $("#dateF").datepicker("setDate", fecha2);
-         //  $('#pointer').val(fecha2.toLocaleDateString("es-ES", options));
-            //$("#pointer").datepicker("setDate", fecha);
-            console.log($('input:radio[name=Tipo]:checked').val());
+           // console.log($('input:radio[name=Tipo]:checked').val());
             if($('input:radio[name=Tipo]:checked').val() == 'Vacaciones'){
                 var factor =  $("label[for='factor']").text();
                 var saldo = parseFloat(factor) * sumar;
                 var resul = saldo.toFixed(2); 
                 $("label[for='Saldo']").text(resul);
-                console.log(resul);
                 //Cálculo del saldo-saldoAct.
                 var saldoactual = $("label[for='saldo']").text();
                 var sal = parseFloat(saldoactual) - resul;
@@ -161,35 +109,30 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
 
             //Nueva funcionalidad de donar vacaciones.
             if($('input:radio[name=Tipo]:checked').val() == 'Donar'){
-              //  var donar = 1;
                 $("label[for='Saldo']").text(sumar);
-                //console.log(donar);
                 //Cálculo del saldo-saldoAct.
                 var saldoact = $("label[for='saldo']").text();
                 var sal = parseFloat(saldoact) - sumar;
                 var resultado = sal.toFixed(2);
                 $("label[for='SaldoT']").text(resultado);
             }
-            
-            //$('#ExtraDateEnd').val(fecha.toLocaleDateString("es-ES", options));
-            //$('#ExtraDateIni').val(fecha.toLocaleDateString("es-ES", options));
+
             $('#ExtraDateIni').datepicker(
                 { 
                    minDate: new Date(newAnio, newMes, newDay),
                    beforeShow: function() {
                    $(this).datepicker('option', 'maxDate', $('#dataF').val());
                  }
-                        });
+            });
 
             }else{
-                //alert("La cantidad de días debe ser mayor a 0");
                 $('#pointer').val('');
                addAlert('.modal-alert', 'La cantidad de días debe ser mayor a 0');
             }
         }
                
     });
-
+    
     $('#pointer2').datepicker(
         { 
            minDate: -7,
@@ -203,26 +146,22 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
                     {
                     defaultDate: "+1w",
                     beforeShow: function() {
-                    $(this).datepicker('option', 'minDate', $('#pointer2').val());
-        if ($('#pointer2').val() === '') $(this).datepicker('option', 'minDate', 0);                             
+                        $(this).datepicker('option', 'minDate', $('#pointer2').val());
+                        if ($('#pointer2').val() === '') $(this).datepicker('option', 'minDate', 0);                             
                     }
                 });
-
+/* Change the final date to click de init date(Edit Vacation Request) */
     $('#pointer2').change(function(){
         var fecha = $('#pointer2').val();
         var sumar = $('#NumDay2').val();
-
         var fecha2 = new Date(fecha);
         var fecha = new Date(fecha);
-
         var fecha = stringToDate($('#pointer2').val(),"dd/MM/yyyy","/");
         var fecha2 = stringToDate($('#pointer2').val(),"dd/MM/yyyy","/");
-        console.log(fecha);
         dia = fecha.getDate();
         mes = fecha.getMonth() + 1;
         anio = fecha.getFullYear();
         if ((sumar == 0) && (sumar == "")){
-            //alert("Primero debe seleccionar  los días a tomar.");
             $('#pointer2').val('');
             addAlert('.modal-alert2', 'Primero debe seleccionar  los días a tomar.');
         }else{
@@ -237,15 +176,13 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
                 addAlert('.modal-alert2', 'Primero debe seleccionar  los días a tomar.');
             }
             
-        }
-        
+        }   
     fecha.setHours(addTime); //Añado el tiempo
  
     str1 = "Fecha actual: " + dia + "/" + mes + "/" + anio + "<br />";
     str2 = "Tiempo añadido: " + sumar + " días<br />";
     str3 = "Fecha final: " + fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear();
-       console.log(str1 + ' ' + str2 +' ' + str3 +' ');
-       
+       //console.log(str1 + ' ' + str2 +' ' + str3 +' ');  
        oldMes = (fecha2.getMonth() + 1);
        oldDay = (fecha2.getDate());
        oldAnio = (fecha2.getFullYear());
@@ -255,7 +192,6 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
        newAnio = (fecha.getFullYear());
        
      //  var options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-     //console.log(newMes.toString().length);
         if(newMes.toString().length > 1 && newDay.toString().length > 1){
             $('#dateF2').val(newDay + "/" + newMes + "/" + newAnio);
         }else if(newMes.toString().length == 1 && newDay.toString().length == 1){
@@ -265,21 +201,7 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
         }else if (newMes.toString().length == 1){  
             $('#dateF2').val(newDay + "/" + "0" +newMes + "/" + newAnio);
         }
-/*
-        if(oldMes.toString().length > 1 && oldDay.toString().length > 1){
-            $('#pointer2').val(oldDay + "/" + oldMes + "/" + oldAnio);
-        }else if(oldMes.toString().length == 1 && oldDay.toString().length == 1){
-            $('#pointer2').val("0" + oldDay + "/" + "0" + oldMes + "/" + oldAnio);
-        }else if(oldDay.toString().length == 1){
-            $('#pointer2').val("0" + oldDay + "/"  + oldMes + "/" + oldAnio);
-        }else if (oldMes.toString().length == 1){  
-            $('#pointer2').val(oldDay + "/" + "0" + oldMes + "/" + oldAnio);
-        }*/
-
-            //$('#dateF2').val(fecha.toLocaleDateString("es-ES", options));
-            console.log(fecha2);
-            //$('#pointer2').val(fecha2.toLocaleDateString("es-ES", options));
-            console.log($('input:radio[name=Tipo]:checked').val());
+            //console.log($('input:radio[name=Tipo]:checked').val());
             if($('input:radio[name=Tipo]:checked').val() == 'Vacaciones'){
                 var factor =  $("label[for='factor2']").text();
                 var saldo = parseFloat(factor) * sumar;
@@ -294,30 +216,20 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
             
              //Nueva funcionalidad de donar vacaciones.
              if($('input:radio[name=Tipo]:checked').val() == 'Donar'){
-                //  var donar = 1;
                   $("label[for='Saldo']").text(sumar);
-                  //console.log(donar);
-                  //Cálculo del saldo-saldoAct.
                   var saldoact = $("label[for='saldo']").text();
                   var sal = parseFloat(saldoact) - sumar;
                   var resultado = sal.toFixed(2);
                   $("label[for='SaldoT']").text(resultado);
               }
-              
-
-
-            //$('#ExtraDateEnd').val(fecha.toLocaleDateString("es-ES", options));
-            //$('#ExtraDateIni').val(fecha.toLocaleDateString("es-ES", options));
             $('#ExtraDateIni').datepicker(
                 { 
                    minDate: new Date(newAnio, newMes, newDay),
                    beforeShow: function() {
                    $(this).datepicker('option', 'maxDate', $('#dataF2').val());
                    }
-                });
-        
+            });      
     });
-
 
     //Modal de sugerir vacaciones desde la vista de saldo de colaboradores.
     $('#pointer3').datepicker(
@@ -327,10 +239,9 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
            beforeShow: function() {
            $(this).datepicker('option', 'maxDate', $('#dataF3').val());
          }
-                });
+    });
 
-        $('#dataF3').datepicker(
-                    {
+        $('#dataF3').datepicker({
                     defaultDate: "+1w",
                     beforeShow: function() {
                     $(this).datepicker('option', 'minDate', $('#pointer3').val());
@@ -338,6 +249,7 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
                     }
                 });
 
+    /* Change the final date to click de init date(suggest Vacation Request)  */
     $('#pointer3').change(function(){
         var fecha = $('#pointer3').val();
         var sumar = $('#NumDay3').val();
@@ -347,12 +259,10 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
 
         var fecha = stringToDate($('#pointer3').val(),"dd/MM/yyyy","/");
         var fecha2 = stringToDate($('#pointer3').val(),"dd/MM/yyyy","/");
-        console.log(fecha);
         dia = fecha.getDate();
         mes = fecha.getMonth() + 1;
         anio = fecha.getFullYear();
         if ((sumar == 0) && (sumar == "")){
-            //alert("Primero debe seleccionar  los días a tomar.");
             $('#pointer3').val('');
             addAlert('.modal-alert3','Primero debe seleccionar  los días a tomar.');
         }else{
@@ -363,19 +273,16 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
                     addTime = (sumar * 24); //Tiempo en horas
                 }
             }else{
-               // alert("La cantidad de días debe ser mayor a 0");
                $('#pointer3').val('');
                addAlert('.modal-alert3','La cantidad de días debe ser mayor a 0.');
             } 
         }
         
     fecha.setHours(addTime); //Añado el tiempo
- 
     str1 = "Fecha actual: " + dia + "/" + mes + "/" + anio + "<br />";
     str2 = "Tiempo añadido: " + sumar + " días<br />";
     str3 = "Fecha final: " + fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear();
-       console.log(str1 + ' ' + str2 +' ' + str3 +' ');
-       
+      // console.log(str1 + ' ' + str2 +' ' + str3 +' ');
        oldMes = (fecha2.getMonth() + 1);
        oldDay = (fecha2.getDate());
        oldAnio = (fecha2.getFullYear());
@@ -383,9 +290,6 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
        newMes = (fecha.getMonth() + 1);
        newDay = (fecha.getDate());
        newAnio = (fecha.getFullYear());
-       
-     //  var options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-     //console.log(newMes.toString().length);
         if(newMes.toString().length > 1 && newDay.toString().length > 1){
             $('#dateF3').val(newDay + "/" + newMes + "/" + newAnio);
         }else if(newMes.toString().length == 1 && newDay.toString().length == 1){
@@ -395,23 +299,8 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
         }else if (newMes.toString().length == 1){  
             $('#dateF3').val(newDay + "/" + "0" +newMes + "/" + newAnio);
         }
-/*
-        if(oldMes.toString().length > 1 && oldDay.toString().length > 1){
-            $('#pointer2').val(oldDay + "/" + oldMes + "/" + oldAnio);
-        }else if(oldMes.toString().length == 1 && oldDay.toString().length == 1){
-            $('#pointer2').val("0" + oldDay + "/" + "0" + oldMes + "/" + oldAnio);
-        }else if(oldDay.toString().length == 1){
-            $('#pointer2').val("0" + oldDay + "/"  + oldMes + "/" + oldAnio);
-        }else if (oldMes.toString().length == 1){  
-            $('#pointer2').val(oldDay + "/" + "0" + oldMes + "/" + oldAnio);
-        }*/
-
-            //$('#dateF2').val(fecha.toLocaleDateString("es-ES", options));
-            console.log(fecha2);
-            //$('#pointer2').val(fecha2.toLocaleDateString("es-ES", options));
-            console.log($('input:radio[name=Tipo]:checked').val());
+            //console.log($('input:radio[name=Tipo]:checked').val());
             if($('input:radio[name=Tipo]:checked').val() == 'Vacaciones'){
-                //var factor =  $("label[for='factor3']").text();
                 var factor =  $("input[id='factor3']").val();
                 var saldo = parseFloat(factor) * sumar;
                 var result = saldo.toFixed(2); 
@@ -422,30 +311,21 @@ stringToDate("9-17-2014","mm-dd-yyyy","-")*/
                 var resultado = sal.toFixed(2);
                 $("label[for='SaldoT']").text(resultado);
             }
-            /**/
-            //$('#ExtraDateEnd').val(fecha.toLocaleDateString("es-ES", options));
-            //$('#ExtraDateIni').val(fecha.toLocaleDateString("es-ES", options));
-            $('#ExtraDateIni').datepicker(
-                { 
+            $('#ExtraDateIni').datepicker({ 
                    minDate: new Date(newAnio, newMes, newDay),
                    beforeShow: function() {
                    $(this).datepicker('option', 'maxDate', $('#dataF2').val());
                    }
-                });
-        
+                });     
     });
-
 
     $('#ExtraDateIni').change(function(){
             var fecha = $('#ExtraDateIni').val();
             var sumar = $('#NumDayExtra').val();
             var fecha = new Date(fecha);
             addTime = (sumar * 24) - 24; //Tiempo en Horas
-    
-        fecha.setHours(addTime); //Añado el tiempo
-        
+        fecha.setHours(addTime); //Añado el tiempo  
         var options = { year: 'numeric', month: 'long', day: 'numeric' };
-
                 $('#ExtraDateEnd').val(fecha.toLocaleDateString("es-ES", options));
     });
     
@@ -463,7 +343,7 @@ function sumarDias(fecha, dias){
             valor = elem[i].value; 
         } return valor;
   }
-
+/* Send the Request Vacation to backend */
  $(document).on('click','#enter', function(e){
      e.preventDefault();
     radioSeleccionado();
@@ -497,11 +377,10 @@ function sumarDias(fecha, dias){
             document.forms["sendNew"].submit();
         }
   });
-
+    /* Send vacation Edit Request to Backend */
   $(document).on('click','#editSol', function(e){
     e.preventDefault();
     radioSeleccionado();
-    console.log('working ...');
     var cantDias = document.getElementById('NumDay2').value;
     var FechaI = document.getElementById('pointer2').value;
     var FechaF = document.getElementById('dateF2').value;
@@ -533,9 +412,7 @@ function sumarDias(fecha, dias){
     document.forms["send"].submit();
     }
   });
-
-
-
+    /*Send vacation suggest Request to backend */
   $(document).on('click','#enter3', function(e){
      e.preventDefault();
     radioSeleccionado();
@@ -554,11 +431,9 @@ function sumarDias(fecha, dias){
         addAlert('.modal-alert3','Debe ingresar los días de vacaciones');
     }else if(cantDias <= 0 && cantDias > 30){
         addAlert('.modal-alert3', 'Numero de dias fuera de rango');
-    }else if(NumDay > cantDias && (cantDias - NumDay) >=0 && (NumDay - cantDias) <= 1 ){
-        //1.5 - 2 = -0.5  >= 0 =f 
+    }else if(NumDay > cantDias && (cantDias - NumDay) <=0 && (NumDay - cantDias) >= 1 ){
         addAlert('.modal-alert3', 'Se esperaba igualdad entre el numero de Días Digitado y el rango de fechas seleccionado');
-    }else if(NumDay < cantDias && ( NumDay - cantDias ) >=0 && (cantDias - NumDay) <= 1 ){
-        
+    }else if(NumDay < cantDias && ( NumDay - cantDias ) <=0 && (cantDias - NumDay) >= 1 ){  
         addAlert('.modal-alert3', 'Se esperaba igualdad entre el numero de Días Digitado y el rango de fechas seleccionado');
     }else if(valor==null){
         addAlert('.modal-alert3', 'Debe seleccionar el tipo de vacaciones');
@@ -568,7 +443,7 @@ function sumarDias(fecha, dias){
         addAlert('.modal-alert3', 'El comentario debe ser menor a 100 caracteres.!!!');
     }
     else {
-            //document.forms["sendNew3"].submit();
+            document.forms["sendNew3"].submit();
         }
   });
 
@@ -596,13 +471,10 @@ function hideExtra(){
 
 hideExtra();
 
-
 //Ingresado el 08-05-18 11:58 am
-
 function ListaFeriados(){
     $.ajax({
-        data: {},
-        
+        data: {},     
         url: "?c=Feriados&a=ListFeriados",
         type: "POST",
         dataType: 'json',
@@ -611,30 +483,9 @@ function ListaFeriados(){
             console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
         },
         success: function (data) {
-          //  console.log(data);
         }
     });
 }
-//ListaFeriados();
-
-/*$(document).on('click', '#ActDonar', function (e) {
-    e.preventDefault();
-console.log("Entra aquí");
-
-//Mandar un mensaje de confirmación para capturar el valor y hace según 
-    var act = confirm('¿Seguro que desea activar la opción de donar vacaciones en el sistema?');
-    if(act) {
-    e.preventDefault;
-    console.log(act);
-    /*$("#Donar").show();
-        location.reload();*/
-       // $(':radio:not(:checked)').attr('disabled', true); 
-      /* function mostrar(){
-        document.getElementById('oculto').style.display = 'block';}
-    } else{
-        $("#Donar").hide();
-    }
-});*/
 
 //Clic para guardar el estado de Habilitar a través de ajax 
 $(document).on('click', '#ActDonarMostar', function (e) {
