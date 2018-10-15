@@ -67,33 +67,39 @@ function sendDataAjax() {
   Fecha2 = $("#salida").val();
   console.log(Fecha1, Fecha2);
   var obj = JSON.stringify({ Fecha1: Fecha1, Fecha2: Fecha2 });
+  if((Fecha1 != "" && Fecha1 != null) && (Fecha2 != "" && Fecha2 != null)){
     $.ajax({
-        type: "POST",
-        url: "?c=HisVacColaboradores&a=GenerarReporte",
-        data: obj,
-        dataType: 'json',
-        contentType: 'application/json; charset= utf-8',
-        error: function(xhr, ajaxOptions, thrownError){
-            console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
-        },
-        success: function (data) {
-            console.log(data);
-            tabla = $("#tbl_Empleados_Vac").DataTable({
-                "aaSorting": [[0, 'desc']]});
-    for (var i = 0; i < data.length; i++) {
-                
-        tabla.fnAddData([
-            data[i].IdVacaciones,
-            (data[i].PNombre + " " + data[i].PApellido),
-            data[i].Nombre,
-            data[i].NombreCargo,
-            (data[i].FechaI + " al " + data[i].FechaF),
-            data[i].CantDias,
-            data[i].Estado,
-        ]);
-    }
-        }
-    });
+      type: "POST",
+      url: "?c=HisVacColaboradores&a=GenerarReporte",
+      data: obj,
+      dataType: 'json',
+      contentType: 'application/json; charset= utf-8',
+      error: function(xhr, ajaxOptions, thrownError){
+          console.log(xhr.status + "\n" + xhr.responseText, "\n" + thrownError)
+      },
+      success: function (data) {
+          console.log(data);
+          tabla = $("#tbl_Empleados_Vac").DataTable({
+              "aaSorting": [[0, 'desc']]});
+  for (var i = 0; i < data.length; i++) {
+              
+      tabla.fnAddData([
+          data[i].IdVacaciones,
+          (data[i].PNombre + " " + data[i].PApellido),
+          data[i].Nombre,
+          data[i].NombreCargo,
+          (data[i].FechaI + " al " + data[i].FechaF),
+          data[i].CantDias,
+          data[i].Estado,
+      ]);
+  }
+      }
+  });
+
+} else{
+    alert("Debe ingresar fecha inicio y fecha final para poder generar el reporte.");
+  }
+  
 }
 //sendDataAjax();
 

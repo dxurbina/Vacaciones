@@ -91,7 +91,7 @@ $(document).on('click', '#btnGuardar', function (e) {
 
 // evento click para eliminar el día feriado
 $(document).on('click', '.btn-del', function (e) {
-    var eliminar = confirm('¿Desea cancelar la solicitud de vacaciones?');
+    var eliminar = confirm('¿Desea eliminar el registro seleccionado?');
     if(eliminar) {
             e.preventDefault;
             var _row = $(this).parent().parent()[0];
@@ -105,15 +105,12 @@ $(document).on('click', '.btn-del', function (e) {
                   dataType: 'json',
                   contentType: 'application/json; charset= utf-8',
                   success: function(data){
-                    location.reload();
                     }
                 });
                   alert('Registro eliminado correctamente.');
-        }else 
-        {
-            //alert('Usted solo puede eliminar las solicitudes que están pendientes.')
-            return false;
-        } 
+                  location.reload();
+        }return false;
+        
                
 });
 

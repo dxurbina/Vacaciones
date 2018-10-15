@@ -175,9 +175,10 @@ $(document).on('click', '.btn-del', function (e) {
                   dataType: 'json',
                   contentType: 'application/json; charset= utf-8',
                   success: function(data){
-                    location.reload();
                     }
                 });
                   alert('Departamento empresa elimanado correctamente.'); 
+                  location.reload();
+
     } return false;
 });

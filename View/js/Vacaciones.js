@@ -361,11 +361,11 @@ function sumarDias(fecha, dias){
     if(cantDias==null || cantDias== ""){
         addAlert('.modal-alert','Debe ingresar los días de vacaciones');
     }else if(cantDias <= 0 && cantDias > 30){
-        addAlert('.modal-alert', 'Numero de dias fuera de rango');
+        addAlert('.modal-alert', 'Número de dias fuera de rango');
     }else if(NumDay > cantDias && (cantDias - NumDay) <=0 && (NumDay - cantDias) >= 1 ){
-        addAlert('.modal-alert', 'Se esperaba igualdad entre el numero de Días Digitado y el rango de fechas seleccionado');
+        addAlert('.modal-alert', 'Se esperaba igualdad entre el número de días digitado y el rango de fechas seleccionado');
     }else if(NumDay < cantDias && ( NumDay - cantDias ) <=0 && (cantDias - NumDay) >= 1 ){  
-        addAlert('.modal-alert', 'Se esperaba igualdad entre el numero de Días Digitado y el rango de fechas seleccionado');
+        addAlert('.modal-alert', 'Se esperaba igualdad entre el número de días digitado y el rango de fechas seleccionado');
     }else if(valor==null){
         addAlert('.modal-alert', 'Debe seleccionar el tipo de vacaciones');
     } else if(FechaI==null || FechaI== ""){

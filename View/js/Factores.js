@@ -175,6 +175,7 @@ $(document).on('click', '.btn-del', function (e) {
                     }
                 });
                   alert('Factor elimanado correctamente.'); 
+                  location.reload();
     } return false;
 });
 

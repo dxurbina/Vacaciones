@@ -17,7 +17,16 @@ function sendDataAjax() {
 
             console.log(data);
             dato = data;
-            tabla = $("#tbl_History").DataTable();
+            tabla = $("#tbl_History").DataTable({
+                "fnRowCallback" :   function(nRow , aData, iDisplayIndex, iDisplayIndexFull){ 
+                    if(aData[4]>=15){ 
+                      $('td', nRow ).css('background-color', '#eeb2b2'); 
+                    }else{ 
+                      $('td', nRow ).css('background-color', '#e6f2f8'); 
+                    } 
+                  }
+                }
+            );
             for (var i = 0; i < data.length; i++) {
                 tabla.fnAddData([
                     data[i].IdEmpleado,
