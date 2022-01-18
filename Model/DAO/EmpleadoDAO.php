@@ -216,22 +216,21 @@ public function listarDptosEmp(){
     $data->__GET('IdMunicipio')
     ));         
 
-    $lastid;
+    $lastid = 0;
     $sql = "select MAX(IdEmpleado) as valor from Empleados";
     $result = $this->db->prepare($sql);
     $result->execute();
     if($row = $result->fetch(PDO::FETCH_OBJ)){
-        $lastid=$row->valor;
+        $lastid = $row->valor;
     }
    /* $sql = "call adduser (?, ?, ?)";
     $consult2 = $this->db->prepare($sql);
     $consult->execute(array($datau->__GET('user'), $datau->__GET('pass'), $lastid));*/
 }
-        
-    
+          
     
     public function GetId(){
-        $id;
+        $id = 0;
         $sql = "select MAX(IdEmpleado) as valor from Empleados";
         $result = $this->db->prepare($sql);
         $result->execute();
@@ -252,34 +251,6 @@ public function listarDptosEmp(){
         $sql = "update Empleado set IdEmpleado = ? where IdEmpleado = ?";
         $val = $this->db->prepare($sql)->execute(array($IdEmpAct));
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public function showDeparment(){
         $sql = "select * from Departamento";
@@ -343,6 +314,10 @@ public function listarDptosEmp(){
                 return $resulSet;
     }
 
+    /**
+     * @param id
+     * @return array $resultSet
+     */
     public function showJefe($id){
         $sql = "select IdEmpleado, PNombre, PApellido from Empleados where IdEmpleado = ?";
         $resulSet = array();
@@ -377,11 +352,6 @@ public function listarDptosEmp(){
                 }
                 return $resulSet;
     }
-
-   
-
-    
-
 
     public function UpdateEmpleados(Empleado $data, User $datau){
         $sqlp = "update Empleados set PNombre = ?, SNombre = ?, PApellido = ?, SApellido = ?, Residencia= ?, Cedula = ?, Pasaporte = ?, NInss = ?, FechaNac = ?, Sexo = ?, Hijos = ?, NumHijos = ?, Hermanos = ?, NumHermanos = ?, Telefono = ?, EstadoCivil = ?, Correo = ?, Escolaridad = ?, NRuc = ?, Profesion = ?, Direccion = ?, Nacionalidad1 = ?, Nacionalidad2 = ?,  IdCargo = ?, IdJefe = ?, IdMunicipio = ? where IdEmpleado = ?";
